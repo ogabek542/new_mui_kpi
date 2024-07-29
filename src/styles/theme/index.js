@@ -1,3 +1,5 @@
+import { createTheme } from "@mui/system";
+
 export const Colors = {
     // black //
     dark:"#000",
@@ -33,3 +35,30 @@ export const Colors = {
     red_light:"#FF3532",
     transparent:"rgba(0,0,0,0.0)",
 };
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: Colors.blue_middle,
+        },
+        secondary: {
+            main: Colors.nbu,
+        },
+        customColors: {
+            dark: Colors.dark,
+            white: Colors.white,
+            nbu: Colors.nbu,
+            blueMiddle: Colors.blue_middle,
+            greenLight: Colors.green_light,
+            greenDark: Colors.green_dark,
+            gray: Colors.gray,
+            red: Colors.red,
+        },
+    },
+    typography: {
+        fontWeightBold: 700,
+    },
+      // other theme settings
+});
+
+export default theme;

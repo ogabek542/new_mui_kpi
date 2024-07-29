@@ -1,28 +1,28 @@
 import React from "react";
 import Footer from "../../components/Footer/Footer";
 import CssBaseline from "@mui/material/CssBaseline";
-import {Container,Box} from "@mui/material";
+import { Container, Box,Typography } from "@mui/material";
+
 const MainPage = () => {
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container  fixed maxWidth="xl" disableGutters>
-        <Box sx={{
-            display:"flex",
-            flexDirection:"column",
-            justifyContent:"center",
-            alignItems:"center",
-            textAlign:"center",
-            height:"100%",
-            bgcolor:"aquamarine"
-        }}>
+        <Container fixed maxWidth="xl" disableGutters>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              minHeight: "100%", // Make sure the Box takes the full viewport height
+              bgcolor: "aquamarine",
+            }}
+          >
             {/* Header */}
             {/* Main */}
-            {/* Footer */}
             <Footer />
-        </Box>
-      </Container>
-    </React.Fragment>
+          </Box>
+        </Container>
+
   );
 };
 
