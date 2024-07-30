@@ -1,7 +1,5 @@
-import React from "react";
 import Footer from "../../components/Footer/Footer";
-import CssBaseline from "@mui/material/CssBaseline";
-import { Container, Box,Typography } from "@mui/material";
+import { Container, Box } from "@mui/material";
 
 const MainPage = () => {
   return (
@@ -14,7 +12,6 @@ const MainPage = () => {
               alignItems: "center",
               textAlign: "center",
               minHeight: "100%", // Make sure the Box takes the full viewport height
-              bgcolor: "aquamarine",
             }}
           >
             {/* Header */}
