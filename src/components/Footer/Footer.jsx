@@ -16,6 +16,7 @@ const Footer = () => {
       direction="column"
       sx={{ width: "100%", height: "235px", gap: "10px", padding: "10px" }}
     >
+        {/* footer top side */}
       <Box sx={{ mx: "10px", p: "10px" }}>
         <Grid
           container
@@ -34,26 +35,28 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  padding: "5px",
+                  padding:"12px"
                 }}
                 color={Colors.blue_nbu}
               >
-                <CallIcon sx={{ color: Colors.blue_nbu }} />
+                <CallIcon sx={{ color: Colors.blue_nbu,fontSize:"32px" }} />
                 <Divider
                   orientation="vertical"
                   variant="middle"
                   color={Colors.nbu}
+                  sx={{width:"1px"}}
                 />
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     textAlign: "left",
+                    mx:"8px",
                   }}
                 >
-                  <Typography sx={{}} color={Colors.dark}>Контакт маркази</Typography>
-                  <Typography>1669</Typography>
-                  <Typography>+998903299295</Typography>
+                  <Typography sx={{fontWeight:"700",lineHeight:"2",fontSize:{sm:"10px",md:"12px",lg:"14px",xl:"18px"}}} color={Colors.dark}>Контакт маркази</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{sm:"10px",md:"12px",lg:"14px",xl:"18px"}}}>1669</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{sm:"10px",md:"12px",lg:"14px",xl:"18px"}}}>+998903299295</Typography>
                 </Box>
               </Box>
             </motion.div>
@@ -69,15 +72,16 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  padding: "5px",
+                  padding:"12px"
                 }}
                 color={Colors.blue_nbu}
               >
-                <AlternateEmailIcon sx={{ color: Colors.blue_nbu }} />
+                <AlternateEmailIcon sx={{ color: Colors.blue_nbu ,fontSize:"32px"}} />
                 <Divider
                   orientation="vertical"
                   variant="middle"
                   color={Colors.nbu}
+                  sx={{width:"1px",mx:"8px"}}
                 />
                 <Box
                   sx={{
@@ -86,9 +90,9 @@ const Footer = () => {
                     textAlign: "left",
                   }}
                 >
-                  <Typography sx={{}}  color={Colors.dark}>Корпоратив мурожаатлар учун</Typography>
-                  <Typography>U_Rajabov@nbu.uz</Typography>
-                  <Typography>webmaster@nbu.uz</Typography>
+                  <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.8",md:"1.5"},fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"18px"}}}  color={Colors.dark}>Корпоратив мурожаатлар учун</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>U_Rajabov@nbu.uz</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>webmaster@nbu.uz</Typography>
                 </Box>
               </Box>
             </motion.div>
@@ -104,7 +108,7 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  padding: "5px",
+                  padding:"12px"
                 }}
                 color={Colors.blue_nbu}
               >
@@ -113,6 +117,7 @@ const Footer = () => {
                   orientation="vertical"
                   variant="middle"
                   color={Colors.nbu}
+                  sx={{width:"1px",mx:"8px"}}
                 />
                 <Box
                   sx={{
@@ -121,15 +126,10 @@ const Footer = () => {
                     textAlign: "left",
                   }}
                 >
-                  <Typography sx={{}}  color={Colors.dark}>Мурожаатлар регламенти</Typography>
-                  <Typography>
-                    Душанба-жума кунлари 
-                  </Typography>
-                  <Typography>соат 9:00 дан 18:00 гача</Typography>
-                  <Typography>Тушлик: 13:00 дан 14:00 гача</Typography>
-                  {/* <Typography >
-                  Душанба-жума кунлари соат 9:00 дан 18:00 гача Тушлик: 13:00 дан 14:00 гача
-                  </Typography> */}
+                  <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.8", md:"2"},fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"14px",xl:"18px"}}}  color={Colors.dark}>Мурожаатлар регламенти</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>Душанба-жума кунлари</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>соат 9:00 дан 18:00 гача</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>Тушлик: 13:00 дан 14:00 гача</Typography>
                 </Box>
               </Box>
             </motion.div>
@@ -145,15 +145,16 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  padding: "5px",
+                  padding:"12px"
                 }}
                 color={Colors.blue_nbu}
               >
-                <PlaceIcon sx={{ color: Colors.blue_nbu }} />
+                <PlaceIcon sx={{ color: Colors.blue_nbu,fontSize:"32px" }} />
                 <Divider
                   orientation="vertical"
                   variant="middle"
                   color={Colors.nbu}
+                  sx={{width:"1px",mx:"8px"}}
                 />
                 <Box
                   sx={{
@@ -162,10 +163,10 @@ const Footer = () => {
                     textAlign: "left",
                   }}
                 >
-                  <Typography sx={{}}  color={Colors.dark}>Манзил</Typography>
-                  <Typography>100084. Ўзбекистон Республикаси,</Typography>
-                  <Typography>Тошкент ш.,Амир Темур шоҳ кўчаси </Typography>
-                  <Typography>101-уй</Typography>
+                  <Typography sx={{fontWeight:"700",lineHeight:"2",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"18px"}}}  color={Colors.dark}>Манзил</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>100084. Ўзбекистон Республикаси,</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>Тошкент ш.,Амир Темур  </Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>шоҳ кўчаси 101-уй</Typography>
                 </Box>
               </Box>
             </motion.div>
@@ -186,6 +187,7 @@ const Footer = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          py:"10px",
         }}
       >
         <Box
@@ -225,7 +227,7 @@ const Footer = () => {
           variant="h5"
           color={Colors.nbu}
           sx={{
-            fontWeight: "500",
+            fontWeight: "600",
             fontSize: {
               xs: "8px",
               sm: "10px",
