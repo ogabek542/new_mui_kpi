@@ -14,7 +14,7 @@ const Footer = () => {
   return (
     <Stack
       direction="column"
-      sx={{ width: "100%", height: "235px", gap: "10px", padding: "10px" }}
+      sx={{ width: "100%", height: "235px", gap: "10px", }}
     >
         {/* footer top side */}
       <Box sx={{ mx: "10px", p: "10px" }}>
@@ -25,7 +25,7 @@ const Footer = () => {
           justifyContent="space-around"
         >
           {/* first grid item */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3} >
             <motion.div whileHover={{ scale: 0.9 }}>
               <Box
                 sx={{
@@ -35,7 +35,8 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  padding:"12px"
+                  padding:"12px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1) inset , -10px -10px 10px white",
                 }}
                 color={Colors.blue_nbu}
               >
@@ -62,7 +63,7 @@ const Footer = () => {
             </motion.div>
           </Grid>
           {/* second grid item */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3} >
             <motion.div whileHover={{ scale: 0.9 }}>
               <Box
                 sx={{
@@ -72,7 +73,8 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  padding:"12px"
+                  padding:"12px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1) inset ",
                 }}
                 color={Colors.blue_nbu}
               >
@@ -98,7 +100,7 @@ const Footer = () => {
             </motion.div>
           </Grid>
           {/* third grid item */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3} >
             <motion.div whileHover={{ scale: 0.9 }}>
               <Box
                 sx={{
@@ -108,7 +110,8 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  padding:"12px"
+                  padding:"12px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1) inset",
                 }}
                 color={Colors.blue_nbu}
               >
@@ -135,7 +138,7 @@ const Footer = () => {
             </motion.div>
           </Grid>
           {/* fouth grid item */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3} >
             <motion.div whileHover={{ scale: 0.9 }}>
               <Box
                 sx={{
@@ -145,11 +148,12 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  padding:"12px"
+                  padding:"12px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1) inset",
                 }}
                 color={Colors.blue_nbu}
               >
-                <PlaceIcon sx={{ color: Colors.blue_nbu,fontSize:"32px" }} />
+                <PlaceIcon sx={{ color: Colors.blue_nbu,fontSize:"32px", }} />
                 <Divider
                   orientation="vertical"
                   variant="middle"

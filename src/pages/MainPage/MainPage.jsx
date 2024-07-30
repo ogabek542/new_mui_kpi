@@ -1,9 +1,11 @@
 import Footer from "../../components/Footer/Footer";
+import Header from "../../components/Header/Header";
 import { Container, Box } from "@mui/material";
 
 const MainPage = () => {
   return (
-        <Container fixed maxWidth="xl" disableGutters>
+        <Container fixed maxWidth="xl" disableGutters sx={{px:"10px"}}>
+          
           <Box
             sx={{
               display: "flex",
@@ -15,6 +17,7 @@ const MainPage = () => {
             }}
           >
             {/* Header */}
+            <Header/>
             {/* Main */}
             <Footer />
           </Box>

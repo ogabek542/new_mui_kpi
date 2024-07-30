@@ -1,8 +1,8 @@
-import { createTheme } from "@mui/system";
+import { createTheme } from "@mui/material";
 
 export const Colors = {
     // black //
-    dark:"#000",
+    dark:"#000000",
     dark_light:"#FFFFFF00", // transparent white //
     // white //
     white:"#FFFFFF",
@@ -36,7 +36,7 @@ export const Colors = {
     transparent:"rgba(0,0,0,0.0)",
 };
 
-const theme = createTheme({
+const themes = createTheme({
     palette: {
         primary: {
             main: Colors.blue_middle,
@@ -61,4 +61,4 @@ const theme = createTheme({
       // other theme settings
 });
 
-export default theme;
+export default themes;
