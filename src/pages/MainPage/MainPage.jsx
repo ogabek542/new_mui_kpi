@@ -13,11 +13,10 @@ const MainPage = () => {
               justifyContent: "center",
               alignItems: "center",
               textAlign: "center",
-              minHeight: "100%", // Make sure the Box takes the full viewport height
+              height: "100%", // Make sure the Box takes the full viewport height
             }}
           >
-            {/* Header */}
-            <Header/>
+            <Header   />
             {/* Main */}
             <Footer />
           </Box>

@@ -221,8 +221,7 @@ const Footer = () => {
             variant="h1"
             color={Colors.nbu}
             sx={{
-              fontSize: { xs: "16px", md: "22px", lg: "28px", xl: "32px" },
-            }}
+              fontSize: { xs: "16px", md: "22px", lg: "28px", xl: "32px" },fontWeight:"800"}}
           >
             NBU
           </Typography>

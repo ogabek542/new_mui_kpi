@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { Box, Stack, Typography,} from "@mui/material";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import * as React from "react";
+import { Box, Stack, Typography, Button ,TextField} from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+// icons //
 // import LOGO image //
 import backgroundImage from "../../assets/photo/homePageTopImage.png";
 import { Colors } from "../../styles/theme";
@@ -11,21 +11,27 @@ import { Colors } from "../../styles/theme";
 import NBUlogo from "../../assets/svg/newForSVG.svg";
 // import framer motion //
 import { motion } from "framer-motion";
+// calendar elements section //
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const Header = () => {
+  const [age, setAge] = React.useState("UZ");
 
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
+  const handleChangeLanguage = (event) => {
+    setAge(event.target.value);
+  };
   return (
-    <Stack
-      direction="row"
+    <Box
       sx={{
+        px: "10px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
         width: "100%",
         height: "137px",
-        padding: "10px",
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -34,7 +40,7 @@ const Header = () => {
       }}
     >
       {/* left side box */}
-      <Box
+      <Box 
         sx={{
           display: "flex",
           alignItems: "center",
@@ -43,6 +49,8 @@ const Header = () => {
           borderRadius: "5px",
           padding: "10px",
           gap: "10px",
+          marginRight: "10px",
+          width:"300px"
         }}
       >
         <motion.div
@@ -59,13 +67,13 @@ const Header = () => {
             },
           }}
         >
-            <a href="/">
-                <Box
-                    component="img"
-                    src={NBUlogo}
-                    sx={{ width: "55px", cursor: "pointer" }}
-                />
-            </a>
+          <a href="/">
+            <Box
+              component="img"
+              src={NBUlogo}
+              sx={{ width: "55px", cursor: "pointer" }}
+            />
+          </a>
         </motion.div>
         <Typography
           sx={{
@@ -82,29 +90,113 @@ const Header = () => {
         </Typography>
       </Box>
       {/* right side box */}
-      <Box sx={{width:"100px"}}>
-        {/* <=== language selection sextion ===>*/}
-        <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+      <Box 
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          textAlign:"end",
+          width:"200px",
+          height:"auto",
+        }}
+      >
+        {/* <=== language selection section ===>*/}
+        <Box >
+          <FormControl
+            size="small"
+            sx={{
+              m: 1,
+              minWidth: 15,
+              backgroundColor: "white", // Custom background color
+              borderRadius: "4px", // Custom border radius
+              boxShadow: "0 3px 5px 2px rgba(255, 255, 255, .3)", // Custom shadow
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "white", // Default border color
+                },
+                "&:hover fieldset": {
+                  borderColor: "white", // Border color on hover
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "white", // Border color on focus
+                },
+              },
+              height: "auto",
+              fontSize: "12px",
+            }}
+          >
+            <Select
+              size="small"
+              value={age}
+              onChange={handleChangeLanguage}
+              displayEmpty
+              sx={{
+                color: "black",
+                fontSize: "14px",
+                fontWeight: "700",
+              }}
+            >
+              <MenuItem
+                value="UZ"
+                sx={{
+                  color: "black",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                }}
+              >
+                UZ
+              </MenuItem>
+              <MenuItem
+                value="EN"
+                sx={{
+                  color: "black",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                }}
+              >
+                EN
+              </MenuItem>
+              <MenuItem
+                value="RU"
+                sx={{
+                  color: "black",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                }}
+              >
+                RU
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
         {/* <=== calendar select data ===> */}
-          
-      </Box>
-    </Stack>
+  <Box sx={{ width: "200px", marginRight: "100px",bgcolor:"white",borderRadius:"5px",my:"10px"}}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}  >
+          <DatePicker
+              renderInput={(props) => (
+              <Box sx={{ width: "200px" }}>
+                <TextField {...props} fullWidth />
+              </Box>
+            )}
+            sx={{
+              ".MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "white",
+                },
+                "&:hover fieldset": {
+                  borderColor: "white",
+
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "white",
+                },
+              },
+            }}
+          />
+      </LocalizationProvider>
+        </Box>
+      </Box >
+    </Box>
   );
 };
 
