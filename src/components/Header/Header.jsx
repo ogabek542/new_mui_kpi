@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Stack, Typography, Button ,TextField} from "@mui/material";
+import { Box, Typography,TextField} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -51,7 +51,7 @@ const Header = () => {
           padding: "10px",
           gap: "10px",
           marginRight: "10px",
-          width:"300px",
+          width:{xs:"150px",sm:"200px", md:"300px"},
           boxShadow: `-10px -10px 15px rgba(255, 255, 255, 0.5),
                     10px 10px 15px rgba(70, 70, 70, 0.12)`
         }}
@@ -74,14 +74,14 @@ const Header = () => {
             <Box
               component="img"
               src={NBUlogo}
-              sx={{ width: "55px", cursor: "pointer" }}
+              sx={{ width: {xs:"35px",md:"55px"}, cursor: "pointer" }}
             />
           </a>
         </motion.div>
         <Typography
           sx={{
-            width: "220px",
-            fontSize: "16px",
+            width: {xs:"120px",sm:"180px",md:"220px"},
+            fontSize: {xs:"8px",sm:"10px",md:"16px"},
             textAlign: "left",
             fontWeight: "900",
             lineHeight: "1.3",
@@ -98,7 +98,7 @@ const Header = () => {
           display: "flex",
           flexDirection: "column",
           textAlign:"end",
-          width:"200px",
+          width:{xs:"120px",sm:"200px"},
           height:"auto",
           gap:"20px"
         }}
@@ -124,8 +124,8 @@ const Header = () => {
                   borderColor: "white", // Border color on focus
                 },
               },
-              height: "auto",
-              fontSize: "12px",
+              height: {sm:"auto"},
+              fontSize: {xs:"8px",sm:"12px"},
             }}
           >
             <Select
@@ -135,7 +135,7 @@ const Header = () => {
               displayEmpty
               sx={{
                 color: "black",
-                fontSize: "14px",
+                fontSize: {xs:"10px",sm:"14px"},
                 fontWeight: "700",
               }}
             >
@@ -143,7 +143,7 @@ const Header = () => {
                 value="UZ"
                 sx={{
                   color: "black",
-                  fontSize: "14px",
+                  fontSize: {xs:"10px",sm:"14px"},
                   fontWeight: "700",
                 }}
               >
@@ -153,7 +153,7 @@ const Header = () => {
                 value="EN"
                 sx={{
                   color: "black",
-                  fontSize: "14px",
+                  fontSize: {xs:"10px",sm:"14px"},
                   fontWeight: "700",
                 }}
               >
@@ -163,7 +163,7 @@ const Header = () => {
                 value="RU"
                 sx={{
                   color: "black",
-                  fontSize: "14px",
+                  fontSize: {xs:"10px",sm:"14px"},
                   fontWeight: "700",
                 }}
               >
@@ -174,14 +174,14 @@ const Header = () => {
         </Box>
 
         {/* <=== calendar select data ===> */}
-      <Box sx={{ width: "200px", marginRight: "100px",bgcolor:"white",borderRadius:"5px",boxShadow:"rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px"}}>
+        <Box sx={{ width: {xs:"120px",sm:"200px",md:"200px"}, marginRight: "100px",bgcolor:"white",borderRadius:"5px",boxShadow:"rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px"}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}  >
           <DatePicker
               value={selectedDate}
               onChange={(newValue) => setSelectedDate(newValue)}
               slotProps={{ textField: { size: 'small' } }}
               renderInput={(props) => (
-              <Box sx={{ width: "200px" }}>
+              <Box sx={{ width: {xs:"100px",sm:"100px",md:"200px"} }}>
                 <TextField {...props} fullWidth />
               </Box>
             )}
@@ -202,6 +202,7 @@ const Header = () => {
                 },
                 ".MuiInputBase-input": {
                   fontWeight: 700, // Adjust the font weight of the DatePicker's text
+                  fontSize:{xs:"12px",sm:"16px"}
                 },
               },
             }}
