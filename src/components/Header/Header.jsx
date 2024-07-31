@@ -97,6 +97,7 @@ const Header = () => {
           textAlign:"end",
           width:"200px",
           height:"auto",
+          gap:"20px"
         }}
       >
         {/* <=== language selection section ===>*/}
@@ -170,9 +171,10 @@ const Header = () => {
         </Box>
 
         {/* <=== calendar select data ===> */}
-  <Box sx={{ width: "200px", marginRight: "100px",bgcolor:"white",borderRadius:"5px",my:"10px"}}>
+      <Box sx={{ width: "200px", marginRight: "100px",bgcolor:"white",borderRadius:"5px",}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}  >
           <DatePicker
+              slotProps={{ textField: { size: 'small' } }}
               renderInput={(props) => (
               <Box sx={{ width: "200px" }}>
                 <TextField {...props} fullWidth />
