@@ -16,6 +16,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru'; // Import Russian locale
 
 const Header = () => {
   const [age, setAge] = React.useState("UZ");
@@ -175,7 +176,7 @@ const Header = () => {
 
         {/* <=== calendar select data ===> */}
         <Box sx={{ width: {xs:"120px",sm:"200px",md:"200px"}, marginRight: "100px",bgcolor:"white",borderRadius:"5px",boxShadow:"rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px"}}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}  >
+      <LocalizationProvider dateAdapter={AdapterDayjs}  adapterLocale="ru" >
           <DatePicker
               value={selectedDate}
               onChange={(newValue) => setSelectedDate(newValue)}

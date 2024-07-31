@@ -1,6 +1,6 @@
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Container, Box } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 
 const MainPage = () => {
   return (
@@ -18,6 +18,9 @@ const MainPage = () => {
           >
             <Header   />
             {/* Main */}
+            <Box>
+              <Typography>MAin Section</Typography>
+            </Box>
             <Footer />
           </Box>
         </Container>
