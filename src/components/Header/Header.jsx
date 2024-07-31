@@ -5,7 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 // icons //
 // import LOGO image //
-import backgroundImage from "../../assets/photo/homePageTopImage.png";
+import backgroundImage from "../../assets/photo/newHomePageTopImage.jpg";
 import { Colors } from "../../styles/theme";
 // SVG //
 import NBUlogo from "../../assets/svg/newForSVG.svg";
@@ -14,11 +14,12 @@ import { motion } from "framer-motion";
 // calendar elements section //
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from 'dayjs';
 
 const Header = () => {
   const [age, setAge] = React.useState("UZ");
+  const [selectedDate, setSelectedDate] = React.useState(dayjs());
 
   const handleChangeLanguage = (event) => {
     setAge(event.target.value);
@@ -50,7 +51,9 @@ const Header = () => {
           padding: "10px",
           gap: "10px",
           marginRight: "10px",
-          width:"300px"
+          width:"300px",
+          boxShadow: `-10px -10px 15px rgba(255, 255, 255, 0.5),
+                    10px 10px 15px rgba(70, 70, 70, 0.12)`
         }}
       >
         <motion.div
@@ -109,7 +112,7 @@ const Header = () => {
               minWidth: 15,
               backgroundColor: "white", // Custom background color
               borderRadius: "4px", // Custom border radius
-              boxShadow: "0 3px 5px 2px rgba(255, 255, 255, .3)", // Custom shadow
+              boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", 
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: "white", // Default border color
@@ -171,9 +174,11 @@ const Header = () => {
         </Box>
 
         {/* <=== calendar select data ===> */}
-      <Box sx={{ width: "200px", marginRight: "100px",bgcolor:"white",borderRadius:"5px",}}>
+      <Box sx={{ width: "200px", marginRight: "100px",bgcolor:"white",borderRadius:"5px",boxShadow:"rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px"}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}  >
           <DatePicker
+              value={selectedDate}
+              onChange={(newValue) => setSelectedDate(newValue)}
               slotProps={{ textField: { size: 'small' } }}
               renderInput={(props) => (
               <Box sx={{ width: "200px" }}>
@@ -192,6 +197,12 @@ const Header = () => {
                 "&.Mui-focused fieldset": {
                   borderColor: "white",
                 },
+                '.MuiInputAdornment-root .MuiIconButton-root': {
+                  color: Colors.blue_nbu, // Custom color for the DatePicker icon
+                },
+                ".MuiInputBase-input": {
+                  fontWeight: 700, // Adjust the font weight of the DatePicker's text
+                },
               },
             }}
           />
@@ -204,3 +215,4 @@ const Header = () => {
 
 export default Header;
 // backdrop-filter:blur(10px);
+// box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
