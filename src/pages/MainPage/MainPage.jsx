@@ -1,7 +1,7 @@
 import * as React from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Container, Box, Typography, Button, Stack } from "@mui/material";
+import { Container, Box, Typography, Button } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
 // input elements //
@@ -14,28 +14,47 @@ import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // backdrop //
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+// modal //
+import Modal from "@mui/material/Modal";
+// icon //
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+// MODAL FOTO //
+import ModalImage from "../../assets/photo/NewQualityNbuModalFoto.jpg";
+// IMAGE MAGNIFIER //
+import ReactImageMagnify from "react-image-magnify";
+// modal styles //
 
 const MainPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [backdrop,setBackdrop] = React.useState(false)
-
+  const [backdrop, setBackdrop] = React.useState(false);
+  const [openmodal, setOpenModal] = React.useState(false);
+  // PASSWORD SHOW HIDE FUNCTION //
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const handleOpenBackdrop = () => setBackdrop(true)
-  const handleCloseBackdrop = () => setBackdrop(false)
+  // BACKDROP FUNCTION //
+  const handleOpenBackdrop = () => setBackdrop(true);
+  const handleCloseBackdrop = () => setBackdrop(false);
+
+  // modal function //
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
   return (
     <Container fixed maxWidth="xl" disableGutters sx={{ px: "10px" }}>
       <Box
         sx={{
-        
-          display:"flex",
-          flexDirection:"column",
-          justifyContent:"space-between",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
           alignItems: "center",
           textAlign: "center",
           height: "100%", // Make sure the Box takes the full viewport height
@@ -43,8 +62,7 @@ const MainPage = () => {
       >
         <Header />
         {/* <=== MAIN SECTION ===> */}
-        <Box sx={{flexDirection:"column",width:"100%"}}>
-
+        <Box sx={{ flexDirection: "column", width: "100%" }}>
           <Box
             sx={{
               bgcolor: Colors.blue_login,
@@ -56,32 +74,35 @@ const MainPage = () => {
               justifyContent: "space-between",
               px: "10px",
               my: "5px",
-              py:{xs:"5px",sm:"5px",md:"0px"},
+              py: { xs: "5px", sm: "5px", md: "0px" },
               lineHeight: "1",
               flexDirection: {
-                xs: 'column', // flexDirection for extra-small screens
-                sm: 'column', // flexDirection for extra-small screens
-                md: 'row'     // flexDirection for medium screens and larger
+                xs: "column",
+                sm: "column",
+                md: "row",
               },
             }}
           >
             <Typography
-              sx={{ fontWeight: "800", fontSize: "16px", color: Colors.nbu ,display:{xs:"none",md:"block"}}}
+              sx={{
+                fontWeight: "800",
+                fontSize: "16px",
+                color: Colors.nbu,
+                display: { xs: "none", md: "block" },
+              }}
             >
               KPI БУРЧАГИ
             </Typography>
             <Box
               sx={{
-                display: {xs:"",md:"flex"},
+                display: { xs: "", md: "flex" },
                 flexDirection: {
-                  xs: 'column', // flexDirection for extra-small screens
-                  sm: 'column', // flexDirection for extra-small screens
-                  md: 'row'     // flexDirection for medium screens and larger
+                  xs: "column",
+                  sm: "column",
+                  md: "row",
                 },
                 alignItems: "center",
                 justifyContent: "space-around",
-                    
-
               }}
             >
               {/* <=== Login Section ===> */}
@@ -101,7 +122,7 @@ const MainPage = () => {
                 sx={{
                   bgcolor: "white",
                   borderRadius: "5px",
-                  marginTop:{xs:"8px",sm:"8px",md:"0px"},
+                  marginTop: { xs: "8px", sm: "8px", md: "0px" },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       borderColor: Colors.blue_nbu, // Custom border color
@@ -163,7 +184,11 @@ const MainPage = () => {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showPassword ? <VisibilityOff sx={{color:Colors.blue_nbu}}/> : <Visibility sx={{color:Colors.blue_nbu}}/>}
+                        {showPassword ? (
+                          <VisibilityOff sx={{ color: Colors.blue_nbu }} />
+                        ) : (
+                          <Visibility sx={{ color: Colors.blue_nbu }} />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -192,7 +217,10 @@ const MainPage = () => {
               </motion.div>
               {/* <=== Backdrop ===> */}
               <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                sx={{
+                  color: "#fff",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
                 open={backdrop}
                 onClick={handleCloseBackdrop}
               >
@@ -222,6 +250,7 @@ const MainPage = () => {
                   lineHeight: "1",
                   color: Colors.red,
                 }}
+                onClick={handleOpenModal}
               >
                 ПАРОЛНИ УНУТДИНГИЗМИ?
               </Typography>
@@ -229,6 +258,110 @@ const MainPage = () => {
           </Box>
         </Box>
         <Footer />
+        <Modal
+          open={openmodal}
+          onClose={handleCloseModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <motion.div
+            className="modal__backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, transition: { delay: 0.3 } }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: { xs: "270px", sm: "450px", md: "500px" ,lg:"600px"},
+                height: { xs: "240px",sm:"400px", md: "400px", lg: "540px" },
+                bgcolor: Colors.gray_back,
+                border: "1px solid gray",
+                borderRadius: "10px",
+                boxShadow: 24,
+                pt: 2,
+                px: 4,
+                pb: 3,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  sx={{
+                    textTransform: "uppercase",
+                    fontWeight: "800",
+                    color: Colors.nbu,
+                    fontSize: { xs: "14px", md: "24px" },
+                  }}
+                >
+                  Tanishib chiqing !!!
+                </Typography>
+                <motion.div
+                  onClick={handleCloseModal}
+                  whileHover={{ scale: 1.3 }}
+                >
+                  <CancelRoundedIcon
+                    sx={{
+                      fontSize: { xs: "32px", md: "40px" },
+                      color: Colors.red,
+                      cursor: "pointer",
+                    }}
+                  />
+                </motion.div>
+              </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  // padding: "5px",
+                  textAlign: "center",
+                  margin: "auto",
+                  justifyContent: "center",
+                  objectFit: "fill",
+                  paddingBlock: "5px",
+                  borderRadius:"10px",
+                }}
+              >
+                <ReactImageMagnify
+                  {...{
+                    smallImage: {
+                      alt: "Wristwatch by Ted Baker London",
+                      isFluidWidth: true,
+                      src: ModalImage,
+                      className: "smallImage",
+                    },
+                    largeImage: {
+                      src: ModalImage,
+                      width: 1000,
+                      height: 800,
+                      className: "largeImage",
+                    },
+                    lensStyle: {
+                      backgroundColor: "rgba(255, 255, 255, 0.3)", // Semi-transparent background
+                      border: "2px solid #000", // Border styling
+                      borderRadius: "50%", // Make the lens circular
+                      width: "180px", // Width of the lens
+                      height: "180px", // Height of the lens
+                    },
+                    enlargedImageContainerDimensions: {
+                      width: "200%",
+                      height: "200%",
+                    },
+                    enlargedImagePosition: "over", // Display the magnified image over the original image
+                  }}
+                />
+              </Box>
+            </Box>
+          </motion.div>
+        </Modal>
       </Box>
     </Container>
   );

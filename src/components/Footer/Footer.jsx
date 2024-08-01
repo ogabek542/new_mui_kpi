@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography, Stack, Divider, Grid } from "@mui/material";
 import StatisticImage from "../../assets/photo/NewRestatic.jpg";
 import NBUSVG from "../../assets/svg/newForSVG.svg";
