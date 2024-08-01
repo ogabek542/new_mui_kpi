@@ -15,6 +15,7 @@ export const Colors = {
     blue_light_table:"#94C7FB",
     blue_light_ultra:"#D6DEEA",
     blue_box:"#E2EBF8",
+    blue_login:"#B5D3FF",
     // green //
     green_light:"#00FF00", 
     green_area:"#00C400", 
