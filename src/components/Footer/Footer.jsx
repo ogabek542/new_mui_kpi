@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <Stack
       direction="column"
-      sx={{ width: "100%", height: "235px", gap: "10px", }}
+      sx={{ width: "100%", height: "235px", gap: "10px",bgcolor:Colors.white_back }}
     >
         {/* footer top side */}
       <Box sx={{ mx: "10px", p: "10px" }}>

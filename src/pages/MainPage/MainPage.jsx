@@ -1,9 +1,10 @@
 import * as React from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Container, Box, Typography, Button } from "@mui/material";
+import { Container, Box, Typography, Button, Paper, Grid } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
+import { styled } from "@mui/system";
 // input elements //
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -25,6 +26,9 @@ import ModalImage from "../../assets/photo/NewQualityNbuModalFoto.jpg";
 // IMAGE MAGNIFIER //
 import ReactImageMagnify from "react-image-magnify";
 // modal styles //
+
+// IMPORT CARDS //
+import PointBar from "../../components/PointBar/PointBar";
 
 const MainPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -49,7 +53,7 @@ const MainPage = () => {
   };
 
   return (
-    <Container fixed maxWidth="xl" disableGutters sx={{ px: "10px" }}>
+    <Container fixed maxWidth="xl" disableGutters sx={{ px: "10px",bgcolor:Colors.gray_back }}>
       <Box
         sx={{
           display: "flex",
@@ -62,7 +66,15 @@ const MainPage = () => {
       >
         <Header />
         {/* <=== MAIN SECTION ===> */}
-        <Box sx={{ flexDirection: "column", width: "100%" }}>
+        <Box
+          sx={{
+            flexDirection: "column",
+            width: "100%",
+            gap: "10px",
+            height: "auto",
+            my: "5px",
+          }}
+        >
           <Box
             sx={{
               bgcolor: Colors.blue_login,
@@ -74,6 +86,7 @@ const MainPage = () => {
               justifyContent: "space-between",
               px: "10px",
               my: "5px",
+              marginBottom: "10px",
               py: { xs: "5px", sm: "5px", md: "0px" },
               lineHeight: "1",
               flexDirection: {
@@ -185,9 +198,9 @@ const MainPage = () => {
                         edge="end"
                       >
                         {showPassword ? (
-                          <VisibilityOff sx={{ color: Colors.blue_nbu }} />
-                        ) : (
                           <Visibility sx={{ color: Colors.blue_nbu }} />
+                        ) : (
+                          <VisibilityOff sx={{ color: Colors.blue_nbu }} />
                         )}
                       </IconButton>
                     </InputAdornment>
@@ -201,6 +214,7 @@ const MainPage = () => {
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <Button
+                size="medium"
                   variant="contained"
                   onClick={handleOpenBackdrop}
                   sx={{
@@ -256,8 +270,269 @@ const MainPage = () => {
               </Typography>
             </Button>
           </Box>
+          {/* <==== BARCHART CARDS SECTION ====> */}
+          <Grid
+            container
+            sx={{ margin: "auto" ,}}
+            direction="row"
+            width={"100%"}
+                
+          >
+            {/* first div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px",
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"8px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:"16px"}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",flexDirection:"column",gap:"15px",}}>
+                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around"}}>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"15px"}}>
+                        <Typography sx={{color:Colors.gray_text,fontSize:"32px",fontWeight:"400",textTransform:"uppercase"}}>ROA</Typography>
+                        <Typography sx={{color:Colors.blue_middle,fontSize:"36px",fontWeight:"900"}}>21%</Typography>
+                      </Box>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"15px"}}>
+                        <Typography sx={{color:Colors.gray_text,fontSize:"32px",fontWeight:"400",textTransform:"uppercase"}}>NPL</Typography>
+                        <Typography sx={{color:Colors.blue_middle,fontSize:"36px",fontWeight:"900"}}>21%</Typography>
+                      </Box>
+                  </Box>
+                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around"}}>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"15px"}}>
+                        <Typography sx={{color:Colors.gray_text,fontSize:"32px",fontWeight:"400",textTransform:"uppercase"}}>ROE</Typography>
+                        <Typography sx={{color:Colors.blue_middle,fontSize:"36px",fontWeight:"900"}}>21%</Typography>
+                      </Box>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"15px"}}>
+                        <Typography sx={{color:Colors.gray_text,fontSize:"32px",fontWeight:"400",textTransform:"uppercase"}}>NPS</Typography>
+                        <Typography sx={{color:Colors.blue_middle,fontSize:"36px",fontWeight:"900"}}>21%</Typography>
+                      </Box>
+                  </Box>
+                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around"}}>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"15px"}}>
+                        <Typography sx={{color:Colors.gray_text,fontSize:"32px",fontWeight:"400",textTransform:"uppercase"}}>CIR</Typography>
+                        <Typography sx={{color:Colors.blue_middle,fontSize:"36px",fontWeight:"900"}}>21%</Typography>
+                      </Box>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"15px"}}>
+                        <Typography sx={{color:Colors.gray_text,fontSize:"32px",fontWeight:"400",textTransform:"uppercase"}}>MAU</Typography>
+                        <Typography sx={{color:Colors.blue_middle,fontSize:"36px",fontWeight:"900"}}>21%</Typography>
+                      </Box>
+                  </Box>
+                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around"}}>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"15px"}}>
+                        <Typography sx={{color:Colors.gray_text,fontSize:"32px",fontWeight:"400"}}>ROA</Typography>
+                        <Typography sx={{color:Colors.dark,fontSize:"32px",fontWeight:"900"}}>21%</Typography>
+                      </Box>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"15px"}}>
+                        <Typography sx={{color:Colors.gray_text,fontSize:"32px",fontWeight:"400"}}>ROA</Typography>
+                        <Typography sx={{color:Colors.dark,fontSize:"32px",fontWeight:"900"}}>21%</Typography>
+                      </Box>
+                  </Box>
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained">
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}}>ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
+              </Box>
+            </Grid>
+            {/* second div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* third div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* fourth div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* fifth div*/}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* sixth div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* seventh div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* eight div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* nineth div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* tenth div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* eleventh div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+            {/* twelveth div */}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={4}
+              sx={{
+                height: "500px",
+                width:"auto",
+                padding:"5px"
+              }}
+            >
+              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
+
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
         <Footer />
+        {/* <=== PASSWORD MODAL ====> */}
         <Modal
           open={openmodal}
           onClose={handleCloseModal}
@@ -276,8 +551,8 @@ const MainPage = () => {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                width: { xs: "270px", sm: "450px", md: "500px" ,lg:"600px"},
-                height: { xs: "240px",sm:"400px", md: "400px", lg: "540px" },
+                width: { xs: "270px", sm: "450px", md: "500px", lg: "600px" },
+                height: { xs: "240px", sm: "400px", md: "400px", lg: "540px" },
                 bgcolor: Colors.gray_back,
                 border: "1px solid gray",
                 borderRadius: "10px",
@@ -327,7 +602,7 @@ const MainPage = () => {
                   justifyContent: "center",
                   objectFit: "fill",
                   paddingBlock: "5px",
-                  borderRadius:"10px",
+                  borderRadius: "10px",
                 }}
               >
                 <ReactImageMagnify
