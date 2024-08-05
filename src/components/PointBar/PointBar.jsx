@@ -115,12 +115,10 @@ const PointBar = ({
         </Box>
 
         <Grid container spacing={2} sx={{ marginTop: 2 }}>
-          {data.map((item, id) => (
-            <LegendGridItem key={id} item xs={6}>
-              <Typography variant="body2">{item.plan}</Typography>
-              <Typography variant="body2">{item.fact}</Typography>
+            <LegendGridItem  item xs={6}>
+              <Typography variant="body2">plan</Typography>
+              <Typography variant="body2">fact</Typography>
             </LegendGridItem>
-          ))}
         </Grid>
 
         <Box sx={{ textAlign: "center", marginTop: 2 }}>
