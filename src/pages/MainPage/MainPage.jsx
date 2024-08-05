@@ -68,19 +68,19 @@ const MainPage = () => {
       {
         // name: "PageA",
         plan: 4000,
-        fakt: 2400,
+        fact: 2400,
         amt: 2400,
       },
       {
         // name: "PageB",
         plan: 6000,
-        fakt: 1398,
+        fact: 1398,
         amt: 2210,
       },
       {
         // name: "PageC",
         plan: 2000,
-        fakt: 1000,
+        fact: 1000,
         amt: 2290,
       },
     ];
@@ -452,7 +452,7 @@ const MainPage = () => {
               md={6}
               lg={4}
               sx={{
-                height: {xs:"400px",md:"500px"},
+                height: "500px",
                 width:"auto",
                 padding:"5px",
               }}
@@ -489,8 +489,39 @@ const MainPage = () => {
                       </Box>
                     </Box>
                   </Box>
-                  <Box sx={{height:"350px",width:"100%",bgcolor:"aquamarine"}}>
-
+                  <Box sx={{height:"350px",width:"100%",}}>
+                  <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        width={500}
+                        height={400}
+                        data={barchartdata}
+                        margin={{
+                          top: 25,
+                        }}
+                        padding={{
+                          top: 45,
+                        }}
+                      >
+                        <Tooltip />
+                        <Bar
+                          dataKey="plan"
+                          fill={Colors.gray_text}
+                          minPointSize={5}
+                          shape={renderBlueShape}
+                        >
+                          <LabelList
+                            dataKey="percentage"
+                            content={renderCustomizedLabel}
+                          />
+                        </Bar>
+                        <Bar
+                          dataKey="fact"
+                          fill={Colors.blue_middle}
+                          minPointSize={10}
+                          shape={renderShape}
+                        />
+                      </BarChart>
+                  </ResponsiveContainer>
                   </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
