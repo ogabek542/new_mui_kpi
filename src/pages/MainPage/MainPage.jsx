@@ -19,6 +19,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 // backdrop //
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { styled } from '@mui/system';
 // modal //
 import Modal from "@mui/material/Modal";
 // icon //
@@ -84,9 +85,14 @@ const MainPage = () => {
         amt: 2290,
       },
     ];
-  
+    
+      // <=== BArchart styles ====> //
+      // Styled components
+
+
     const renderShape = ({ x, y, width, height }) => (
       <>
+       
         <rect
           className="shape_render"
           x={x}
@@ -96,6 +102,7 @@ const MainPage = () => {
           fill={Colors.blue_middle}
           rx={5}
           transform={`translate(-25, 0)`}
+          
         />
       </>
     );
@@ -107,13 +114,12 @@ const MainPage = () => {
           y={y}
           width={`10%`}
           height={height}
-          fill={Colors.gray_text}
-          rx={5}
+          fill={Colors.gray_back}
+          ry={5}
           transform={`translate(15, 0)`}
         />
       </>
     );
-    //<----- Check Icon Content ----->   //
     const renderCustomizedLabel = (props) => {
       const { x, y, width, value } = props;
       const rectWidth = 65;
@@ -122,15 +128,13 @@ const MainPage = () => {
       const rectY = y - rectHeight - 5; // Adjust y position as needed
       const loginValue = value >= 100 ? true : false;
       return (
-        <g className="custom-label">
+        <g className="custom-label" >
           <rect
             x={rectX}
             y={rectY}
             width={rectWidth}
             height={rectHeight}
             fill={Colors.transparent}
-            rx={5} // Rounded corners
-            ry={5} // Rounded corners
           />
           <foreignObject
             x={rectX}
@@ -468,7 +472,7 @@ const MainPage = () => {
                     </Box>
                     <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",textAlign:"center",width:"50px"}}>
                       <Typography sx={{lineHeight:"1.2",fontSize:{xs:"8px",md:"10px"},fontWeight:"600"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
-                      <Typography component="span" sx={{lineHeight:"1.2",color:Colors.gray_text,fontSize:{xs:"8px",md:"10px"},fontWeight:"500",fontStyle:"italic"}}>млрд.сўм.экв</Typography>
+                      <Typography component="span" sx={{lineHeight:"1.2",color:Colors.gray_text,fontSize:{xs:"8px",md:"10px"},fontWeight:"500",fontStyle:"italic"}}>минг.долл</Typography>
                     </Box>
                     <Box sx={{display:"flex",flexDirection:"column",alignItems:"center"}}>
                       <Typography sx={{lineHeight:"1.2",fontSize:{xs:"8px",md:"10px"},fontWeight:"600"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
@@ -489,7 +493,7 @@ const MainPage = () => {
                       </Box>
                     </Box>
                   </Box>
-                  <Box sx={{height:"350px",width:"100%",}}>
+                  <Box sx={{height:"350px",width:"100%",position:"relative"}}>
                   <ResponsiveContainer width="100%" height="100%">
                       <BarChart
                         width={500}
@@ -522,6 +526,27 @@ const MainPage = () => {
                         />
                       </BarChart>
                   </ResponsiveContainer>
+                  <Box  sx={{ marginTop:"-35px",position:"absolute",display:"flex",alignItems:"center",justifyContent:"space-around",width:"100%" }}>
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                      <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
+                      <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
+                    </Box>
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                      <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
+                      <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
+                    </Box>
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                      <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
+                      <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
+                    </Box>
+                  </Box>
+                    <Box sx={{position:"absolute",bottom:"30%",left:"25%"}}>
+                      <Box
+                          component="img"
+                          src={LeftSideSVG}
+                          sx={{ width: {xs:"35px",md:"45px"}, cursor: "pointer" }}
+                        />
+                    </Box>
                   </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
