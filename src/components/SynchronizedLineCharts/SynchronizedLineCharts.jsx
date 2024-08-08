@@ -1,5 +1,5 @@
-import  React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React from 'react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Box, Card, CardContent } from '@mui/material';
 
 const data = [
@@ -12,30 +12,30 @@ const data = [
   { name: 'Page G', uv: 3490, pv: 4300, amt: 2100 },
 ];
 
-const SynchronizedLineCharts = () => {
+const SynchronizedAreaCharts = () => {
   return (
     <Card sx={{ height: '100%', width: '100%', bgcolor: 'transparent', border: 'none' }} elevation={0}>
       <CardContent sx={{ height: '100%', bgcolor: 'transparent', border: 'none' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <ResponsiveContainer width="100%" height="50%">
-            <LineChart data={data}>
+            <AreaChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-            </LineChart>
+              <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+            </AreaChart>
           </ResponsiveContainer>
           <ResponsiveContainer width="100%" height="50%">
-            <LineChart data={data}>
+            <AreaChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="pv" stroke="#82ca9d" />
-            </LineChart>
+              <Area type="monotone" dataKey="pv" stroke="#82ca9d" fill="#82ca9d" />
+            </AreaChart>
           </ResponsiveContainer>
         </Box>
       </CardContent>
@@ -43,4 +43,4 @@ const SynchronizedLineCharts = () => {
   );
 };
 
-export default SynchronizedLineCharts;
+export default SynchronizedAreaCharts;

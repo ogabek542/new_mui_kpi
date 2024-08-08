@@ -4,36 +4,30 @@ import {
   Chart as ChartJS,
   LineElement,
   PointElement,
+  LinearScale,
   Tooltip,
   Legend,
-  Title,
-  CategoryScale,
-  LinearScale
+  Filler, // Import Filler for area chart
 } from 'chart.js';
-import { Box, Card } from '@mui/material';
+import { Box, Card, CardContent } from '@mui/material';
 
-// Register necessary components for Chart.js
-ChartJS.register(
-  LineElement,
-  PointElement,
-  Tooltip,
-  Legend,
-  Title,
-  CategoryScale,
-  LinearScale
-);
+// Register the necessary components for Chart.js
+ChartJS.register(LineElement, PointElement, LinearScale, Tooltip, Legend, Filler);
 
+// Sparkline Component
 const Sparkline = ({ data, options }) => {
   return (
     <Card sx={{ width: '100%', height: 'auto', bgcolor: 'transparent', border: 'none' }} elevation={0}>
-      <Box sx={{ width: '100%', height: 'auto', bgcolor: 'transparent', border: 'none' }}>
-        <Line data={data} options={options} />
-      </Box>
+      <CardContent sx={{ height: '100%', bgcolor: 'transparent', border: 'none' }}>
+        <Box sx={{ width: '100%', height: '100%', bgcolor: 'transparent', border: 'none' }}>
+          <Line data={data} options={options} />
+        </Box>
+      </CardContent>
     </Card>
   );
 };
 
-// Usage Example
+// SparklineApp Component
 const SparklineApp = () => {
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -52,7 +46,7 @@ const SparklineApp = () => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: false, // This ensures the chart will fill the container's height
     elements: {
       line: {
         tension: 0.2, // Line smoothing
@@ -77,9 +71,9 @@ const SparklineApp = () => {
   };
 
   return (
-    <div style={{ width: '300px', height: '100px' }}>
+    <Box style={{ width: '100%', height: '100%' }}>
       <Sparkline data={data} options={options} />
-    </div>
+    </Box>
   );
 };
 
