@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React   from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import { Container, Box, Typography, Button, Grid } from "@mui/material";
@@ -15,11 +15,10 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { REQUESTS } from "../../api/requests.js";
 // backdrop //
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { styled } from '@mui/system';
 // modal //
 import Modal from "@mui/material/Modal";
 // icon //
@@ -29,6 +28,16 @@ import ModalImage from "../../assets/photo/NewQualityNbuModalFoto.jpg";
 import LeftSideSVG from "../../assets/svg/Left_SVG.svg";
 // IMAGE MAGNIFIER //
 import ReactImageMagnify from "react-image-magnify";
+import { useState} from 'react';
+import {useReduxDispatch } from "../../hooks/useReduxHook.js"
+import { useNavigate } from "react-router-dom";
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess,
+} from "../../store/slice/userSlice.js"
+import { useParams } from "react-router-dom"
+
 // modal styles //
 
 // recharts elements //
@@ -46,6 +55,7 @@ const MainPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [backdrop, setBackdrop] = React.useState(false);
   const [openmodal, setOpenModal] = React.useState(false);
+  const [loginError, setLoginError] = React.useState("");
   // PASSWORD SHOW HIDE FUNCTION //
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -71,6 +81,7 @@ const MainPage = () => {
         plan: 4000,
         fact: 2400,
         amt: 2400,
+        percentage:"120"
       },
       {
         // name: "PageB",
@@ -90,41 +101,48 @@ const MainPage = () => {
       // Styled components
 
 
-    const renderShape = ({ x, y, width, height }) => (
-      <>
-       
-        <rect
-          className="shape_render"
-          x={x}
-          y={y}
-          width={`10%`}
-          height={height}
-          fill={Colors.blue_middle}
-          rx={5}
-          transform={`translate(-25, 0)`}
-          
-        />
-      </>
-    );
-    const renderBlueShape = ({ x, y, width, height }) => (
-      <>
-        <rect
-          className="shape_blue"
-          x={x}
-          y={y}
-          width={`10%`}
-          height={height}
-          fill={Colors.gray_back}
-          ry={5}
-          transform={`translate(15, 0)`}
-        />
-      </>
-    );
+    const renderShape = ({ x, y, width, height }) => {
+      const translateX = width * (-0.25); // 10% of the width
+      const borderRadius = 5; // Radius for the top corners
+      return (
+        <>
+          <rect
+            className="shape_render"
+            x={x}
+            y={y}
+            width={`10%`}
+            height={height}
+            fill={Colors.blue_middle}
+            ry={borderRadius} // Apply radius to top-left and top-right corners
+            transform={`translate(${translateX}, 0)`}
+            
+          />
+        </>
+      )
+    };
+    const renderBlueShape = ({ x, y, width, height }) => {
+      const translateX = width * (0.4); // 10% of the width
+      return (
+        <>
+          <rect
+            className="shape_blue"
+            x={x}
+            y={y}
+            width={`10%`}
+            height={height}
+            fill={Colors.gray_back}
+            ry={5}
+            transform={`translate(${translateX}, 0)`}
+          />
+        </>
+
+      )
+    };
     const renderCustomizedLabel = (props) => {
       const { x, y, width, value } = props;
       const rectWidth = 65;
       const rectHeight = 20;
-      const rectX = x + width / 2 - rectWidth / 2 + 10;
+      const rectX = x + width / 2 - rectWidth / 2 + 22;
       const rectY = y - rectHeight - 5; // Adjust y position as needed
       const loginValue = value >= 100 ? true : false;
       return (
@@ -142,25 +160,84 @@ const MainPage = () => {
             width={rectWidth}
             height={rectHeight}
           >
-            <div className="check-icon_box_hh">
-              <FontAwesomeIcon
-                icon={faCircleCheck}
-                className={
-                  loginValue ? "check-icon_style_hh" : "check-icon_style_hh_false"
-                }
-              />
-              <span
-                className={
-                  loginValue ? "check-Icon_text_hh" : "check-Icon_text_hh_false"
-                }
+          <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+              <Box
+                sx={{
+                  color: loginValue ? Colors.blue_middle : Colors.red,
+                  fontSize: '14px', // Adjust the size as needed
+                }}
               >
-                {value}%
-              </span>
-            </div>
+                <FontAwesomeIcon icon={faCircleCheck} />
+              </Box>
+            <Typography
+              component="span"
+              sx={{
+                color: loginValue ? Colors.blue_middle : Colors.red,
+                fontWeight: '500', // Adjust font weight as needed
+                fontSize: '16px', // Adjust font size as needed
+              }}
+            >
+              {value}%
+            </Typography>
+          </Box>
           </foreignObject>
         </g>
       );
     };
+
+
+// <---- LOGIN CONSTANTS -----> //
+const dispatch = useReduxDispatch();
+const [isAuth, setIsAuth] = useState(false);
+const [username, setUsername] = useState("");
+const [password, setPassword] = useState("");
+const navigate = useNavigate();
+const params = useParams();
+
+
+const handleLogin = async () => {
+  // console.log("clicked ", username, password);
+  localStorage.clear();
+
+  try {
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+    dispatch(loginStart());
+    const response = await REQUESTS.auth.login(formData);
+    setIsAuth(true);
+    console.log("opened login");
+    navigate("/accessall");
+
+    if (response && response.data) {
+      dispatch(loginSuccess(response.data.access));
+      localStorage.setItem("token", response.data.access);
+      params.setPassname();
+    } else {
+      throw new Error("Invalid response from server");
+    }
+  } catch (error) {
+    console.error("Login failed:", error);
+    let errorMessage = "Login failed";
+    if (error.response && error.response.status === 401) {
+      // errorMessage = "Invalid username or password";
+      errorMessage = "Login yoki Parol xato !!!";
+    } else if (error.response && error.response.status === 500) {
+      errorMessage = "Server error. Please try again later.";
+    }
+    dispatch(loginFailure(errorMessage));
+    setLoginError(errorMessage);
+    setIsAuth(!isAuth);
+  }
+};
+
+
+
 
   return (
     <Container fixed maxWidth="xl" disableGutters sx={{ px: "10px",bgcolor:Colors.gray_back }}>
@@ -185,6 +262,7 @@ const MainPage = () => {
             my: "5px",
           }}
         >
+          {/* <=== login main section ===> */}
           <Box
             sx={{
               bgcolor: Colors.blue_login,
@@ -234,6 +312,8 @@ const MainPage = () => {
                 id="outlined-basic"
                 label="ЛОГИН"
                 variant="outlined"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 size="small"
                 InputLabelProps={{
                   sx: {
@@ -268,57 +348,57 @@ const MainPage = () => {
               />
               {/* <== Password section ===> */}
               <FormControl
-                sx={{
-                  m: 1,
-                  width: "25ch",
-                  bgcolor: "white",
-                  borderRadius: "5px",
-                  "& .MuiInputLabel-root": {
-                    color: Colors.blue_nbu, // Custom label text color
-                    "&.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: Colors.blue_nbu, // Default border color
-                    },
-                    "&:hover fieldset": {
-                      borderColor: Colors.blue_nbu, // Border color on hover
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: Colors.blue_nbu, // Border color on focus
-                    },
-                  },
-                }}
-                variant="outlined"
-                size="small"
-              >
-                <InputLabel htmlFor="outlined-adornment-password">
-                  ПАРОЛ
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <Visibility sx={{ color: Colors.blue_nbu }} />
-                        ) : (
-                          <VisibilityOff sx={{ color: Colors.blue_nbu }} />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                />
-              </FormControl>
+      sx={{
+        m: 1,
+        width: "25ch",
+        bgcolor: "white",
+        borderRadius: "5px",
+        "& .MuiInputLabel-root": {
+          color: Colors.blue_nbu, // Custom label text color
+          "&.Mui-focused": {
+            color: Colors.blue_nbu, // Custom label text color on focus
+          },
+        },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: Colors.blue_nbu, // Default border color
+          },
+          "&:hover fieldset": {
+            borderColor: Colors.blue_nbu, // Border color on hover
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: Colors.blue_nbu, // Border color on focus
+          },
+        },
+      }}
+      variant="outlined"
+      size="small"
+    >
+      <InputLabel htmlFor="outlined-adornment-password">ПАРОЛ</InputLabel>
+      <OutlinedInput
+        id="outlined-adornment-password"
+        type={showPassword ? "text" : "password"}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+              edge="end"
+            >
+              {showPassword ? (
+                <Visibility sx={{ color: Colors.blue_nbu }} />
+              ) : (
+                <VisibilityOff sx={{ color: Colors.blue_nbu }} />
+              )}
+            </IconButton>
+          </InputAdornment>
+        }
+        label="ПАРОЛ"
+      />
+    </FormControl>
               {/* <=== OPEN button ====> */}
               <motion.div
                 whileHover={{ scale: 1.1 }}
@@ -327,7 +407,7 @@ const MainPage = () => {
                 <Button
                 size="medium"
                   variant="contained"
-                  onClick={handleOpenBackdrop}
+                  onClick={handleLogin}
                   sx={{
                     bgcolor: Colors.nbu,
                     "&:hover": {
@@ -540,7 +620,7 @@ const MainPage = () => {
                       <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
                     </Box>
                   </Box>
-                    <Box sx={{position:"absolute",bottom:"30%",left:"25%"}}>
+                    <Box sx={{position:"absolute",bottom:"30%",left:"26%"}}>
                       <Box
                           component="img"
                           src={LeftSideSVG}
