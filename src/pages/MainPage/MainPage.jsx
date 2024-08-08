@@ -15,6 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import HorizontalBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
 import { REQUESTS } from "../../api/requests.js";
 // backdrop //
 import Backdrop from "@mui/material/Backdrop";
@@ -237,49 +238,6 @@ const handleLogin = async () => {
     setIsAuth(!isAuth);
   }
 };
-
-// const handleLogin = async () => {
-//   localStorage.clear();
-
-//   try {
-//     const formData = new FormData();
-//     formData.append("username", username);
-//     formData.append("password", password);
-//     dispatch(loginStart());
-//     const response = await REQUESTS.auth.login(formData);
-
-//     if (response && response.data) {
-//       dispatch(loginSuccess(response.data.access));
-//       localStorage.setItem("token", response.data.access);
-//       setUsername(""); // Clear username
-//       setPassword(""); // Clear password
-//       navigate("/accessall");
-//     } else {
-//       throw new Error("Invalid response from server");
-//     }
-//   } catch (error) {
-//     console.error("Login failed:", error);
-
-//     let errorMessage = "Login failed";
-//     if (error.response) {
-//       if (error.response.status === 401) {
-//         errorMessage = "Invalid username or password";
-//       } else if (error.response.status === 500) {
-//         errorMessage = "Server error. Please try again later.";
-//       } else {
-//         errorMessage = `Unexpected error: ${error.response.status}`;
-//       }
-//       console.error('Server response:', error.response.data);
-//     } else if (error.request) {
-//       errorMessage = "Network error. Please check your connection.";
-//     } else {
-//       errorMessage = `Error: ${error.message}`;
-//     }
-
-//     dispatch(loginFailure(errorMessage));
-//     setLoginError(errorMessage);
-//   }
-// };
 
 
   return (
@@ -698,8 +656,16 @@ const handleLogin = async () => {
                 padding:"5px"
               }}
             >
-              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"77%",bgcolor:"transparent"}} >
+                  <HorizontalBarChart />
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained" size={"medium"}>
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
               </Box>
             </Grid>
             {/* fourth div */}
@@ -716,7 +682,7 @@ const handleLogin = async () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-
+                
               </Box>
             </Grid>
             {/* fifth div*/}
