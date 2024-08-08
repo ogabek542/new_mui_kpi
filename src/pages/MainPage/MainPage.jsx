@@ -15,7 +15,6 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import HorizontalBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
 import { REQUESTS } from "../../api/requests.js";
 // backdrop //
 import Backdrop from "@mui/material/Backdrop";
@@ -51,6 +50,10 @@ import {
 } from "recharts";
 
 // IMPORT CARDS //
+import HorizontalBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
+import AreaChart from "../../components/AreaChart/AreaChart.jsx"
+
+
 
 const MainPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -681,8 +684,17 @@ const handleLogin = async () => {
                 padding:"5px"
               }}
             >
-              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-                
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",height:"77%"}} >
+                   <AreaChart/>
+                   
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained" size={"medium"}>
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
               </Box>
             </Grid>
             {/* fifth div*/}
