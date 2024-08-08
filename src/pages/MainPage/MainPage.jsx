@@ -212,6 +212,8 @@ const handleLogin = async () => {
     const response = await REQUESTS.auth.login(formData);
     setIsAuth(true);
     console.log("opened login");
+    setUsername(""); // Clear username
+    setPassword(""); // Clear password
     navigate("/accessall");
 
     if (response && response.data) {
@@ -236,7 +238,48 @@ const handleLogin = async () => {
   }
 };
 
+// const handleLogin = async () => {
+//   localStorage.clear();
 
+//   try {
+//     const formData = new FormData();
+//     formData.append("username", username);
+//     formData.append("password", password);
+//     dispatch(loginStart());
+//     const response = await REQUESTS.auth.login(formData);
+
+//     if (response && response.data) {
+//       dispatch(loginSuccess(response.data.access));
+//       localStorage.setItem("token", response.data.access);
+//       setUsername(""); // Clear username
+//       setPassword(""); // Clear password
+//       navigate("/accessall");
+//     } else {
+//       throw new Error("Invalid response from server");
+//     }
+//   } catch (error) {
+//     console.error("Login failed:", error);
+
+//     let errorMessage = "Login failed";
+//     if (error.response) {
+//       if (error.response.status === 401) {
+//         errorMessage = "Invalid username or password";
+//       } else if (error.response.status === 500) {
+//         errorMessage = "Server error. Please try again later.";
+//       } else {
+//         errorMessage = `Unexpected error: ${error.response.status}`;
+//       }
+//       console.error('Server response:', error.response.data);
+//     } else if (error.request) {
+//       errorMessage = "Network error. Please check your connection.";
+//     } else {
+//       errorMessage = `Error: ${error.message}`;
+//     }
+
+//     dispatch(loginFailure(errorMessage));
+//     setLoginError(errorMessage);
+//   }
+// };
 
 
   return (
@@ -315,6 +358,9 @@ const handleLogin = async () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 size="small"
+                autoComplete="off"
+                autoSave="off"
+                required
                 InputLabelProps={{
                   sx: {
                     color: Colors.blue_nbu, // Custom label text color
@@ -348,38 +394,41 @@ const handleLogin = async () => {
               />
               {/* <== Password section ===> */}
               <FormControl
-      sx={{
-        m: 1,
-        width: "25ch",
-        bgcolor: "white",
-        borderRadius: "5px",
-        "& .MuiInputLabel-root": {
-          color: Colors.blue_nbu, // Custom label text color
-          "&.Mui-focused": {
-            color: Colors.blue_nbu, // Custom label text color on focus
-          },
-        },
-        "& .MuiOutlinedInput-root": {
-          "& fieldset": {
-            borderColor: Colors.blue_nbu, // Default border color
-          },
-          "&:hover fieldset": {
-            borderColor: Colors.blue_nbu, // Border color on hover
-          },
-          "&.Mui-focused fieldset": {
-            borderColor: Colors.blue_nbu, // Border color on focus
-          },
-        },
-      }}
-      variant="outlined"
-      size="small"
-    >
+                sx={{
+                  m: 1,
+                  width: "25ch",
+                  bgcolor: "white",
+                  borderRadius: "5px",
+                  "& .MuiInputLabel-root": {
+                    color: Colors.blue_nbu, // Custom label text color
+                    "&.Mui-focused": {
+                      color: Colors.blue_nbu, // Custom label text color on focus
+                    },
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: Colors.blue_nbu, // Default border color
+                    },
+                    "&:hover fieldset": {
+                      borderColor: Colors.blue_nbu, // Border color on hover
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: Colors.blue_nbu, // Border color on focus
+                    },
+                  },
+                }}
+                variant="outlined"
+                size="small"
+                    >
       <InputLabel htmlFor="outlined-adornment-password">ПАРОЛ</InputLabel>
       <OutlinedInput
         id="outlined-adornment-password"
         type={showPassword ? "text" : "password"}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        autoSave="off"
+        autoComplete="new-password" 
+        required
         endAdornment={
           <InputAdornment position="end">
             <IconButton
