@@ -1,7 +1,7 @@
 import * as React   from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Container, Box, Typography, Button, Grid, Fade  } from "@mui/material";
+import { Container, Box, Typography, Button, Grid,  } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
 // input elements //
