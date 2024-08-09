@@ -1,7 +1,7 @@
 import * as React   from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Container, Box, Typography, Button, Grid } from "@mui/material";
+import { Container, Box, Typography, Button, Grid, Fade  } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
 // input elements //
@@ -37,6 +37,7 @@ import {
   loginSuccess,
 } from "../../store/slice/userSlice.js"
 import { useParams } from "react-router-dom"
+import Alert from '@mui/material/Alert';
 
 // modal styles //
 
@@ -66,6 +67,7 @@ const MainPage = () => {
   const [backdrop, setBackdrop] = React.useState(false);
   const [openmodal, setOpenModal] = React.useState(false);
   const [loginError, setLoginError] = React.useState("");
+  const [openauthmodal,setOpenAuthModal] = React.useState(false);
   // PASSWORD SHOW HIDE FUNCTION //
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -75,6 +77,13 @@ const MainPage = () => {
   // BACKDROP FUNCTION //
   const handleOpenBackdrop = () => setBackdrop(true);
   const handleCloseBackdrop = () => setBackdrop(false);
+
+  // AUTH  MODAL FUNCTION //
+  const handleOpenAuthModal = () =>  setOpenAuthModal(true);
+  
+  const handleCloseAuthModal = () => setOpenAuthModal(false);
+    
+  
 
   // modal function //
   const handleCloseModal = () => {
@@ -538,7 +547,7 @@ const handleLogin = async () => {
                     </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -646,7 +655,7 @@ const handleLogin = async () => {
                   </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -671,7 +680,7 @@ const handleLogin = async () => {
                   <HorizontalBarChart />
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -696,7 +705,7 @@ const handleLogin = async () => {
                     <AreaChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -721,7 +730,7 @@ const handleLogin = async () => {
                   <SteppedLineChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -746,7 +755,7 @@ const handleLogin = async () => {
                   <DoughnutChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -771,7 +780,7 @@ const handleLogin = async () => {
                   <PieChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -796,7 +805,7 @@ const handleLogin = async () => {
                   <VerticalBarChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -821,7 +830,7 @@ const handleLogin = async () => {
                   <SynchronizedLineCharts/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -846,7 +855,7 @@ const handleLogin = async () => {
                   <RadialBarChartComponent/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -871,7 +880,7 @@ const handleLogin = async () => {
                   <SparklineApp/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -896,7 +905,7 @@ const handleLogin = async () => {
                   <RadarChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -1009,6 +1018,28 @@ const handleLogin = async () => {
               </Box>
             </Box>
           </motion.div>
+        </Modal>
+        {/* <=== AUTHORISATION MODAL ===>*/}
+        <Modal
+            open={openauthmodal}
+            onClose={handleCloseAuthModal}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+          <Box sx={{position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: "auto",
+              bgcolor: "orange",
+              border: '1px solid gray',
+              boxShadow: 24,
+              borderRadius:"5px",
+              }}>
+              <Alert variant="filled" severity="warning">
+                "Aftorizatsiyadan o'tgandan keyin yangi sahifaga o'tish mumkin !!!"
+              </Alert>
+          </Box>
         </Modal>
       </Box>
     </Container>
