@@ -13,6 +13,8 @@ import Footer from "../../components/Footer/Footer";
 import AreaLineChart from "../../components/LineChart/LineChart";
 import NewLineChart from "../../components/NewLineChart/NewLineChart";
 import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar";
+import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";
+import OpenVerticalGroupBarChart from "../../components/OpenVerticalGroupBarchart/OpenVerticalBarChart";
 // calendar elements section //
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -249,18 +251,29 @@ const NetProfitSceen = () => {
                     }}
                   >
                     {/* Left side of text box */}
-                    <Typography
+                    <Box
                       sx={{
-                        fontSize: "80px",
-                        fontWeight: "900",
-                        textAlign: "start",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-end", // Aligns the content to the bottom
+                        alignItems: "center",
+                        gap: "5px",
+                        height: "100%", // Ensure the parent Box has a height to push content to the bottom
                       }}
                     >
-                      992
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "112px",
+                          fontWeight: "900",
+                          textAlign: "start",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        992
+                      </Typography>
+                  </Box>
                     {/* Right side of text box */}
                     <Box
                       sx={{
@@ -274,7 +287,7 @@ const NetProfitSceen = () => {
                       <MovingIcon
                         sx={{
                           color: Colors.green_dark,
-                          fontSize: "80px",
+                          fontSize: "48px",
                           padding: "0px",
                           // rotate:"180deg"
                           
@@ -401,7 +414,7 @@ const NetProfitSceen = () => {
               </Grid>
             </Grid>
             {/* third grid div */}
-            <Grid container sx={{ width: "100%", height: "300px" }}>
+            <Grid container sx={{ width: "100%", height: "350px" }}>
               {/* left side of third div */}
               <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px" }}>
                 <Box
@@ -432,6 +445,9 @@ const NetProfitSceen = () => {
                     без процентов  расходы
                   </Typography>
                   {/* Bottom side box of third div */}
+                  <Box sx={{width:"100%",height:"300px"}}>
+                  <OpenVerticalGroupBarChart/>
+                  </Box>
                 </Box>
               </Grid>
               {/* right side of third div */}
@@ -464,6 +480,9 @@ const NetProfitSceen = () => {
                     процентные расходы
                   </Typography>
                   {/* Bottom side box of third div */}
+                  <Box sx={{width:"100%",height:"300px"}}>
+                  <OpenHorizontalBarChart/>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>

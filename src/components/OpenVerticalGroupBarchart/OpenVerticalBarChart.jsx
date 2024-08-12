@@ -14,33 +14,33 @@ import { Box, Card, CardContent } from '@mui/material';
 // Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const OpenHorizontalBarChart = () => {
+const OpenVerticalGroupBarChart = () => {
   const data = {
-    labels: ['Комиссионные расходы', 'Убытки в иностранной валюте', 'Другие беспроцентные расходы'],
+    labels: ['Процентные расходы по депозитам', 'Процентные расходы по счетам к оплате в ЦБРУ', 'Процентные расходы по счетам к оплате в другие банки', 'Процентные расходы по кредитам к оплате', 'Процентные расходы по выпущенным ценным бумагам','Другие процентные расходы'],
     datasets: [
       {
         label: 'PLAN',
-        data: [9800, 4800, 3908],
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        data: [2400, 1398, 9800, 3908, 4800,8000],
+        backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
-        barThickness: 15, // Thinner bars
+        barThickness: 30, // Adjust this value to make bars thicker
       },
       {
         label: 'FACT',
-        data: [6000, 4000, 2500], // Example data for the second dataset
-        backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
-        borderColor: 'rgba(144, 238, 144, 1)', // Light green border color
+        data: [1200, 2300, 8400, 5000, 3600,7500],
+        backgroundColor: 'rgba(34, 139, 34, 0.8)', // Dark Green
+        borderColor: 'rgba(34, 139, 34, 1)', // Dark Green Border
         borderWidth: 2,
-        barThickness: 15, // Thinner bars
+        barThickness: 30, // Adjust this value to make bars thicker
       },
     ],
   };
 
   const options = {
-    indexAxis: 'y', // Horizontal bar chart
+    indexAxis: 'x', // Vertical bar chart
     scales: {
-      x: {
+      y: {
         beginAtZero: true,
       },
     },
@@ -49,7 +49,7 @@ const OpenHorizontalBarChart = () => {
     plugins: {
       legend: {
         display: true, // Show the legend
-        position: 'top', // Position the legend at the top
+        position: 'top', // Position of the legend
         align: 'end', // Align the legend to the right
         labels: {
           usePointStyle: true, // Use point styles instead of box styles
@@ -73,4 +73,4 @@ const OpenHorizontalBarChart = () => {
   );
 };
 
-export default OpenHorizontalBarChart;
+export default OpenVerticalGroupBarChart;
