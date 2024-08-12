@@ -125,44 +125,40 @@ const NetProfitSceen = () => {
                         textAlign: "center",
                       }}
                       >
-                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-                          <DatePicker
-                            value={selectnewdata}
-                            onChange={(newValue) => setSelectNewData(newValue)}
-                            slotProps={{ textField: { size: 'small' } }}
-                            renderInput={(props) => (
-                              <TextField
-                                {...props}
-                                fullWidth
-                                sx={{
-                                  width: { xs: "100px", sm: "100px", md: "200px" },
-                                  ".MuiOutlinedInput-root": {
-                                    "& fieldset": {
-                                      borderColor: "white",
-                                      border:"none"
-                                    },
-                                    "&:hover fieldset": {
-                                      borderColor: "white",
-                                      border:"none"
-                                    },
-                                    "&.Mui-focused fieldset": {
-                                      borderColor: "white",
-                                      border:"none"
-                                    },
-                                    '.MuiInputAdornment-root .MuiIconButton-root': {
-                                      color: Colors.blue_nbu,
-                                      border:"none"
-                                    },
-                                    ".MuiInputBase-input": {
-                                      fontWeight: 700,
-                                      fontSize: { xs: "12px", sm: "16px" },
-                                      border:"none"
-                                    },
+                        <LocalizationProvider dateAdapter={AdapterDayjs}  adapterLocale="ru" >
+                            <DatePicker
+                                value={selectnewdata}
+                                onChange={(newValue) => setSelectNewData(newValue)}
+                                slotProps={{ textField: { size: 'medium' } }}
+                                renderInput={(props) => (
+                                <Box sx={{ width: {xs:"100px",sm:"100px",md:"200px"} }}>
+                                  <TextField {...props} fullWidth />
+                                </Box>
+                              )}
+                              sx={{
+                                ".MuiOutlinedInput-root": {
+                                  "& fieldset": {
+                                    borderColor: "white",
+                                    border:"none"
                                   },
-                                }}
-                              />
-                            )}
-                          />
+                                  "&:hover fieldset": {
+                                    borderColor: "white",
+                                    border:"none"
+
+                                  },
+                                  "&.Mui-focused fieldset": {
+                                    borderColor: "white",
+                                  },
+                                  '.MuiInputAdornment-root .MuiIconButton-root': {
+                                    color: Colors.blue_nbu, // Custom color for the DatePicker icon
+                                  },
+                                  ".MuiInputBase-input": {
+                                    fontWeight: 800, // Adjust the font weight of the DatePicker's text
+                                    fontSize:{xs:"12px",sm:"18px"}
+                                  },
+                                },
+                              }}
+                            />
                         </LocalizationProvider>
                     </Box>
               </Grid>
