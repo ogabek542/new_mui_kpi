@@ -13,11 +13,11 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const OpenDoughnutChart = () => {
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Заработная плата и другие расходы на сотрудников', 'Аренда и содержание', 'Командировочные и транспортные расходы', 'Административные расходы', 'Репрезентация и благотворительность', 'Расходы на износ','Страхование, налоги и другие расходы'],
     datasets: [
       {
         label: 'My Doughnut Chart',
-        data: [12, 19, 3, 5, 2, 3], // Example data
+        data: [12, 19, 8, 15, 2, 3], // Example data
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)', // Red
           'rgba(54, 162, 235, 0.6)', // Blue

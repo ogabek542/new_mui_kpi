@@ -28,13 +28,200 @@ import MovingIcon from "@mui/icons-material/Moving";
 const NetProfitSceen = () => {
   // data //
   const top128Filials = [
-    { title: "Избоскан БХО" },
-    { title: "Шахрихон БХО" },
-    { title: "Асака БХМ" },
-    { title: "Зарафшон БХМ" },
+    { title: "Тошкент шаҳри", id: 1 },
+    { title: "Андижон вилояти", id: 2 },
+    { title: "Бухоро вилояти", id: 3 },
+    { title: "Фарғона вилояти", id: 4 },
+    { title: "Жиззах  вилояти", id: 5 },
+    { title: "Наманган  вилояти", id: 6 },
+    { title: "Навоий  вилояти", id: 7 },
+    { title: "Қашқадарё  вилояти", id: 8 },
+    { title: "Самарқанд  вилояти", id: 9 },
+    { title: "Сирдарё  вилояти", id: 10 },
+    { title: "Сурхондарё  вилояти", id: 11 },
+    { title: "Тошкент  вилояти", id: 12 },
+    { title: "Хоразм  вилояти", id: 13 },
+    { title: "Қорақалпоғистон республикаси", id: 14 },
   ];
+  const secondOptions = {
+    // Тошкент шаҳри //
+    1: [
+      { title: "Головной офис" },
+      { title: "Миробод бўлими" },
+      { title: "Абусахий БХО" },
+      { title: "Атлас НБУ БХО" },
+      { title: "Ғалаба БХО" },
+      { title: "Миробод плаза БХО" },
+      { title: "Наврўз БХО" },
+      { title: "Технопарк БХО" },
+      { title: "Хумо БХО" },
+      { title: "Шайхонтохур БХО" },
+      { title: "Янги сергели БХО" },
+      { title: "Академия БХМ" },
+      { title: "Бектемир БХМ" },
+      { title: "Бош амалиёт БХМ" },
+      { title: "Марказий амалиёт БХМ" },
+      { title: "Мирзо-Улуғбек БХМ" },
+      { title: "Олмазор БХМ" },
+      { title: "Саёхат БХМ" },
+      { title: "Себзор амалиёт БХМ" },
+      { title: "Сергели БХМ" },
+      { title: "Учтепа БХM" },
+      { title: "Юнусобод БХМ" },
+      { title: "Яккасарой БХМ" },
+      { title: "Янгиобод БХM" },
+      { title: "Яшнобод БХM" },
+    ],
+    // Андижон вилояти //
+    2: [
+      { title: "Андижон амалиёт БХМ" },
+      { title: "Асака БХM" },
+      { title: "Избоскан БХО" },
+      { title: "Қурғонтепа БХО" },
+      { title: "Мархамат БХМ" },
+      { title: "Пахтаобод БХО" },
+      { title: "Шахрихон БХО" },
+    ],
+    // Бухоро вилояти //
+    3: [
+      { title: "Арк БХО" },
+      { title: "Бухоро амалиёт БХМ" },
+      { title: "Бухоро шаҳар БХО" },
+      { title: "Вобкент БХО" },
+      { title: "Ғиждувон БХМ" },
+      { title: "Когон БХM" },
+      { title: "Қоракўл БХМ" },
+      { title: "Қоровулбозор БХО" },
+      { title: "Нақшбанд БХО" },
+      { title: "Ромитан БХМ" },
+      { title: "Шофиркон БХО" },
+    ],
+    // Фарғона вилояти //
+    4: [
+      { title: "Бешариқ БХМ" },
+      { title: "Бувайда БХО" },
+      { title: "Қува БХМ" },
+      { title: "Қувасой БХО" },
+      { title: "Қуқон БХМ" },
+      { title: "Риштон БХМ" },
+      { title: "Фарғона амалиёт БХМ" },
+      { title: "Марғилон БХО" },
+    ],
+    // Жиззах  вилояти //
+    5: [
+      { title: "Джизак амалиёт БХМ" },
+      { title: "Индустриал БХМ" },
+      { title: "Мирзачуль БХМ" },
+      { title: "Пахтакор БХО" },
+    ],
+    // Наманган  вилояти //
+    6: [
+      { title: "Косонсой БХО" },
+      { title: "Наманган амалиёт БХМ" },
+      { title: "Турақўрғон БХО" },
+      { title: "Уйчи БХМ" },
+      { title: "Учқурғон БХМ" },
+      { title: "Чортоқ БХМ" },
+      { title: "Чуст БХО" },
+    ],
+    // Навоий  вилояти //
+    7: [
+      { title: "Зарафшон БХМ" },
+      { title: "Қизилтепа БХМ" },
+      { title: "Маликрабод БХМ" },
+      { title: "Навоий амалиёт БХМ" },
+      { title: "Нурота БХО" },
+      { title: "Учқудуқ БХМ" },
+    ],
+    // Қашқадарё  вилояти //
+    8: [
+      { title: "Ғузор БХО" },
+      { title: "Қарши амалиёт БХМ" },
+      { title: "Муборак БХО" },
+      { title: "Шаҳрисабз БХМ" },
+      { title: "Янгинишон БХО" },
+    ],
+    // Самарқанд  вилояти //
+    9: [
+      { title: "Булунғур БХО" },
+      { title: "Джамбай БХМ" },
+      { title: "Зармитан БХО" },
+      { title: "Каттақўрғон БХО" },
+      { title: "Қорасув БХО" },
+      { title: "Нуробод БХО" },
+      { title: "Пайариқ БХО" },
+      { title: "Пастдаргом БХМ" },
+      { title: "Регистан БХМ" },
+      { title: "Самарканд амалиёт БХМ" },
+      { title: "Ургут БХМ" },
+    ],
+    // Сирдарё  вилояти //
+    10: [
+      { title: "Гулистан амалиёт БХМ" },
+      { title: "Оқолтин БХО" },
+    ],
+    // Сурхондарё  вилояти //
+    11: [
+      { title: "Денов БХМ" },
+      { title: "Қумқўрғон БХМ" },
+      { title: "Термиз амалиёт БХМ" },
+      { title: "Жарқўрғон БХО" },
+      { title: "Шеробод БХО" },
+    ],
+    // Тошкент  вилояти //
+    12: [
+      { title: "Ангрен БХM" },
+      { title: "Бекабад БХМ" },
+      { title: "Газалкент БХО" },
+      { title: "Нурафшон амалиёт БХМ" },
+      { title: "Олмалиқ БХО" },
+      { title: "Тошкент шахар БХО" },
+      { title: "Чирчиқ БХО" },
+      { title: "Янгийул БХМ" },
+    ],
+    // Хоразм  вилояти //
+    13: [
+      { title: "Гурлан БХО" },
+      { title: "Карвон БХО" },
+      { title: "Хазорасп БХМ" },
+      { title: "Хива БХО" },
+      { title: "Хонқа БХМ" },
+      { title: "Хоразм амалиёт БХМ" },
+      { title: "Шовот БХМ" },
+      { title: "Янгиариқ БХО" },
+      { title: "Кушкупир БХМ" },
+    ],
+    // Қорақалпоғистон республикаси //
+    14: [
+      { title: "Кўнғирот БХМ" },
+      { title: "Манғит БХО" },
+      { title: "Нукус амалиёт БХМ" },
+      { title: "Тўрткўл БХM" },
+      { title: "Хўжайли БХО" },
+      { title: "Чимбой БХО" },
+    ],
+  };
 
   const [selectnewdata, setSelectNewData] = React.useState(dayjs());
+  // auto complete elements //
+  const [selectedFirstOption, setSelectedFirstOption] = React.useState(null);
+  const [filteredSecondOptions, setFilteredSecondOptions] = React.useState([]);
+
+  // Handle selection of the first Autocomplete
+  const handleFirstChange = (event, value) => {
+    setSelectedFirstOption(value);
+    if (value && value.id) {
+      setFilteredSecondOptions(secondOptions[value.id] || []);
+    } else {
+      setFilteredSecondOptions([]);
+    }
+  };
+
+  // Handle selection of the second Autocomplete (Optional)
+  const handleSecondChange = (event, value) => {
+    console.log('Selected second option:', value);
+  };
+
 
   return (
     <Container
@@ -83,35 +270,28 @@ const NetProfitSceen = () => {
                   }}
                 >
                   {/* choose filila name  */}
-                  <Autocomplete
-                    options={top128Filials}
-                    sx={{ width: "100%", height: "100%" }}
-                    getOptionLabel={(option) => `${option.title}`}
-                    id="movie-customized-option-demo"
-                    disableCloseOnSelect
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Выбор отделение"
-                        variant="standard"
-                        sx={{
-                          "& .MuiInput-underline:before": {
-                            borderBottomColor: "red", // Change the color here
-                          },
-                          "& .MuiInput-underline:after": {
-                            borderBottomColor: "green", // Change the color here
-                          },
-                          "& .MuiInput-underline:before, & .MuiInput-underline:after":
-                            {
-                              borderBottom: "none", // To remove the border
-                            },
-                        }}
-                        InputLabelProps={{
-                          style: { color: Colors.dark }, // Change the color to your desired value
-                        }}
+                    <Autocomplete
+                        options={top128Filials}
+                        sx={{ width: '100%', height: '100%', mb: 2 }}
+                        getOptionLabel={(option) => option.title}
+                        value={selectedFirstOption}
+                        onChange={handleFirstChange}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Выбор отделение"
+                            variant="standard"
+                            sx={{
+                              "& .MuiInput-underline:before": { borderBottomColor: "red" },
+                              "& .MuiInput-underline:after": { borderBottomColor: "green" },
+                              "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+                                borderBottom: "none",
+                              },
+                            }}
+                            InputLabelProps={{ style: { color: 'black' } }}
+                          />
+                        )}
                       />
-                    )}
-                  />
                 </Box>
               </Grid>
               <Grid item xs={12} sm={7} md={4} lg={4} sx={{ padding: "5px" }}>
@@ -125,35 +305,28 @@ const NetProfitSceen = () => {
                   }}
                 >
                   {/* choose filila name  */}
-                  <Autocomplete
-                    options={top128Filials}
-                    sx={{ width: "100%", height: "100%" }}
-                    getOptionLabel={(option) => `${option.title}`}
-                    id="movie-customized-option-demo"
-                    disableCloseOnSelect
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Выбор филиала"
-                        variant="standard"
-                        sx={{
-                          "& .MuiInput-underline:before": {
-                            borderBottomColor: "red", // Change the color here
-                          },
-                          "& .MuiInput-underline:after": {
-                            borderBottomColor: "green", // Change the color here
-                          },
-                          "& .MuiInput-underline:before, & .MuiInput-underline:after":
-                            {
-                              borderBottom: "none", // To remove the border
-                            },
-                        }}
-                        InputLabelProps={{
-                          style: { color: Colors.dark }, // Change the color to your desired value
-                        }}
+                      {/* Second Autocomplete */}
+                      <Autocomplete
+                        options={filteredSecondOptions}
+                        sx={{ width: '100%', height: '100%' }}
+                        getOptionLabel={(option) => option.title}
+                        onChange={handleSecondChange}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Выбор филиала"
+                            variant="standard"
+                            sx={{
+                              "& .MuiInput-underline:before": { borderBottomColor: "red" },
+                              "& .MuiInput-underline:after": { borderBottomColor: "green" },
+                              "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+                                borderBottom: "none",
+                              },
+                            }}
+                            InputLabelProps={{ style: { color: 'black' } }}
+                          />
+                        )}
                       />
-                    )}
-                  />
                 </Box>
               </Grid>
               <Grid item xs={12} sm={5} md={3} lg={3} sx={{ padding: "5px" }}>
