@@ -213,8 +213,8 @@ const NetProfitSceen = () => {
 
   // auto complete elements //
   const [prevFirstOption, setPrevFirstOption] = React.useState(null);
-  const [selectedFirstOption, setSelectedFirstOption] = React.useState(null);
-  const [selectedSecondOptions, setSelectedSecondOptions] = React.useState([]);
+  const [selectedFirstOption, setSelectedFirstOption] = React.useState({ title: "Тошкент шаҳри" });
+  const [selectedSecondOptions, setSelectedSecondOptions] = React.useState({ title: "Миробод бўлими" });
   const [prevSecondOption, setPrevSecondOption] = React.useState(null);
   // for data map //
   const [secondOptions, setSecondOptions] = React.useState([]);
@@ -239,7 +239,7 @@ const NetProfitSceen = () => {
     if (selectedDataFromAPI) {
       setChooseData([selectedDataFromAPI]);
     } else {
-      setChooseData(["data not found"]);
+      setChooseData([]);
     }
   };
 
@@ -257,7 +257,16 @@ const NetProfitSceen = () => {
       } else {
         setSecondOptions([]);
       }
+      const initializeScreen = () => {
+        // Set initial date or use the current date as default
+        const initialDate = dayjs(); // You can adjust this to a specific date if needed
     
+        // Trigger handleDateChange with the initial date
+        handleDateChange(initialDate);
+      };
+    
+      // Call the initialization function
+      initializeScreen();
     }, [selectedFirstOption]);
 
 
