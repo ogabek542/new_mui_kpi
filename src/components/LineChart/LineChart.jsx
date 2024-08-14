@@ -17,11 +17,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const AreaLineChart = () => {
   const data = {
-    labels: ['Page A', 'Page B', 'Page C', 'Page D', 'Page E', 'Page A', 'Page B', 'Page C', 'Page D', 'Page E'],
+    labels: ['Page A', 'Page B', 'Page C', 'Page D',],
     datasets: [
       {
         label: 'PLAN',
-        data: [2000, 1398, 9800, 3908, 4800, 3020, 4014, 8021, 1000, 1250],
+        data: [2000, 1398, 9800, 3908,],
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,

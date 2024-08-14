@@ -14,13 +14,13 @@ import { Box, Card, CardContent } from '@mui/material';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const NewLineChart = () => {
+const NewLineChart = ({ labelsData, planData, factData }) => {
   const data = {
-    labels: ['Комиссионные расходы','Прибыль в иностранной валюте','Прибыль и дивиденды от инвестиций', 'Другие беспроцентные доходы',],
+    labels:labelsData,
     datasets: [
       {
         label: 'PLAN',
-        data: [2000, 1398, 9800, 3908,],
+        data:  planData,
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
@@ -28,7 +28,7 @@ const NewLineChart = () => {
       },
       {
         label: 'FACT',
-        data: [300, 3000, 6200, 7100, 8000, 6000, 10000, 3000, 4500, 5500],
+        data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.4)',
         borderColor: 'rgba(144, 238, 144, 1)',
         borderWidth: 2,

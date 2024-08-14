@@ -1,14 +1,11 @@
 import React from "react";
-import { Container, Box, Grid, Paper, Typography } from "@mui/material";
+import { Container, Box, Grid,Typography } from "@mui/material";
 import { Colors } from "../../styles/theme";
-import Autocomplete, { autocompleteClasses } from "@mui/material/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { useEffect } from "react";
 // IMPORT SCREENS //
 import LightHeader from "../../components/LightHeader/LightHeader";
-import DoughnutChart from "../../components/Doughnut/Doughnut";
-import AreaChart from "../../components/AreaChart/AreaChart";
-import VerticalBarChart from "../../components/VerticalBarChart/VerticalBarChart";
-import HorizontalBarChart from "../../components/HorizontalBarchart/HorizontalBarchart";
 import Footer from "../../components/Footer/Footer";
 import AreaLineChart from "../../components/LineChart/LineChart";
 import NewLineChart from "../../components/NewLineChart/NewLineChart";
@@ -21,11 +18,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import "dayjs/locale/ru"; // Import Russian locale
+// IPORT TEST API //
+import TestNewApi from '../../pages/testapi/someTestApi.jsx';
+import CommonData from "../../pages/testapi/testDataAll.jsx"
 
 // IMPORT ICONS //
 import MovingIcon from "@mui/icons-material/Moving";
 
 const NetProfitSceen = () => {
+
   // data //
   const top128Filials = [
     { title: "Тошкент шаҳри", id: 1 },
@@ -43,7 +44,7 @@ const NetProfitSceen = () => {
     { title: "Хоразм  вилояти", id: 13 },
     { title: "Қорақалпоғистон республикаси", id: 14 },
   ];
-  const secondOptions = {
+  const setSelectedSecondMap = {
     // Тошкент шаҳри //
     1: [
       { title: "Головной офис" },
@@ -203,24 +204,63 @@ const NetProfitSceen = () => {
   };
 
   const [selectnewdata, setSelectNewData] = React.useState(dayjs());
-  // auto complete elements //
-  const [selectedFirstOption, setSelectedFirstOption] = React.useState(null);
-  const [filteredSecondOptions, setFilteredSecondOptions] = React.useState([]);
+  const [dateText, setDateText] = React.useState(dayjs().format('DD.MM.YYYY')); // state for the formatted date text
+  // const [selectnewdata, setSelectNewData] = React.useState(dayjs().format('DD.MM.YYYY'));
+  const [chooseData, setChooseData] = React.useState([]);
+  const [dataSelectedDate, setDataSelectedDate] = React.useState("");
 
-  // Handle selection of the first Autocomplete
-  const handleFirstChange = (event, value) => {
-    setSelectedFirstOption(value);
-    if (value && value.id) {
-      setFilteredSecondOptions(secondOptions[value.id] || []);
+  console.log(chooseData)
+
+  // auto complete elements //
+  const [prevFirstOption, setPrevFirstOption] = React.useState(null);
+  const [selectedFirstOption, setSelectedFirstOption] = React.useState(null);
+  const [selectedSecondOptions, setSelectedSecondOptions] = React.useState([]);
+  const [prevSecondOption, setPrevSecondOption] = React.useState(null);
+  // for data map //
+  const [secondOptions, setSecondOptions] = React.useState([]);
+  
+
+  // REal worjing Code //
+  const handleDateChange = (newValue) => {
+    // Update selected date and formatted date text
+    setSelectNewData(newValue);
+    const formattedDate = newValue ? dayjs(newValue).format('DD.MM.YYYY') : '';
+    setDateText(formattedDate);
+  
+    // Find data from newAllData based on the selected second option and formatted date
+    const selectedDataFromAPI = CommonData.find(
+      (item) =>
+        item.name.toLowerCase() === (selectedSecondOptions ? selectedSecondOptions.title.toLowerCase() : '')
+    )?.sana.find(
+      (sanaItem) => sanaItem.date === formattedDate
+    );
+  
+    // Update state based on the match
+    if (selectedDataFromAPI) {
+      setChooseData([selectedDataFromAPI]);
     } else {
-      setFilteredSecondOptions([]);
+      setChooseData(["data not found"]);
     }
   };
 
-  // Handle selection of the second Autocomplete (Optional)
-  const handleSecondChange = (event, value) => {
-    console.log('Selected second option:', value);
-  };
+  
+
+    // Update the options for the second Autocomplete based on the first selection
+    useEffect(() => {
+      if (selectedFirstOption && selectedFirstOption.id) {
+        // Save the current selections before changing the options
+        setPrevFirstOption(selectedFirstOption);
+        setPrevSecondOption(setSelectedSecondOptions);
+  
+        setSecondOptions(setSelectedSecondMap[selectedFirstOption.id] || []);
+        setSelectedSecondOptions(null); // Reset the second option
+      } else {
+        setSecondOptions([]);
+      }
+    
+    }, [selectedFirstOption]);
+
+
 
 
   return (
@@ -249,6 +289,9 @@ const NetProfitSceen = () => {
           }}
         >
           <LightHeader />
+          <Typography variant="body1" sx={{ mt: 2 }}>
+            Selected Date: {dateText}
+          </Typography>
           <Box
             sx={{
               width: "100%",
@@ -269,13 +312,13 @@ const NetProfitSceen = () => {
                     padding: "5px",
                   }}
                 >
-                  {/* choose filila name  */}
+                  {/* First autocomplete  */}
                     <Autocomplete
                         options={top128Filials}
                         sx={{ width: '100%', height: '100%', mb: 2 }}
                         getOptionLabel={(option) => option.title}
-                        value={selectedFirstOption}
-                        onChange={handleFirstChange}
+                        value={selectedFirstOption || prevFirstOption}
+                        onChange={(event, value) => setSelectedFirstOption(value)}
                         renderInput={(params) => (
                           <TextField
                             {...params}
@@ -304,13 +347,13 @@ const NetProfitSceen = () => {
                     padding: "5px",
                   }}
                 >
-                  {/* choose filila name  */}
                       {/* Second Autocomplete */}
                       <Autocomplete
-                        options={filteredSecondOptions}
+                        options={secondOptions}
                         sx={{ width: '100%', height: '100%' }}
                         getOptionLabel={(option) => option.title}
-                        onChange={handleSecondChange}
+                        onChange={(event, value) => setSelectedSecondOptions(value)}
+                        value={selectedSecondOptions || prevSecondOption}
                         renderInput={(params) => (
                           <TextField
                             {...params}
@@ -342,7 +385,7 @@ const NetProfitSceen = () => {
                     textAlign: "center",
                   }}
                 >
-                  <LocalizationProvider
+                  {/* <LocalizationProvider
                     dateAdapter={AdapterDayjs}
                     adapterLocale="ru"
                   >
@@ -382,6 +425,44 @@ const NetProfitSceen = () => {
                         },
                       }}
                     />
+                  </LocalizationProvider> */}
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+                      <DatePicker
+                        value={dayjs(selectnewdata, 'DD.MM.YYYY')}
+                        onChange={handleDateChange}
+                        slotProps={{ textField: { size: "medium" } }}
+                        renderInput={(props) => (
+                          <Box
+                            sx={{
+                              width: { xs: "100px", sm: "100px", md: "200px" },
+                            }}
+                          >
+                            <TextField {...props} fullWidth />
+                          </Box>
+                        )}
+                        sx={{
+                          ".MuiOutlinedInput-root": {
+                            "& fieldset": {
+                              borderColor: "white",
+                              border: "none",
+                            },
+                            "&:hover fieldset": {
+                              borderColor: "white",
+                              border: "none",
+                            },
+                            "&.Mui-focused fieldset": {
+                              borderColor: "white",
+                            },
+                            ".MuiInputAdornment-root .MuiIconButton-root": {
+                              color: '#0000FF', // Custom color for the DatePicker icon
+                            },
+                            ".MuiInputBase-input": {
+                              fontWeight: 800, // Adjust the font weight of the DatePicker's text
+                              fontSize: { xs: "12px", sm: "18px" },
+                            },
+                          },
+                        }}
+                      />
                   </LocalizationProvider>
                 </Box>
               </Grid>
@@ -580,9 +661,27 @@ const NetProfitSceen = () => {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}>Даходы(без процентов)   план/факт</Typography>
-                    <Box sx={{width:"100%",height:"auto"}}>
-                      <NewLineChart/>
-                    </Box>
+                      <Box sx={{ width: "100%", height: "auto" }}>
+                        {/* {TestNewApi.map((item, index) => (
+                          <div key={index}>
+                            <NewLineChart 
+                              labelsData={item.cleanProfit.labelsData} 
+                              planData={item.cleanProfit.planData} 
+                              factData={item.cleanProfit.factData} 
+                            />
+                          </div>
+                        ))} */}
+                        {chooseData.map((item, index) => (
+                          <div key={index}>
+                            <NewLineChart 
+                              labelsData={item.cleanProfit.labelsData} 
+                              planData={item.cleanProfit.planData} 
+                              factData={item.cleanProfit.factData} 
+                            />
+                          </div>
+                        ))}
+                        
+                      </Box>
                 </Box>
               </Grid>
             </Grid>
