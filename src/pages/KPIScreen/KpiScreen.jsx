@@ -7,11 +7,24 @@ import { Colors } from '../../styles/theme';
 import LightHeader from '../../components/LightHeader/LightHeader';
 import Footer from '../../components/Footer/Footer';
 import NewMain from '../TableKPI/TableKpiScreen';
+import MUIkpi from "../MUIkpiScreen/MuiKpi"
 
 const KpiScreen = () => {
 
   return (
-    <Container fixed maxWidth="xl" disableGutters sx={{ px: '10px', height: '100%' }}>
+    <Container
+    maxWidth={false} // This allows the container to expand beyond the default breakpoints
+    disableGutters
+    sx={{
+      px: "10px",
+      bgcolor: Colors.gray_back,
+      width: '100%', // Ensure the container takes up 100% of the viewport width
+      maxWidth: '100vw', // Ensure the container doesn't exceed the viewport width
+      '@media (min-width: 1920px)': {
+        maxWidth: '100%', // For extra-large screens, allow full width
+      },
+    }}
+  >
       <LightHeader />
         {/* <Box sx={{ display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
         <Grid container spacing={2}>
@@ -85,8 +98,9 @@ const KpiScreen = () => {
                 </Grid>
                 {/* Right side (9 columns) */}
                 <Grid item xs={12} sm={10} sx={{ height: 'auto',display:"block" }}>
-                  <Paper elevation={3} sx={{ height: '100%', padding: '16px',width:"100%" }}>
-                    <NewMain/>
+                  {/* KPI SCREEN */}
+                  <Paper elevation={3} sx={{ height: '100%', padding: '5px',width:"100%" }}>
+                    <MUIkpi/>
                   </Paper>
                 </Grid>
               </Grid>

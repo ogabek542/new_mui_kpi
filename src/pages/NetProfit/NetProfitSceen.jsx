@@ -207,14 +207,14 @@ const NetProfitSceen = () => {
   const [dateText, setDateText] = React.useState(dayjs().format('DD.MM.YYYY')); // state for the formatted date text
   // const [selectnewdata, setSelectNewData] = React.useState(dayjs().format('DD.MM.YYYY'));
   const [chooseData, setChooseData] = React.useState([]);
-  const [dataSelectedDate, setDataSelectedDate] = React.useState("");
+  // const [dataSelectedDate, setDataSelectedDate] = React.useState("");
 
   console.log(chooseData)
 
   // auto complete elements //
   const [prevFirstOption, setPrevFirstOption] = React.useState(null);
   const [selectedFirstOption, setSelectedFirstOption] = React.useState({ title: "Тошкент шаҳри" });
-  const [selectedSecondOptions, setSelectedSecondOptions] = React.useState({ title: "Миробод бўлими" });
+  const [selectedSecondOptions, setSelectedSecondOptions] = React.useState({ title: "Головной офис" });
   const [prevSecondOption, setPrevSecondOption] = React.useState(null);
   // for data map //
   const [secondOptions, setSecondOptions] = React.useState([]);
@@ -298,9 +298,7 @@ const NetProfitSceen = () => {
           }}
         >
           <LightHeader />
-          <Typography variant="body1" sx={{ mt: 2 }}>
-            Selected Date: {dateText}
-          </Typography>
+        
           <Box
             sx={{
               width: "100%",
@@ -310,6 +308,7 @@ const NetProfitSceen = () => {
             }}
           >
             {/* header items div */}
+            
             <Grid container sx={{ width: "100%", height: "auto" }}>
               <Grid item xs={12} sm={12} md={5} lg={5} sx={{ padding: "5px" }}>
                 <Box
@@ -394,47 +393,7 @@ const NetProfitSceen = () => {
                     textAlign: "center",
                   }}
                 >
-                  {/* <LocalizationProvider
-                    dateAdapter={AdapterDayjs}
-                    adapterLocale="ru"
-                  >
-                    <DatePicker
-                      value={selectnewdata}
-                      onChange={(newValue) => setSelectNewData(newValue)}
-                      slotProps={{ textField: { size: "medium" } }}
-                      renderInput={(props) => (
-                        <Box
-                          sx={{
-                            width: { xs: "100px", sm: "100px", md: "200px" },
-                          }}
-                        >
-                          <TextField {...props} fullWidth />
-                        </Box>
-                      )}
-                      sx={{
-                        ".MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "white",
-                            border: "none",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "white",
-                            border: "none",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "white",
-                          },
-                          ".MuiInputAdornment-root .MuiIconButton-root": {
-                            color: Colors.blue_nbu, // Custom color for the DatePicker icon
-                          },
-                          ".MuiInputBase-input": {
-                            fontWeight: 800, // Adjust the font weight of the DatePicker's text
-                            fontSize: { xs: "12px", sm: "18px" },
-                          },
-                        },
-                      }}
-                    />
-                  </LocalizationProvider> */}
+                  
                   <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
                       <DatePicker
                         value={dayjs(selectnewdata, 'DD.MM.YYYY')}
