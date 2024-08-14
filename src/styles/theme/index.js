@@ -37,7 +37,7 @@ export const Colors = {
     transparent:"rgba(0,0,0,0.0)",
 };
 
-const themes = createTheme({
+const theme = createTheme({
     palette: {
         primary: {
             main: Colors.blue_middle,
@@ -62,4 +62,4 @@ const themes = createTheme({
       // other theme settings
 });
 
-export default themes;
+export default theme;

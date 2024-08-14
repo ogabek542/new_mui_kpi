@@ -50,6 +50,7 @@ const CircleProgressBar = ({
           sx={{
             fontWeight: "bold",
             color: textColor,
+            fontSize:"24px"
           }}
         >
           {formattedValue}
