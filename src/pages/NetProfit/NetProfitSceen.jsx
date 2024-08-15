@@ -29,24 +29,30 @@ const NetProfitSceen = () => {
 
   // data //
   const top128Filials = [
-    { title: "Тошкент шаҳри", id: 1 },
-    { title: "Андижон вилояти", id: 2 },
-    { title: "Бухоро вилояти", id: 3 },
-    { title: "Фарғона вилояти", id: 4 },
-    { title: "Жиззах  вилояти", id: 5 },
-    { title: "Наманган  вилояти", id: 6 },
-    { title: "Навоий  вилояти", id: 7 },
-    { title: "Қашқадарё  вилояти", id: 8 },
-    { title: "Самарқанд  вилояти", id: 9 },
-    { title: "Сирдарё  вилояти", id: 10 },
-    { title: "Сурхондарё  вилояти", id: 11 },
-    { title: "Тошкент  вилояти", id: 12 },
-    { title: "Хоразм  вилояти", id: 13 },
-    { title: "Қорақалпоғистон республикаси", id: 14 },
+    { title: "Respublika", id: 1 },
+    { title: "Тошкент шаҳри", id: 2 },
+    { title: "Андижон вилояти", id: 3 },
+    { title: "Бухоро вилояти", id: 4 },
+    { title: "Фарғона вилояти", id: 5 },
+    { title: "Жиззах  вилояти", id: 6 },
+    { title: "Наманган  вилояти", id: 7 },
+    { title: "Навоий  вилояти", id: 8 },
+    { title: "Қашқадарё  вилояти", id: 9 },
+    { title: "Самарқанд  вилояти", id: 10 },
+    { title: "Сирдарё  вилояти", id: 11 },
+    { title: "Сурхондарё  вилояти", id: 12 },
+    { title: "Тошкент  вилояти", id: 13 },
+    { title: "Хоразм  вилояти", id: 14 },
+    { title: "Қорақалпоғистон республикаси", id: 15 },
   ];
   const setSelectedSecondMap = {
-    // Тошкент шаҳри //
+    // NBU//
     1: [
+      { title: "Гулистан амалиёт БХМ" },
+      { title: "Оқолтин БХО" },
+    ],
+    // Тошкент шаҳри //
+    2: [
       { title: "Головной офис" },
       { title: "Миробод бўлими" },
       { title: "Абусахий БХО" },
@@ -74,7 +80,7 @@ const NetProfitSceen = () => {
       { title: "Яшнобод БХM" },
     ],
     // Андижон вилояти //
-    2: [
+    3: [
       { title: "Андижон амалиёт БХМ" },
       { title: "Асака БХM" },
       { title: "Избоскан БХО" },
@@ -84,7 +90,7 @@ const NetProfitSceen = () => {
       { title: "Шахрихон БХО" },
     ],
     // Бухоро вилояти //
-    3: [
+    4: [
       { title: "Арк БХО" },
       { title: "Бухоро амалиёт БХМ" },
       { title: "Бухоро шаҳар БХО" },
@@ -98,7 +104,7 @@ const NetProfitSceen = () => {
       { title: "Шофиркон БХО" },
     ],
     // Фарғона вилояти //
-    4: [
+    5: [
       { title: "Бешариқ БХМ" },
       { title: "Бувайда БХО" },
       { title: "Қува БХМ" },
@@ -109,14 +115,14 @@ const NetProfitSceen = () => {
       { title: "Марғилон БХО" },
     ],
     // Жиззах  вилояти //
-    5: [
+    6: [
       { title: "Джизак амалиёт БХМ" },
       { title: "Индустриал БХМ" },
       { title: "Мирзачуль БХМ" },
       { title: "Пахтакор БХО" },
     ],
     // Наманган  вилояти //
-    6: [
+    7: [
       { title: "Косонсой БХО" },
       { title: "Наманган амалиёт БХМ" },
       { title: "Турақўрғон БХО" },
@@ -126,7 +132,7 @@ const NetProfitSceen = () => {
       { title: "Чуст БХО" },
     ],
     // Навоий  вилояти //
-    7: [
+    8: [
       { title: "Зарафшон БХМ" },
       { title: "Қизилтепа БХМ" },
       { title: "Маликрабод БХМ" },
@@ -135,7 +141,7 @@ const NetProfitSceen = () => {
       { title: "Учқудуқ БХМ" },
     ],
     // Қашқадарё  вилояти //
-    8: [
+    9: [
       { title: "Ғузор БХО" },
       { title: "Қарши амалиёт БХМ" },
       { title: "Муборак БХО" },
@@ -143,7 +149,7 @@ const NetProfitSceen = () => {
       { title: "Янгинишон БХО" },
     ],
     // Самарқанд  вилояти //
-    9: [
+    10: [
       { title: "Булунғур БХО" },
       { title: "Джамбай БХМ" },
       { title: "Зармитан БХО" },
@@ -157,12 +163,12 @@ const NetProfitSceen = () => {
       { title: "Ургут БХМ" },
     ],
     // Сирдарё  вилояти //
-    10: [
+    11: [
       { title: "Гулистан амалиёт БХМ" },
       { title: "Оқолтин БХО" },
     ],
     // Сурхондарё  вилояти //
-    11: [
+    12: [
       { title: "Денов БХМ" },
       { title: "Қумқўрғон БХМ" },
       { title: "Термиз амалиёт БХМ" },
@@ -170,7 +176,7 @@ const NetProfitSceen = () => {
       { title: "Шеробод БХО" },
     ],
     // Тошкент  вилояти //
-    12: [
+    13: [
       { title: "Ангрен БХM" },
       { title: "Бекабад БХМ" },
       { title: "Газалкент БХО" },
@@ -181,7 +187,7 @@ const NetProfitSceen = () => {
       { title: "Янгийул БХМ" },
     ],
     // Хоразм  вилояти //
-    13: [
+    14: [
       { title: "Гурлан БХО" },
       { title: "Карвон БХО" },
       { title: "Хазорасп БХМ" },
@@ -193,7 +199,7 @@ const NetProfitSceen = () => {
       { title: "Кушкупир БХМ" },
     ],
     // Қорақалпоғистон республикаси //
-    14: [
+    15: [
       { title: "Кўнғирот БХМ" },
       { title: "Манғит БХО" },
       { title: "Нукус амалиёт БХМ" },
@@ -531,8 +537,268 @@ const NetProfitSceen = () => {
                   </Box>
                 </Box>
               </Grid>
+              <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
+                <Box
+                  sx={{
+                    bgcolor: Colors.white,
+                    borderRadius: "5px",
+                    width: "100%",
+                    height: "100%",
+                    padding: "5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "5px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      color: Colors.dark,
+                      textAlign: "start",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                    }}
+                  >
+                    Чистая прибыль
+                  </Typography>
+                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"100%"}}>
+                    {/* Left side Doxod */}
+                    <Box sx={{display:"flex",flexDirection:"column",height:"auto"}}>
+                      <Typography sx={{fontWeight:"800", display:"flex",justifyContent:"flex-start",textTransform:"uppercase"}}>Доходы</Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                        }}
+                      >
+                        {/* Left side of BIG text box */}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-end", // Aligns the content to the bottom
+                            alignItems: "center",
+                            gap: "5px",
+                            height: "100%", // Ensure the parent Box has a height to push content to the bottom
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: "48px",
+                              fontWeight: "900",
+                              textAlign: "start",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            668
+                          </Typography>
+                      </Box>
+                        {/* Right side of text box */}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                        >
+                          {/* Icon on the right side */}
+                          <MovingIcon
+                            sx={{
+                              color: Colors.green_dark,
+                              fontSize: "24px",
+                              padding: "0px",
+                              // rotate:"180deg"
+                              
+                            }}
+                          />
+                          {/* Percentage text on the right side */}
+                          <Typography
+                            sx={{
+                              fontSize: "24px",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                              fontWeight: "600",
+                            }}
+                          >
+                            19.78%
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  {/* right side Rosxod */}
+                    <Box sx={{display:"flex",flexDirection:"column",height:"auto"}}>
+                        <Typography sx={{fontWeight:"800", display:"flex",justifyContent:"flex-start",textTransform:"uppercase"}}>расходы</Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          {/* Left side of BIG text box */}
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "flex-end", // Aligns the content to the bottom
+                              alignItems: "center",
+                              gap: "5px",
+                              height: "100%", // Ensure the parent Box has a height to push content to the bottom
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                fontSize: "48px",
+                                fontWeight: "900",
+                                textAlign: "start",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              764
+                            </Typography>
+                        </Box>
+                          {/* Right side of text box */}
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "5px",
+                              alignItems: "center",
+                            }}
+                          >
+                            {/* Icon on the right side */}
+                            <MovingIcon
+                              sx={{
+                                color: Colors.green_dark,
+                                fontSize: "24px",
+                                padding: "0px",
+                                // rotate:"180deg"
+                                
+                              }}
+                            />
+                            {/* Percentage text on the right side */}
+                            <Typography
+                              sx={{
+                                fontSize: "24px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                fontWeight: "600",
+                              }}
+                            >
+                              16.16%
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Box>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
+                <Box
+                  sx={{
+                    bgcolor: Colors.white,
+                    borderRadius: "5px",
+                    width: "100%",
+                    height: "100%",
+                    padding: "5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "5px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      color: Colors.dark,
+                      textAlign: "start",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                    }}
+                  >
+                    Чистая прибыль (расходы)
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    {/* Left side of text box */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-end", // Aligns the content to the bottom
+                        alignItems: "center",
+                        gap: "5px",
+                        height: "100%", // Ensure the parent Box has a height to push content to the bottom
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "112px",
+                          fontWeight: "900",
+                          textAlign: "start",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        374
+                      </Typography>
+                  </Box>
+                    {/* Right side of text box */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "5px",
+                        alignItems: "center",
+                      }}
+                    >
+                      {/* Icon on the right side */}
+                      <MovingIcon
+                        sx={{
+                          color: Colors.green_dark,
+                          fontSize: "48px",
+                          padding: "0px",
+                          // rotate:"180deg"
+                          
+                        }}
+                      />
+                      {/* Percentage text on the right side */}
+                      <Typography
+                        sx={{
+                          fontSize: "40px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          fontWeight: "600",
+                        }}
+                      >
+                        16.16%
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Grid>
               {/* right side */}
-              <Grid item xs={7} md={7} lg={8} sx={{ padding: "5px" }}>
+              {/* <Grid item xs={7} md={7} lg={8} sx={{ padding: "5px" }}>
                 <Box
                   sx={{
                     bgcolor: Colors.white,
@@ -559,9 +825,156 @@ const NetProfitSceen = () => {
                       <AreaLineChart/>
                     </Box>
                 </Box>
-              </Grid>
+              </Grid> */}
             </Grid>
             {/* second grid div */}
+            <Grid container sx={{ width: "100%", height: "250px" }}>
+              {/* left side */}
+              <Grid item xs={5} md={5} lg={6} sx={{ padding: "5px" }}>
+              <Box
+                  sx={{
+                    bgcolor: Colors.white,
+                    borderRadius: "5px",
+                    width: "100%",
+                    height: "100%",
+                    padding:"5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "5px",
+                  }}
+                >
+                  <Typography   sx={{
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      color: Colors.dark,
+                      textAlign: "start",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                    }}>Доходы(процент)  план/факт</Typography>
+                    <Box sx={{width:"100%",height:"auto"}}>
+                      <AreaLineChart/>
+                    </Box>
+                </Box>
+              </Grid>
+              {/* right side */}
+              <Grid item xs={7} md={7} lg={6} sx={{ padding: "5px" }}>
+                <Box
+                  sx={{
+                    bgcolor: Colors.white,
+                    borderRadius: "5px",
+                    width: "100%",
+                    height: "100%",
+                    padding:"5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "5px",
+                  }}
+                >
+                  <Typography   sx={{
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      color: Colors.dark,
+                      textAlign: "start",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                    }}>Доходы(без процентов)   план/факт</Typography>
+                      <Box sx={{ width: "100%", height: "auto" }}>
+                      
+                        {chooseData.map((item, index) => (
+                          <div key={index}>
+                            <NewLineChart 
+                              labelsData={item.cleanProfit.labelsData} 
+                              planData={item.cleanProfit.planData} 
+                              factData={item.cleanProfit.factData} 
+                            />
+                          </div>
+                        ))}
+                        
+                      </Box>
+                </Box>
+              </Grid>
+            </Grid>
+            {/* third grid div */}
+            <Grid container sx={{ width: "100%", height: "400px" }}>
+              {/* left side of third div */}
+              <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px",height:"auto" }}>
+                <Box
+                  sx={{
+                    bgcolor: Colors.white,
+                    borderRadius: "5px",
+                    width: "100%",
+                    height: "100%",
+                    display:"flex",
+                    flexDirection:"column",
+                    gap:"10px",
+                    padding:"5px",
+                  }}
+                >
+                  {/* topside text of third div */}
+                  <Typography
+                    sx={{
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      color: Colors.dark,
+                      textAlign: "start",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                    }}
+                  >
+                    расходы (процентные) план/факт
+                  </Typography>
+                  {/* Bottom side box of third div */}
+                  <Box sx={{width:"100%",height:"350px"}}>
+                  
+                  <OpenVerticalGroupBarChart/>
+                  </Box>
+                </Box>
+              </Grid>
+              {/* right side of third div */}
+              <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px" }}>
+              <Box
+                  sx={{
+                    bgcolor: Colors.white,
+                    borderRadius: "5px",
+                    width: "100%",
+                    height: "100%",
+                    display:"flex",
+                    flexDirection:"column",
+                    gap:"10px",
+                    padding:"5px",
+                  }}
+                >
+                  {/* topside text of third div */}
+                  <Typography
+                    sx={{
+                      fontWeight: "700",
+                      fontSize: "14px",
+                      color: Colors.dark,
+                      textAlign: "start",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                    }}
+                  >
+                   
+                   расходы (без процентов) план/факт 
+                  </Typography>
+                  {/* Bottom side box of third div */}
+                  <Box sx={{width:"100%",height:"350px"}}>
+                  
+                  <OpenHorizontalBarChart/>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+            {/* fouth gris div */}
             <Grid container sx={{ width: "100%", height: "250px" }}>
               {/* left side */}
               <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
@@ -628,17 +1041,9 @@ const NetProfitSceen = () => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>Даходы(без процентов)   план/факт</Typography>
+                    }}>резервное   план/факт</Typography>
                       <Box sx={{ width: "100%", height: "auto" }}>
-                        {/* {TestNewApi.map((item, index) => (
-                          <div key={index}>
-                            <NewLineChart 
-                              labelsData={item.cleanProfit.labelsData} 
-                              planData={item.cleanProfit.planData} 
-                              factData={item.cleanProfit.factData} 
-                            />
-                          </div>
-                        ))} */}
+                      
                         {chooseData.map((item, index) => (
                           <div key={index}>
                             <NewLineChart 
@@ -650,79 +1055,6 @@ const NetProfitSceen = () => {
                         ))}
                         
                       </Box>
-                </Box>
-              </Grid>
-            </Grid>
-            {/* third grid div */}
-            <Grid container sx={{ width: "100%", height: "350px" }}>
-              {/* left side of third div */}
-              <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px" }}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    display:"flex",
-                    flexDirection:"column",
-                    gap:"10px",
-                    padding:"5px",
-                  }}
-                >
-                  {/* topside text of third div */}
-                  <Typography
-                    sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}
-                  >
-                    без процентов  расходы
-                  </Typography>
-                  {/* Bottom side box of third div */}
-                  <Box sx={{width:"100%",height:"300px"}}>
-                  <OpenVerticalGroupBarChart/>
-                  </Box>
-                </Box>
-              </Grid>
-              {/* right side of third div */}
-              <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px" }}>
-              <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    display:"flex",
-                    flexDirection:"column",
-                    gap:"10px",
-                    padding:"5px",
-                  }}
-                >
-                  {/* topside text of third div */}
-                  <Typography
-                    sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}
-                  >
-                    процентные расходы
-                  </Typography>
-                  {/* Bottom side box of third div */}
-                  <Box sx={{width:"100%",height:"300px"}}>
-                  <OpenHorizontalBarChart/>
-                  </Box>
                 </Box>
               </Grid>
             </Grid>

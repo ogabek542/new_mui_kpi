@@ -9,10 +9,11 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,Filler);
 
 const NewLineChart = ({ labelsData, planData, factData }) => {
   const data = {
@@ -24,7 +25,8 @@ const NewLineChart = ({ labelsData, planData, factData }) => {
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
-        tension: 0, // Straight line
+        fill: true,
+        tension: 0.4,
       },
       {
         label: 'FACT',
@@ -32,7 +34,8 @@ const NewLineChart = ({ labelsData, planData, factData }) => {
         backgroundColor: 'rgba(144, 238, 144, 0.4)',
         borderColor: 'rgba(144, 238, 144, 1)',
         borderWidth: 2,
-        tension: 0, // Straight line
+        fill: true,
+        tension: 0.4,
       },
     ],
   };
@@ -84,6 +87,9 @@ const NewLineChart = ({ labelsData, planData, factData }) => {
     // animation: {
     //   duration: 2000, // Duration of the animation
     //   easing: 'easeInOutQuad', // Animation easing function
+    //   onProgress: function(animation) {
+    //     // Optional: Custom function to run during animation progress
+    //   },
     //   onComplete: function(animation) {
     //     // Loop the animation indefinitely
     //     const chart = animation.chart;
@@ -95,7 +101,6 @@ const NewLineChart = ({ labelsData, planData, factData }) => {
     //   },
     // },
   };
-
   return (
     <Card sx={{ height: '100%', width: '100%', bgcolor: 'transparent', border: 'none', padding: '0px' }} elevation={0}>
       <CardContent sx={{ height: '100%', bgcolor: 'transparent', border: 'none' }}>

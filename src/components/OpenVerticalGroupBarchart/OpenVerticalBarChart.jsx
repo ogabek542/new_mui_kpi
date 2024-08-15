@@ -16,31 +16,31 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const OpenVerticalGroupBarChart = () => {
   const data = {
-    labels: ['Процентные расходы по депозитам', 'Процентные расходы по счетам к оплате в ЦБРУ', 'Процентные расходы по счетам к оплате в другие банки', 'Процентные расходы по кредитам к оплате', 'Процентные расходы по выпущенным ценным бумагам','Другие процентные расходы'],
+    labels: ['Процентные расходы по депозитам', 'Процентные расходы по счетам к оплате в другие банки', 'Процентные расходы по кредитам к оплате', 'Процентные расходы по выпущенным ценным бумагам','Другие процентные расходы'],
     datasets: [
       {
         label: 'PLAN',
-        data: [2400, 1398, 9800, 3908, 4800,8000],
-        backgroundColor: 'rgba(75, 192, 192, 0.4)',
+        data: [2400, 1398, 3908, 4800,8000],
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
-        barThickness: 30, // Adjust this value to make bars thicker
+        barThickness: 15, // Adjust this value to make bars thicker
       },
       {
         label: 'FACT',
-        data: [1200, 2300, 8400, 5000, 3600,7500],
-        backgroundColor: 'rgba(34, 139, 34, 0.8)', // Dark Green
-        borderColor: 'rgba(34, 139, 34, 1)', // Dark Green Border
+        data: [1200, 2300, 5000, 3600,7500],
+        backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
+        borderColor: 'rgba(144, 238, 144, 1)', // Light green border color
         borderWidth: 2,
-        barThickness: 30, // Adjust this value to make bars thicker
+        barThickness: 15, // Adjust this value to make bars thicker
       },
     ],
   };
 
   const options = {
-    indexAxis: 'x', // Vertical bar chart
+    indexAxis: 'y', // Horizontal bar chart
     scales: {
-      y: {
+      x: {
         beginAtZero: true,
       },
     },
@@ -49,7 +49,7 @@ const OpenVerticalGroupBarChart = () => {
     plugins: {
       legend: {
         display: true, // Show the legend
-        position: 'top', // Position of the legend
+        position: 'top', // Position the legend at the top
         align: 'end', // Align the legend to the right
         labels: {
           usePointStyle: true, // Use point styles instead of box styles

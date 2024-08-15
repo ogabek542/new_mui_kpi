@@ -205,6 +205,16 @@ const newDefaultImage = DefaultImage;
             </g>
         );
     };
+
+    const formatValue = (value) => {
+        if (value > 125) {
+          return 125;
+        } else if (value < 0) {
+          return 0;
+        } else {
+          return value;
+        }
+      };
     
 
   return (
@@ -275,7 +285,7 @@ const newDefaultImage = DefaultImage;
                         {/* TOP TEXT SECTION */}
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                             <Typography sx={{fontWeight:"bold",fontSize:"12px"}}>KPI</Typography>
-                            <Typography sx={{fontSize:"12px",fontWeight:"bold",textTransform:"capitalize"}}>{formatDate(circleData.month)}г.</Typography>
+                            <Typography sx={{fontSize:"12px",fontWeight:"bold",textTransform:"capitalize"}}>{circleData.month}г.</Typography>
                         </Box>
                         {/* CIRCLE SECTION */}
                         <Box sx={{width:"100%",height:"90%",display:"flex",alignItems:"center",textAlign:"center",justifyContent:"center"}}>
@@ -309,7 +319,7 @@ const newDefaultImage = DefaultImage;
                                 width={"100%"}
                                 height={"100%"}
                                 margin={{ left: 0, top: 10, right: 10,bottom:15 }}
-                                data={line.kpies}
+                                // data={line.kpies}
                                 data={lastTwelveMonthsData}
                                 >
                                 <CartesianGrid
@@ -318,8 +328,8 @@ const newDefaultImage = DefaultImage;
                                     vertical="true"
                                 />
                                 <XAxis
-                                    dataKey="month"
-                                    dataKey={(item) => formatDate(item.month)}
+                                    // dataKey="month"
+                                    dataKey={(item) => item.month}
                                     padding={{ left: 0, right: 0 }}
                                     tick={{
                                     fill: "#000",
@@ -356,8 +366,80 @@ const newDefaultImage = DefaultImage;
         {/* KPI TABLE  */}
             <Grid container sx={{width:"100%",height:"auto",padding:"5px"}}>
                 <Grid item lg={12} sx={{width:"100%",height:"auto"}}>
-                    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",border:"1px solid gray"}}>
-                        <Typography sx={{height:"50px"}}>table</Typography>
+                    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",border:"1px solid gray",display:"flex",flexDirection:"column"}}>
+                            {/* Table Header */}
+                        <Grid container  sx={{width:"100%",height:"auto",gap:"5px"}}>
+                            <Grid item xs={2.5} sm={2.5}  sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>НАименование метрики</Typography>
+                            </Grid>
+                            <Grid item xs={0.7} sm={0.7} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>начало</Typography>
+                            </Grid>
+                            <Grid item xs={0.7} sm={0.7} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>конец</Typography>
+                            </Grid>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>активность</Typography>
+                            </Grid>
+                            <Grid item xs={1.5} sm={1.5} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>метод расчёта</Typography>
+                            </Grid>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>вес показ.</Typography>
+                            </Grid>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>единица</Typography>
+                            </Grid>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>план</Typography>
+                            </Grid>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>факт</Typography>
+                            </Grid>
+                            <Grid item xs={1} sm={1.1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>исполнение</Typography>
+                            </Grid>
+                        </Grid>
+
+                        {/* Table Body */}
+                        {tableData.map((rowData, id) => (
+                            <Grid container  key={id} >
+                            <Grid item xs={2.5} sm={2.5} >
+                                <Typography >{rowData.kpi_name}</Typography>
+                            </Grid>
+                            <Grid item xs={0.7} sm={0.7} >
+                                <Typography >{rowData.start}</Typography>
+                            </Grid>
+                            <Grid item xs={0.7} sm={0.7} >
+                                <Typography >{rowData.end}</Typography>
+                            </Grid>
+                            <Grid
+                                item
+                                xs={1} sm={1}
+                                className={`table-body_text-div ${rowData.activity === "Да" ? "defaultBg" : "yellowBg"}`}
+                            >
+                                <Typography >{rowData.activity}</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={2} >
+                                <Typography >{rowData.method}</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={1} >
+                                <Typography >{Math.round(rowData.weight)}%</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={1} >
+                                <Typography >{rowData.metric}</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={1} >
+                                <Typography >{rowData.performance_score}</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={1} >
+                                <Typography >{rowData.fact}</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={1} className="table-body_text-div">
+                                <Typography className="table-body-text">{Math.round(formatValue(rowData.finished))} %</Typography>
+                            </Grid>
+                            </Grid>
+                        ))}
                     </Box>
                 </Grid>
             </Grid>
