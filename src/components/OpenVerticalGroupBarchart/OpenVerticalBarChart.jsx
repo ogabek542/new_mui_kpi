@@ -14,31 +14,31 @@ import { Box, Card, CardContent } from '@mui/material';
 // Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const OpenVerticalGroupBarChart = () => {
+const VerticalGroupBarChart = ({ labelsData, planData, factData }) => {
   const data = {
-    labels: ['Процентные расходы по депозитам', 'Процентные расходы по счетам к оплате в другие банки', 'Процентные расходы по кредитам к оплате', 'Процентные расходы по выпущенным ценным бумагам','Другие процентные расходы'],
+    labels: labelsData,
     datasets: [
       {
         label: 'PLAN',
-        data: [2400, 1398, 3908, 4800,8000],
+        data: planData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
-        barThickness: 15, // Adjust this value to make bars thicker
+        barThickness: 30, // Adjust this value to make bars thicker
       },
       {
         label: 'FACT',
-        data: [1200, 2300, 5000, 3600,7500],
+        data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
         borderColor: 'rgba(144, 238, 144, 1)', // Light green border color
         borderWidth: 2,
-        barThickness: 15, // Adjust this value to make bars thicker
+        barThickness: 30, // Adjust this value to make bars thicker
       },
     ],
   };
 
   const options = {
-    indexAxis: 'y', // Horizontal bar chart
+    indexAxis: 'x', // Vertical bar chart
     scales: {
       x: {
         beginAtZero: true,
@@ -73,4 +73,4 @@ const OpenVerticalGroupBarChart = () => {
   );
 };
 
-export default OpenVerticalGroupBarChart;
+export default VerticalGroupBarChart;

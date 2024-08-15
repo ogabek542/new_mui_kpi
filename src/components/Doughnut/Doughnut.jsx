@@ -13,7 +13,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = () => {
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange',"Другие процентные доходы"],
     datasets: [
       {
         label: 'My Doughnut Chart',
@@ -25,6 +25,7 @@ const DoughnutChart = () => {
           'rgba(75, 192, 192, 0.6)', // Green
           'rgba(153, 102, 255, 0.6)', // Purple
           'rgba(255, 159, 64, 0.6)', // Orange
+          'rgba(144, 238, 144, 0.6)',//Green
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)', // Red
@@ -33,6 +34,7 @@ const DoughnutChart = () => {
           'rgba(75, 192, 192, 1)', // Green
           'rgba(153, 102, 255, 1)', // Purple
           'rgba(255, 159, 64, 1)', // Orange
+          'rgba(144, 238, 144,1)',// Green
         ],
         borderWidth: 1,
       },

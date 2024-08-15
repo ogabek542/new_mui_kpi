@@ -11,13 +11,13 @@ import { Box, Card, CardContent } from '@mui/material';
 // Register the necessary components for Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const OpenDoughnutChart = () => {
+const DoughnutChart = ({ labelsData, chartData }) => {
   const data = {
-    labels: ['Заработная плата и другие расходы на сотрудников', 'Аренда и содержание', 'Командировочные и транспортные расходы', 'Административные расходы', 'Репрезентация и благотворительность', 'Расходы на износ','Страхование, налоги и другие расходы'],
+    labels: labelsData,
     datasets: [
       {
         label: 'My Doughnut Chart',
-        data: [12, 19, 8, 15, 2, 3], // Example data
+        data: chartData, 
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)', // Red
           'rgba(54, 162, 235, 0.6)', // Blue
@@ -25,6 +25,7 @@ const OpenDoughnutChart = () => {
           'rgba(75, 192, 192, 0.6)', // Green
           'rgba(153, 102, 255, 0.6)', // Purple
           'rgba(255, 159, 64, 0.6)', // Orange
+          'rgba(144, 238, 144, 0.6)', // Light Green
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)', // Red
@@ -33,6 +34,7 @@ const OpenDoughnutChart = () => {
           'rgba(75, 192, 192, 1)', // Green
           'rgba(153, 102, 255, 1)', // Purple
           'rgba(255, 159, 64, 1)', // Orange
+          'rgba(144, 238, 144, 1)', // Light Green
         ],
         borderWidth: 1,
       },
@@ -44,10 +46,13 @@ const OpenDoughnutChart = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'right', // Move the legend to the right side
+        position: 'right',
         labels: {
-          usePointStyle: true, // Use circular point styles instead of the default boxes
-          pointStyle: 'circle', // Set the point style to circle
+          usePointStyle: true,
+          pointStyle: 'circle',
+          boxWidth: 10,  // Smaller box size can give more space for text
+          padding: 8,   // Increase padding for better spacing
+          maxWidth: 150, // Increase maxWidth to prevent truncation
         },
       },
       tooltip: {
@@ -58,18 +63,17 @@ const OpenDoughnutChart = () => {
         },
       },
     },
-    // Hover settings
     hover: {
-      mode: 'nearest', // Mode determines which element is activated on hover
-      intersect: true, // If true, only triggers when mouse is directly over an element
+      mode: 'nearest',
+      intersect: true,
       onHover: function (event, chartElement) {
         if (chartElement.length) {
-          console.log('Hovered over:', chartElement[0].index); // Example action
+          console.log('Hovered over:', chartElement[0].index);
         }
       },
     },
   };
-
+  
   return (
     <Card sx={{ height: '100%', width: '100%', bgcolor: 'transparent', border: 'none' }} elevation={0}>
       <CardContent sx={{ height: '100%', bgcolor: 'transparent', border: 'none' }}>
@@ -81,4 +85,4 @@ const OpenDoughnutChart = () => {
   );
 };
 
-export default OpenDoughnutChart;
+export default DoughnutChart;

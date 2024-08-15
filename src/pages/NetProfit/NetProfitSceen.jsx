@@ -29,7 +29,7 @@ const NetProfitSceen = () => {
 
   // data //
   const top128Filials = [
-    { title: "Respublika", id: 1 },
+    { title: "Республика", id: 1 },
     { title: "Тошкент шаҳри", id: 2 },
     { title: "Андижон вилояти", id: 3 },
     { title: "Бухоро вилояти", id: 4 },
@@ -48,8 +48,7 @@ const NetProfitSceen = () => {
   const setSelectedSecondMap = {
     // NBU//
     1: [
-      { title: "Гулистан амалиёт БХМ" },
-      { title: "Оқолтин БХО" },
+      { title: "НБУ" },
     ],
     // Тошкент шаҳри //
     2: [
@@ -249,7 +248,6 @@ const NetProfitSceen = () => {
     }
   };
 
-  
 
     // Update the options for the second Autocomplete based on the first selection
     useEffect(() => {
@@ -275,7 +273,10 @@ const NetProfitSceen = () => {
       initializeScreen();
     }, [selectedFirstOption]);
 
-
+    const insertSpaces = (text) => {
+      if (!text) return ""; // Handle empty or undefined text
+      return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    };
 
 
   return (
@@ -313,8 +314,7 @@ const NetProfitSceen = () => {
               alignItems: "center",
             }}
           >
-            {/* header items div */}
-            
+            {/*<=== header items div ===>*/}
             <Grid container sx={{ width: "100%", height: "auto" }}>
               <Grid item xs={12} sm={12} md={5} lg={5} sx={{ padding: "5px" }}>
                 <Box
@@ -336,7 +336,7 @@ const NetProfitSceen = () => {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Выбор отделение"
+                            label="Выбор область"
                             variant="standard"
                             sx={{
                               "& .MuiInput-underline:before": { borderBottomColor: "red" },
@@ -441,9 +441,11 @@ const NetProfitSceen = () => {
                 </Box>
               </Grid>
             </Grid>
-            {/* first grid div */}
+            {chooseData.map((item, index) => (
+              <Box key={index} sx={{width:"100%",height:"100%"}}>
+                {/*<==== first grid div ====>*/}
             <Grid container sx={{ width: "100%", height: "250px" }}>
-              {/* left side */}
+              {/* first number div */}
               <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
                 <Box
                   sx={{
@@ -469,7 +471,7 @@ const NetProfitSceen = () => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                    Чистая прибыль
+                    Чистая прибыль(МЛН сум)
                   </Typography>
                   <Box
                     sx={{
@@ -489,7 +491,7 @@ const NetProfitSceen = () => {
                         height: "100%", // Ensure the parent Box has a height to push content to the bottom
                       }}
                     >
-                      <Typography
+                      {/* <Typography
                         sx={{
                           fontSize: "112px",
                           fontWeight: "900",
@@ -499,8 +501,21 @@ const NetProfitSceen = () => {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        992
+                        {item.cleanProfit.netProfitData}
+                      </Typography> */}
+                      <Typography
+                        sx={{
+                          fontSize: "64px",// 112px
+                          fontWeight: "800",
+                          textAlign: "start",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        { insertSpaces(item.cleanProfit.netProfitData) || "нет информации"}
                       </Typography>
+
                   </Box>
                     {/* Right side of text box */}
                     <Box
@@ -531,12 +546,13 @@ const NetProfitSceen = () => {
                           fontWeight: "600",
                         }}
                       >
-                        16.16%
+                        {item.cleanProfit.netPercentageData || "нет информации"}%
                       </Typography>
                     </Box>
                   </Box>
                 </Box>
               </Grid>
+                {/* second number div */}
               <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
                 <Box
                   sx={{
@@ -562,12 +578,11 @@ const NetProfitSceen = () => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                    Чистая прибыль
+                    чистый % доход  / чистый не % доход
                   </Typography>
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"100%"}}>
                     {/* Left side Doxod */}
                     <Box sx={{display:"flex",flexDirection:"column",height:"auto"}}>
-                      <Typography sx={{fontWeight:"800", display:"flex",justifyContent:"flex-start",textTransform:"uppercase"}}>Доходы</Typography>
                       <Box
                         sx={{
                           display: "flex",
@@ -588,7 +603,7 @@ const NetProfitSceen = () => {
                         >
                           <Typography
                             sx={{
-                              fontSize: "48px",
+                              fontSize: "32px",
                               fontWeight: "900",
                               textAlign: "start",
                               overflow: "hidden",
@@ -596,7 +611,7 @@ const NetProfitSceen = () => {
                               whiteSpace: "nowrap",
                             }}
                           >
-                            668
+                            {insertSpaces(item.cleanPercentageIncome.netSoftProfitData) || "нет информации"}
                           </Typography>
                       </Box>
                         {/* Right side of text box */}
@@ -621,21 +636,20 @@ const NetProfitSceen = () => {
                           {/* Percentage text on the right side */}
                           <Typography
                             sx={{
-                              fontSize: "24px",
+                              fontSize: "18px",
                               overflow: "hidden",
                               textOverflow: "ellipsis",
                               whiteSpace: "nowrap",
                               fontWeight: "600",
                             }}
                           >
-                            19.78%
+                            {item.cleanPercentageIncome.netSoftPercentageData || "нет информации"}%
                           </Typography>
                         </Box>
                       </Box>
                     </Box>
-                  {/* right side Rosxod */}
+                    {/* right side Rosxod */}
                     <Box sx={{display:"flex",flexDirection:"column",height:"auto"}}>
-                        <Typography sx={{fontWeight:"800", display:"flex",justifyContent:"flex-start",textTransform:"uppercase"}}>расходы</Typography>
                         <Box
                           sx={{
                             display: "flex",
@@ -645,65 +659,66 @@ const NetProfitSceen = () => {
                         >
                           {/* Left side of BIG text box */}
                           <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-end", // Aligns the content to the bottom
+                            alignItems: "center",
+                            gap: "5px",
+                            height: "100%", // Ensure the parent Box has a height to push content to the bottom
+                          }}
+                        >
+                          <Typography
                             sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              justifyContent: "flex-end", // Aligns the content to the bottom
-                              alignItems: "center",
-                              gap: "5px",
-                              height: "100%", // Ensure the parent Box has a height to push content to the bottom
+                              fontSize: "32px",
+                              fontWeight: "900",
+                              textAlign: "start",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
                             }}
                           >
-                            <Typography
-                              sx={{
-                                fontSize: "48px",
-                                fontWeight: "900",
-                                textAlign: "start",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              764
-                            </Typography>
-                        </Box>
+                            {insertSpaces(item.cleanNoPercentageIncome.netSoftNoProfitData)|| "нет информации"}
+                          </Typography>
+                      </Box>
                           {/* Right side of text box */}
                           <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                        >
+                          {/* Icon on the right side */}
+                          <MovingIcon
                             sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                              alignItems: "center",
+                              color: Colors.green_dark,
+                              fontSize: "24px",
+                              padding: "0px",
+                              // rotate:"180deg"
+                              
+                            }}
+                          />
+                          {/* Percentage text on the right side */}
+                          <Typography
+                            sx={{
+                              fontSize: "18px",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                              fontWeight: "600",
                             }}
                           >
-                            {/* Icon on the right side */}
-                            <MovingIcon
-                              sx={{
-                                color: Colors.green_dark,
-                                fontSize: "24px",
-                                padding: "0px",
-                                // rotate:"180deg"
-                                
-                              }}
-                            />
-                            {/* Percentage text on the right side */}
-                            <Typography
-                              sx={{
-                                fontSize: "24px",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                                fontWeight: "600",
-                              }}
-                            >
-                              16.16%
-                            </Typography>
-                          </Box>
+                            {item.cleanNoPercentageIncome.netSoftNoPercentageData || "нет информации"}%
+                          </Typography>
+                        </Box>
                         </Box>
                       </Box>
                   </Box>
                 </Box>
               </Grid>
+              {/* third number div */}
               <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
                 <Box
                   sx={{
@@ -719,7 +734,7 @@ const NetProfitSceen = () => {
                 >
                   <Typography
                     sx={{
-                      fontWeight: "700",
+                      fontWeight: "800",
                       fontSize: "14px",
                       color: Colors.dark,
                       textAlign: "start",
@@ -729,7 +744,7 @@ const NetProfitSceen = () => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                    Чистая прибыль (расходы)
+                    CIR
                   </Typography>
                   <Box
                     sx={{
@@ -751,7 +766,7 @@ const NetProfitSceen = () => {
                     >
                       <Typography
                         sx={{
-                          fontSize: "112px",
+                          fontSize: "64px",
                           fontWeight: "900",
                           textAlign: "start",
                           overflow: "hidden",
@@ -759,7 +774,7 @@ const NetProfitSceen = () => {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        374
+                        {insertSpaces(item.cirProfir.cirData) || "нет информации"}
                       </Typography>
                   </Box>
                     {/* Right side of text box */}
@@ -791,43 +806,14 @@ const NetProfitSceen = () => {
                           fontWeight: "600",
                         }}
                       >
-                        16.16%
+                        {item.cirProfir.cirPercentageDate}%
                       </Typography>
                     </Box>
                   </Box>
                 </Box>
               </Grid>
-              {/* right side */}
-              {/* <Grid item xs={7} md={7} lg={8} sx={{ padding: "5px" }}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    padding:"5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                  }}
-                >
-                  <Typography   sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>Даходы(процент)  план/факт</Typography>
-                    <Box sx={{width:"100%",height:"auto"}}>
-                      <AreaLineChart/>
-                    </Box>
-                </Box>
-              </Grid> */}
             </Grid>
-            {/* second grid div */}
+            {/*<==== second grid div ====>*/}
             <Grid container sx={{ width: "100%", height: "250px" }}>
               {/* left side */}
               <Grid item xs={5} md={5} lg={6} sx={{ padding: "5px" }}>
@@ -852,9 +838,13 @@ const NetProfitSceen = () => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>Доходы(процент)  план/факт</Typography>
+                    }}>не %  Доходы</Typography>
                     <Box sx={{width:"100%",height:"auto"}}>
-                      <AreaLineChart/>
+                          <NewLineChart 
+                              labelsData={item.nointerestIncome.labelsData} 
+                              planData={item.nointerestIncome.planData} 
+                              factData={item.nointerestIncome.factData} 
+                            />
                     </Box>
                 </Box>
               </Grid>
@@ -881,24 +871,20 @@ const NetProfitSceen = () => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>Доходы(без процентов)   план/факт</Typography>
+                    }}>% Доходы</Typography>
                       <Box sx={{ width: "100%", height: "auto" }}>
                       
-                        {chooseData.map((item, index) => (
-                          <div key={index}>
                             <NewLineChart 
-                              labelsData={item.cleanProfit.labelsData} 
-                              planData={item.cleanProfit.planData} 
-                              factData={item.cleanProfit.factData} 
+                              labelsData={item.interestIncome.labelsData} 
+                              planData={item.interestIncome.planData} 
+                              factData={item.interestIncome.factData} 
                             />
-                          </div>
-                        ))}
                         
                       </Box>
                 </Box>
               </Grid>
             </Grid>
-            {/* third grid div */}
+            {/*<==== third grid div ====>*/}
             <Grid container sx={{ width: "100%", height: "400px" }}>
               {/* left side of third div */}
               <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px",height:"auto" }}>
@@ -927,12 +913,17 @@ const NetProfitSceen = () => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                    расходы (процентные) план/факт
+                  % расходы
                   </Typography>
                   {/* Bottom side box of third div */}
                   <Box sx={{width:"100%",height:"350px"}}>
                   
-                  <OpenVerticalGroupBarChart/>
+                  <OpenHorizontalBarChart 
+                     labelsData={item.interestCost.labelsData} 
+                     planData={item.interestCost.planData} 
+                     factData={item.interestCost.factData} 
+                  
+                  />
                   </Box>
                 </Box>
               </Grid>
@@ -964,20 +955,24 @@ const NetProfitSceen = () => {
                     }}
                   >
                    
-                   расходы (без процентов) план/факт 
+                   не % расходы
                   </Typography>
                   {/* Bottom side box of third div */}
                   <Box sx={{width:"100%",height:"350px"}}>
                   
-                  <OpenHorizontalBarChart/>
+                  <OpenHorizontalBarChart 
+                     labelsData={item.nointerestCost.labelsData} 
+                     planData={item.nointerestCost.planData} 
+                     factData={item.nointerestCost.factData} 
+                  />
                   </Box>
                 </Box>
               </Grid>
             </Grid>
-            {/* fouth gris div */}
+            {/*<==== fouth grid div ====>*/}
             <Grid container sx={{ width: "100%", height: "250px" }}>
               {/* left side */}
-              <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
+              <Grid item xs={5} md={5} lg={5} sx={{ padding: "5px" }}>
                 <Box
                   sx={{
                     bgcolor: Colors.white,
@@ -1002,7 +997,7 @@ const NetProfitSceen = () => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                    оперативный  расходы
+                    операционные  расходы
                   </Typography>
                   <Box
                     sx={{
@@ -1012,14 +1007,14 @@ const NetProfitSceen = () => {
                     }}
                   >
                     {/* Left side of text box */}
-                  <OpenDoughnutChart/>
+                  <OpenDoughnutChart labelsData={item.operatingExpenses.labelsData} chartData={item.operatingExpenses.planData}/>
                     {/* Right side of text box */}
                   
                   </Box>
                 </Box>
               </Grid>
               {/* right side */}
-              <Grid item xs={7} md={7} lg={8} sx={{ padding: "5px" }}>
+              <Grid item xs={7} md={7} lg={7} sx={{ padding: "5px" }}>
                 <Box
                   sx={{
                     bgcolor: Colors.white,
@@ -1041,23 +1036,29 @@ const NetProfitSceen = () => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>резервное   план/факт</Typography>
+                    }}>резервы</Typography>
                       <Box sx={{ width: "100%", height: "auto" }}>
                       
-                        {chooseData.map((item, index) => (
+                        {/* {chooseData.map((item, index) => (
                           <div key={index}>
                             <NewLineChart 
-                              labelsData={item.cleanProfit.labelsData} 
-                              planData={item.cleanProfit.planData} 
-                              factData={item.cleanProfit.factData} 
+                              labelsData={item.interestIncome.labelsData} 
+                              planData={item.interestIncome.planData} 
+                              factData={item.interestIncome.factData} 
                             />
                           </div>
-                        ))}
-                        
+                        ))} */}
+                           <OpenVerticalGroupBarChart 
+                              labelsData={item.reserveData.labelsData} 
+                              planData={item.reserveData.planData} 
+                              factData={item.reserveData.factData} 
+                            />
                       </Box>
                 </Box>
               </Grid>
             </Grid>
+            </Box>
+             ))}
           </Box>
           <Footer />
         </Box>

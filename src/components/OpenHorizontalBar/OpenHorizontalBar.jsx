@@ -14,13 +14,13 @@ import { Box, Card, CardContent } from '@mui/material';
 // Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const OpenHorizontalBarChart = () => {
+const HorizontalBarChart = ({ labelsData, planData, factData }) => {
   const data = {
-    labels: ['Комиссионные расходы', 'Убытки в иностранной валюте', 'Другие беспроцентные расходы'],
+    labels: labelsData,
     datasets: [
       {
         label: 'PLAN',
-        data: [9800, 4800, 3908],
+        data: planData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
@@ -28,7 +28,7 @@ const OpenHorizontalBarChart = () => {
       },
       {
         label: 'FACT',
-        data: [6000, 4000, 2500], // Example data for the second dataset
+        data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
         borderColor: 'rgba(144, 238, 144, 1)', // Light green border color
         borderWidth: 2,
@@ -45,7 +45,7 @@ const OpenHorizontalBarChart = () => {
       },
     },
     responsive: true,
-    maintainAspectRatio: false, // This ensures the chart will fill the container's height
+    maintainAspectRatio: false, // Ensures the chart will fill the container's height
     plugins: {
       legend: {
         display: true, // Show the legend
@@ -73,4 +73,4 @@ const OpenHorizontalBarChart = () => {
   );
 };
 
-export default OpenHorizontalBarChart;
+export default HorizontalBarChart;
