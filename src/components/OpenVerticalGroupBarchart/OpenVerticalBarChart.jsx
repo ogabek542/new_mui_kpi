@@ -19,7 +19,8 @@ const VerticalGroupBarChart = ({ labelsData, planData, factData }) => {
     labels: labelsData,
     datasets: [
       {
-        label: 'PLAN',
+       
+        label: 'ПЛАН',
         data: planData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -27,7 +28,7 @@ const VerticalGroupBarChart = ({ labelsData, planData, factData }) => {
         barThickness: 30, // Adjust this value to make bars thicker
       },
       {
-        label: 'FACT',
+        label: 'ФАКТ',
         data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
         borderColor: 'rgba(144, 238, 144, 1)', // Light green border color

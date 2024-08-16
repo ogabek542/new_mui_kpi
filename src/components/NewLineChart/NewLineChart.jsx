@@ -20,7 +20,8 @@ const NewLineChart = ({ labelsData, planData, factData }) => {
     labels:labelsData,
     datasets: [
       {
-        label: 'PLAN',
+        
+        label: 'ПЛАН',
         data:  planData,
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -29,7 +30,7 @@ const NewLineChart = ({ labelsData, planData, factData }) => {
         tension: 0.4,
       },
       {
-        label: 'FACT',
+        label: 'ФАКТ',
         data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.4)',
         borderColor: 'rgba(144, 238, 144, 1)',
