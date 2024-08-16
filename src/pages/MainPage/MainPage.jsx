@@ -516,6 +516,7 @@ const handleLogin = async () => {
                 height: {xs:"400px",md:"500px"},
                 width:"auto",
                 padding:"5px",
+                
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
@@ -1059,3 +1060,8 @@ const handleLogin = async () => {
 };
 
 export default MainPage;
+
+
+// boxShadow: "inset 0px 5px 10px 2px rgba(34, 60, 80, 0.2)", 
+// WebkitBoxShadow: "inset 0px 5px 10px 2px rgba(34, 60, 80, 0.2)", 
+// MozBoxShadow: "inset 0px 5px 10px 2px rgba(34, 60, 80, 0.2)", 

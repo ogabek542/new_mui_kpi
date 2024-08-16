@@ -24,7 +24,7 @@ const HorizontalBarChart = ({ labelsData, planData, factData }) => {
         data: planData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 2,
+        borderWidth: 1,
         barThickness: 15, // Thinner bars
       },
       {
@@ -32,7 +32,7 @@ const HorizontalBarChart = ({ labelsData, planData, factData }) => {
         data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
         borderColor: 'rgba(144, 238, 144, 1)', // Light green border color
-        borderWidth: 2,
+        borderWidth: 1,
         barThickness: 15, // Thinner bars
       },
     ],

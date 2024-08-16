@@ -1,6 +1,6 @@
 const newAllData = [
     {
-      name: "Головной офис",
+      name: "НБУ",
       sana: [
         {
           date: "15.08.2024",

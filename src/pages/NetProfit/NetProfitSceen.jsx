@@ -7,7 +7,6 @@ import { useEffect } from "react";
 // IMPORT SCREENS //
 import LightHeader from "../../components/LightHeader/LightHeader";
 import Footer from "../../components/Footer/Footer";
-import AreaLineChart from "../../components/LineChart/LineChart";
 import NewLineChart from "../../components/NewLineChart/NewLineChart";
 import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar";
 import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";
@@ -19,7 +18,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import "dayjs/locale/ru"; // Import Russian locale
 // IPORT TEST API //
-import TestNewApi from '../../pages/testapi/someTestApi.jsx';
 import CommonData from "../../pages/testapi/testDataAll.jsx"
 
 // IMPORT ICONS //
@@ -218,8 +216,8 @@ const NetProfitSceen = () => {
 
   // auto complete elements //
   const [prevFirstOption, setPrevFirstOption] = React.useState(null);
-  const [selectedFirstOption, setSelectedFirstOption] = React.useState({ title: "Тошкент шаҳри" });
-  const [selectedSecondOptions, setSelectedSecondOptions] = React.useState({ title: "Головной офис" });
+  const [selectedFirstOption, setSelectedFirstOption] = React.useState({ title: "Республика" });
+  const [selectedSecondOptions, setSelectedSecondOptions] = React.useState({ title: "НБУ" });
   const [prevSecondOption, setPrevSecondOption] = React.useState(null);
   // for data map //
   const [secondOptions, setSecondOptions] = React.useState([]);
@@ -324,6 +322,9 @@ const NetProfitSceen = () => {
                     width: "100%",
                     height: "50px",
                     padding: "5px",
+                    boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   {/* First autocomplete  */}
@@ -359,6 +360,9 @@ const NetProfitSceen = () => {
                     width: "100%",
                     height: "50px",
                     padding: "5px",
+                    boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                       {/* Second Autocomplete */}
@@ -397,6 +401,9 @@ const NetProfitSceen = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     textAlign: "center",
+                    boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   
@@ -457,6 +464,9 @@ const NetProfitSceen = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: "5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   <Typography
@@ -469,6 +479,7 @@ const NetProfitSceen = () => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                      textShadow:"0.5px 0.5px 2px gray",
                     }}
                   >
                     Чистая прибыль(МЛН сум)
@@ -511,6 +522,7 @@ const NetProfitSceen = () => {
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
+                          textShadow:"2px 2px 5px gray",
                         }}
                       >
                         { insertSpaces(item.cleanProfit.netProfitData) || "нет информации"}
@@ -564,6 +576,9 @@ const NetProfitSceen = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: "5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   <Typography
@@ -576,18 +591,20 @@ const NetProfitSceen = () => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                      textShadow:"0.5px 0.5px 2px gray",
                     }}
                   >
                     чистый % доход  / чистый не % доход (МЛН сум)
                   </Typography>
-                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"100%"}}>
+                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"100%",}}>
                     {/* Left side Doxod */}
-                    <Box sx={{display:"flex",flexDirection:"column",height:"auto"}}>
+                    <Box sx={{display:"flex",flexDirection:"column",height:"auto",}}>
                       <Box
                         sx={{
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "space-evenly",
+                          
                         }}
                       >
                         {/* Left side of BIG text box */}
@@ -599,6 +616,7 @@ const NetProfitSceen = () => {
                             alignItems: "center",
                             gap: "5px",
                             height: "100%", // Ensure the parent Box has a height to push content to the bottom
+                            
                           }}
                         >
                           <Typography
@@ -609,6 +627,7 @@ const NetProfitSceen = () => {
                               overflow: "hidden",
                               textOverflow: "ellipsis",
                               whiteSpace: "nowrap",
+                              textShadow:"0.5px 0.5px 2px gray",
                             }}
                           >
                             {insertSpaces(item.cleanPercentageIncome.netSoftProfitData) || "нет информации"}
@@ -676,6 +695,7 @@ const NetProfitSceen = () => {
                               overflow: "hidden",
                               textOverflow: "ellipsis",
                               whiteSpace: "nowrap",
+                              textShadow:"0.5px 0.5px 2px gray",
                             }}
                           >
                             {insertSpaces(item.cleanNoPercentageIncome.netSoftNoProfitData)|| "нет информации"}
@@ -708,6 +728,7 @@ const NetProfitSceen = () => {
                               textOverflow: "ellipsis",
                               whiteSpace: "nowrap",
                               fontWeight: "600",
+                              
                             }}
                           >
                             {item.cleanNoPercentageIncome.netSoftNoPercentageData || "нет информации"}%
@@ -730,18 +751,22 @@ const NetProfitSceen = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: "5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   <Typography
                     sx={{
                       fontWeight: "800",
-                      fontSize: "14px",
+                      fontSize: "20px",
                       color: Colors.dark,
                       textAlign: "start",
                       textTransform: "uppercase",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                      textShadow:"0.5px 0.5px 2px gray",
                     }}
                   >
                     CIR
@@ -774,6 +799,7 @@ const NetProfitSceen = () => {
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
+                          textShadow:"4px 4px 4px gray",
                         }}
                       >
                         {insertSpaces(item.cirProfir.cirPercentageDate) || "нет информации"} %
@@ -797,6 +823,9 @@ const NetProfitSceen = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: "5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   <Typography   sx={{
@@ -830,6 +859,9 @@ const NetProfitSceen = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: "5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   <Typography   sx={{
@@ -868,6 +900,9 @@ const NetProfitSceen = () => {
                     flexDirection:"column",
                     gap:"10px",
                     padding:"5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   {/* topside text of third div */}
@@ -908,6 +943,9 @@ const NetProfitSceen = () => {
                     flexDirection:"column",
                     gap:"10px",
                     padding:"5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   {/* topside text of third div */}
@@ -952,6 +990,9 @@ const NetProfitSceen = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: "5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   <Typography
@@ -994,6 +1035,9 @@ const NetProfitSceen = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: "5px",
+                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
+                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
                   <Typography   sx={{
@@ -1005,9 +1049,10 @@ const NetProfitSceen = () => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
+                      
                     }}>резервы</Typography>
-                      <Box sx={{ width: "100%", height: "auto" }}>
-                           <OpenVerticalGroupBarChart 
+                      <Box sx={{ width: "100%", height: "auto" ,}}>
+                          <OpenVerticalGroupBarChart 
                               labelsData={item.reserveData.labelsData} 
                               planData={item.reserveData.planData} 
                               factData={item.reserveData.factData} 
@@ -1027,3 +1072,9 @@ const NetProfitSceen = () => {
 };
 
 export default NetProfitSceen;
+
+
+
+// boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
+// WebkitBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
+// MozBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)", 
