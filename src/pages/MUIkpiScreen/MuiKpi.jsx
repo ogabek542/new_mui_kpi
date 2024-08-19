@@ -7,7 +7,7 @@ import { Colors } from '../../styles/theme';
 // IMPORT CIRCLEPROGRESSBAR //
 import CircularProgressBarWithPercentage from "../../components/CircleProgress/CircleProgressBar"
 // IMPORT ICONS //
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
 // line chart elements //
 import {
     AreaChart,
@@ -43,9 +43,9 @@ const newDefaultImage = DefaultImage;
         const dateObj = new Date(value);
         
         // Check if the dateObj is valid
-        if (isNaN(dateObj.getTime())) {
-          throw new RangeError("Invalid time value");
-        }
+        // if (isNaN(dateObj.getTime())) {
+        //   throw new RangeError("Invalid time value");
+        // }
       
         const monthNames = [
           "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", 
@@ -202,6 +202,16 @@ const newDefaultImage = DefaultImage;
         return (
             <g onClick={handleClick} style={{ cursor: "pointer" }}>
                 <circle cx={cx} cy={cy} r={8} fill={fill} className="circleShadow" />
+                <text
+                    x={cx - 3}
+                    y={cy - 10}
+                    textAnchor="middle"
+                    fontSize="14px"
+                    fill="#000"
+                    fontWeight="700"
+                    >
+                    {Math.round(overall)}%
+                </text>
             </g>
         );
     };
@@ -214,6 +224,11 @@ const newDefaultImage = DefaultImage;
         } else {
           return value;
         }
+      };
+
+      const insertSpaces = (text) => {
+        if (!text) return ""; // Handle empty or undefined text
+        return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       };
     
 
@@ -231,6 +246,7 @@ const newDefaultImage = DefaultImage;
                             />
                     </Box>
                 </Grid>
+                {/* <=== User Information Table ====> */}
                 <Grid item lg={7} sx={{padding:"5px"}}>
                     <Box sx={{width:"100%",height:"100%",borderRadius:"5px",border:"1px solid gray",padding:"4px",display:"flex",flexDirection:"column",gap:"2px"}}>
                         {/* USER NAME */}
@@ -275,7 +291,7 @@ const newDefaultImage = DefaultImage;
                             {/* LEFT SIDE USRT DATA TEXT */}
                             <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>ОКЛАД РАБОТНИКА, СУМ</Typography>
                             {/* RIGHT SIDE USRT DATA TEXT */}
-                            <Typography sx={{fontSize:"12px",fontWeight:"bold"}}> {data.fixed || "нет информации"}</Typography>
+                            <Typography sx={{fontSize:"12px",fontWeight:"bold"}}> {insertSpaces(data.fixed)|| "нет информации"}</Typography>
                         </Box>
                     </Box>
                 </Grid>
@@ -285,7 +301,7 @@ const newDefaultImage = DefaultImage;
                         {/* TOP TEXT SECTION */}
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                             <Typography sx={{fontWeight:"bold",fontSize:"12px"}}>KPI</Typography>
-                            <Typography sx={{fontSize:"12px",fontWeight:"bold",textTransform:"capitalize"}}>{circleData.month}г.</Typography>
+                            <Typography sx={{fontSize:"12px",fontWeight:"bold",textTransform:"capitalize"}}>{formatDate(circleData.month)}г.</Typography>
                         </Box>
                         {/* CIRCLE SECTION */}
                         <Box sx={{width:"100%",height:"90%",display:"flex",alignItems:"center",textAlign:"center",justifyContent:"center"}}>
@@ -311,9 +327,10 @@ const newDefaultImage = DefaultImage;
                             <Typography sx={{fontWeight:"bold",fontSize:"14px"}}>Динамика выполнения общих плановых показателей KPI</Typography>
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",textAlign:"center"}}>
                                 <Typography>Количество просмотров в день:{numberLive.count || "no data"}</Typography>
+                                <VisibilityIcon sx={{fontSize:"20px",color:Colors.blue_nbu}}/>
                             </Box>
                         </Box>
-                        <Box sx={{width:"100%",height:"100%",}}>
+                        <Box sx={{width:"100%",height:"400px",}}>
                         <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart
                                 width={"100%"}
@@ -329,7 +346,7 @@ const newDefaultImage = DefaultImage;
                                 />
                                 <XAxis
                                     // dataKey="month"
-                                    dataKey={(item) => item.month}
+                                    dataKey={(item) => formatDate(item.month)}
                                     padding={{ left: 0, right: 0 }}
                                     tick={{
                                     fill: "#000",
@@ -366,16 +383,16 @@ const newDefaultImage = DefaultImage;
         {/* KPI TABLE  */}
             <Grid container sx={{width:"100%",height:"auto",padding:"5px"}}>
                 <Grid item lg={12} sx={{width:"100%",height:"auto"}}>
-                    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",border:"1px solid gray",display:"flex",flexDirection:"column"}}>
+                    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",display:"flex",flexDirection:"column"}}>
                             {/* Table Header */}
-                        <Grid container  sx={{width:"100%",height:"auto",gap:"5px"}}>
+                        <Grid container  sx={{width:"100%",height:"auto",gap:"4px"}}>
                             <Grid item xs={2.5} sm={2.5}  sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
                             <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>НАименование метрики</Typography>
                             </Grid>
-                            <Grid item xs={0.7} sm={0.7} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Grid item xs={0.7} sm={0.8} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
                             <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>начало</Typography>
                             </Grid>
-                            <Grid item xs={0.7} sm={0.7} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Grid item xs={0.7} sm={0.8} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
                             <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>конец</Typography>
                             </Grid>
                             <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
@@ -396,47 +413,54 @@ const newDefaultImage = DefaultImage;
                             <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
                             <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>факт</Typography>
                             </Grid>
-                            <Grid item xs={1} sm={1.1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
+                            <Grid item xs={1.1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
                             <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>исполнение</Typography>
                             </Grid>
                         </Grid>
 
                         {/* Table Body */}
                         {tableData.map((rowData, id) => (
-                            <Grid container  key={id} >
-                            <Grid item xs={2.5} sm={2.5} >
-                                <Typography >{rowData.kpi_name}</Typography>
+                            <Grid container  key={id} sx={{gap:"4px",marginTop:"5px"}}>
+                            <Grid item xs={2.5} sm={2.5} sx={{bgcolor:Colors.blue_light_table,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center", }}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"10px",fontWeight:"bold",color:Colors.dark,display:"flex",alignItems:"center",justifyContent:"start"}}>{rowData.kpi_name}</Typography>
                             </Grid>
-                            <Grid item xs={0.7} sm={0.7} >
-                                <Typography >{rowData.start}</Typography>
+                            <Grid item xs={0.7} sm={0.8} sx={{bgcolor:Colors.gray_back,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center",justifyContent:"center"}}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{rowData.start}</Typography>
                             </Grid>
-                            <Grid item xs={0.7} sm={0.7} >
-                                <Typography >{rowData.end}</Typography>
+                            <Grid item xs={0.7} sm={0.8} sx={{bgcolor:Colors.gray_back,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center",justifyContent:"center"}}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{rowData.end}</Typography>
                             </Grid>
                             <Grid
                                 item
                                 xs={1} sm={1}
-                                className={`table-body_text-div ${rowData.activity === "Да" ? "defaultBg" : "yellowBg"}`}
+                                sx={{
+                                    backgroundColor: rowData.activity === "Да" ? "#91FF9A" : "#F7F763",
+                                    padding: "10px",
+                                    borderRadius: "4px",
+                                    display:"flex",
+                                    alignItems: "center",
+                                    justifyContent:"center",
+                                }}
                             >
-                                <Typography >{rowData.activity}</Typography>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{rowData.activity}</Typography>
                             </Grid>
-                            <Grid item xs={12} sm={2} >
-                                <Typography >{rowData.method}</Typography>
+                            <Grid item xs={1.5} sm={1.5}  sx={{bgcolor:Colors.gray_back,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center",justifyContent:"center"}}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{rowData.method}</Typography>
                             </Grid>
-                            <Grid item xs={12} sm={1} >
-                                <Typography >{Math.round(rowData.weight)}%</Typography>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.blue_light_table,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center",justifyContent:"center"}}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{Math.round(rowData.weight)}%</Typography>
                             </Grid>
-                            <Grid item xs={12} sm={1} >
-                                <Typography >{rowData.metric}</Typography>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.gray_back,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center",justifyContent:"center"}}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{rowData.metric}</Typography>
                             </Grid>
-                            <Grid item xs={12} sm={1} >
-                                <Typography >{rowData.performance_score}</Typography>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.gray_back,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center",justifyContent:"center"}}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{rowData.performance_score}</Typography>
                             </Grid>
-                            <Grid item xs={12} sm={1} >
-                                <Typography >{rowData.fact}</Typography>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.gray_back,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center",justifyContent:"center"}}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{rowData.fact}</Typography>
                             </Grid>
-                            <Grid item xs={12} sm={1} className="table-body_text-div">
-                                <Typography className="table-body-text">{Math.round(formatValue(rowData.finished))} %</Typography>
+                            <Grid item xs={1} sm={1} sx={{bgcolor:Colors.blue_light_table,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center",justifyContent:"center"}}>
+                                <Typography sx={{textTransform:"uppercase",fontSize:"11px",fontWeight:"bold",color:Colors.dark,textAlign:"center"}}>{Math.round(formatValue(rowData.finished))}%</Typography>
                             </Grid>
                             </Grid>
                         ))}

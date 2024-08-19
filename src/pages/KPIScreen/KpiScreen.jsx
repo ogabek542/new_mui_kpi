@@ -45,7 +45,7 @@ const KpiScreen = () => {
           <Box sx={{ height: 'auto', width: '100%',my:"10px" }}>
               <Grid container spacing={0.5} sx={{ height: 'auto' }} alignItems="stretch">
                 {/* Left side (3 columns) */}
-                <Grid item xs={12} sm={2} sx={{ height: 'auto' }}>
+                <Grid item xs={2} sm={2} sx={{ height: 'auto' }}>
                   <Paper elevation={3} sx={{ height: '100%', padding: '16px' }}>
                     <Typography variant="h6" sx={{color:Colors.nbu,fontWeight:"bold"}}>KPI</Typography>
                     <List>
@@ -97,7 +97,7 @@ const KpiScreen = () => {
                   </Paper>
                 </Grid>
                 {/* Right side (9 columns) */}
-                <Grid item xs={12} sm={10} sx={{ height: 'auto',display:"block" }}>
+                <Grid item xs={10} sm={10} sx={{ height: 'auto',display:"block" }}>
                   {/* KPI SCREEN */}
                   <Paper elevation={3} sx={{ height: '100%', padding: '5px',width:"100%" }}>
                     <MUIkpi/>
