@@ -184,7 +184,17 @@ const AccessAll = () => {
     };
 
   return (
-    <Container fixed maxWidth="xl" disableGutters sx={{ px: "10px",bgcolor:Colors.gray_back }}>
+    <Container    maxWidth={false} // This allows the container to expand beyond the default breakpoints
+    disableGutters
+    sx={{
+      px: "10px",
+      bgcolor: Colors.gray_back,
+      width: '100%', // Ensure the container takes up 100% of the viewport width
+      maxWidth: '100vw', // Ensure the container doesn't exceed the viewport width
+      '@media (min-width: 1920px)': {
+        maxWidth: '100%', // For extra-large screens, allow full width
+      },
+    }}>
     <Box
       sx={{
         display: "flex",
