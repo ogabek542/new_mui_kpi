@@ -1023,7 +1023,7 @@ const NetProfitSceen = () => {
                     }}
                   >
                     {/* Left side of text box */}
-                  <OpenDoughnutChart labelsData={item.operatingExpenses.labelsData} chartData={item.operatingExpenses.planData}/>
+                  <OpenDoughnutChart  chartData={item.operatingExpenses.planData}/>
                     {/* Right side of text box */}
                   
                   </Box>
@@ -1059,7 +1059,6 @@ const NetProfitSceen = () => {
                     }}>резервы</Typography>
                       <Box sx={{ width: "100%", height: "auto" ,}}>
                           <OpenVerticalGroupBarChart 
-                              labelsData={item.reserveData.labelsData} 
                               planData={item.reserveData.planData} 
                               factData={item.reserveData.factData} 
                             />

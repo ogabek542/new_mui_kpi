@@ -11,12 +11,11 @@ import { Box, Card, CardContent } from '@mui/material';
 // Register the necessary components for Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DoughnutChart = ({ labelsData, chartData }) => {
+const DoughnutChart = ({ chartData }) => {
   const data = {
-    labels: labelsData,
+    labels: ['Расходы на сотрудников','Аренда и содержание','Транспортные расходы','Административные расходы','Репрезентация и благотворительность','Расходы на износ','Другие операционные расходы',],
     datasets: [
       {
-        label: 'My Doughnut Chart',
         data: chartData, 
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)', // Red

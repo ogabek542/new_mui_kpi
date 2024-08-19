@@ -14,9 +14,9 @@ import { Box, Card, CardContent } from '@mui/material';
 // Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const VerticalGroupBarChart = ({ labelsData, planData, factData }) => {
+const VerticalGroupBarChart = ({  planData, factData }) => {
   const data = {
-    labels: labelsData,
+    labels: ["Оценка убитков","Возмещение ранее созданных резервов","Досоздание резервов в текущем году"],
     datasets: [
       {
        
