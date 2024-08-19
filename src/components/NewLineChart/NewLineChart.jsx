@@ -15,9 +15,9 @@ import { Box, Card, CardContent } from '@mui/material';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,Filler);
 
-const NewLineChart = ({ labelsData, planData, factData }) => {
+const NewLineChart = ({ planData, factData }) => {
   const data = {
-    labels:labelsData,
+    labels:["К оплате в другие банки","По кредитам","По ценным бумагам","Другие % доходы",],
     datasets: [
       {
         

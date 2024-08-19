@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -13,15 +13,16 @@ import {
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,Filler);
 
-const AreaLineChart = () => {
+const NoIncomeLineChart = ({ planData, factData }) => {
   const data = {
-    labels: ['Page A', 'Page B', 'Page C', 'Page D',],
+    labels:["Комиссионные доходы", "Прибыль в иностранной валюте", "Прибыль и дивиденды от инвестиций", "Другие беспроцентные доходы"],
     datasets: [
       {
-        label: 'PLAN',
-        data: [2000, 1398, 9800, 3908,],
+        
+        label: 'ПЛАН',
+        data:  planData,
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
@@ -29,8 +30,8 @@ const AreaLineChart = () => {
         tension: 0.4,
       },
       {
-        label: 'FACT',
-        data: [300, 3000, 6200, 7100, 8000, 6000, 10000, 3000, 4500, 5500],
+        label: 'ФАКТ',
+        data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.4)',
         borderColor: 'rgba(144, 238, 144, 1)',
         borderWidth: 2,
@@ -101,7 +102,6 @@ const AreaLineChart = () => {
     //   },
     // },
   };
-
   return (
     <Card sx={{ height: '100%', width: '100%', bgcolor: 'transparent', border: 'none', padding: '0px' }} elevation={0}>
       <CardContent sx={{ height: '100%', bgcolor: 'transparent', border: 'none' }}>
@@ -113,4 +113,8 @@ const AreaLineChart = () => {
   );
 };
 
-export default AreaLineChart;
+export default NoIncomeLineChart;
+
+
+
+// AreaLineChart

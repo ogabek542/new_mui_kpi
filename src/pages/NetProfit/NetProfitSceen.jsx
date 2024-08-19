@@ -7,7 +7,8 @@ import { useEffect } from "react";
 // IMPORT SCREENS //
 import LightHeader from "../../components/LightHeader/LightHeader";
 import Footer from "../../components/Footer/Footer";
-import NewLineChart from "../../components/NewLineChart/NewLineChart";
+import NewLineChart from "../../components/NewLineChart/NewLineChart"; // % income line chart component//
+import NoIncomeLineChart from "../../components/LineChart/LineChart.jsx"; // no % income line chart component//
 import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar";
 import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";
 import OpenVerticalGroupBarChart from "../../components/OpenVerticalGroupBarchart/OpenVerticalBarChart";
@@ -847,7 +848,6 @@ const NetProfitSceen = () => {
                     }}>%  Доходы</Typography>
                     <Box sx={{width:"100%",height:"auto"}}>
                     <NewLineChart 
-                              labelsData={item.interestIncome.labelsData} 
                               planData={item.interestIncome.planData} 
                               factData={item.interestIncome.factData} 
                             />
@@ -884,8 +884,7 @@ const NetProfitSceen = () => {
                       <Box sx={{ width: "100%", height: "auto" }}>
                       
                           
-                        <NewLineChart 
-                              labelsData={item.nointerestIncome.labelsData} 
+                        <NoIncomeLineChart 
                               planData={item.nointerestIncome.planData} 
                               factData={item.nointerestIncome.factData} 
                         />
