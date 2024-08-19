@@ -14,17 +14,26 @@ import { Box, Card, CardContent } from '@mui/material';
 // Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const HorizontalBarChart = () => {
+const HorizontalCostBarChart = ({  planData, factData }) => {
   const data = {
-    labels: ['АНДИЖАН БХО', 'ТЕРМИЗ БХО', 'САМАРҚАНД БХО', 'ХОРАЗМ БХО', 'НАМАНГАН БХО'],
+    labels: ['Процентные расходы по депозитам', 'Процентные расходы по счетам к оплате в другие банки', 'Процентные расходы по кредитам к оплате', 'Процентные расходы по выпущенным ценным бумагам','Другие процентные расходы'],
     datasets: [
       {
-        label: 'PV',
-        data: [2400, 1398, 9800, 3908, 4800],
+         // ПЛАН ФАКТ
+        label: 'ПЛАН',
+        data: planData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 2,
-        barThickness: 30, // Adjust this value to make bars thicker
+        borderWidth: 1,
+        barThickness: 15, // Thinner bars
+      },
+      {
+        label: 'ФАКТ',
+        data: factData,
+        backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
+        borderColor: 'rgba(144, 238, 144, 1)', // Light green border color
+        borderWidth: 1,
+        barThickness: 15, // Thinner bars
       },
     ],
   };
@@ -37,13 +46,19 @@ const HorizontalBarChart = () => {
       },
     },
     responsive: true,
-    maintainAspectRatio: false, // This ensures the chart will fill the container's height
+    maintainAspectRatio: false, // Ensures the chart will fill the container's height
     plugins: {
       legend: {
-        display: false, // Hides the legend
+        display: true, // Show the legend
+        position: 'top', // Position the legend at the top
+        align: 'end', // Align the legend to the right
+        labels: {
+          usePointStyle: true, // Use point styles instead of box styles
+          pointStyle: 'circle', // Set the point style to circle
+        },
       },
       title: {
-        display: true,
+        display: false,
       },
     },
   };
@@ -59,4 +74,4 @@ const HorizontalBarChart = () => {
   );
 };
 
-export default HorizontalBarChart;
+export default HorizontalCostBarChart;

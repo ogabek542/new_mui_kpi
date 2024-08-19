@@ -9,9 +9,10 @@ import LightHeader from "../../components/LightHeader/LightHeader";
 import Footer from "../../components/Footer/Footer";
 import NewLineChart from "../../components/NewLineChart/NewLineChart"; // % income line chart component//
 import NoIncomeLineChart from "../../components/LineChart/LineChart.jsx"; // no % income line chart component//
-import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar";
+import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar"; // changes doughnut //
 import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";
-import OpenVerticalGroupBarChart from "../../components/OpenVerticalGroupBarchart/OpenVerticalBarChart";
+import HorizontalCostBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
+import OpenVerticalGroupBarChart from "../../components/OpenVerticalGroupBarchart/OpenVerticalBarChart"; // change static form label name //
 // calendar elements section //
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -929,8 +930,7 @@ const NetProfitSceen = () => {
                   {/* Bottom side box of third div */}
                   <Box sx={{width:"100%",height:"350px"}}>
                   
-                  <OpenHorizontalBarChart 
-                      labelsData={item.interestCost.labelsData} 
+                  <HorizontalCostBarChart 
                       planData={item.interestCost.planData} 
                       factData={item.interestCost.factData} 
                   />
@@ -967,14 +967,12 @@ const NetProfitSceen = () => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                   
-                   не % расходы
+                    не % расходы
                   </Typography>
                   {/* Bottom side box of third div */}
                   <Box sx={{width:"100%",height:"350px"}}>
                   
                   <OpenHorizontalBarChart 
-                     labelsData={item.nointerestCost.labelsData} 
                      planData={item.nointerestCost.planData} 
                      factData={item.nointerestCost.factData} 
                   />

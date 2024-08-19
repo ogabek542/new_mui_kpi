@@ -14,9 +14,9 @@ import { Box, Card, CardContent } from '@mui/material';
 // Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const HorizontalBarChart = ({ labelsData, planData, factData }) => {
+const HorizontalBarChart = ({ planData, factData }) => {
   const data = {
-    labels: labelsData,
+    labels: ["Комиссионные расходы", "Прибыль в иностранной валюте", "Прибыль и дивиденды от инвестиций", "Другие беспроцентные расходы"],
     datasets: [
       {
          // ПЛАН ФАКТ
