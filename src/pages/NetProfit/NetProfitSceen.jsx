@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Box, Grid,Typography } from "@mui/material";
+import { Container, Box, Grid,Typography,Divider  } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -491,7 +491,7 @@ const NetProfitSceen = () => {
                       textShadow:"0.5px 0.5px 2px gray",
                     }}
                   >
-                    Чистая прибыль(МЛН сум)
+                    Чистая прибыль(млрд сум)
                   </Typography>
                   <Box
                     sx={{
@@ -522,7 +522,8 @@ const NetProfitSceen = () => {
                           textShadow:"2px 2px 5px gray",
                         }}
                       >
-                        { insertSpaces(item.cleanProfit.netProfitData) || "нет информации"}
+                        {/* { insertSpaces(item.cleanProfit.netProfitData) || "нет информации"} */}
+                        {item.cleanProfit.netProfitData ? insertSpaces(Math.round(item.cleanProfit.netProfitData / 1000 )) : "нет информации"}
                       </Typography>
 
                   </Box>
@@ -591,7 +592,7 @@ const NetProfitSceen = () => {
                       textShadow:"0.5px 0.5px 2px gray",
                     }}
                   >
-                    чистый % доход  / чистый не % доход (МЛН сум)
+                    чистый % доход  / чистый не % доход (млрд сум)
                   </Typography>
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"100%",}}>
                     {/* Left side Doxod */}
@@ -627,7 +628,9 @@ const NetProfitSceen = () => {
                               textShadow:"0.5px 0.5px 2px gray",
                             }}
                           >
-                            {insertSpaces(item.cleanPercentageIncome.netSoftProfitData) || "нет информации"}
+                            {/* {insertSpaces(item.cleanPercentageIncome.netSoftProfitData) || "нет информации"} */}
+                            {item.cleanPercentageIncome.netSoftProfitData ? insertSpaces(Math.round(item.cleanPercentageIncome.netSoftProfitData / 1000))
+                              : "нет информации"}
                           </Typography>
                       </Box>
                         {/* Right side of text box */}
@@ -664,6 +667,17 @@ const NetProfitSceen = () => {
                         </Box>
                       </Box>
                     </Box>
+                    {/* Divider */}
+                    <Divider
+                      orientation="vertical"
+                      variant="middle"
+                      flexItem
+                      sx={{
+                        width: "3px",            // Sets the width of the divider
+                        backgroundColor: Colors.gray_back,   // Sets the color of the divider
+                        margin: "0 10px",         // Optional: Adds some space around the divider
+                      }}
+                    />
                     {/* right side Rosxod */}
                     <Box sx={{display:"flex",flexDirection:"column",height:"auto"}}>
                         <Box
