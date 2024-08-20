@@ -209,7 +209,7 @@ const NetProfitSceen = () => {
   };
 
   const [selectnewdata, setSelectNewData] = React.useState(dayjs());
-  const [dateText, setDateText] = React.useState(dayjs().format('DD.MM.YYYY')); // state for the formatted date text
+  const [dateText, setDateText] = React.useState(dayjs().format('DD.MM.YYYY'));
   // const [selectnewdata, setSelectNewData] = React.useState(dayjs().format('DD.MM.YYYY'));
   const [chooseData, setChooseData] = React.useState([]);
   // const [dataSelectedDate, setDataSelectedDate] = React.useState("");
@@ -225,14 +225,12 @@ const NetProfitSceen = () => {
   const [secondOptions, setSecondOptions] = React.useState([]);
   
 
-  // REal worjing Code //
+  // Real working Code //
   const handleDateChange = (newValue) => {
-    // Update selected date and formatted date text
     setSelectNewData(newValue);
     const formattedDate = newValue ? dayjs(newValue).format('DD.MM.YYYY') : '';
     setDateText(formattedDate);
   
-    // Find data from newAllData based on the selected second option and formatted date
     const selectedDataFromAPI = CommonData.find(
       (item) =>
         item.name.toLowerCase() === (selectedSecondOptions ? selectedSecondOptions.title.toLowerCase() : '')
@@ -240,7 +238,6 @@ const NetProfitSceen = () => {
       (sanaItem) => sanaItem.date === formattedDate
     );
   
-    // Update state based on the match
     if (selectedDataFromAPI) {
       setChooseData([selectedDataFromAPI]);
     } else {
@@ -249,10 +246,8 @@ const NetProfitSceen = () => {
   };
 
 
-    // Update the options for the second Autocomplete based on the first selection
     useEffect(() => {
       if (selectedFirstOption && selectedFirstOption.id) {
-        // Save the current selections before changing the options
         setPrevFirstOption(selectedFirstOption);
         setPrevSecondOption(setSelectedSecondOptions);
   
@@ -261,20 +256,20 @@ const NetProfitSceen = () => {
       } else {
         setSecondOptions([]);
       }
-      const initializeScreen = () => {
-        // Set initial date or use the current date as default
-        const initialDate = dayjs(); // You can adjust this to a specific date if needed
     
+      const initializeScreen = () => {
+        // Use the day before today as the initial date
+        const initialDate = dayjs().subtract(1, 'day');
+  
         // Trigger handleDateChange with the initial date
         handleDateChange(initialDate);
       };
     
-      // Call the initialization function
       initializeScreen();
     }, [selectedFirstOption]);
 
     const insertSpaces = (text) => {
-      if (!text) return ""; // Handle empty or undefined text
+      if (!text) return ""; 
       return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     };
 
