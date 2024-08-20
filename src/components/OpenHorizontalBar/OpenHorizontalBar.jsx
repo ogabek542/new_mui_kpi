@@ -16,7 +16,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const HorizontalBarChart = ({ planData, factData }) => {
   const data = {
-    labels: ["Комиссионные расходы", "Прибыль в иностранной валюте", "Прибыль и дивиденды от инвестиций", "Другие беспроцентные расходы"],
+    labels: ["Комиссионные расходы", "Убытки в иностранной валюте", "Другие беспроцентные расходы"],
     datasets: [
       {
          // ПЛАН ФАКТ

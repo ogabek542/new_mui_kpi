@@ -16,7 +16,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const VerticalGroupBarChart = ({  planData, factData }) => {
   const data = {
-    labels: ["Оценка убитков","Возмещение ранее созданных резервов","Досоздание резервов в текущем году"],
+    labels: ["Оценка убытков","Возмещение ранее созданных резервов","Досоздание резервов в текущем году"],
     datasets: [
       {
        

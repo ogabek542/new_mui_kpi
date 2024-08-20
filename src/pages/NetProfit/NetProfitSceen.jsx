@@ -587,7 +587,7 @@ const NetProfitSceen = () => {
                       textShadow:"0.5px 0.5px 2px gray",
                     }}
                   >
-                    чистый % доход  / чистый не % доход (млрд сум)
+                    чистый % доход  / чистый Бес % доход (млрд сум)
                   </Typography>
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"100%",}}>
                     {/* Left side Doxod */}
@@ -881,7 +881,7 @@ const NetProfitSceen = () => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>не % Доходы</Typography>
+                    }}>Бес % Доходы</Typography>
                       <Box sx={{ width: "100%", height: "auto" }}>
                       
                           
@@ -967,7 +967,7 @@ const NetProfitSceen = () => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                    не % расходы
+                    Бес % расходы
                   </Typography>
                   {/* Bottom side box of third div */}
                   <Box sx={{width:"100%",height:"350px"}}>
