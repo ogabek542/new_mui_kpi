@@ -15,7 +15,7 @@ function App() {
           <Route path="/tablescreen" element={<TableScreen />} />
           <Route path="/accessall" element={<AccessAll />} />
           <Route path="/kpidashboard" element={<KpiScreen />} />
-          <Route path="/softprofit" element={<NetProfitSceen />} />
+          <Route path="/softprofit" element={<NetProfitSceen />} /> 
           <Route path="/testscreen" element={<TestScreen />} />
         </Routes>
       </BrowserRouter>

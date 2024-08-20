@@ -257,6 +257,10 @@ const handleLogin = async () => {
   }
 };
 
+const handleNavigate = () => {
+  
+}
+
 
   return (
     <Container
@@ -560,7 +564,7 @@ const handleLogin = async () => {
                     </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                  <Button variant="contained" size={"medium"} onClick={() => navigate("/softprofit")}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>

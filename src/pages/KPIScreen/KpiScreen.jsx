@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Box, CssBaseline, Drawer, AppBar, Toolbar, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText ,Grid,Paper,Typography,ToggleButton,ToggleButtonGroup } from '@mui/material';
+import { Container, Box, CssBaseline, Drawer, AppBar, Toolbar, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText ,Grid,Paper,Typography,ToggleButton,ToggleButtonGroup, Button } from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Colors } from '../../styles/theme';
@@ -46,7 +46,7 @@ const KpiScreen = () => {
               <Grid container spacing={0.5} sx={{ height: 'auto' }} alignItems="stretch">
                 {/* Left side (3 columns) */}
                 <Grid item xs={2} sm={2} sx={{ height: 'auto' }}>
-                  <Paper elevation={3} sx={{ height: '100%', padding: '16px' }}>
+                  <Paper elevation={3} sx={{ height: '100%', padding: '16px',}}>
                     <Typography variant="h6" sx={{color:Colors.nbu,fontWeight:"bold"}}>KPI</Typography>
                     <List>
                       {/* First item */}
@@ -94,6 +94,9 @@ const KpiScreen = () => {
                             </ListItemButton>
                           </ListItem>
                     </List>
+                    <Button sx={{width:"150px",height:"30px",bgcolor:"red",}}>
+
+                    </Button>
                   </Paper>
                 </Grid>
                 {/* Right side (9 columns) */}
