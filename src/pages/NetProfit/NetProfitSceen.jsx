@@ -511,18 +511,6 @@ const NetProfitSceen = () => {
                         height: "100%", // Ensure the parent Box has a height to push content to the bottom
                       }}
                     >
-                      {/* <Typography
-                        sx={{
-                          fontSize: "112px",
-                          fontWeight: "900",
-                          textAlign: "start",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {item.cleanProfit.netProfitData}
-                      </Typography> */}
                       <Typography
                         sx={{
                           fontSize: "64px",// 112px
@@ -550,11 +538,11 @@ const NetProfitSceen = () => {
                       {/* Icon on the right side */}
                       <MovingIcon
                         sx={{
-                          color: Colors.green_dark,
+                          color: item.cleanProfit.netPercentageData <= 100 ? Colors.red : Colors.green_dark,
                           fontSize: "48px",
                           padding: "0px",
-                          // rotate:"180deg"
-                          
+                          transform: item.cleanProfit.netPercentageData <= 100 ? "rotate(180deg)" : "rotate(0deg)",
+                          transition: "transform 0.3s ease",
                         }}
                       />
                       {/* Percentage text on the right side */}
@@ -567,7 +555,7 @@ const NetProfitSceen = () => {
                           fontWeight: "600",
                         }}
                       >
-                        {item.cleanProfit.netPercentageData || "нет информации"}%
+                        {item.cleanProfit.netPercentageData || "нет информации"}% 
                       </Typography>
                     </Box>
                   </Box>
@@ -654,11 +642,11 @@ const NetProfitSceen = () => {
                           {/* Icon on the right side */}
                           <MovingIcon
                             sx={{
-                              color: Colors.green_dark,
+                              color:item.cleanPercentageIncome.netSoftPercentageData <= 100 ? Colors.red :  Colors.green_dark,
                               fontSize: "24px",
                               padding: "0px",
-                              // rotate:"180deg"
-                              
+                              transform:item.cleanPercentageIncome.netSoftPercentageData <= 100 ? "rotate(180deg)" : "rotate(0deg)",
+                              transition:"transform 0.3s ease", 
                             }}
                           />
                           {/* Percentage text on the right side */}
@@ -707,7 +695,10 @@ const NetProfitSceen = () => {
                               textShadow:"0.5px 0.5px 2px gray",
                             }}
                           >
-                            {insertSpaces(item.cleanNoPercentageIncome.netSoftNoProfitData)|| "нет информации"}
+                            {/* {insertSpaces(item.cleanNoPercentageIncome.netSoftNoProfitData)|| "нет информации"} */}
+                            {item.cleanNoPercentageIncome.netSoftNoProfitData
+                              ? insertSpaces(Math.round(item.cleanNoPercentageIncome.netSoftNoProfitData / 1000))
+                              : "нет информации"}
                           </Typography>
                       </Box>
                           {/* Right side of text box */}
@@ -722,11 +713,11 @@ const NetProfitSceen = () => {
                           {/* Icon on the right side */}
                           <MovingIcon
                             sx={{
-                              color: Colors.green_dark,
+                              color:item.cleanNoPercentageIncome.netSoftNoPercentageData <= 100 ? Colors.red: Colors.green_dark,
                               fontSize: "24px",
                               padding: "0px",
-                              // rotate:"180deg"
-                              
+                              transform:item.cleanNoPercentageIncome.netSoftNoPercentageData <=100 ? "rotate(180deg)" : "rotate(0deg)",
+                              transition: "transform 0.3s ease",
                             }}
                           />
                           {/* Percentage text on the right side */}
@@ -1075,9 +1066,3 @@ const NetProfitSceen = () => {
 };
 
 export default NetProfitSceen;
-
-
-
-// boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
-// WebkitBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
-// MozBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)", 

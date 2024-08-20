@@ -6,7 +6,7 @@ const newAllData = [
           date: "19.08.2024",
           cleanProfit: {
             netProfitData:"1916547",
-            netPercentageData:"58",
+            netPercentageData:"108",
           },
           cleanPercentageIncome: {
             netSoftProfitData:"1761024",
