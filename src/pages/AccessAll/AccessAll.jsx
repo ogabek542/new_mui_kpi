@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Container, Box, Typography, Button, Grid } from "@mui/material";
+import { Container, Box, Typography, Button, Grid ,Modal,Alert} from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,17 @@ import Footer from '../../components/Footer/Footer';
 // icons //
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+// import screen components //
+import DoughnutChart from '../../components/Doughnut/Doughnut';
+import HorizontalBarChart from '../../components/HorizontalBarchart/HorizontalBarchart';
+import AreaChart from '../../components/AreaChart/AreaChart';
+import SteppedLineChart from '../../components/SteppedLineChart/SteppedLineChart';
+import PieChart from '../../components/PieChart/PieChart';
+import VerticalBarChart from '../../components/VerticalBarChart/VerticalBarChart';
+import SynchronizedLineCharts from "../../components/SynchronizedLineCharts/SynchronizedLineCharts.jsx";
+import RadialBarChartComponent from "../../components/RadialBarChart/RadialBarChart.jsx";
+import RadarChart from "../../components/RadarChart/RadarChart.jsx";
+import SparklineApp from "../../components/Sparkline/Sparkline.jsx";
 // import image //
 import LeftSideSVG from "../../assets/svg/Left_SVG.svg";
 // recharts elements //
@@ -29,6 +40,14 @@ const AccessAll = () => {
   const [usertype, setUsertype] = React.useState("leader");
   const [barlogin, setBarlogin] = React.useState(true);
   const [barpoint, setBarpoint] = React.useState("");
+  const [openauthmodal,setOpenAuthModal] = React.useState(false);
+
+
+
+  // AUTH  MODAL FUNCTION //
+  const handleOpenAuthModal = () =>  setOpenAuthModal(true);
+  
+  const handleCloseAuthModal = () => setOpenAuthModal(false);
 
   
   useEffect(() => {
@@ -305,6 +324,7 @@ const AccessAll = () => {
                 height: {xs:"400px",md:"500px"},
                 width:"auto",
                 padding:"5px",
+                
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
@@ -348,7 +368,7 @@ const AccessAll = () => {
                     </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={() => navigate("/softprofit")}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -456,13 +476,13 @@ const AccessAll = () => {
                   </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
               </Box>
             </Grid>
-            {/* third div */}
+          {/* third div */}
             <Grid
               item
               xs={12}
@@ -475,8 +495,16 @@ const AccessAll = () => {
                 padding:"5px"
               }}
             >
-              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"77%",bgcolor:"transparent"}} >
+                  <HorizontalBarChart />
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
               </Box>
             </Grid>
             {/* fourth div */}
@@ -492,8 +520,16 @@ const AccessAll = () => {
                 padding:"5px"
               }}
             >
-              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",height:"77%"}} >
+                    <AreaChart/>
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
               </Box>
             </Grid>
             {/* fifth div*/}
@@ -509,8 +545,16 @@ const AccessAll = () => {
                 padding:"5px"
               }}
             >
-              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",height:"77%"}} >
+                  <SteppedLineChart/>
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
               </Box>
             </Grid>
             {/* sixth div */}
@@ -526,48 +570,13 @@ const AccessAll = () => {
                 padding:"5px",
               }}
             >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
-                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"73%"}} >
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px",}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROA</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROE</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",}}>CIR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>COR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                    </Box>
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px"}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPL</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPS</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>MAU</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>NIM</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                    </Box>
+                <Box sx={{display:"flex",height:"77%"}} >
+                  <DoughnutChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -586,48 +595,13 @@ const AccessAll = () => {
                 padding:"5px",
               }}
             >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
-                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"73%"}} >
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px",}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROA</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROE</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",}}>CIR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>COR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                    </Box>
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px"}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPL</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPS</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>MAU</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>NIM</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                    </Box>
+                <Box sx={{display:"flex",height:"77%"}} >
+                  <PieChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -646,8 +620,16 @@ const AccessAll = () => {
                 padding:"5px"
               }}
             >
-              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-
+            <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",height:"77%"}} >
+                  <VerticalBarChart/>
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
               </Box>
             </Grid>
             {/* nineth div */}
@@ -663,8 +645,16 @@ const AccessAll = () => {
                 padding:"5px"
               }}
             >
-              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",height:"77%"}} >
+                  <SynchronizedLineCharts/>
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
               </Box>
             </Grid>
             {/* tenth div */}
@@ -680,8 +670,16 @@ const AccessAll = () => {
                 padding:"5px"
               }}
             >
-              <Box sx={{width:"100%",height:"100%",bgcolor:Colors.gray_footer,borderRadius:"5px"}}>
-
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Box sx={{display:"flex",height:"77%"}} >
+                  <RadialBarChartComponent/>
+                </Box>
+                <Box sx={{textAlign:"end"}}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  </Button>
+                </Box>
               </Box>
             </Grid>
             {/* eleventh div */}
@@ -697,48 +695,13 @@ const AccessAll = () => {
                 padding:"5px",
               }}
             >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
-                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"73%"}} >
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px",}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROA</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROE</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",}}>CIR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>COR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                    </Box>
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px"}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPL</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPS</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>MAU</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>NIM</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                    </Box>
+                <Box sx={{display:"flex",height:"77%"}} >
+                  <SparklineApp/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
@@ -757,53 +720,40 @@ const AccessAll = () => {
                 padding:"5px",
               }}
             >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
-                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"73%"}} >
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px",}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROA</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROE</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",}}>CIR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>COR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                    </Box>
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px"}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPL</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPS</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>MAU</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>NIM</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                    </Box>
+                <Box sx={{display:"flex",height:"77%"}} >
+                  <RadarChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
                   </Button>
                 </Box>
               </Box>
             </Grid>
+                 {/* <=== AUTHORISATION MODAL ===>*/}
+        <Modal
+            open={openauthmodal}
+            onClose={handleCloseAuthModal}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+          <Box sx={{position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: "auto",
+              bgcolor: "blue",
+              border: '1px solid gray',
+              boxShadow: 24,
+              borderRadius:"5px",
+              }}>
+              <Alert variant="filled" severity="info">
+                "Tez orada yangi sahifalar qo'shiladi !!!"
+              </Alert>
+          </Box>
+        </Modal>
           </Grid>
         </Box>
       <Footer/>

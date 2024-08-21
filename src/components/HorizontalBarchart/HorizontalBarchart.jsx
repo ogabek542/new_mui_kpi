@@ -19,7 +19,6 @@ const HorizontalCostBarChart = ({  planData, factData }) => {
     labels: ['По депозитам', 'По счетам к оплате в другие банки', 'По кредитам к оплате', 'По выпущенным ценным бумагам','Другие'],
     datasets: [
       {
-         // ПЛАН ФАКТ
         label: 'ПЛАН',
         data: planData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',

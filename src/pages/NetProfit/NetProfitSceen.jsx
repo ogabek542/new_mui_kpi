@@ -307,7 +307,6 @@ const NetProfitSceen = () => {
           }}
         >
           <LightHeader />
-        
           <Box
             sx={{
               width: "100%",
@@ -1073,5 +1072,6 @@ const NetProfitSceen = () => {
     </Container>
   );
 };
+
 
 export default NetProfitSceen;
