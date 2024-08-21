@@ -299,7 +299,11 @@ const handleLogin = async () => {
           }}
         >
           {/* <=== login main section ===> */}
-          <Box sx={{width:"100%",height:"auto",bgcolor: Colors.blue_login,}}>
+          <Box sx={{width:"100%",height:"auto",bgcolor: Colors.blue_login,  borderRadius: "5px",px: "10px",
+                marginTop: "5px",
+                marginBottom: "10px",
+                py: { xs: "5px", sm: "5px", md: "0px" },
+                lineHeight: "1",}}>
             <Box
               sx={{
                 bgcolor: Colors.blue_login,
@@ -309,11 +313,6 @@ const handleLogin = async () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                px: "10px",
-                my: "5px",
-                marginBottom: "10px",
-                py: { xs: "5px", sm: "5px", md: "0px" },
-                lineHeight: "1",
                 flexDirection: {
                   xs: "column",
                   sm: "column",
