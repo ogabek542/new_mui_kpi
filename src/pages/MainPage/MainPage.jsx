@@ -218,6 +218,10 @@ const [password, setPassword] = useState("");
 const navigate = useNavigate();
 const params = useParams();
 
+const [usernameError, setUsernameError] = useState("");
+const [passwordError, setPasswordError] = useState("");
+
+
 
 const handleLogin = async () => {
   // console.log("clicked ", username, password);
@@ -295,209 +299,245 @@ const handleLogin = async () => {
           }}
         >
           {/* <=== login main section ===> */}
-          <Box
-            sx={{
-              bgcolor: Colors.blue_login,
-              width: "100%",
-              height: "auto",
-              borderRadius: "5px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              px: "10px",
-              my: "5px",
-              marginBottom: "10px",
-              py: { xs: "5px", sm: "5px", md: "0px" },
-              lineHeight: "1",
-              flexDirection: {
-                xs: "column",
-                sm: "column",
-                md: "row",
-              },
-            }}
-          >
-            <Button variant="text" sx={{display: { xs: "none", md: "block" },}}>
-              <Typography
-                sx={{
-                  fontWeight: "800",
-                  fontSize: "16px",
-                  color: Colors.nbu,
-                }}
-              >
-                KPI БУРЧАГИ
-              </Typography>
-            </Button>
+          <Box sx={{width:"100%",height:"auto",bgcolor: Colors.blue_login,}}>
             <Box
               sx={{
-                display: { xs: "", md: "flex" },
+                bgcolor: Colors.blue_login,
+                width: "100%",
+                height: "auto",
+                borderRadius: "5px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                px: "10px",
+                my: "5px",
+                marginBottom: "10px",
+                py: { xs: "5px", sm: "5px", md: "0px" },
+                lineHeight: "1",
                 flexDirection: {
                   xs: "column",
                   sm: "column",
                   md: "row",
                 },
-                alignItems: "center",
-                justifyContent: "space-around",
               }}
             >
-              {/* <=== Login Section ===> */}
-              <TextField
-                id="outlined-basic"
-                label="ЛОГИН"
-                variant="outlined"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                size="small"
-                autoComplete="off"
-                autoSave="off"
-                required
-                InputLabelProps={{
-                  sx: {
-                    color: Colors.blue_nbu, // Custom label text color
-                    "&.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  },
-                }}
-                sx={{
-                  bgcolor: "white",
-                  borderRadius: "5px",
-                  marginTop: { xs: "8px", sm: "8px", md: "0px" },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: Colors.blue_nbu, // Custom border color
-                    },
-                    "&:hover fieldset": {
-                      borderColor: Colors.blue_nbu, // Border color on hover
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: Colors.blue_nbu, // Border color on focus
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: Colors.blue_nbu, // Custom label text color
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: Colors.blue_nbu, // Custom label text color on focus
-                  },
-                }}
-              />
-              {/* <== Password section ===> */}
-              <FormControl
-                sx={{
-                  m: 1,
-                  width: "25ch",
-                  bgcolor: "white",
-                  borderRadius: "5px",
-                  "& .MuiInputLabel-root": {
-                    color: Colors.blue_nbu, // Custom label text color
-                    "&.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: Colors.blue_nbu, // Default border color
-                    },
-                    "&:hover fieldset": {
-                      borderColor: Colors.blue_nbu, // Border color on hover
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: Colors.blue_nbu, // Border color on focus
-                    },
-                  },
-                }}
-                variant="outlined"
-                size="small"
-                    >
-      <InputLabel htmlFor="outlined-adornment-password">ПАРОЛ</InputLabel>
-      <OutlinedInput
-        id="outlined-adornment-password"
-        type={showPassword ? "text" : "password"}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        autoSave="off"
-        autoComplete="new-password" 
-        required
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              edge="end"
-            >
-              {showPassword ? (
-                <Visibility sx={{ color: Colors.blue_nbu }} />
-              ) : (
-                <VisibilityOff sx={{ color: Colors.blue_nbu }} />
-              )}
-            </IconButton>
-          </InputAdornment>
-        }
-        label="ПАРОЛ"
-      />
-    </FormControl>
-              {/* <=== OPEN button ====> */}
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <Button
-                size="medium"
-                  variant="contained"
-                  onClick={handleLogin}
+              <Button variant="text" sx={{display: { xs: "none", md: "block" },}}>
+                <Typography
                   sx={{
-                    bgcolor: Colors.nbu,
-                    "&:hover": {
-                      bgcolor: Colors.nbu, // Set hover background color to be the same as default
-                    },
+                    fontWeight: "800",
+                    fontSize: "16px",
+                    color: Colors.nbu,
                   }}
                 >
-                  <Typography sx={{ color: Colors.white, fontWeight: "700" }}>
-                    КИРИШ
+                  KPI БУРЧАГИ
+                </Typography>
+              </Button>
+              <Box
+                sx={{
+                  display: { xs: "", md: "flex" },
+                  flexDirection: {
+                    xs: "column",
+                    sm: "column",
+                    md: "row",
+                  },
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                }}
+              >
+                {/* <=== Login Section ===> */}
+                <TextField
+                  id="outlined-basic"
+                  label="ЛОГИН"
+                  variant="outlined"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  size="small"
+                  autoComplete="off"
+                  autoSave="off"
+                  required
+                  InputLabelProps={{
+                    sx: {
+                      color: Colors.blue_nbu, // Custom label text color
+                      "&.Mui-focused": {
+                        color: Colors.blue_nbu, // Custom label text color on focus
+                      },
+                    },
+                  }}
+                  sx={{
+                    bgcolor: "white",
+                    borderRadius: "5px",
+                    marginTop: { xs: "8px", sm: "8px", md: "0px" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: Colors.blue_nbu, // Custom border color
+                      },
+                      "&:hover fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on hover
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on focus
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: Colors.blue_nbu, // Custom label text color
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: Colors.blue_nbu, // Custom label text color on focus
+                    },
+                  }}
+                />
+                {/* <== Password section ===> */}
+                <FormControl
+                  sx={{
+                    m: 1,
+                    width: "25ch",
+                    bgcolor: "white",
+                    borderRadius: "5px",
+                    "& .MuiInputLabel-root": {
+                      color: Colors.blue_nbu, // Custom label text color
+                      "&.Mui-focused": {
+                        color: Colors.blue_nbu, // Custom label text color on focus
+                      },
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: Colors.blue_nbu, // Default border color
+                      },
+                      "&:hover fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on hover
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on focus
+                      },
+                    },
+                  }}
+                  variant="outlined"
+                  size="small"
+                      >
+        <InputLabel htmlFor="outlined-adornment-password">ПАРОЛ</InputLabel>
+        <OutlinedInput
+          id="outlined-adornment-password"
+          type={showPassword ? "text" : "password"}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          autoSave="off"
+          autoComplete="new-password" 
+          required
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? (
+                  <Visibility sx={{ color: Colors.blue_nbu }} />
+                ) : (
+                  <VisibilityOff sx={{ color: Colors.blue_nbu }} />
+                )}
+              </IconButton>
+            </InputAdornment>
+          }
+          label="ПАРОЛ"
+        />
+      </FormControl>
+                {/* <=== OPEN button ====> */}
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <Button
+                  size="medium"
+                    variant="contained"
+                    onClick={handleLogin}
+                    sx={{
+                      bgcolor: Colors.nbu,
+                      "&:hover": {
+                        bgcolor: Colors.nbu, // Set hover background color to be the same as default
+                      },
+                    }}
+                  >
+                    <Typography sx={{ color: Colors.white, fontWeight: "700" }}>
+                      КИРИШ
+                    </Typography>
+                  </Button>
+                </motion.div>
+                {/* <=== Backdrop ===> */}
+                <Backdrop
+                  sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                  }}
+                  open={backdrop}
+                  onClick={handleCloseBackdrop}
+                >
+                  <CircularProgress color="inherit" />
+                </Backdrop>
+
+                {/* <=== Register section ===> */}
+                <Button variant="text" color="secondary" size="medium">
+                  <Typography
+                    sx={{
+                      fontWeight: "800",
+                      fontSize: "16px",
+                      lineHeight: "1",
+                      color: Colors.green_dark,
+                    }}
+                  >
+                    РЎЙҲАТДАН ЎТИШ
                   </Typography>
                 </Button>
-              </motion.div>
-              {/* <=== Backdrop ===> */}
-              <Backdrop
-                sx={{
-                  color: "#fff",
-                  zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}
-                open={backdrop}
-                onClick={handleCloseBackdrop}
-              >
-                <CircularProgress color="inherit" />
-              </Backdrop>
-
-              {/* <=== Register section ===> */}
-              <Button variant="text" color="secondary" size="medium">
+              </Box>
+              {/* <=== Forget Password ===> */}
+              <Button variant="text" color="secondary">
                 <Typography
                   sx={{
                     fontWeight: "800",
                     fontSize: "16px",
                     lineHeight: "1",
-                    color: Colors.green_dark,
+                    color: Colors.red,
                   }}
+                  onClick={handleOpenModal}
                 >
-                  РЎЙҲАТДАН ЎТИШ
+                  ПАРОЛНИ УНУТДИНГИЗМИ?
                 </Typography>
               </Button>
+
+
             </Box>
-            {/* <=== Forget Password ===> */}
-            <Button variant="text" color="secondary">
-              <Typography
-                sx={{
-                  fontWeight: "800",
-                  fontSize: "16px",
-                  lineHeight: "1",
-                  color: Colors.red,
-                }}
-                onClick={handleOpenModal}
-              >
-                ПАРОЛНИ УНУТДИНГИЗМИ?
-              </Typography>
-            </Button>
+            <Box>
+            <Box display="flex" justifyContent="space-between" alignItems="center" className="nav-bottom-errlogin-section">
+      
+      {/* Left section (can be customized with MUI styles if needed) */}
+      <Box className="left-bottom" />
+
+      {/* Center section */}
+      <Box className="center-bottom" textAlign="center">
+        <Box className="error-section">
+          {passwordError && (
+            <Typography variant="body2" sx={{ fontSize:"16px",color:"red",fontWeight:"bold"}}>
+              {passwordError}
+            </Typography>
+          )}
+          {loginError && (
+            <Typography variant="body2" color="error" sx={{fontSize:"16px",color:"red",fontWeight:"bold"}}>
+              {loginError}
+            </Typography>
+          )}
+          {usernameError && (
+            <Typography variant="body2"  sx={{ fontSize:"16px",color:"red",fontWeight:"bold"}}>
+              {usernameError}
+            </Typography>
+          )}
+        </Box>
+      </Box>
+
+      {/* Right section (can be customized with MUI styles if needed) */}
+      <Box className="right-bottom" />
+      
+    </Box>
+            </Box>
           </Box>
           {/* <==== BARCHART CARDS SECTION ====> */}
           <Grid
