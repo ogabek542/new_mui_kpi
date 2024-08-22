@@ -74,13 +74,3 @@ export const REQUESTS = {
 };
 console.log(getToken(), 'get token');
 // console.log(getRefreshToken(),'ok refresh')
-
-// all apis
-// Umar Aka NBU, [28/04/2024 20:34]
-// https://umarjon.pythonanywhere.com/api/employee-detail/3/
-
-// Umar Aka NBU, [28/04/2024 20:34]
-// https://umarjon.pythonanywhere.com/api/api/login/
-
-// Umar Aka NBU, [29/04/2024 09:55]
-// https://umarjon.pythonanywhere.com/api/employee-list/ 

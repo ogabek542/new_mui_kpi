@@ -223,6 +223,7 @@ const NetProfitSceen = () => {
   const [prevSecondOption, setPrevSecondOption] = React.useState(null);
   // for data map //
   const [secondOptions, setSecondOptions] = React.useState([]);
+ 
   
 
   // Real working Code //
@@ -454,7 +455,7 @@ const NetProfitSceen = () => {
             {chooseData.map((item, index) => (
               <Box key={index} sx={{width:"100%",height:"100%"}}>
             {/*<==== first grid div ====>*/}
-            <Grid container sx={{ width: "100%", height: "250px" }}>
+            <Grid container sx={{ width: "100%", height: "200px" }}>
               {/* first number div */}
               <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
                 <Box

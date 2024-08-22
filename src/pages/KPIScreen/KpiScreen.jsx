@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Box, CssBaseline, Drawer, AppBar, Toolbar, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText ,Grid,Paper,Typography,ToggleButton,ToggleButtonGroup, Button } from '@mui/material';
+import { Container, Box,Grid,Paper,Typography,Button,Autocomplete ,TextField} from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Colors } from '../../styles/theme';
@@ -28,24 +28,17 @@ const KpiScreen = () => {
     }
   };
 
-    // add new changes of styles 
-    const applyStylesForPDF = () => {
-      const style = document.createElement('style');
-      style.id = 'pdfStyles';
-      style.innerHTML = `
-       .formIcon {
-        margin-right:15px;
-       }
-        .imageDiv {
-          padding: 10px 50px !important;
-        }
-        .workerImageStyle{
-          object-fit:contain;
-        }
-      `;
-      document.head.appendChild(style);
-    };
+  const userListData = [
+    { title: "no name1", id: 1 },
+    { title: "no name2", id: 2 },
+    { title: "no name3", id: 3 },
+    { title: "no name4", id: 4 },
+    { title: "no name5", id: 5 },
+    { title: "no name6", id: 6 },
+  ];
 
+  const [value, setValue] = React.useState();
+  const [workerValue, setWorkerValue] = React.useState(null);
 
   const downloadPDF = () => {
 
@@ -108,83 +101,87 @@ const KpiScreen = () => {
     
   >
       <LightHeader />
-              {/* <Box sx={{ display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-              <Grid container spacing={2}>
-            <Grid item xs={12} sm={3} sx={{height:"100%"}}>
-              <Paper elevation={3} sx={{ padding: '16px' ,height:"100%"}}>
-                
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12} sm={9} sx={{height:"100%"}}>
-              <Paper elevation={3} sx={{ padding: '16px' }}>
-                
-              </Paper>
-            </Grid>
-          </Grid>
-
-              </Box> */}
+            
           <Box sx={{ height: 'auto', width: '100%',my:"10px" }}>
               <Grid container spacing={0.5} sx={{ height: 'auto' }} alignItems="stretch">
                 {/* Left side (3 columns) */}
                 <Grid item xs={2} sm={2} sx={{ height: 'auto' }}>
                   <Paper elevation={3} sx={{ height: '100%', padding: '16px',}}>
                     <Typography variant="h6" sx={{color:Colors.nbu,fontWeight:"bold"}}>KPI</Typography>
-                    {/* <List>
-                          <ListItem  disablePadding>
-                          <ListItemButton>
-                                <ListItemIcon>
-                                <InboxIcon sx={{color:Colors.nbu}}/> 
-                                </ListItemIcon>
-                                <ListItemText sx={{color:Colors.nbu,fontWeight:"800",textTransform:"uppercase"}}>
-                                  salom
-                                </ListItemText>
-                          </ListItemButton>
-                          </ListItem>
-                            <ListItem  disablePadding>
-                              <ListItemButton>
-                                <ListItemIcon>
-                                <InboxIcon sx={{color:Colors.nbu}}/> 
-                                </ListItemIcon>
-                                <ListItemText sx={{color:Colors.nbu,fontWeight:"800",textTransform:"uppercase"}}>
-                                  salom
-                                </ListItemText>
-                              </ListItemButton>
-                            </ListItem>
-                          <ListItem  disablePadding>
-                            <ListItemButton>
-                              <ListItemIcon>
-                              <InboxIcon sx={{color:Colors.nbu}}/> 
-                              </ListItemIcon>
-                              <ListItemText sx={{color:Colors.nbu,fontWeight:"800",textTransform:"uppercase"}}>
-                                salom
-                              </ListItemText>
-                            </ListItemButton>
-                          </ListItem>
-                          <ListItem  disablePadding>
-                            <ListItemButton>
-                              <ListItemIcon>
-                              <InboxIcon sx={{color:Colors.nbu}}/> 
-                              </ListItemIcon>
-                              <ListItemText sx={{color:Colors.nbu,fontWeight:"800",textTransform:"uppercase"}}>
-                                salom
-                              </ListItemText>
-                            </ListItemButton>
-                          </ListItem>
-                    </List> */}
-                    <Button variant="outlined" sx={{width:"100%",height:"30px",}} disabled={loader} onClick={downloadPDF} endIcon={ loader ?   <RefreshOutlinedIcon   sx={{
-                            animation: 'spin 2s linear infinite',
-                            '@keyframes spin': {
-                              '0%': {
-                                transform: 'rotate(0deg)',
-                              },
-                              '100%': {
-                                transform: 'rotate(360deg)',
-                              },
-                            },
-                          }}/> : <PictureAsPdfIcon />}>
-                    {loader ? "печать...." : "печать"}
-                    </Button>
+                    <Autocomplete
+                            options={userListData}
+                            sx={{ width: '100%', height: '25px', my: 4,padding:"0px" }}
+                            getOptionLabel={(option) => option.title}
+                            value={workerValue}
+                            onChange={(event, newValue) => {
+                              setWorkerValue(newValue); // Update the workerValue state
+                              setValue(newValue);
+                            }}
+                            renderInput={(params) => (
+                              <TextField
+                                  {...params}
+                                  label="Выбор сотрудник"
+                                  variant="outlined"
+                                  sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                      "& fieldset": {
+                                        borderColor: "#083473", // Default border color
+                                      },
+                                      "&:hover fieldset": {
+                                        borderColor: "#083473", // Border color on hover
+                                      },
+                                      "&.Mui-focused fieldset": {
+                                        borderColor: "#083473", // Border color when focused
+                                      },
+                                    },
+                                    "& .MuiInputLabel-root": {
+                                      color: '#083473', // Default label color
+                                      "&.Mui-focused": {
+                                        color: '#083473', // Label color when focused
+                                      },
+                                    },
+                                  }}
+                                />
+                            )}
+                          />
+                          <Button
+                              variant="outlined"
+                              sx={{
+                                width: "100%",
+                                height: "30px",
+                                marginTop: "15px",
+                                borderColor: "#083473", // Button border color
+                                color: "#083473", // Button text and icon color
+                                '&:hover': {
+                                  borderColor: "#083473", // Border color on hover
+                                  backgroundColor: "rgba(8, 52, 115, 0.04)", // Optional: Light blue background on hover
+                                },
+                              }}
+                              disabled={loader}
+                              onClick={downloadPDF}
+                              endIcon={
+                                loader ? (
+                                  <RefreshOutlinedIcon
+                                    sx={{
+                                      color: "#083473", // Icon color
+                                      animation: 'spin 2s linear infinite',
+                                      '@keyframes spin': {
+                                        '0%': {
+                                          transform: 'rotate(0deg)',
+                                        },
+                                        '100%': {
+                                          transform: 'rotate(360deg)',
+                                        },
+                                      },
+                                    }}
+                                  />
+                                ) : (
+                                  <PictureAsPdfIcon sx={{ color: "#083473" }} /> // Icon color
+                                )
+                              }
+                            >
+                              {loader ? "печать...." : "печать"}
+                          </Button>
                   </Paper>
                 </Grid>
                 {/* Right side (9 columns) */}

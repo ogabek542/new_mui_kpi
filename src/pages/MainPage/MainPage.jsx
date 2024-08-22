@@ -75,7 +75,6 @@ const MainPage = () => {
     event.preventDefault();
   };
   // BACKDROP FUNCTION //
-  const handleOpenBackdrop = () => setBackdrop(true);
   const handleCloseBackdrop = () => setBackdrop(false);
 
   // AUTH  MODAL FUNCTION //
@@ -217,7 +216,6 @@ const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
 const navigate = useNavigate();
 const params = useParams();
-
 const [usernameError, setUsernameError] = useState("");
 const [passwordError, setPasswordError] = useState("");
 
