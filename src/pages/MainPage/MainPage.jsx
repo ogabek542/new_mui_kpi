@@ -62,7 +62,36 @@ import RadialBarChartComponent from "../../components/RadialBarChart/RadialBarCh
 import RadarChart from "../../components/RadarChart/RadarChart.jsx";
 import SparklineApp from "../../components/Sparkline/Sparkline.jsx";
 
+
+// LANGUAGE SECTION //
+import i18n from "i18next";
+import {initReactI18next} from "react-i18next";
+import translationEn from "../../locale/translationEn.js";
+import translationUz from "../../locale/translationUz.js";
+import translationRu from "../../locale/translationRu.js";
+
+i18n.use(initReactI18next).init({
+  resources:{
+    en:{translation:translationEn},
+    uz:{translation:translationUz},
+    ru:{translation:translationRu},
+  },
+  lng:"uz",
+  fallbackLng:"uz",
+})
+
+
+
+
 const MainPage = () => {
+
+  // change language function //
+  const changeLang = (value) => {
+    i18n.changeLanguage(value)
+  }
+
+
+
   const [showPassword, setShowPassword] = React.useState(false);
   const [backdrop, setBackdrop] = React.useState(false);
   const [openmodal, setOpenModal] = React.useState(false);
@@ -285,7 +314,7 @@ const handleLogin = async () => {
           height: "100%", // Make sure the Box takes the full viewport height
         }}
       >
-        <Header />
+        <Header changeLang={changeLang}/>
         {/* <=== MAIN SECTION ===> */}
         <Box
           sx={{

@@ -17,14 +17,29 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru'; // Import Russian locale
+import {useEffect} from "react"
 
-const Header = () => {
+import { useTranslation } from "react-i18next";
+
+const Header = ({changeLang}) => {
+
+  const {t,i18n} = useTranslation()
+
+  const handleChangeLanguage = (event) => {
+    const newLanguage = event.target.value;
+    setAge(newLanguage);
+    changeLang(newLanguage);
+  };
+
   const [age, setAge] = React.useState("UZ");
   const [selectedDate, setSelectedDate] = React.useState(dayjs());
 
-  const handleChangeLanguage = (event) => {
-    setAge(event.target.value);
-  };
+
+  useEffect(() => {
+    setAge(i18n.language);
+  }, [i18n.language]);
+
+  
   return (
     <Box
       sx={{
@@ -89,8 +104,9 @@ const Header = () => {
             }}
             color={Colors.dark}
           >
-            “ЎЗМИЛЛИЙБАНК” АЖ БУХГАЛТЕРИЯ ҲИСОБИ ВА МОЛИЯВИЙ МЕНЕЖМЕНТ
-            ДЕПАРТАМЕНТИ
+            {/* “ЎЗМИЛЛИЙБАНК” АЖ БУХГАЛТЕРИЯ ҲИСОБИ ВА МОЛИЯВИЙ МЕНЕЖМЕНТ
+            ДЕПАРТАМЕНТИ */}
+            {t("headerText")}
           </Typography>
         </Box>
       {/* right side box */}
@@ -141,7 +157,7 @@ const Header = () => {
               }}
             >
               <MenuItem
-                value="UZ"
+                value="uz"
                 sx={{
                   color: "black",
                   fontSize: {xs:"10px",sm:"14px"},
@@ -151,7 +167,7 @@ const Header = () => {
                 UZ
               </MenuItem>
               <MenuItem
-                value="EN"
+                value="en"
                 sx={{
                   color: "black",
                   fontSize: {xs:"10px",sm:"14px"},
@@ -161,7 +177,7 @@ const Header = () => {
                 EN
               </MenuItem>
               <MenuItem
-                value="RU"
+                value="ru"
                 sx={{
                   color: "black",
                   fontSize: {xs:"10px",sm:"14px"},

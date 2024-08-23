@@ -110,7 +110,7 @@ const KpiScreen = () => {
                     <Typography variant="h6" sx={{color:Colors.nbu,fontWeight:"bold"}}>KPI</Typography>
                     <Autocomplete
                             options={userListData}
-                            sx={{ width: '100%', height: '25px', my: 4,padding:"0px" }}
+                            sx={{ width: '100%', height: '20px', my: 4,padding:"0px" }}
                             getOptionLabel={(option) => option.title}
                             value={workerValue}
                             onChange={(event, newValue) => {

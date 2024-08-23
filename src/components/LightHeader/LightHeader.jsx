@@ -7,9 +7,12 @@ import { Colors } from "../../styles/theme";
 import NBUlogo from "../../assets/svg/newForSVG.svg";
 // import framer motion //
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 
-const LightHeader = () => {
+const LightHeader = ({changeLang}) => {
+
+  const {t} = useTranslation()
    
   return (
     <Box
@@ -75,8 +78,9 @@ const LightHeader = () => {
         }}
         color={Colors.dark}
       >
-        “ЎЗМИЛЛИЙБАНК” АЖ БУХГАЛТЕРИЯ ҲИСОБИ ВА МОЛИЯВИЙ МЕНЕЖМЕНТ
-        ДЕПАРТАМЕНТИ
+        {/* “ЎЗМИЛЛИЙБАНК” АЖ БУХГАЛТЕРИЯ ҲИСОБИ ВА МОЛИЯВИЙ МЕНЕЖМЕНТ
+        ДЕПАРТАМЕНТИ */}
+        {t("headerText")}
       </Typography>
     </Box>
     {/* right side box */}

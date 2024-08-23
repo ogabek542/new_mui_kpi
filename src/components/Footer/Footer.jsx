@@ -8,8 +8,12 @@ import CallIcon from "@mui/icons-material/Call";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import PlaceIcon from "@mui/icons-material/Place";
+import { useTranslation } from "react-i18next";
 
-const Footer = () => {
+const Footer = ({changeLang}) => {
+
+  const {t} = useTranslation()
+
   return (
     <Stack
       direction="column"
@@ -54,7 +58,7 @@ const Footer = () => {
                     mx:"8px",
                   }}
                 >
-                  <Typography sx={{fontWeight:"700",lineHeight:"2",fontSize:{sm:"10px",md:"12px",lg:"14px",xl:"18px"}}} color={Colors.dark}>Контакт маркази</Typography>
+                  <Typography sx={{fontWeight:"700",lineHeight:"2",fontSize:{sm:"10px",md:"12px",lg:"14px",xl:"18px"},textTransform:"capitalize"}} color={Colors.dark}>{t("contactcenter")}</Typography>
                   <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{sm:"10px",md:"12px",lg:"14px",xl:"18px"}}}>1669</Typography>
                   <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{sm:"10px",md:"12px",lg:"14px",xl:"18px"}}}>+998903299295</Typography>
                 </Box>
@@ -91,7 +95,7 @@ const Footer = () => {
                     textAlign: "left",
                   }}
                 >
-                  <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.8",md:"1.5"},fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"18px"}}}  color={Colors.dark}>Корпоратив мурожаатлар учун</Typography>
+                  <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.8",md:"1.5"},fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"18px"},textTransform:"capitalize"}}  color={Colors.dark}>{t("forreference")}</Typography>
                   <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>U_Rajabov@nbu.uz</Typography>
                   <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>webmaster@nbu.uz</Typography>
                 </Box>
@@ -128,7 +132,7 @@ const Footer = () => {
                     textAlign: "left",
                   }}
                 >
-                  <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.8", md:"2"},fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"14px",xl:"18px"}}}  color={Colors.dark}>Мурожаатлар регламенти</Typography>
+                  <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.8", md:"2"},fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"14px",xl:"18px"},textTransform:"capitalize"}}  color={Colors.dark}>{t("regulationappeal")}</Typography>
                   <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>Душанба-жума кунлари</Typography>
                   <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>соат 9:00 дан 18:00 гача</Typography>
                   <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>Тушлик: 13:00 дан 14:00 гача</Typography>
@@ -237,10 +241,12 @@ const Footer = () => {
               lg: "14px",
               xl: "16px",
             },
+            textTransform:"uppercase",
           }}
         >
-          © 2023-2024 “ЎЗМИЛЛИЙБАНК” АЖ БУХГАЛТЕРИЯ ҲИСОБИ ВА МОЛИЯВИЙ МЕНЕЖМЕНТ
-          ДЕПАРТАМЕНТИ
+          {/* © 2023-2024 “ЎЗМИЛЛИЙБАНК” АЖ БУХГАЛТЕРИЯ ҲИСОБИ ВА МОЛИЯВИЙ МЕНЕЖМЕНТ
+          ДЕПАРТАМЕНТИ */}
+          {t("footertext")}
         </Typography>
         <Box
           component="img"
