@@ -69,6 +69,7 @@ import {initReactI18next} from "react-i18next";
 import translationEn from "../../locale/translationEn.js";
 import translationUz from "../../locale/translationUz.js";
 import translationRu from "../../locale/translationRu.js";
+import { useTranslation } from "react-i18next";
 
 i18n.use(initReactI18next).init({
   resources:{
@@ -89,7 +90,7 @@ const MainPage = () => {
   const changeLang = (value) => {
     i18n.changeLanguage(value)
   }
-
+  const {t} = useTranslation()
 
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -353,9 +354,10 @@ const handleLogin = async () => {
                     fontWeight: "800",
                     fontSize: "16px",
                     color: Colors.nbu,
+                    textTransform:"uppercase",
                   }}
                 >
-                  KPI БУРЧАГИ
+                  {t("kpicorner")}
                 </Typography>
               </Button>
               <Box
@@ -373,7 +375,7 @@ const handleLogin = async () => {
                 {/* <=== Login Section ===> */}
                 <TextField
                   id="outlined-basic"
-                  label="ЛОГИН"
+                  label={t("login")}
                   variant="outlined"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -413,7 +415,7 @@ const handleLogin = async () => {
                   }}
                 />
                 {/* <== Password section ===> */}
-                <FormControl
+                  <FormControl
                   sx={{
                     m: 1,
                     width: "25ch",
@@ -440,7 +442,7 @@ const handleLogin = async () => {
                   variant="outlined"
                   size="small"
                       >
-        <InputLabel htmlFor="outlined-adornment-password">ПАРОЛ</InputLabel>
+        <InputLabel htmlFor="outlined-adornment-password">{t("parol")}</InputLabel>
         <OutlinedInput
           id="outlined-adornment-password"
           type={showPassword ? "text" : "password"}
@@ -467,7 +469,7 @@ const handleLogin = async () => {
           }
           label="ПАРОЛ"
         />
-      </FormControl>
+                  </FormControl>
                 {/* <=== OPEN button ====> */}
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -485,7 +487,7 @@ const handleLogin = async () => {
                     }}
                   >
                     <Typography sx={{ color: Colors.white, fontWeight: "700" }}>
-                      КИРИШ
+                      {t("access")}
                     </Typography>
                   </Button>
                 </motion.div>
@@ -509,9 +511,10 @@ const handleLogin = async () => {
                       fontSize: "16px",
                       lineHeight: "1",
                       color: Colors.green_dark,
+                      textTransform:"uppercase",
                     }}
                   >
-                    РЎЙҲАТДАН ЎТИШ
+                    {t("register")}
                   </Typography>
                 </Button>
               </Box>
@@ -523,14 +526,13 @@ const handleLogin = async () => {
                     fontSize: "16px",
                     lineHeight: "1",
                     color: Colors.red,
+                    textTransform:"uppercase",
                   }}
                   onClick={handleOpenModal}
                 >
-                  ПАРОЛНИ УНУТДИНГИЗМИ?
+                  {t("forgetpassword")}
                 </Typography>
               </Button>
-
-
             </Box>
             <Box>
             <Box display="flex" justifyContent="space-between" alignItems="center" className="nav-bottom-errlogin-section">
@@ -628,7 +630,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -736,7 +738,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -761,7 +763,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -786,7 +788,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -811,7 +813,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -836,7 +838,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -861,7 +863,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -886,7 +888,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -911,7 +913,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -936,7 +938,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -961,7 +963,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -986,7 +988,7 @@ const handleLogin = async () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -1039,7 +1041,7 @@ const handleLogin = async () => {
                     fontSize: { xs: "14px", md: "24px" },
                   }}
                 >
-                  Tanishib chiqing !!!
+                  {t("maintextforgetpassword")}
                 </Typography>
                 <motion.div
                   onClick={handleCloseModal}
@@ -1117,7 +1119,7 @@ const handleLogin = async () => {
               borderRadius:"5px",
               }}>
               <Alert variant="filled" severity="warning">
-                "Aftorizatsiyadan o'tgandan keyin yangi sahifaga o'tish mumkin !!!"
+                {t("maintextmodal")}
               </Alert>
           </Box>
         </Modal>

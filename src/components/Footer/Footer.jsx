@@ -133,9 +133,9 @@ const Footer = ({changeLang}) => {
                   }}
                 >
                   <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.8", md:"2"},fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"14px",xl:"18px"},textTransform:"capitalize"}}  color={Colors.dark}>{t("regulationappeal")}</Typography>
-                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>Душанба-жума кунлари</Typography>
-                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>соат 9:00 дан 18:00 гача</Typography>
-                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"}}}>Тушлик: 13:00 дан 14:00 гача</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"},textTransform:"capitalize"}}>{t("regulationtextone")}</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"},textTransform:"capitalize"}}>{t("regulationtexttwo")}</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"10px",lg:"12px",xl:"16px"},textTransform:"capitalize"}}>{t("regulationtextthree")}</Typography>
                 </Box>
               </Box>
             </motion.div>
@@ -170,10 +170,10 @@ const Footer = ({changeLang}) => {
                     textAlign: "left",
                   }}
                 >
-                  <Typography sx={{fontWeight:"700",lineHeight:"2",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"18px"}}}  color={Colors.dark}>Манзил</Typography>
-                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>100084. Ўзбекистон Республикаси,</Typography>
-                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>Тошкент ш.,Амир Темур  </Typography>
-                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>шоҳ кўчаси 101-уй</Typography>
+                  <Typography sx={{fontWeight:"700",lineHeight:"2",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"18px"},textTransform:"capitalize"}}  color={Colors.dark}>{t("address")}</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"},textTransform:"capitalize"}}>{t("addresstextone")}</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"},textTransform:"capitalize"}}>{t("addresstexttwo")}</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"},textTransform:"capitalize"}}>{t("addresstextthree")}</Typography>
                 </Box>
               </Box>
             </motion.div>

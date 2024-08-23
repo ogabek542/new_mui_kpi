@@ -33,6 +33,7 @@ import {
   Tooltip,
   LabelList,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 
 const AccessAll = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const AccessAll = () => {
   const [barpoint, setBarpoint] = React.useState("");
   const [openauthmodal,setOpenAuthModal] = React.useState(false);
 
-
+  const {t} = useTranslation()
 
   // AUTH  MODAL FUNCTION //
   const handleOpenAuthModal = () =>  setOpenAuthModal(true);
@@ -264,7 +265,7 @@ const AccessAll = () => {
                   color: Colors.nbu,
                 }}
               >
-                KPI БУРЧАГИ
+                {t("kpicorner")}
               </Typography>
             </Button>
             <Box
@@ -282,8 +283,8 @@ const AccessAll = () => {
         
               {/* <=== USERNAME SECTION ====> */}
               <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",gap:{xs:"0px",md:"5px"}}}>
-                <Typography variant="text" sx={{fontSize:{xs:"10px",md:"14px",lg:"16px"},fontWeight:"nornal",color:Colors.green_dark,textTransform:"uppercase"}}>
-                САҲИФАМИЗГА ХУШ КЕЛИБСИЗ, ҲУРМАТЛИ
+                <Typography variant="text" sx={{fontSize:{xs:"10px",md:"14px",lg:"16px"},fontWeight:"500",color:Colors.green_dark,textTransform:"uppercase"}}>
+                {t("welcomekpi")}
                 </Typography>
                 <Typography variant="text" sx={{fontSize:{xs:"10px",md:"14px",lg:"16px",textTransform:"uppercase"},fontWeight:"bold",color:Colors.green_dark}}>
                 {userdata ? userdata.name : "no exist name"}
@@ -298,11 +299,12 @@ const AccessAll = () => {
                   fontWeight: "800",
                   fontSize:{ xs:"10px",md:"14px",lg:"16px"},
                   lineHeight: "1",
-                  color: Colors.blue_nbutton,
+                  color:Colors.blue_nbu,
+                  textTransform:"uppercase",
                 }}
                 onClick={handleOpenKPI}
               >
-                KPI НАТИЖАЛАРИ БИЛАН ТАНИШИШ
+                {t("resultkpi")}
               </Typography>
             </Button>
           </Box>
@@ -369,7 +371,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={() => navigate("/softprofit")}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -477,12 +479,12 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
             </Grid>
-          {/* third div */}
+            {/* third div */}
             <Grid
               item
               xs={12}
@@ -502,7 +504,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -527,7 +529,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -552,7 +554,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -577,7 +579,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -602,7 +604,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -627,7 +629,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -652,7 +654,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -677,7 +679,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -702,7 +704,7 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
@@ -727,34 +729,34 @@ const AccessAll = () => {
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800"}} >ТЎЛИҚ МАЪЛУМОТ</Typography>
+                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
             </Grid>
-                 {/* <=== AUTHORISATION MODAL ===>*/}
-        <Modal
-            open={openauthmodal}
-            onClose={handleCloseAuthModal}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-          <Box sx={{position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: "auto",
-              bgcolor: "blue",
-              border: '1px solid gray',
-              boxShadow: 24,
-              borderRadius:"5px",
-              }}>
-              <Alert variant="filled" severity="info">
-                "Tez orada yangi sahifalar qo'shiladi !!!"
-              </Alert>
-          </Box>
-        </Modal>
           </Grid>
+                  {/* <=== AUTHORISATION MODAL ===>*/}
+            <Modal
+                open={openauthmodal}
+                onClose={handleCloseAuthModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+              <Box sx={{position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: "auto",
+                  bgcolor: "blue",
+                  border: '1px solid gray',
+                  boxShadow: 24,
+                  borderRadius:"5px",
+                  }}>
+                  <Alert variant="filled" severity="info">
+                    {t("accessmodaltext")}
+                  </Alert>
+              </Box>
+            </Modal>
         </Box>
       <Footer/>
     </Box>
