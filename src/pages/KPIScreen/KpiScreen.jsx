@@ -14,8 +14,10 @@ import jsPDF from "jspdf";
 // import Icon //
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import RefreshOutlinedIcon from '@mui/icons-material/RefreshOutlined';
+import { useTranslation } from "react-i18next";
 
 const KpiScreen = () => {
+  const {t} = useTranslation()
 
   const [loader, setLoader] = React.useState(false);
   const pdfRef = useRef(null);
@@ -180,7 +182,7 @@ const KpiScreen = () => {
                                 )
                               }
                             >
-                              {loader ? "печать...." : "печать"}
+                              {loader ? t("printing") : t("print")}
                           </Button>
                   </Paper>
                 </Grid>

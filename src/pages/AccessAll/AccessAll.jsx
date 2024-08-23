@@ -34,8 +34,16 @@ import {
   LabelList,
 } from "recharts";
 import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import {initReactI18next} from "react-i18next";
 
 const AccessAll = () => {
+
+  const changeLang = (value) => {
+    i18n.changeLanguage(value)
+  }
+
+
   const navigate = useNavigate();
   const [userdata, setUserData] = React.useState([]);
   const [usertype, setUsertype] = React.useState("leader");
@@ -225,7 +233,7 @@ const AccessAll = () => {
         height: "100%", // Make sure the Box takes the full viewport height
       }}
     >
-      <Header/>
+      <Header changeLang={changeLang} />
       <Box
           sx={{
             flexDirection: "column",

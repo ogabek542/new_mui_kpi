@@ -19,11 +19,15 @@ import {
     ResponsiveContainer,
   } from "recharts";
 
+  import { useTranslation } from "react-i18next";
+
     // import axios from "axios" //
 import { REQUESTS } from "../../api/requests";
 import { useReduxDispatch } from "../../hooks/useReduxHook";
 
 const MuiKpi = () => {
+
+const {t} = useTranslation()
 // elements //
 const dispatch = useReduxDispatch();
 const [tableData, setTableData] = useState([]);
@@ -85,8 +89,6 @@ const newDefaultImage = DefaultImage;
         fetchImage();
     }, [imageUrl]);
 
-
-      
     // useEffect(() => {
     //     const fetchUserData = async () => {
     //       try {
@@ -324,9 +326,9 @@ const newDefaultImage = DefaultImage;
             <Grid item xs={12} lg={12} sx={{padding:"5px",}}>
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",border:"1px solid gray",padding:"5px",display:"flex",flexDirection:"column",gap:"10px"}}>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                            <Typography sx={{fontWeight:"bold",fontSize:"14px"}}>Динамика выполнения общих плановых показателей KPI</Typography>
+                            <Typography sx={{fontWeight:"bold",fontSize:"14px"}}>{t("linetoptext")}</Typography>
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",textAlign:"center"}}>
-                                <Typography>Количество просмотров в день:{numberLive.count || "no data"}</Typography>
+                                <Typography>{t("dayviewers")}:{numberLive.count || "no data"}</Typography>
                                 <VisibilityIcon sx={{fontSize:"20px",color:Colors.blue_nbu}}/>
                             </Box>
                         </Box>
@@ -387,34 +389,34 @@ const newDefaultImage = DefaultImage;
                             {/* Table Header */}
                         <Grid container  sx={{width:"100%",height:"auto",gap:"4px"}}>
                             <Grid item xs={2.5} sm={2.5}  sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>НАименование метрики</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("mertikname")}</Typography>
                             </Grid>
                             <Grid item xs={0.7} sm={0.8} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>начало</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("starttext")}</Typography>
                             </Grid>
                             <Grid item xs={0.7} sm={0.8} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>конец</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("endtext")}</Typography>
                             </Grid>
                             <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>активность</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("activity")}</Typography>
                             </Grid>
                             <Grid item xs={1.5} sm={1.5} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>метод расчёта</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("calculationmethod")}</Typography>
                             </Grid>
                             <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>вес показ.</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("point")}</Typography>
                             </Grid>
                             <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>единица</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("unity")}</Typography>
                             </Grid>
                             <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>план</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("plan")}</Typography>
                             </Grid>
                             <Grid item xs={1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>факт</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("fact")}</Typography>
                             </Grid>
                             <Grid item xs={1.1} sm={1} sx={{bgcolor:Colors.nbu,padding:"10px",borderRadius:"5px"}}>
-                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>исполнение</Typography>
+                            <Typography sx={{textTransform:"uppercase",fontSize:"12px",fontWeight:"bold",color:Colors.white,textAlign:"center"}}>{t("execution")}</Typography>
                             </Grid>
                         </Grid>
 

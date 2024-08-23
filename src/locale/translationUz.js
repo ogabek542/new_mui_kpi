@@ -40,7 +40,7 @@ const translationUz = {
     plan:"PLAN",
     fact:"FAKT",
     execution:"IJRO",
-    filial:"FILIAL",
+    filial:"filial",
     vsp:"VSP (OPERU/BHM/BHO)",
     part:"BO'LMA",
     positionjob:"LAVOZIM",
@@ -48,6 +48,21 @@ const translationUz = {
     tablenumber:"XODIM TABEL RAQAMI",
     salary:"XODIMLAR ISH HAQI, SO‘M",
     print:"chop etish",
+    printing:"chop qilinmoqda",
+
+    // Netfrofit screen //
+    selectregion:"Hududni tanlash",
+    selectfilial:"Filialni tanlash",
+    cleanincommain:"Чистая прибыль(млрд сум)",
+    cleanpercentagevalues:"чистый % доход / чистый Бес % доход (млрд сум)",
+    percentageincome:"% Доходы",
+    nopercentageincome:"Бес % Доходы",
+    costpercentage:"% расходы",
+    costnopercentage:"Бес % расходы",
+    operatsioncost:"операционные расходы",
+    reserve:"резервы",
+
+
 };
 
 export default translationUz;
