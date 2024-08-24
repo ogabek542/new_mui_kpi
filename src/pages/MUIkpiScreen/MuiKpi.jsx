@@ -25,7 +25,7 @@ import {
 import { REQUESTS } from "../../api/requests";
 import { useReduxDispatch } from "../../hooks/useReduxHook";
 
-const MuiKpi = () => {
+const MuiKpi = ({changeLang}) => {
 
 const {t} = useTranslation()
 // elements //
@@ -255,43 +255,43 @@ const newDefaultImage = DefaultImage;
                         <Typography sx={{textTransform:"uppercase",color:"#000",fontWeight:"800"}}>{data.name || "no exist name"}</Typography>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px",marginTop:"5px"}}>
                             {/* LEFT SIDE USRT DATA TEXT */}
-                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>ФИЛИАЛ/ГО</Typography>
+                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("filial")}</Typography>
                             {/* RIGHT SIDE USRT DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.branch || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
                             {/* LEFT SIDE USRT DATA TEXT */}
-                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>ВСП (ОПЕРУ/БХМ/БХО)</Typography>
+                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("vsp")}</Typography>
                             {/* RIGHT SIDE USRT DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.division || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
                             {/* LEFT SIDE USRT DATA TEXT */}
-                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>ПОДРАЗДЕЛЕНИЕ</Typography>
+                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("part")}</Typography>
                             {/* RIGHT SIDE USRT DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.department || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
                             {/* LEFT SIDE USRT DATA TEXT */}
-                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>ДОЛЖНОСТЬ</Typography>
+                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("positionjob")}</Typography>
                             {/* RIGHT SIDE USRT DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.position || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
                             {/* LEFT SIDE USRT DATA TEXT */}
-                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>функционал</Typography>
+                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("functional")}</Typography>
                             {/* RIGHT SIDE USRT DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.premium || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
                             {/* LEFT SIDE USRT DATA TEXT */}
-                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>ТАБЕЛЬНЫЙ НОМЕР РАБОТНИКА</Typography>
+                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("tablenumber")}</Typography>
                             {/* RIGHT SIDE USRT DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.table_number || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
                             {/* LEFT SIDE USRT DATA TEXT */}
-                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>ОКЛАД РАБОТНИКА, СУМ</Typography>
+                            <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("salary")}</Typography>
                             {/* RIGHT SIDE USRT DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}> {insertSpaces(data.fixed)|| "нет информации"}</Typography>
                         </Box>

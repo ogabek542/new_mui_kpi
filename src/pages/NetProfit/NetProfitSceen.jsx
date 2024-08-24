@@ -24,8 +24,11 @@ import CommonData from "../../pages/testapi/testDataAll.jsx"
 
 // IMPORT ICONS //
 import MovingIcon from "@mui/icons-material/Moving";
+import { useTranslation } from "react-i18next";
 
-const NetProfitSceen = () => {
+const NetProfitSceen = ({changeLang}) => {
+
+  const {t} = useTranslation()
 
   // data //
   const top128Filials = [

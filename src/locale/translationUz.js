@@ -54,13 +54,13 @@ const translationUz = {
     selectregion:"Hududni tanlash",
     selectfilial:"Filialni tanlash",
     cleanincommain:"Чистая прибыль(млрд сум)",
-    cleanpercentagevalues:"чистый % доход / чистый Бес % доход (млрд сум)",
-    percentageincome:"% Доходы",
-    nopercentageincome:"Бес % Доходы",
-    costpercentage:"% расходы",
-    costnopercentage:"Бес % расходы",
-    operatsioncost:"операционные расходы",
-    reserve:"резервы",
+    cleanpercentagevalues:"sof % daromad / sof % daromad (milliard so‘m)",
+    percentageincome:"% Daromad",
+    nopercentageincome:"% bo'lmagan daromad",
+    costpercentage:"% xarajatlar",
+    costnopercentage:"% xarajat yoʻq",
+    operatsioncost:"operatsion xarajatlar",
+    reserve:"zaxiralar",
 
 
 };
