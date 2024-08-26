@@ -72,8 +72,29 @@ const translationRu = {
         profitforeigncurrency:"Прибыль в иностранной валюте",
         profitsanDdividentsInvestments:"Прибыль и дивиденды от инвестиций",
         noneInterestIncome:"Другие беспроцентные доходы",
+        // no % horizontal barchart //
+        commisionexpensecost:"Комиссионные расходы",
+        foreigncurrencyloses:"Убытки в иностранной валюте",
+        noneInterestExpenses:"Другие беспроцентные расходы",
+        // percentage cost //
+        onDeposits:"По депозитам",
+        onPlayableToOtherBanks:"По счетам к оплате в другие банки",
+        onPlayableLoans:"По кредитам к оплате",
+        onIssuedSecurities:"По выпущенным ценным бумагам",
+        otherCostes:"Другие",
+        // verticalbarchart //
+        assessmentOfLosts:"Оценка убытков",
+        recoveryPreviousReserves:"Возмещение ранее созданных резервов",
+        currenrYearReserves:"Досоздание резервов в текущем году",
+        // Doughtnut piechart //
+        employeExpenses:"Расходы на сотрудников",
+        rentMaintanance:"Аренда и содержание",
+        transportationExpenses:"Транспортные расходы",
+        administrativExpenses:"Административные расходы",
+        charitableExpenses:"Репрезентация и благотворительность",
+        obsolescenceExpenses:"Расходы на износ",
+        otherExpenses:"Другие операционные расходы",
 
 
-        // labels:["Комиссионные доходы", "Прибыль в иностранной валюте", "Прибыль и дивиденды от инвестиций", "Другие беспроцентные доходы"],
 }
 export default translationRu 

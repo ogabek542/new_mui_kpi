@@ -9,7 +9,7 @@ import LightHeader from "../../components/LightHeader/LightHeader";
 import Footer from "../../components/Footer/Footer";
 import NewLineChart from "../../components/NewLineChart/NewLineChart"; // % income line chart component//
 import NoIncomeLineChart from "../../components/LineChart/LineChart.jsx"; // no % income line chart component//
-import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";
+import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";// no % cost right side //
 import HorizontalCostBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
 import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar"; // changes doughnut //
 import OpenVerticalGroupBarChart from "../../components/OpenVerticalGroupBarchart/OpenVerticalBarChart"; // change static form label name //
@@ -1015,7 +1015,7 @@ const NetProfitSceen = ({changeLang}) => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                    операционные  расходы
+                    {t("operatsioncost")}
                   </Typography>
                   <Box
                     sx={{
@@ -1058,7 +1058,7 @@ const NetProfitSceen = ({changeLang}) => {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                       
-                    }}>резервы</Typography>
+                    }}>{t("reserve")}</Typography>
                       <Box sx={{ width: "100%", height: "auto" ,}}>
                           <OpenVerticalGroupBarChart 
                               planData={item.reserveData.planData} 

@@ -10,17 +10,25 @@ import {
   Legend,
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
+import { useTranslation } from "react-i18next";
 
 // Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const VerticalGroupBarChart = ({  planData, factData }) => {
+
+  const {t} = useTranslation()
+
   const data = {
-    labels: ["Оценка убытков","Возмещение ранее созданных резервов","Досоздание резервов в текущем году"],
+    // labels: ["Оценка убытков","Возмещение ранее созданных резервов","Досоздание резервов в текущем году"],
+    labels:[
+      t("assessmentOfLosts"),
+      t("recoveryPreviousReserves"),
+      t("currenrYearReserves"),
+    ],
     datasets: [
       {
-       
-        label: 'ПЛАН',
+        label:t('planlinechart'),
         data: planData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -28,7 +36,7 @@ const VerticalGroupBarChart = ({  planData, factData }) => {
         barThickness: 30, // Adjust this value to make bars thicker
       },
       {
-        label: 'ФАКТ',
+        label: t('factlinechart'),
         data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
         borderColor: 'rgba(144, 238, 144, 1)', // Light green border color

@@ -10,16 +10,27 @@ import {
   Legend,
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
+import { useTranslation } from "react-i18next";
 
 // Register the necessary components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const HorizontalCostBarChart = ({  planData, factData }) => {
+
+  const {t} = useTranslation()
+
   const data = {
-    labels: ['По депозитам', 'По счетам к оплате в другие банки', 'По кредитам к оплате', 'По выпущенным ценным бумагам','Другие'],
+    // labels: ['По депозитам', 'По счетам к оплате в другие банки', 'По кредитам к оплате', 'По выпущенным ценным бумагам','Другие'],
+    labels:[
+      t("onDeposits"),
+      t("onPlayableToOtherBanks"),
+      t("onPlayableLoans"),
+      t("onIssuedSecurities"),
+      t("otherCostes"),
+    ],
     datasets: [
       {
-        label: 'ПЛАН',
+        label:t('planlinechart'),
         data: planData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -27,7 +38,7 @@ const HorizontalCostBarChart = ({  planData, factData }) => {
         barThickness: 15, // Thinner bars
       },
       {
-        label: 'ФАКТ',
+        label: t('factlinechart'),
         data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
         borderColor: 'rgba(144, 238, 144, 1)', // Light green border color

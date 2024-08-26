@@ -7,13 +7,26 @@ import {
   Legend,
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
+import { useTranslation } from "react-i18next";
 
 // Register the necessary components for Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = ({ chartData }) => {
+
+  const {t} = useTranslation()
+
   const data = {
-    labels: ['Расходы на сотрудников','Аренда и содержание','Транспортные расходы','Административные расходы','Репрезентация и благотворительность','Расходы на износ','Другие операционные расходы',],
+    // labels: ['Расходы на сотрудников','Аренда и содержание','Транспортные расходы','Административные расходы','Репрезентация и благотворительность','Расходы на износ','Другие операционные расходы',],
+    labels:[
+      t("employeExpenses"),
+      t("rentMaintanance"),
+      t("transportationExpenses"),
+      t("administrativExpenses"),
+      t("charitableExpenses"),
+      t("obsolescenceExpenses"),
+      t("otherExpenses"),
+    ],
     datasets: [
       {
         data: chartData, 

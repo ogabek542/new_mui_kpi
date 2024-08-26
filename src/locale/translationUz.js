@@ -73,6 +73,28 @@ const translationUz = {
     profitforeigncurrency:"Xorijiy valyutadagi foyda",
     profitsanDdividentsInvestments:"Investitsiyalardan olingan foyda va dividendlar",
     noneInterestIncome:"Boshqa foizsiz daromadlar",
+    // no % horizontal barchart //
+    commisionexpensecost:"Komissiya xarajatlari",
+    foreigncurrencyloses:"Xorijiy valyutadagi yo'qotishlar",
+    noneInterestExpenses:"Boshqa foizsiz xarajatlar",
+    // percentage cost //
+    onDeposits:"Depozitlar bo'yicha",
+    onPlayableToOtherBanks:"Boshqa banklardagi kreditorlik qarzlari bo'yicha",
+    onPlayableLoans:"To'lanadigan kreditlar bo'yicha",
+    onIssuedSecurities:"Emissiya qilingan qimmatli qog'ozlar bo'yicha",
+    otherCostes:"Boshqalar",
+    // verticalbarchart //
+    assessmentOfLosts:"Yo'qotishlarni baholash",
+    recoveryPreviousReserves:"Oldin yaratilgan zahiralarni qoplash",
+    currenrYearReserves:"Joriy yilda zaxiralarni qo'shimcha yaratish",
+     // Doughtnut piechart //
+    employeExpenses:"Xodimlar xarajatlari",
+    rentMaintanance:"Ijara va texnik xizmat ko'rsatish",
+    transportationExpenses:"Transport xarajatlari",
+    administrativExpenses:"Ma'muriy xarajatlar",
+    charitableExpenses:"Vakillik va xayriya xarajatlari",
+    obsolescenceExpenses:"Eskirish va eskirish xarajatlari",
+    otherExpenses:"Boshqa operatsion xarajatlar",
 };
 
 export default translationUz;
