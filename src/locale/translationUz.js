@@ -8,7 +8,7 @@ const translationUz = {
     access:"KIRISH",
     register:"ro'yxatdan o'tish",
     forgetpassword:"parolni unutdingizmi?",
-    infobutton:"to'liq malumot",
+    infobutton:"to'liq ma'lumot",
     maintextmodal:"Aftorizatsiyadan o'tgandan keyin yangi sahifaga o'tish mumkin !!!",
     maintextforgetpassword:"Tanishib chiqing !!!",
     // footer section text //

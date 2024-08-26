@@ -3,7 +3,7 @@ const translationEn = {
         headerText:"ACCOUNTING AND FINANCIAL MANAGEMENT DEPARTMENT OF UZMILLIY BANK JSC",
         // main section text //
         kpicorner:"angle of KPI",
-        login:"Login",
+        login:"LOGIN",
         parol:"PASSWORD",
         access:"OPEN",
         register:"Register",

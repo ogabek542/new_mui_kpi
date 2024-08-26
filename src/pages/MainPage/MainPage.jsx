@@ -65,21 +65,10 @@ import SparklineApp from "../../components/Sparkline/Sparkline.jsx";
 
 // LANGUAGE SECTION //
 import i18n from "i18next";
-import {initReactI18next} from "react-i18next";
-import translationEn from "../../locale/translationEn.js";
-import translationUz from "../../locale/translationUz.js";
-import translationRu from "../../locale/translationRu.js";
+
 import { useTranslation } from "react-i18next";
 
-i18n.use(initReactI18next).init({
-  resources:{
-    en:{translation:translationEn},
-    uz:{translation:translationUz},
-    ru:{translation:translationRu},
-  },
-  lng:"uz",
-  fallbackLng:"uz",
-})
+
 
 
 

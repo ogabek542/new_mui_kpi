@@ -40,7 +40,7 @@ const translationRu = {
         plan:"план",
         fact:"факт",
         execution:"исполнение",
-        filial:"ФИЛИАЛ/ГО",
+        filial:"ФИЛИАЛ",
         vsp:"ВСП (ОПЕРУ/БХМ/БХО)",
         part:"ПОДРАЗДЕЛЕНИЕ",
         positionjob:"ДОЛЖНОСТЬ",
