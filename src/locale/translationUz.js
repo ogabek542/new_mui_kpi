@@ -87,7 +87,7 @@ const translationUz = {
     assessmentOfLosts:"Yo'qotishlarni baholash",
     recoveryPreviousReserves:"Oldin yaratilgan zahiralarni qoplash",
     currenrYearReserves:"Joriy yilda zaxiralarni qo'shimcha yaratish",
-     // Doughtnut piechart //
+    // Doughtnut piechart //
     employeExpenses:"Xodimlar xarajatlari",
     rentMaintanance:"Ijara va texnik xizmat ko'rsatish",
     transportationExpenses:"Transport xarajatlari",
