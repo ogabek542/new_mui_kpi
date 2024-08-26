@@ -53,16 +53,26 @@ const translationUz = {
     // Netfrofit screen //
     selectregion:"Hududni tanlash",
     selectfilial:"Filialni tanlash",
-    cleanincommain:"Чистая прибыль(млрд сум)",
-    cleanpercentagevalues:"sof % daromad / sof % daromad (milliard so‘m)",
-    percentageincome:"% Daromad",
-    nopercentageincome:"% bo'lmagan daromad",
+    cleanincommain:"Sof foyda (mlrd so‘m)",
+    cleanpercentagevalues:"sof % daromad / sof % daromad (mlrd so‘m)",
+    percentageincome:"% Daromadlar",
+    nopercentageincome:"% bo'lmagan daromadlar",
     costpercentage:"% xarajatlar",
-    costnopercentage:"% xarajat yoʻq",
+    costnopercentage:"% bo'lmagan xarajatlar",
     operatsioncost:"operatsion xarajatlar",
     reserve:"zaxiralar",
-
-
+    // newlinechartjs //
+    toOtherBanks: "Boshqa banklarga to'lash uchun",
+    loans: "Kreditlar uchun",
+    securities: "Qimmatli qog'ozlar uchun",
+    otherIncome: "Boshqa% daromad",
+    planlinechart: "PLAN",
+    factlinechart: "FAKT",
+    // nopercentageincome chartjs //
+    nopercentageincomeright:"Komissiya daromadi",
+    profitforeigncurrency:"Xorijiy valyutadagi foyda",
+    profitsanDdividentsInvestments:"Investitsiyalardan olingan foyda va dividendlar",
+    noneInterestIncome:"Boshqa foizsiz daromadlar",
 };
 
 export default translationUz;

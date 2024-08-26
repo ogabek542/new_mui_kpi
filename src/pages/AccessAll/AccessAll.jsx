@@ -378,7 +378,7 @@ const AccessAll = () => {
                     </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={() => navigate("/softprofit")}>
+                  <Button variant="contained" size={"medium"} onClick={() => navigate("/netprofit")}>
                       <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>

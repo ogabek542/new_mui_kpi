@@ -12,16 +12,26 @@ import {
   Filler,
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,Filler);
 
 const NoIncomeLineChart = ({ planData, factData }) => {
+
+  const {t} = useTranslation()
+
   const data = {
-    labels:["Комиссионные доходы", "Прибыль в иностранной валюте", "Прибыль и дивиденды от инвестиций", "Другие беспроцентные доходы"],
+    // labels:["Комиссионные доходы", "Прибыль в иностранной валюте", "Прибыль и дивиденды от инвестиций", "Другие беспроцентные доходы"],
+    labels: [
+      t('nopercentageincomeright'), // "К оплате в другие банки"
+      t('profitforeigncurrency'), // "По кредитам"
+      t('profitsanDdividentsInvestments'), // "По ценным бумагам"
+      t('noneInterestIncome'), // "Другие % доходы"
+    ],
     datasets: [
       {
         
-        label: 'ПЛАН',
+        label:t('planlinechart'),
         data:  planData,
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -30,7 +40,7 @@ const NoIncomeLineChart = ({ planData, factData }) => {
         tension: 0.4,
       },
       {
-        label: 'ФАКТ',
+        label: t('factlinechart'),
         data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.4)',
         borderColor: 'rgba(144, 238, 144, 1)',

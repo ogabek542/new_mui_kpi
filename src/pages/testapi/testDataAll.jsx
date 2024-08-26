@@ -3,7 +3,7 @@ const newAllData = [
       name: "НБУ",
       sana: [
         {
-          date: "21.08.2024",
+          date: "25.08.2024",
           cleanProfit: {
             netProfitData:"1916547",
             netPercentageData:"108",
@@ -44,7 +44,7 @@ const newAllData = [
           },
         },
         {
-          date: "22.08.2024",
+          date: "26.08.2024",
           cleanProfit: {
             netProfitData:"1716547",
             netPercentageData:"73",
@@ -85,7 +85,7 @@ const newAllData = [
           },
         },
         {
-          date: "23.08.2024",
+          date: "27.08.2024",
           cleanProfit: {
             netProfitData:"1616547",
             netPercentageData:"63",

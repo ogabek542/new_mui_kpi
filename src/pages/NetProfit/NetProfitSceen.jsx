@@ -9,9 +9,9 @@ import LightHeader from "../../components/LightHeader/LightHeader";
 import Footer from "../../components/Footer/Footer";
 import NewLineChart from "../../components/NewLineChart/NewLineChart"; // % income line chart component//
 import NoIncomeLineChart from "../../components/LineChart/LineChart.jsx"; // no % income line chart component//
-import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar"; // changes doughnut //
 import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";
 import HorizontalCostBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
+import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar"; // changes doughnut //
 import OpenVerticalGroupBarChart from "../../components/OpenVerticalGroupBarchart/OpenVerticalBarChart"; // change static form label name //
 // calendar elements section //
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -226,7 +226,6 @@ const NetProfitSceen = ({changeLang}) => {
   const [prevSecondOption, setPrevSecondOption] = React.useState(null);
   // for data map //
   const [secondOptions, setSecondOptions] = React.useState([]);
- 
   
 
   // Real working Code //
@@ -344,7 +343,8 @@ const NetProfitSceen = ({changeLang}) => {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Выбор область"
+                            // label="Выбор область"
+                            label={t("selectregion")}
                             variant="standard"
                             sx={{
                               "& .MuiInput-underline:before": { borderBottomColor: "red" },
@@ -382,7 +382,8 @@ const NetProfitSceen = ({changeLang}) => {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Выбор филиала"
+                            // label="Выбор филиала"
+                            label={t("selectfilial")}
                             variant="standard"
                             sx={{
                               "& .MuiInput-underline:before": { borderBottomColor: "red" },
@@ -489,7 +490,7 @@ const NetProfitSceen = ({changeLang}) => {
                       textShadow:"0.5px 0.5px 2px gray",
                     }}
                   >
-                    Чистая прибыль(млрд сум)
+                    {t("cleanincommain")}
                   </Typography>
                   <Box
                     sx={{
@@ -590,7 +591,7 @@ const NetProfitSceen = ({changeLang}) => {
                       textShadow:"0.5px 0.5px 2px gray",
                     }}
                   >
-                    чистый % доход  / чистый Бес % доход (млрд сум)
+                    {t("cleanpercentagevalues")}
                   </Typography>
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"100%",}}>
                     {/* Left side Doxod */}
@@ -849,7 +850,7 @@ const NetProfitSceen = ({changeLang}) => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>%  Доходы</Typography>
+                    }}>{t("percentageincome")} </Typography>
                     <Box sx={{width:"100%",height:"auto"}}>
                     <NewLineChart 
                               planData={item.interestIncome.planData} 
@@ -884,7 +885,7 @@ const NetProfitSceen = ({changeLang}) => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>Бес % Доходы</Typography>
+                    }}>{t("nopercentageincome")}</Typography>
                       <Box sx={{ width: "100%", height: "auto" }}>
                       
                           
@@ -928,7 +929,7 @@ const NetProfitSceen = ({changeLang}) => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                  % расходы
+                  {t("costpercentage")}
                   </Typography>
                   {/* Bottom side box of third div */}
                   <Box sx={{width:"100%",height:"350px"}}>
@@ -970,7 +971,7 @@ const NetProfitSceen = ({changeLang}) => {
                       whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
                     }}
                   >
-                    Бес % расходы
+                    {t("costnopercentage")}
                   </Typography>
                   {/* Bottom side box of third div */}
                   <Box sx={{width:"100%",height:"350px"}}>

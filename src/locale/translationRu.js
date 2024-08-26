@@ -60,6 +60,20 @@ const translationRu = {
         costnopercentage:"Бес % расходы",
         operatsioncost:"операционные расходы",
         reserve:"резервы",
+         // newlinechartjs //
+        toOtherBanks: "К оплате в другие банки",
+        loans: "По кредитам",
+        securities: "По ценным бумагам",
+        otherIncome: "Другие % доходы",
+        planlinechart: "ПЛАН",
+        factlinechart: "ФАКТ",
+        // nopercentageincome chartjs //
+        nopercentageincomeright:"Комиссионные доходы",
+        profitforeigncurrency:"Прибыль в иностранной валюте",
+        profitsanDdividentsInvestments:"Прибыль и дивиденды от инвестиций",
+        noneInterestIncome:"Другие беспроцентные доходы",
 
+
+        // labels:["Комиссионные доходы", "Прибыль в иностранной валюте", "Прибыль и дивиденды от инвестиций", "Другие беспроцентные доходы"],
 }
 export default translationRu 

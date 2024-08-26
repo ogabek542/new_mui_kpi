@@ -12,16 +12,26 @@ import {
   Filler,
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,Filler);
 
 const NewLineChart = ({ planData, factData }) => {
+
+   const {t} = useTranslation()
+
   const data = {
-    labels:["К оплате в другие банки","По кредитам","По ценным бумагам","Другие % доходы",],
+    // labels:["К оплате в другие банки","По кредитам","По ценным бумагам","Другие % доходы",],4
+    labels: [
+      t('toOtherBanks'), // "К оплате в другие банки"
+      t('loans'), // "По кредитам"
+      t('securities'), // "По ценным бумагам"
+      t('otherIncome'), // "Другие % доходы"
+    ],
+
     datasets: [
       {
-        
-        label: 'ПЛАН',
+        label:t('planlinechart'),
         data:  planData,
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -30,7 +40,7 @@ const NewLineChart = ({ planData, factData }) => {
         tension: 0.4,
       },
       {
-        label: 'ФАКТ',
+        label: t('factlinechart'),
         data: factData,
         backgroundColor: 'rgba(144, 238, 144, 0.4)',
         borderColor: 'rgba(144, 238, 144, 1)',
