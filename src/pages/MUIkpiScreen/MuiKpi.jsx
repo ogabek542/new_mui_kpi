@@ -239,6 +239,7 @@ const newDefaultImage = DefaultImage;
         {/* HEADER SECTION OF KPI SCREEN .. USER DATAS IN HERE */}
             <Grid container sx={{width:"100%",height:"200px",}}>
                 <Grid item xs={2.5} lg={2.5} sx={{padding:"5px",}}>
+                    {/* user image section */}
                     <Box sx={{width:"100%",height:"100%",borderRadius:"5px",border:"1px solid gray",display:"flex",alignItems:"center",justifyContent:"center",padding:"5px"}}>
                         <Box
                             component="img"

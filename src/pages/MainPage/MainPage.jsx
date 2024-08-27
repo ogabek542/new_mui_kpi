@@ -899,6 +899,7 @@ const handleLogin = async () => {
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
                   <SynchronizedLineCharts/>
+                  <SynchronizedLineCharts/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
