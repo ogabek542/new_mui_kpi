@@ -95,6 +95,20 @@ const translationUz = {
     charitableExpenses:"Vakillik va xayriya xarajatlari",
     obsolescenceExpenses:"Eskirish va eskirish xarajatlari",
     otherExpenses:"Boshqa operatsion xarajatlar",
+    // 12 screen texts // 
+    firstText:"BANK RENTABILLIGI KO'RSATKICHLARI",
+    secontText:"BANK AKTIVLARI",
+    thirdText:"BANK MAJBURIYATLARI",
+    fourthText:"BANK KREDIT PORTFELI",
+    fifthText:"BANK SOF FOYDASI",
+    sixthText:"RAQAMLI KO'RSATKICHLAR",
+    seventhText:"BANK VALYUTA KO'RSATKICHLARI",
+    eighthText:"BANK KAPITALI",
+    ninthText:"BANK DAROMADLARI VA XARAJATLARI",
+    tenthText: "BANK RISKLARI VA UYQASH MASALALARI",
+    eleventhText: "BANKNING MOLIYAVIY STABILLIGI",
+    twelfthText: "BANKNING STRATEGIK REJALARI VA INVESTITSION FAOLIYATI",
+
 };
 
 export default translationUz;

@@ -94,6 +94,19 @@ const translationRu = {
         charitableExpenses:"Репрезентация и благотворительность",
         obsolescenceExpenses:"Расходы на износ",
         otherExpenses:"Другие операционные расходы",
+        // 12 screen texts // 
+        firstText: "ПОКАЗАТЕЛИ РЕНТАБЕЛЬНОСТИ БАНКА",
+        secontText: "АКТИВЫ БАНКА",
+        thirdText: "ОБЯЗАТЕЛЬСТВА БАНКА",
+        fourthText: "КРЕДИТНЫЙ ПОРТФЕЛЬ БАНКА",
+        fifthText: "ЧИСТАЯ ПРИБЫЛЬ БАНКА",
+        sixthText: "ЦИФРОВЫЕ ПОКАЗАТЕЛИ",
+        seventhText: "ВАЛЮТНЫЕ ПОКАЗАТЕЛИ БАНКА",
+        eighthText: "КАПИТАЛ БАНКА",
+        ninthText: "ДОХОДЫ И РАСХОДЫ БАНКА",
+        tenthText: "РИСКИ БАНКА И СООТВЕТСТВИЕ ТРЕБОВАНИЯМ",
+        eleventhText: "ФИНАНСОВАЯ СТАБИЛЬНОСТЬ БАНКА",
+        twelfthText: "СТРАТЕГИЧЕСКИЕ ПЛАНЫ И ИНВЕСТИЦИОННАЯ ДЕЯТЕЛЬНОСТЬ БАНКА",
 
 
 }

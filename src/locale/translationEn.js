@@ -94,7 +94,19 @@ const translationEn = {
         charitableExpenses:"Representation and Charity",
         obsolescenceExpenses:"Wear and tear expenses",
         otherExpenses:"Other operating expenses",
-
-};
+        // 12 screen texts // 
+        firstText: "BANK PROFITABILITY INDICATORS",
+        secontText: "BANK ASSETS",
+        thirdText: "BANK LIABILITIES",
+        fourthText: "BANK LOAN PORTFOLIO",
+        fifthText: "BANK NET PROFIT",
+        sixthText: "DIGITAL INDICATORS",
+        seventhText: "BANK CURRENCY INDICATORS",
+        eighthText: "BANK CAPITAL",
+        ninthText: "BANK REVENUES AND EXPENSES",
+        tenthText: "BANK RISKS AND COMPLIANCE ISSUES",
+        eleventhText: "BANK FINANCIAL STABILITY",
+        twelfthText: "BANK STRATEGIC PLANS AND INVESTMENT ACTIVITIES",
+        };
 
 export default translationEn;
