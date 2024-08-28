@@ -4,11 +4,11 @@ import { Box, Card, CardContent } from '@mui/material';
 
 const CapitalChart = () => {
   const data = {
-    labels: ['2018', '2019', '2020', '2021'],
+    labels: ['2020', '2021', '2022', '2023','2024'],
     datasets: [
       {
         label: 'Bank Capital',
-        data: [150, 200, 180, 220],
+        data: [150, 200, 80, 220,220],
         fill: true,
         backgroundColor: 'rgba(153, 102, 255, 0.2)',
         borderColor: 'rgba(153, 102, 255, 1)',
