@@ -23,6 +23,21 @@ import SynchronizedLineCharts from "../../components/SynchronizedLineCharts/Sync
 import RadialBarChartComponent from "../../components/RadialBarChart/RadialBarChart.jsx";
 import RadarChart from "../../components/RadarChart/RadarChart.jsx";
 import SparklineApp from "../../components/Sparkline/Sparkline.jsx";
+// 12 Screen Components //
+import LiabilitiesChart from "../../components/TwelfScreenComponents/ThirdScreenComponent/LiabilitiesChart.jsx";
+import LoanPortfolioChart from "../../components/TwelfScreenComponents/FouthScreenComponent/LoanPortfolioChart .jsx";
+import NetProfitChart from "../../components/TwelfScreenComponents/FifthScreenComponent/NetProfitChart.jsx";
+import DigitalIndicatorsChart from "../../components/TwelfScreenComponents/SixthScreenComponent/DigitalIndicatorsChart.jsx";
+import CurrencyIndicatorsChart from "../../components/TwelfScreenComponents/SeventhScreenComponent/CurrencyIndicatorsChart.jsx";
+import CapitalChart from "../../components/TwelfScreenComponents/EightScreenComponent/CapitalChart.jsx";
+import RevenuesExpensesChart from "../../components/TwelfScreenComponents/NinthScreenComponent/RevenuesExpensesChart.jsx";
+import RisksComplianceChart from "../../components/TwelfScreenComponents/TenthScreenComponent/RisksComplianceChart.jsx";
+import FinancialStabilityChart from "../../components/TwelfScreenComponents/EleventhScreenComponent/FinancialStabilityChart.jsx";
+import StrategicPlansChart from "../../components/TwelfScreenComponents/TwelfScreen/StrategicPlansChart.jsx";
+
+
+
+
 // import image //
 import LeftSideSVG from "../../assets/svg/Left_SVG.svg";
 // recharts elements //
@@ -337,7 +352,7 @@ const AccessAll = () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("firstText")}</Typography>
                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"73%"}} >
                     <Box sx={{display:"flex",flexDirection:"column",gap:"10px",}}>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
@@ -377,7 +392,7 @@ const AccessAll = () => {
                     </Box>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={() => navigate("/netprofit")}>
+                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
@@ -397,7 +412,7 @@ const AccessAll = () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК АКТИВЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("secontText")}</Typography>
                 <Box sx={{display:"flex",flexDirection:"column",height:"81%"}} >
                   {/* three text container Box */}
                   <Box sx={{width:"100%",height:"auto",display:"flex",alignItems:"center",justifyContent:"space-around",}}>
@@ -505,9 +520,10 @@ const AccessAll = () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("thirdText")}</Typography>
                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"77%",bgcolor:"transparent"}} >
-                  <HorizontalBarChart />
+                  {/* <HorizontalBarChart /> */}
+                  <LiabilitiesChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -530,9 +546,10 @@ const AccessAll = () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("fourthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                    <AreaChart/>
+                    {/* <AreaChart/> */}
+                    <LoanPortfolioChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -555,9 +572,9 @@ const AccessAll = () => {
               }}
             >
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("fifthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <SteppedLineChart/>
+                  <NetProfitChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -580,9 +597,9 @@ const AccessAll = () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("sixthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <DoughnutChart/>
+                  <DigitalIndicatorsChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -605,9 +622,9 @@ const AccessAll = () => {
               }}
             >
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("seventhText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <PieChart/>
+                  <CurrencyIndicatorsChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -630,9 +647,9 @@ const AccessAll = () => {
               }}
             >
             <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eighthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <VerticalBarChart/>
+                  <CapitalChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -655,9 +672,9 @@ const AccessAll = () => {
               }}
             >
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("ninthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <SynchronizedLineCharts/>
+                  <RevenuesExpensesChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -680,9 +697,9 @@ const AccessAll = () => {
               }}
             >
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("tenthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <RadialBarChartComponent/>
+                  <RisksComplianceChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -705,9 +722,9 @@ const AccessAll = () => {
               }}
             >
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eleventhText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <SparklineApp/>
+                  <FinancialStabilityChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -730,9 +747,9 @@ const AccessAll = () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>БАНК РЕНТАБЕЛЛИГИ КЎРСАТКИЧЛАРИ</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("twelfthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <RadarChart/>
+                  <StrategicPlansChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>

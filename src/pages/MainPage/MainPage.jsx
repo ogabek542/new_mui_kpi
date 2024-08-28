@@ -61,6 +61,19 @@ import SynchronizedLineCharts from "../../components/SynchronizedLineCharts/Sync
 import RadialBarChartComponent from "../../components/RadialBarChart/RadialBarChart.jsx";
 import RadarChart from "../../components/RadarChart/RadarChart.jsx";
 import SparklineApp from "../../components/Sparkline/Sparkline.jsx";
+// 12 Screen Components //
+import LiabilitiesChart from "../../components/TwelfScreenComponents/ThirdScreenComponent/LiabilitiesChart.jsx";
+import LoanPortfolioChart from "../../components/TwelfScreenComponents/FouthScreenComponent/LoanPortfolioChart .jsx";
+import NetProfitChart from "../../components/TwelfScreenComponents/FifthScreenComponent/NetProfitChart.jsx";
+import DigitalIndicatorsChart from "../../components/TwelfScreenComponents/SixthScreenComponent/DigitalIndicatorsChart.jsx";
+import CurrencyIndicatorsChart from "../../components/TwelfScreenComponents/SeventhScreenComponent/CurrencyIndicatorsChart.jsx";
+import CapitalChart from "../../components/TwelfScreenComponents/EightScreenComponent/CapitalChart.jsx";
+import RevenuesExpensesChart from "../../components/TwelfScreenComponents/NinthScreenComponent/RevenuesExpensesChart.jsx";
+import RisksComplianceChart from "../../components/TwelfScreenComponents/TenthScreenComponent/RisksComplianceChart.jsx";
+import FinancialStabilityChart from "../../components/TwelfScreenComponents/EleventhScreenComponent/FinancialStabilityChart.jsx";
+import StrategicPlansChart from "../../components/TwelfScreenComponents/TwelfScreen/StrategicPlansChart.jsx";
+
+
 
 
 // LANGUAGE SECTION //
@@ -748,7 +761,8 @@ const handleLogin = async () => {
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("thirdText")}</Typography>
                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"77%",bgcolor:"transparent"}} >
-                  <HorizontalBarChart />
+                  {/* <HorizontalBarChart /> */}
+                  <LiabilitiesChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -773,7 +787,8 @@ const handleLogin = async () => {
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("fourthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                    <AreaChart/>
+                    {/* <AreaChart/> */}
+                    <LoanPortfolioChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -798,7 +813,7 @@ const handleLogin = async () => {
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("fifthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <SteppedLineChart/>
+                  <NetProfitChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -823,7 +838,7 @@ const handleLogin = async () => {
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("sixthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <DoughnutChart/>
+                  <DigitalIndicatorsChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -848,7 +863,7 @@ const handleLogin = async () => {
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("seventhText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <PieChart/>
+                  <CurrencyIndicatorsChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -873,7 +888,7 @@ const handleLogin = async () => {
             <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eighthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <VerticalBarChart/>
+                  <CapitalChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -898,8 +913,7 @@ const handleLogin = async () => {
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("ninthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <SynchronizedLineCharts/>
-                  <SynchronizedLineCharts/>
+                  <RevenuesExpensesChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -924,7 +938,7 @@ const handleLogin = async () => {
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("tenthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <RadialBarChartComponent/>
+                  <RisksComplianceChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -949,7 +963,7 @@ const handleLogin = async () => {
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eleventhText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <SparklineApp/>
+                  <FinancialStabilityChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -974,7 +988,7 @@ const handleLogin = async () => {
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("twelfthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
-                  <RadarChart/>
+                  <StrategicPlansChart/>
                 </Box>
                 <Box sx={{textAlign:"end"}}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
@@ -1119,8 +1133,3 @@ const handleLogin = async () => {
 };
 
 export default MainPage;
-
-
-// boxShadow: "inset 0px 5px 10px 2px rgba(34, 60, 80, 0.2)", 
-// WebkitBoxShadow: "inset 0px 5px 10px 2px rgba(34, 60, 80, 0.2)", 
-// MozBoxShadow: "inset 0px 5px 10px 2px rgba(34, 60, 80, 0.2)", 
