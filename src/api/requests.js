@@ -71,6 +71,9 @@ export const REQUESTS = {
     realtimelive:{
         getRealTimeLive:() => axiosInstance.get('/api/daily-visitors')
     },
+    // analysisScreenOne:{
+    //     getAnalysisScreenOne:() => axiosInstance.get('/api/')
+    // },
 };
 console.log(getToken(), 'get token');
 // console.log(getRefreshToken(),'ok refresh')

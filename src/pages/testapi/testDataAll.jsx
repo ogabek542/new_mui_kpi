@@ -3,7 +3,7 @@ const newAllData = [
       name: "НБУ",
       sana: [
         {
-          date: "25.08.2024", 
+          date: "27.08.2024", 
           cleanProfit: {
             netProfitData:"1916547",// Чистая прибыль(млрд сум) ni qiymati million so'mda //
             netPercentageData:"108",// Чистая прибыль(млрд сум) ni plani va faktini nisbati man qiyamt kutib olib % qilib chiqaraman  butun son holida//
@@ -44,7 +44,7 @@ const newAllData = [
           },
         },
         {
-          date: "26.08.2024",
+          date: "28.08.2024",
           cleanProfit: {
             netProfitData:"1716547",
             netPercentageData:"73",
@@ -85,7 +85,7 @@ const newAllData = [
           },
         },
         {
-          date: "27.08.2024",
+          date: "29.08.2024",
           cleanProfit: {
             netProfitData:"1616547",
             netPercentageData:"63",

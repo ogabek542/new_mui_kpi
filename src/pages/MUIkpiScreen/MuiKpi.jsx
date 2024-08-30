@@ -45,22 +45,28 @@ const newDefaultImage = DefaultImage;
 
     const formatDate = (value) => {
         const dateObj = new Date(value);
-        
-        // Check if the dateObj is valid
-        // if (isNaN(dateObj.getTime())) {
-        //   throw new RangeError("Invalid time value");
-        // }
-      
         const monthNames = [
-          "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", 
-          "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+          "Январь",
+          "Февраль",
+          "Март",
+          "Апрель",
+          "Май",
+          "Июнь",
+          "Июль",
+          "Август",
+          "Сентябрь",
+          "Октябрь",
+          "Ноябрь",
+          "Декабрь",
         ];
-      
+    
         const monthIndex = dateObj.getMonth();
         const year = dateObj.getFullYear();
-      
+    
         return `${monthNames[monthIndex]} ${year}`;
       };
+
+  
   
     // fetch(imageUrl)
     //   .then((response) => {
@@ -190,7 +196,11 @@ const newDefaultImage = DefaultImage;
 
     const lastTwelveMonthsData = useMemo(() => {
         return line.kpies ? line.kpies.slice(-12) : [];
+
+
     }, [line.kpies]);
+
+
 
     const CustomizedDot = ({ cx, cy, payload }) => {
         const { month, month_data, overall } = payload;
@@ -199,11 +209,11 @@ const newDefaultImage = DefaultImage;
             setTableData(month_data);
             setCircleData({ overall, month });
         };
-        const fill = overall === 0 ? "#94c7fb" : "#0a7f40";
+        const fill = overall === 0 ? "#020D9E" : "#0A7F40";
 
         return (
             <g onClick={handleClick} style={{ cursor: "pointer" }}>
-                <circle cx={cx} cy={cy} r={8} fill={fill} className="circleShadow" />
+                <circle cx={cx} cy={cy} r={8} fill={fill} />
                 <text
                     x={cx - 3}
                     y={cy - 10}
@@ -338,7 +348,7 @@ const newDefaultImage = DefaultImage;
                                 <AreaChart
                                 width={"100%"}
                                 height={"100%"}
-                                margin={{ left: 0, top: 10, right: 10,bottom:15 }}
+                                margin={{ left: -10, top: 20, right: 10,bottom:10 }}
                                 // data={line.kpies}
                                 data={lastTwelveMonthsData}
                                 >
@@ -352,30 +362,33 @@ const newDefaultImage = DefaultImage;
                                     dataKey={(item) => formatDate(item.month)}
                                     padding={{ left: 0, right: 0 }}
                                     tick={{
-                                    fill: "#000",
-                                    fontWeight: "bold",
-                                    textAnchor: "middle",
-                                    width: 10,
-                                    fontSize:10,
+                                        fill: "#000",
+                                        fontWeight: "bold",
+                                        textAnchor: "middle",
+                                        width: 10,
+                                        fontSize:11,
                                     }}
-                                    
-                                />
+                                    />
                                 <YAxis
                                     className="procent-line-text"
                                     tickFormatter={(value) => `${value} %`}
                                     ticks={[0, 25, 50, 75, 100, 125]}
                                     domain={[0, 125]}
                                     type="number"
+                                    tick={{
+                                        fontSize:14,
+                                        fill: "#000",
+                                    }}
                                 />
                                 <Tooltip />
                                 <Area
                                     type="monotone"
                                     dataKey={(item) => Math.round(item.overall)}
-                                    stroke={"green"}
+                                    stroke={"#00C400"}
                                     strokeWidth={2}
                                     activeDot={{ r: 0.00001, fill: "#000"}}
                                     dot={<CustomizedDot />}
-                                    fill="#abf7b1"
+                                    fill="#CDFAD0"
                                 />
                                 </AreaChart>
                         </ResponsiveContainer>

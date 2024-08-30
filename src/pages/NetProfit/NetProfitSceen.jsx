@@ -227,6 +227,21 @@ const NetProfitSceen = ({changeLang}) => {
   // for data map //
   const [secondOptions, setSecondOptions] = React.useState([]);
   
+  // <==== Grapic Indicator API Datas  ====> //
+
+  //   useEffect(() => {
+  //     const fetchGraphicData = async () => {
+  //         try {
+  //             const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne("...api...");
+  //             const graphicIndicators = response.data;
+  //             setNumberLive(graphicIndicators);
+  //         } catch (error) {
+  //             console.error("Error fetching graphic indicator data:", error);
+  //         }
+  //     };
+  //     fetchGraphicData();
+  // }, []);
+
 
   // Real working Code //
   const handleDateChange = (newValue) => {
@@ -275,6 +290,8 @@ const NetProfitSceen = ({changeLang}) => {
       if (!text) return ""; 
       return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     };
+
+
 
 
   return (

@@ -11,7 +11,7 @@ const LiabilitiesChart = () => {
         data: [300, 100, 50],
         backgroundColor: 'rgba(72, 209, 204, 0.4)', // Light teal color
         borderColor: 'rgba(72, 209, 204, 0.8)', // Darker teal border color
-        borderWidth: 1, // Thin border for visual separation
+        borderWidth: 3, // Thin border for visual separation
       },
     ],
   };

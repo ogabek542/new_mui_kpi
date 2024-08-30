@@ -13,6 +13,8 @@ const RevenuesExpensesChart = () => {
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
+        barPercentage: 0.9, // Adjust the width of each bar
+        categoryPercentage: 0.5, // Adjust the width of the grouped bars
       },
       {
         label: 'Expenses',
@@ -20,6 +22,8 @@ const RevenuesExpensesChart = () => {
         backgroundColor: 'rgba(144, 238, 144, 0.4)',
         borderColor: 'rgba(144, 238, 144, 1)',
         borderWidth: 2,
+        barPercentage: 0.9,
+        categoryPercentage: 0.5,
       },
     ],
   };
@@ -28,12 +32,26 @@ const RevenuesExpensesChart = () => {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
-      x: { stacked: true },
-      y: { stacked: true },
+      x: {
+        stacked: false, // Disable stacking to make it grouped
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        stacked: false, // Disable stacking to make it grouped
+        grid: {
+          display: true,
+        },
+      },
     },
     plugins: {
       legend: {
         position: 'top',
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
       },
     },
   };
