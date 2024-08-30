@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://10.8.88.91:8000/';
+// const API_URL = 'http://10.8.88.91:8000/';
+const API_URL = 'http://10.8.99.171:8000/';
 const TOKEN_KEY = 'token';
 // const REFRESH_TOKEN_KEY = 'refresh_token';
 
@@ -18,7 +19,8 @@ export const axiosInstance = axios.create({
     baseURL: API_URL,
 });
 
-export const API_BASE_URL = 'http://10.8.88.91:8000/api/';
+// export const API_BASE_URL = 'http://10.8.88.91:8000/api/';
+export const API_BASE_URL = 'http://10.8.99.171:8000/api';
 
 
 axiosInstance.interceptors.request.use(
@@ -71,9 +73,9 @@ export const REQUESTS = {
     realtimelive:{
         getRealTimeLive:() => axiosInstance.get('/api/daily-visitors')
     },
-    // analysisScreenOne:{
-    //     getAnalysisScreenOne:() => axiosInstance.get('/api/')
-    // },
+    analysisScreenOne:{
+        getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes')
+    },
 };
 console.log(getToken(), 'get token');
 // console.log(getRefreshToken(),'ok refresh')

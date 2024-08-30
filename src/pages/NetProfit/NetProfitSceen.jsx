@@ -1,36 +1,28 @@
-import React from "react";
-import { Container, Box, Grid,Typography,Divider  } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Container, Box, Grid, Typography, Divider } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { useEffect } from "react";
-// IMPORT SCREENS //
 import LightHeader from "../../components/LightHeader/LightHeader";
 import Footer from "../../components/Footer/Footer";
-import NewLineChart from "../../components/NewLineChart/NewLineChart"; // % income line chart component//
-import NoIncomeLineChart from "../../components/LineChart/LineChart.jsx"; // no % income line chart component//
-import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";// no % cost right side //
+import NewLineChart from "../../components/NewLineChart/NewLineChart";
+import NoIncomeLineChart from "../../components/LineChart/LineChart.jsx";
+import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";
 import HorizontalCostBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
-import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar"; // changes doughnut //
-import OpenVerticalGroupBarChart from "../../components/OpenVerticalGroupBarchart/OpenVerticalBarChart"; // change static form label name //
-// calendar elements section //
+import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar";
+import OpenVerticalGroupBarChart from "../../components/OpenVerticalGroupBarchart/OpenVerticalBarChart";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import "dayjs/locale/ru"; // Import Russian locale
-// IPORT TEST API //
-import CommonData from "../../pages/testapi/testDataAll.jsx"
-
-// IMPORT ICONS //
+import "dayjs/locale/ru";
+import { REQUESTS } from "../../api/requests.js";
 import MovingIcon from "@mui/icons-material/Moving";
 import { useTranslation } from "react-i18next";
 
-const NetProfitSceen = ({changeLang}) => {
+const NetProfitSceen = ({ changeLang }) => {
+  const { t } = useTranslation();
 
-  const {t} = useTranslation()
-
-  // data //
   const top128Filials = [
     { title: "Республика", id: 1 },
     { title: "Тошкент шаҳри", id: 2 },
@@ -48,6 +40,7 @@ const NetProfitSceen = ({changeLang}) => {
     { title: "Хоразм  вилояти", id: 14 },
     { title: "Қорақалпоғистон республикаси", id: 15 },
   ];
+
   const setSelectedSecondMap = {
     // NBU//
     1: [
@@ -211,102 +204,91 @@ const NetProfitSceen = ({changeLang}) => {
     ],
   };
 
-  const [selectnewdata, setSelectNewData] = React.useState(dayjs());
-  const [dateText, setDateText] = React.useState(dayjs().format('DD.MM.YYYY'));
-  // const [selectnewdata, setSelectNewData] = React.useState(dayjs().format('DD.MM.YYYY'));
-  const [chooseData, setChooseData] = React.useState([]);
-  // const [dataSelectedDate, setDataSelectedDate] = React.useState("");
+  const [selectNewData, setSelectNewData] = useState(dayjs());
+  const [dateText, setDateText] = useState(dayjs().format("DD.MM.YYYY"));
+  const [chooseData, setChooseData] = useState([]);
+  const [selectedFirstOption, setSelectedFirstOption] = useState({ title: "Республика" });
+  const [selectedSecondOptions, setSelectedSecondOptions] = useState({ title: "НБУ" });
+  const [secondOptions, setSecondOptions] = useState(setSelectedSecondMap[1]);
 
-  console.log(chooseData)
-
-  // auto complete elements //
-  const [prevFirstOption, setPrevFirstOption] = React.useState(null);
-  const [selectedFirstOption, setSelectedFirstOption] = React.useState({ title: "Республика" });
-  const [selectedSecondOptions, setSelectedSecondOptions] = React.useState({ title: "НБУ" });
-  const [prevSecondOption, setPrevSecondOption] = React.useState(null);
-  // for data map //
-  const [secondOptions, setSecondOptions] = React.useState([]);
-  
-  // <==== Grapic Indicator API Datas  ====> //
-
-  //   useEffect(() => {
-  //     const fetchGraphicData = async () => {
-  //         try {
-  //             const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne("...api...");
-  //             const graphicIndicators = response.data;
-  //             setNumberLive(graphicIndicators);
-  //         } catch (error) {
-  //             console.error("Error fetching graphic indicator data:", error);
-  //         }
-  //     };
-  //     fetchGraphicData();
-  // }, []);
-
-
-  // Real working Code //
-  const handleDateChange = (newValue) => {
-    setSelectNewData(newValue);
-    const formattedDate = newValue ? dayjs(newValue).format('DD.MM.YYYY') : '';
-    setDateText(formattedDate);
-  
-    const selectedDataFromAPI = CommonData.find(
-      (item) =>
-        item.name.toLowerCase() === (selectedSecondOptions ? selectedSecondOptions.title.toLowerCase() : '')
-    )?.sana.find(
-      (sanaItem) => sanaItem.date === formattedDate
-    );
-  
-    if (selectedDataFromAPI) {
-      setChooseData([selectedDataFromAPI]);
-    } else {
-      setChooseData([]);
-    }
-  };
-
-
-    useEffect(() => {
-      if (selectedFirstOption && selectedFirstOption.id) {
-        setPrevFirstOption(selectedFirstOption);
-        setPrevSecondOption(setSelectedSecondOptions);
-  
-        setSecondOptions(setSelectedSecondMap[selectedFirstOption.id] || []);
-        setSelectedSecondOptions(null); // Reset the second option
-      } else {
-        setSecondOptions([]);
+  useEffect(() => {
+    const fetchGraphicData = async () => {
+      try {
+        const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
+        const graphicIndicators = response.data;
+        console.log(response);
+        console.log(graphicIndicators, "Fetched data");
+        setChooseData(graphicIndicators);
+      } catch (error) {
+        console.error("Error fetching graphic indicator data:", error);
+        if (error.response && error.response.status === 404) {
+          console.error("Endpoint not found. Please check the URL or backend configuration.");
+        } else {
+          console.error("An error occurred:", error.message);
+        }
       }
-    
-      const initializeScreen = () => {
-        // Use the day before today as the initial date
-        const initialDate = dayjs().subtract(1, 'day');
-  
-        // Trigger handleDateChange with the initial date
-        handleDateChange(initialDate);
-      };
-    
-      initializeScreen();
-    }, [selectedFirstOption]);
-
-    const insertSpaces = (text) => {
-      if (!text) return ""; 
-      return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     };
 
+    fetchGraphicData();
+  }, []);
 
+  useEffect(() => {
+    if (selectedFirstOption && selectedFirstOption.id) {
+      setSecondOptions(setSelectedSecondMap[selectedFirstOption.id] || []);
+      setSelectedSecondOptions(null); // Reset the second option
+    } else {
+      setSecondOptions([]);
+    }
+
+    // Initialize the screen with the previous day's date
+    const initializeScreen = () => {
+      const initialDate = dayjs().subtract(1, "day");
+      handleDateChange(initialDate);
+    };
+
+    initializeScreen();
+  }, [selectedFirstOption]);
+
+  const handleDateChange = (newValue) => {
+    setSelectNewData(newValue);
+    const formattedDate = newValue ? dayjs(newValue).format("DD.MM.YYYY") : "";
+
+    // Filter data by selected date
+    const selectedData = chooseData.map((item) => {
+      return {
+        ...item, // Spread the existing item properties
+        filteredSana: item.sana ? item.sana.filter((sanaItem) => sanaItem.date === formattedDate) : [],
+      };
+    });
+
+    setChooseData(selectedData);
+  };
+
+  const insertSpaces = (text) => {
+    if (!text) return "";
+    return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  };
+
+    // General function to divide data by 100
+    const divideAndRoundData = (dataArray) => {
+      if (!dataArray) return [];
+      return dataArray.map((value) => Math.round(value / 100));
+    };
 
 
   return (
     <Container
-    maxWidth={false} // This allows the container to expand beyond the default breakpoints
-    disableGutters
-    sx={{
-      px: "10px",
-      bgcolor: Colors.gray_back,
-      width: '100%', // Ensure the container takes up 100% of the viewport width
-      maxWidth: '100vw', // Ensure the container doesn't exceed the viewport width
-      '@media (min-width: 1920px)': {
-        maxWidth: '100%', // For extra-large screens, allow full width
-      },
-    }}
+      maxWidth={false}
+      disableGutters
+      sx={{
+        px: "10px",
+        bgcolor: Colors.gray_back,
+        width: "100%",
+        maxWidth: "100vw",
+        "@media (min-width: 1920px)": {
+          maxWidth: "100%",
+        },
+      }}
     >
       <Box
         sx={{
@@ -335,7 +317,7 @@ const NetProfitSceen = ({changeLang}) => {
               alignItems: "center",
             }}
           >
-            {/*<=== header items div ===>*/}
+            {/* Header items div */}
             <Grid container sx={{ width: "100%", height: "auto" }}>
               <Grid item xs={12} sm={12} md={5} lg={5} sx={{ padding: "5px" }}>
                 <Box
@@ -346,34 +328,29 @@ const NetProfitSceen = ({changeLang}) => {
                     height: "50px",
                     padding: "5px",
                     boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
-                  {/* First autocomplete  */}
-                    <Autocomplete
-                        options={top128Filials}
-                        sx={{ width: '100%', height: '100%', mb: 2 }}
-                        getOptionLabel={(option) => option.title}
-                        value={selectedFirstOption || prevFirstOption}
-                        onChange={(event, value) => setSelectedFirstOption(value)}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            // label="Выбор область"
-                            label={t("selectregion")}
-                            variant="standard"
-                            sx={{
-                              "& .MuiInput-underline:before": { borderBottomColor: "red" },
-                              "& .MuiInput-underline:after": { borderBottomColor: "green" },
-                              "& .MuiInput-underline:before, & .MuiInput-underline:after": {
-                                borderBottom: "none",
-                              },
-                            }}
-                            InputLabelProps={{ style: { color: 'black' } }}
-                          />
-                        )}
+                  {/* First Autocomplete */}
+                  <Autocomplete
+                    options={top128Filials}
+                    sx={{ width: "100%", height: "100%", mb: 2 }}
+                    getOptionLabel={(option) => option.title}
+                    value={selectedFirstOption}
+                    onChange={(event, value) => setSelectedFirstOption(value)}
+                    isOptionEqualToValue={(option, value) => option.title === value?.title}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label={t("selectregion")}
+                        variant="standard"
+                        sx={{
+                          "& .MuiInput-underline:before": { borderBottomColor: "red" },
+                          "& .MuiInput-underline:after": { borderBottomColor: "green" },
+                        }}
+                        InputLabelProps={{ style: { color: "black" } }}
                       />
+                    )}
+                  />
                 </Box>
               </Grid>
               <Grid item xs={12} sm={7} md={4} lg={4} sx={{ padding: "5px" }}>
@@ -385,34 +362,29 @@ const NetProfitSceen = ({changeLang}) => {
                     height: "50px",
                     padding: "5px",
                     boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
-                      {/* Second Autocomplete */}
-                      <Autocomplete
-                        options={secondOptions}
-                        sx={{ width: '100%', height: '100%' }}
-                        getOptionLabel={(option) => option.title}
-                        onChange={(event, value) => setSelectedSecondOptions(value)}
-                        value={selectedSecondOptions || prevSecondOption}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            // label="Выбор филиала"
-                            label={t("selectfilial")}
-                            variant="standard"
-                            sx={{
-                              "& .MuiInput-underline:before": { borderBottomColor: "red" },
-                              "& .MuiInput-underline:after": { borderBottomColor: "green" },
-                              "& .MuiInput-underline:before, & .MuiInput-underline:after": {
-                                borderBottom: "none",
-                              },
-                            }}
-                            InputLabelProps={{ style: { color: 'black' } }}
-                          />
-                        )}
+                  {/* Second Autocomplete */}
+                  <Autocomplete
+                    options={secondOptions}
+                    sx={{ width: "100%", height: "100%" }}
+                    getOptionLabel={(option) => option.title}
+                    onChange={(event, value) => setSelectedSecondOptions(value)}
+                    value={selectedSecondOptions}
+                    isOptionEqualToValue={(option, value) => option.title === value?.title}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label={t("selectfilial")}
+                        variant="standard"
+                        sx={{
+                          "& .MuiInput-underline:before": { borderBottomColor: "red" },
+                          "& .MuiInput-underline:after": { borderBottomColor: "green" },
+                        }}
+                        InputLabelProps={{ style: { color: "black" } }}
                       />
+                    )}
+                  />
                 </Box>
               </Grid>
               <Grid item xs={12} sm={5} md={3} lg={3} sx={{ padding: "5px" }}>
@@ -427,666 +399,59 @@ const NetProfitSceen = ({changeLang}) => {
                     justifyContent: "center",
                     textAlign: "center",
                     boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)", 
                   }}
                 >
-                  
-                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-                      <DatePicker
-                        value={dayjs(selectnewdata, 'DD.MM.YYYY')}
-                        onChange={handleDateChange}
-                        slotProps={{ textField: { size: "medium" } }}
-                        renderInput={(props) => (
-                          <Box
-                            sx={{
-                              width: { xs: "100px", sm: "100px", md: "200px" },
-                            }}
-                          >
-                            <TextField {...props} fullWidth />
-                          </Box>
-                        )}
-                        sx={{
-                          ".MuiOutlinedInput-root": {
-                            "& fieldset": {
-                              borderColor: "white",
-                              border: "none",
-                            },
-                            "&:hover fieldset": {
-                              borderColor: "white",
-                              border: "none",
-                            },
-                            "&.Mui-focused fieldset": {
-                              borderColor: "white",
-                            },
-                            ".MuiInputAdornment-root .MuiIconButton-root": {
-                              color: '#0000FF', // Custom color for the DatePicker icon
-                            },
-                            ".MuiInputBase-input": {
-                              fontWeight: 800, // Adjust the font weight of the DatePicker's text
-                              fontSize: { xs: "12px", sm: "18px" },
-                            },
-                          },
-                        }}
-                      />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      value={selectNewData}
+                      onChange={handleDateChange}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          id="datepicker-input"
+                          inputProps={{
+                            ...params.inputProps,
+                            placeholder: "DD.MM.YYYY",
+                            readOnly: true,
+                          }}
+                        />
+                      )}
+                    />
                   </LocalizationProvider>
                 </Box>
               </Grid>
             </Grid>
+            
+            {/* Display fetched data */}
             {chooseData.map((item, index) => (
-              <Box key={index} sx={{width:"100%",height:"100%"}}>
-            {/*<==== first grid div ====>*/}
-            <Grid container sx={{ width: "100%", height: "200px" }}>
-              {/* first number div */}
-              <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    padding: "5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                      textShadow:"0.5px 0.5px 2px gray",
-                    }}
-                  >
-                    {t("cleanincommain")}
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-evenly",
-                    }}
-                  >
-                    {/* Left side of text box */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-end", // Aligns the content to the bottom
-                        alignItems: "center",
-                        gap: "5px",
-                        height: "100%", // Ensure the parent Box has a height to push content to the bottom
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "64px",// 112px
-                          fontWeight: "800",
-                          textAlign: "start",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          textShadow:"2px 2px 5px gray",
-                        }}
-                      >
-                        {/* { insertSpaces(item.cleanProfit.netProfitData) || "нет информации"} */}
-                        {item.cleanProfit.netProfitData ? insertSpaces(Math.round(item.cleanProfit.netProfitData / 1000 )) : "нет информации"}
-                      </Typography>
+              <Box key={index} sx={{ width: "100%", height: "100%", marginTop: "20px" }}>
+                <Typography variant="h6">{item.name}</Typography>
+                
+                {item.filteredSana && item.filteredSana.length > 0 ? (
+                  item.filteredSana.map((sanaItem, idx) => (
+                    <Box key={idx} sx={{ padding: "10px", marginBottom: "10px", border: "1px solid #ddd" }}>
+                    
+                      {sanaItem.nointerestIncome && sanaItem.nointerestIncome.planData && sanaItem.nointerestIncome.factData ? (
 
-                  </Box>
-                    {/* Right side of text box */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "5px",
-                        alignItems: "center",
-                      }}
-                    >
-                      {/* Icon on the right side */}
-                      <MovingIcon
-                        sx={{
-                          color: item.cleanProfit.netPercentageData <= 100 ? Colors.red : Colors.green_dark,
-                          fontSize: "48px",
-                          padding: "0px",
-                          transform: item.cleanProfit.netPercentageData <= 100 ? "rotate(180deg)" : "rotate(0deg)",
-                          transition: "transform 0.3s ease",
-                        }}
-                      />
-                      {/* Percentage text on the right side */}
-                      <Typography
-                        sx={{
-                          fontSize: "40px",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          fontWeight: "600",
-                        }}
-                      >
-                        {item.cleanProfit.netPercentageData || "нет информации"}% 
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-              </Grid>
-                {/* second number div */}
-              <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    padding: "5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                      textShadow:"0.5px 0.5px 2px gray",
-                    }}
-                  >
-                    {t("cleanpercentagevalues")}
-                  </Typography>
-                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"100%",}}>
-                    {/* Left side Doxod */}
-                    <Box sx={{display:"flex",flexDirection:"column",height:"auto",}}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          
-                        }}
-                      >
-                        {/* Left side of BIG text box */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "flex-end", // Aligns the content to the bottom
-                            alignItems: "center",
-                            gap: "5px",
-                            height: "100%", // Ensure the parent Box has a height to push content to the bottom
-                            
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              fontSize: "32px",
-                              fontWeight: "900",
-                              textAlign: "start",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              textShadow:"0.5px 0.5px 2px gray",
-                            }}
-                          >
-                            {/* {insertSpaces(item.cleanPercentageIncome.netSoftProfitData) || "нет информации"} */}
-                            {item.cleanPercentageIncome.netSoftProfitData ? insertSpaces(Math.round(item.cleanPercentageIncome.netSoftProfitData / 1000))
-                              : "нет информации"}
-                          </Typography>
-                      </Box>
-                        {/* Right side of text box */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "5px",
-                            alignItems: "center",
-                          }}
-                        >
-                          {/* Icon on the right side */}
-                          <MovingIcon
-                            sx={{
-                              color:item.cleanPercentageIncome.netSoftPercentageData <= 100 ? Colors.red :  Colors.green_dark,
-                              fontSize: "24px",
-                              padding: "0px",
-                              transform:item.cleanPercentageIncome.netSoftPercentageData <= 100 ? "rotate(180deg)" : "rotate(0deg)",
-                              transition:"transform 0.3s ease", 
-                            }}
+
+                        <Box sx={{ width: "100%", height: "350px" }}>
+                          <NoIncomeLineChart 
+                            planData={divideAndRoundData(sanaItem.nointerestIncome.planData) } 
+                            factData={divideAndRoundData(sanaItem.nointerestIncome.factData) } 
                           />
-                          {/* Percentage text on the right side */}
-                          <Typography
-                            sx={{
-                              fontSize: "18px",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              fontWeight: "600",
-                            }}
-                          >
-                            {item.cleanPercentageIncome.netSoftPercentageData || "нет информации"}%
-                          </Typography>
                         </Box>
-                      </Box>
+
+                        
+                      ) : (
+                        <Typography>No data available for chart</Typography>
+                      )}
                     </Box>
-                    {/* Divider */}
-                    <Divider
-                      orientation="vertical"
-                      variant="middle"
-                      flexItem
-                      sx={{
-                        width: "3px",            // Sets the width of the divider
-                        backgroundColor: Colors.gray_back,   // Sets the color of the divider
-                        margin: "0 10px",         // Optional: Adds some space around the divider
-                      }}
-                    />
-                    {/* right side Rosxod */}
-                    <Box sx={{display:"flex",flexDirection:"column",height:"auto"}}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-evenly",
-                          }}
-                        >
-                          {/* Left side of BIG text box */}
-                          <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "flex-end", // Aligns the content to the bottom
-                            alignItems: "center",
-                            gap: "5px",
-                            height: "100%", // Ensure the parent Box has a height to push content to the bottom
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              fontSize: "32px",
-                              fontWeight: "900",
-                              textAlign: "start",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              textShadow:"0.5px 0.5px 2px gray",
-                            }}
-                          >
-                            {/* {insertSpaces(item.cleanNoPercentageIncome.netSoftNoProfitData)|| "нет информации"} */}
-                            {item.cleanNoPercentageIncome.netSoftNoProfitData
-                              ? insertSpaces(Math.round(item.cleanNoPercentageIncome.netSoftNoProfitData / 1000))
-                              : "нет информации"}
-                          </Typography>
-                      </Box>
-                          {/* Right side of text box */}
-                          <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "5px",
-                            alignItems: "center",
-                          }}
-                        >
-                          {/* Icon on the right side */}
-                          <MovingIcon
-                            sx={{
-                              color:item.cleanNoPercentageIncome.netSoftNoPercentageData <= 100 ? Colors.red: Colors.green_dark,
-                              fontSize: "24px",
-                              padding: "0px",
-                              transform:item.cleanNoPercentageIncome.netSoftNoPercentageData <=100 ? "rotate(180deg)" : "rotate(0deg)",
-                              transition: "transform 0.3s ease",
-                            }}
-                          />
-                          {/* Percentage text on the right side */}
-                          <Typography
-                            sx={{
-                              fontSize: "18px",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              fontWeight: "600",
-                              
-                            }}
-                          >
-                            {item.cleanNoPercentageIncome.netSoftNoPercentageData || "нет информации"}%
-                          </Typography>
-                        </Box>
-                        </Box>
-                      </Box>
-                  </Box>
-                </Box>
-              </Grid>
-              {/* third number div */}
-              <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    padding: "5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontWeight: "800",
-                      fontSize: "20px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                      textShadow:"0.5px 0.5px 2px gray",
-                    }}
-                  >
-                    CIR
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center", // Center the content vertically
-                      height: "100%", // Ensure the Box takes the full height of the viewport
-                    }}
-                  >
-                    {/* Inner Box to center content */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center", // Center the content vertically
-                        alignItems: "center", // Center the content horizontally
-                        textAlign: "center",
-                        gap: "5px",
-                        width: "100%", // Optional: Ensures full width for content centering
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "96px",
-                          fontWeight: "900",
-                          textAlign: "center",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          textShadow:"4px 4px 4px gray",
-                        }}
-                      >
-                        {insertSpaces(item.cirProfir.cirPercentageDate) || "нет информации"} %
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-            {/*<==== second grid div ====>*/}
-            <Grid container sx={{ width: "100%", height: "250px" }}>
-              {/* left side */}
-              <Grid item xs={5} md={5} lg={6} sx={{ padding: "5px" }}>
-              <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    padding:"5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  <Typography   sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>{t("percentageincome")} </Typography>
-                    <Box sx={{width:"100%",height:"auto"}}>
-                    <NewLineChart 
-                              planData={item.interestIncome.planData} 
-                              factData={item.interestIncome.factData} 
-                            />
-                    </Box>
-                </Box>
-              </Grid>
-              {/* right side */}
-              <Grid item xs={7} md={7} lg={6} sx={{ padding: "5px" }}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    padding:"5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  <Typography   sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}>{t("nopercentageincome")}</Typography>
-                      <Box sx={{ width: "100%", height: "auto" }}>
-                      
-                          
-                        <NoIncomeLineChart 
-                              planData={item.nointerestIncome.planData} 
-                              factData={item.nointerestIncome.factData} 
-                        />
-                      </Box>
-                </Box>
-              </Grid>
-            </Grid>
-            {/*<==== third grid div ====>*/}
-            <Grid container sx={{ width: "100%", height: "400px" }}>
-              {/* left side of third div */}
-              <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px",height:"auto" }}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    display:"flex",
-                    flexDirection:"column",
-                    gap:"10px",
-                    padding:"5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  {/* topside text of third div */}
-                  <Typography
-                    sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}
-                  >
-                  {t("costpercentage")}
-                  </Typography>
-                  {/* Bottom side box of third div */}
-                  <Box sx={{width:"100%",height:"350px"}}>
-                  
-                  <HorizontalCostBarChart 
-                      planData={item.interestCost.planData} 
-                      factData={item.interestCost.factData} 
-                  />
-                  </Box>
-                </Box>
-              </Grid>
-              {/* right side of third div */}
-              <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px" }}>
-              <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    display:"flex",
-                    flexDirection:"column",
-                    gap:"10px",
-                    padding:"5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  {/* topside text of third div */}
-                  <Typography
-                    sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}
-                  >
-                    {t("costnopercentage")}
-                  </Typography>
-                  {/* Bottom side box of third div */}
-                  <Box sx={{width:"100%",height:"350px"}}>
-                  
-                  <OpenHorizontalBarChart 
-                     planData={item.nointerestCost.planData} 
-                     factData={item.nointerestCost.factData} 
-                  />
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-            {/*<==== fouth grid div ====>*/}
-            <Grid container sx={{ width: "100%", height: "260px" }}>
-              {/* left side */}
-              <Grid item xs={5} md={5} lg={5} sx={{ padding: "5px", }}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    padding: "5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                    }}
-                  >
-                    {t("operatsioncost")}
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-evenly",
-                    }}
-                  >
-                    {/* Left side of text box */}
-                  <OpenDoughnutChart  chartData={item.operatingExpenses.planData}/>
-                    {/* Right side of text box */}
-                  
-                  </Box>
-                </Box>
-              </Grid>
-              {/* right side */}
-              <Grid item xs={7} md={7} lg={7} sx={{ padding: "5px",}}>
-                <Box
-                  sx={{
-                    bgcolor: Colors.white,
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "100%",
-                    padding:"5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "5px",
-                    boxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    WebkitBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                    MozBoxShadow: "0px -1px 12px 1px rgba(34, 60, 80, 0.2)", 
-                  }}
-                >
-                  <Typography   sx={{
-                      fontWeight: "700",
-                      fontSize: "14px",
-                      color: Colors.dark,
-                      textAlign: "start",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                      
-                    }}>{t("reserve")}</Typography>
-                      <Box sx={{ width: "100%", height: "auto" ,}}>
-                          <OpenVerticalGroupBarChart 
-                              planData={item.reserveData.planData} 
-                              factData={item.reserveData.factData} 
-                            />
-                      </Box>
-                </Box>
-              </Grid>
-            </Grid>
-            </Box>
-              ))}
+                  ))
+                ) : (
+                  <Typography>No data available for selected date.</Typography>
+                )}
+              </Box>
+            ))}
           </Box>
           <Footer />
         </Box>
@@ -1094,6 +459,5 @@ const NetProfitSceen = ({changeLang}) => {
     </Container>
   );
 };
-
 
 export default NetProfitSceen;
