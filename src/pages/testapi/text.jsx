@@ -1720,8 +1720,8 @@ const NetProfitSceen = ({changeLang}) => {
                   <Box sx={{width:"100%",height:"350px"}}>
                   
                   <OpenHorizontalBarChart 
-                     planData={item.nointerestCost.planData} 
-                     factData={item.nointerestCost.factData} 
+                      planData={item.nointerestCost.planData} 
+                      factData={item.nointerestCost.factData} 
                   />
                   </Box>
                 </Box>
