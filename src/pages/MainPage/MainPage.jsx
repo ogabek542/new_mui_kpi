@@ -570,69 +570,173 @@ const handleLogin = async () => {
             </Box>
           </Box>
           {/* <==== BARCHART CARDS SECTION ====> */}
-          <Grid
-            container
-            sx={{ margin: "auto" ,}}
-            direction="row"
-            width={"100%"}
-          >
-            {/* first div */}
             <Grid
+              container
+              sx={{ margin: "auto" ,}}
+              direction="row"
+              width={"100%"}
+            >
+              {/* first div */}
+              <Grid
               item
               xs={12}
               sm={12}
               md={6}
               lg={4}
               sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-                
+                height: { xs: "400px", md: "500px" },
+                width: "auto",
+                padding: "5px",
+              }}>
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "5px",
+                padding: "10px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "30px",
+                bgcolor: Colors.gray_footer,
+                position: "relative",
+                "&:hover .hover-button": {
+                  opacity: 1, // Show button when hovering over the box
+                },
               }}
             >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("firstText")}</Typography>
-                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"73%"}} >
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px",}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROA</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROE</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",}}>CIR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>COR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                    </Box>
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px"}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPL</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPS</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
+              <Typography
+                sx={{
+                  textAlign: "start",
+                  fontWeight: "800",
+                  fontSize: { xs: "12px", md: "16px" },
+                }}
+              >
+                {t("firstText")}
+              </Typography>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-evenly",
+                      height: "90%",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: "10px",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: Colors.gray_text,
+                            fontSize: { xs: "22px", sm: "30px", md: "32px" },
+                            fontWeight: "400",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          ROA
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: Colors.blue_middle,
+                            fontSize: { xs: "22px", sm: "34px", md: "36px" },
+                            fontWeight: "900",
+                          }}
+                        >
+                          21%
+                        </Typography>
                       </Box>
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>MAU</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>NIM</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
+
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: "10px",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: Colors.gray_text,
+                            fontSize: { xs: "22px", sm: "30px", md: "32px" },
+                            fontWeight: "400",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          ROE
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: Colors.blue_middle,
+                            fontSize: { xs: "22px", sm: "34px", md: "36px" },
+                            fontWeight: "900",
+                          }}
+                        >
+                          21%
+                        </Typography>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: "10px",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: Colors.gray_text,
+                            fontSize: { xs: "22px", sm: "30px", md: "32px" },
+                            fontWeight: "400",
+                          }}
+                        >
+                          CIR
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: Colors.blue_middle,
+                            fontSize: { xs: "22px", sm: "34px", md: "36px" },
+                            fontWeight: "900",
+                          }}
+                        >
+                          21%
+                        </Typography>
                       </Box>
                     </Box>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                  </Box>
+
+                {/* Button at the bottom-right */}
+                <Box
+                  className="hover-button"
+                  sx={{
+                    textAlign: "end",
+                    position: "absolute",
+                    bottom: "10px",
+                    right: "10px",
+                    opacity: 0, // Initially hidden
+                    transition: "opacity 300ms ease", // Smooth transition for hover
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    size="medium"
+                    onClick={handleOpenAuthModal}
+                  >
+                    <Typography
+                      sx={{
+                        color: Colors.white,
+                        fontWeight: "800",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {t("infobutton")}
+                    </Typography>
                   </Button>
                 </Box>
               </Box>
@@ -650,7 +754,10 @@ const handleLogin = async () => {
                 padding:"5px",
               }}
             >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,}}>
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,  position: "relative",
+                "&:hover .hover-button": {
+                  opacity: 1, // Show button when hovering over the box
+                },}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("secontText")}</Typography>
                 <Box sx={{display:"flex",flexDirection:"column",height:"81%"}} >
                   {/* three text container Box */}
@@ -738,7 +845,15 @@ const handleLogin = async () => {
                     </Box>
                   </Box>
                 </Box>
-                <Box sx={{textAlign:"end"}}>
+                <Box   className="hover-button"
+                  sx={{
+                    textAlign: "end",
+                    position: "absolute",
+                    bottom: "10px",
+                    right: "10px",
+                    opacity: 0, // Initially hidden
+                    transition: "opacity 300ms ease", // Smooth transition for hover
+                  }}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                   <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
@@ -755,7 +870,11 @@ const handleLogin = async () => {
               sx={{
                 height: {xs:"400px",md:"500px"},
                 width:"auto",
-                padding:"5px"
+                padding:"5px",
+                position: "relative",
+                "&:hover .hover-button": {
+                  opacity: 1, // Show button when hovering over the box
+                },
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
@@ -764,7 +883,15 @@ const handleLogin = async () => {
                   {/* <HorizontalBarChart /> */}
                   <LiabilitiesChart/>
                 </Box>
-                <Box sx={{textAlign:"end"}}>
+                <Box   className="hover-button"
+                  sx={{
+                    textAlign: "end",
+                    position: "absolute",
+                    bottom: "15px",
+                    right: "15px",
+                    opacity: 0, // Initially hidden
+                    transition: "opacity 300ms ease", // Smooth transition for hover
+                  }}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                   <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
@@ -781,7 +908,11 @@ const handleLogin = async () => {
               sx={{
                 height: {xs:"400px",md:"500px"},
                 width:"auto",
-                padding:"5px"
+                padding:"5px",
+                position: "relative",
+                "&:hover .hover-button": {
+                  opacity: 1, // Show button when hovering over the box
+                },
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
@@ -790,7 +921,15 @@ const handleLogin = async () => {
                     {/* <AreaChart/> */}
                     <LoanPortfolioChart/>
                 </Box>
-                <Box sx={{textAlign:"end"}}>
+                <Box   className="hover-button"
+                  sx={{
+                    textAlign: "end",
+                    position: "absolute",
+                    bottom: "15px",
+                    right: "15px",
+                    opacity: 0, // Initially hidden
+                    transition: "opacity 300ms ease", // Smooth transition for hover
+                  }}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                   <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
@@ -807,7 +946,11 @@ const handleLogin = async () => {
               sx={{
                 height: {xs:"400px",md:"500px"},
                 width:"auto",
-                padding:"5px"
+                padding:"5px",
+                position:"relative",
+                "&:hover .hovers-button": {
+                  opacity: 1, // Show button when hovering over the box
+                },
               }}
             >
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
@@ -815,7 +958,15 @@ const handleLogin = async () => {
                 <Box sx={{display:"flex",height:"77%"}} >
                   <NetProfitChart/>
                 </Box>
-                <Box sx={{textAlign:"end"}}>
+                <Box    className="hovers-button"
+                  sx={{
+                    textAlign: "end",
+                    position: "absolute",
+                    bottom: "15px",
+                    right: "15px",
+                    opacity: 0, // Initially hidden
+                    transition: "opacity 300ms ease", // Smooth transition for hover
+                  }}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                   <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
@@ -833,170 +984,34 @@ const handleLogin = async () => {
                 height: {xs:"400px",md:"500px"},
                 width:"auto",
                 padding:"5px",
+                position: "relative",
+                "&:hover .hover-button": {
+                  opacity: 1, // Show button when hovering over the box
+                },
+
               }}
             >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,position:"relative"}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("sixthText")}</Typography>
                 <Box sx={{display:"flex",height:"77%"}} >
                   <DigitalIndicatorsChart/>
                 </Box>
-                <Box sx={{textAlign:"end"}}>
+                <Box   className="hover-button"
+                  sx={{
+                    textAlign: "end",
+                    position: "absolute",
+                    bottom: "10px",
+                    right: "10px",
+                    opacity: 0, // Initially hidden
+                    transition: "opacity 300ms ease", // Smooth transition for hover
+                  }}>
                   <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
                   <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                   </Button>
                 </Box>
               </Box>
             </Grid>
-            {/* seventh div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-              }}
-            >
-                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("seventhText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <CurrencyIndicatorsChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* eight div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
-            <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eighthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <CapitalChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* nineth div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
-                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("ninthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <RevenuesExpensesChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* tenth div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
-                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("tenthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <RisksComplianceChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* eleventh div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-              }}
-            >
-                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eleventhText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <FinancialStabilityChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* twelveth div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-              }}
-            >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("twelfthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <StrategicPlansChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
+          
           </Grid>
         </Box>
         <Footer />

@@ -3163,6 +3163,7 @@ export default NetProfitSceen;
     </Grid>
   </Grid>
 
+
 {chooseData.map((item, index) => (
   <Box key={index} sx={{width:"100%",height:"100%"}}>
 {/*<==== first grid div ====>*/}
@@ -3786,3 +3787,154 @@ export default NetProfitSceen;
                       ) : (
                         <Typography>No data available for chart</Typography>
                       )} */}
+
+  {/* seventh div */}
+  <Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px",
+  }}
+>
+    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("seventhText")}</Typography>
+    <Box sx={{display:"flex",height:"77%"}} >
+      <CurrencyIndicatorsChart/>
+    </Box>
+    <Box sx={{textAlign:"end"}}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* eight div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px"
+  }}
+>
+<Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eighthText")}</Typography>
+    <Box sx={{display:"flex",height:"77%"}} >
+      <CapitalChart/>
+    </Box>
+    <Box sx={{textAlign:"end"}}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* nineth div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px"
+  }}
+>
+    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("ninthText")}</Typography>
+    <Box sx={{display:"flex",height:"77%"}} >
+      <RevenuesExpensesChart/>
+    </Box>
+    <Box sx={{textAlign:"end"}}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* tenth div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px"
+  }}
+>
+    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("tenthText")}</Typography>
+    <Box sx={{display:"flex",height:"77%"}} >
+      <RisksComplianceChart/>
+    </Box>
+    <Box sx={{textAlign:"end"}}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* eleventh div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px",
+  }}
+>
+    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eleventhText")}</Typography>
+    <Box sx={{display:"flex",height:"77%"}} >
+      <FinancialStabilityChart/>
+    </Box>
+    <Box sx={{textAlign:"end"}}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* twelveth div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px",
+  }}
+>
+  <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("twelfthText")}</Typography>
+    <Box sx={{display:"flex",height:"77%"}} >
+      <StrategicPlansChart/>
+    </Box>
+    <Box sx={{textAlign:"end"}}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>

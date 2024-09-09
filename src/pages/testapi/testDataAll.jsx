@@ -3,44 +3,44 @@
         name: "НБУ",
         sana: [
           {
-            date: "08.09.2024", 
+            date: "08.09.2024",
             cleanProfit: {
-              netProfitData:"1916547",// Чистая прибыль(млрд сум) ni qiymati million so'mda //
-              netPercentageData:"108",// Чистая прибыль(млрд сум) ni plani va faktini nisbati man qiyamt kutib olib % qilib chiqaraman  butun son holida//
+              netProfitData:"1716547",
+              netPercentageData:"73",
             },
             cleanPercentageIncome: {
-              netSoftProfitData:"1761024",// чистый % доход (млрд сум) qiymati  //
-              netSoftPercentageData:"113",// чистый % доход (млрд сум) ni plani va fakitini nisbati man % qilib chiqaraman //
+              netSoftProfitData:"1881024",
+              netSoftPercentageData:"13",
             },
             cleanNoPercentageIncome: {
-              netSoftNoProfitData:"2610299",// чистый Бес % доход (млрд сум) qiymati  //
-              netSoftNoPercentageData:"33",// чистый Бес % доход (млрд сум) ninig plan va faktlari nisbati  man % qilib chiqaraman   //
+              netSoftNoProfitData:"2490299",
+              netSoftNoPercentageData:"29",
             },
             cirProfir:{
-              cirPercentageDate:"86", // CIR ni qimati keladi man % da chiqaraman  //
+              cirPercentageDate:"56",
             },
             nointerestIncome: {
-              planData: [1901089,76412,715558,690117],// Бес % Доходы ni planini qiymati ketma ketlik asoasida : "Комиссионные доходы","Прибыль в иностранной валюте","Прибыль и дивиденды от инвестиций","Другие беспроцентные доходы", // 
-              factData: [1299604,7815,459361,366345],//  Бес % Доходы ni fakitini qiymati yuqorda planda berilgan nomlar  ketma ketligi asoasida // 
+              planData: [1301089,6412,175558,200117],
+              factData: [1499604,8015,189361,266345],
             },
             interestIncome: {
-              planData: [881177,5647736,5251365,2502926,],// % Доходы ni plan qiymati ushbu ketma ketlik asosida qiymat yuboriladi  "К оплате в другие банки","По кредитам","По ценным бумагам","Другие % доходы",//
-              factData: [336824,3009770,8905725,2427040], // % Доходы ni fakt qiymati yuqoridagi ketma ketlik asosida qiymat yuboriladi //
+              planData: [481177,2647736,251365,2502926,],
+              factData: [336824,3009770,505725,2427040],
             },
             interestCost: {
-              planData: [8976382,230660,7557191,1209854,970290,],// % расходы ni planini qiymati quyidagi ketmaketlik asosida qiymatlar yuboriladi : "По депозитам","По счетам к оплате в другие банки","По кредитам к оплате","По выпущенным ценным бумагам","Другие", // 
-              factData: [4580649,84289,9685404,567511,472347,], // % расходы ni faktini qiymati yuqoridagidagi ketmaketlik asosida qiymatlar yuboriladi // 
+              planData: [1376382,260660,8657191,2509854,970290,],
+              factData: [1580649,45289,4985404,177511,472347,],
             },
             nointerestCost: {
-              planData: [297771,144568,258768],// Бес % расходы ni planini qiymati quyidagi nomlar ketma ketligi asosida qiymat kutib olinadi : "Комиссионные расходы","Убытки в иностранной валюте","Другие беспроцентные расходы", //
-              factData: [516880,134915,127860],// Бес % расходы ni fakitini qiymati yuqoridagi nomlar ketma ketligi asosida qiymat kutib olinadi // 
+              planData: [297771,144568,258768],
+              factData: [416880,134915,287860],
             },
             operatingExpenses:{
-              planData: [629562,978336,753059,136106,79323,75484,406405,], //  операционные расходы ni qiymatlari qatiy nomlar ketma ketligi asosida qiymatlar kutib olinadi :"Расходы на сотрудников","Аренда и содержание","Транспортные расходы","Административные расходы","Репрезентация и благотворительность","Расходы на износ","Другие операционные расходы",//
+              planData: [419562,978336,263059,136106,68323,75484,206405,],
             },
             reserveData:{
-              planData: [32166868, 99133530,70640587],// резервы ni planini qiymati quyidagi nomlar ketma ketligi asosida kutib olinadi: "Оценка убытков","Возмещение ранее созданных резервов","Досоздание резервов в текущем году", //
-              factData: [51643070, 72171076,81688024],// резервы ni faktini qiymati yuqoridagi nomlar ketma ketligi asosida kutib olinadi   //
+              planData: [32166868, 99133530,70640587],
+              factData: [51643070, 72171076,81688024],
             },
           },
           {
