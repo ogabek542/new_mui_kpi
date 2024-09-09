@@ -5,8 +5,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import LightHeader from "../../components/LightHeader/LightHeader";
 import Footer from "../../components/Footer/Footer";
-import NewLineChart from "../../components/NewLineChart/NewLineChart";
 import NoIncomeLineChart from "../../components/LineChart/LineChart.jsx";
+import NewLineChart from "../../components/NewLineChart/NewLineChart";
 import OpenHorizontalBarChart from "../../components/OpenHorizontalBar/OpenHorizontalBar";
 import HorizontalCostBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
 import OpenDoughnutChart from "../../components/OperDroughtBar/OpenDroughtBar";
@@ -19,6 +19,13 @@ import "dayjs/locale/ru";
 import { REQUESTS } from "../../api/requests.js";
 import MovingIcon from "@mui/icons-material/Moving";
 import { useTranslation } from "react-i18next";
+import testData from "../testapi/testDataAll.jsx"
+// for holidays data //
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 const NetProfitSceen = ({ changeLang }) => {
   const { t } = useTranslation();
@@ -39,6 +46,7 @@ const NetProfitSceen = ({ changeLang }) => {
     { title: "Тошкент  вилояти", id: 13 },
     { title: "Хоразм  вилояти", id: 14 },
     { title: "Қорақалпоғистон республикаси", id: 15 },
+    { title: "Миробод бўлими", id: 16 },
   ];
 
   const setSelectedSecondMap = {
@@ -47,7 +55,6 @@ const NetProfitSceen = ({ changeLang }) => {
     // Тошкент шаҳри //
     2: [
       { title: "Головной офис" },
-      { title: "Миробод бўлими" },
       { title: "Абусахий БХО" },
       { title: "Атлас НБУ БХО" },
       { title: "Ғалаба БХО" },
@@ -156,7 +163,9 @@ const NetProfitSceen = ({ changeLang }) => {
       { title: "Ургут БХМ" },
     ],
     // Сирдарё  вилояти //
-    11: [{ title: "Гулистан амалиёт БХМ" }, { title: "Оқолтин БХО" }],
+    11: [
+      {title: "Гулистан амалиёт БХМ" }, 
+      {title: "Оқолтин БХО" }],
     // Сурхондарё  вилояти //
     12: [
       { title: "Денов БХМ" },
@@ -197,6 +206,9 @@ const NetProfitSceen = ({ changeLang }) => {
       { title: "Хўжайли БХО" },
       { title: "Чимбой БХО" },
     ],
+    16: [
+      { title: "Миробод бўлими" },
+    ],
   };
 
   const [selectNewData, setSelectNewData] = useState(dayjs());
@@ -210,7 +222,7 @@ const NetProfitSceen = ({ changeLang }) => {
   });
   const [secondOptions, setSecondOptions] = useState(setSelectedSecondMap[1]);
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchGraphicData = async () => {
       try {
         const response =
@@ -256,12 +268,16 @@ const NetProfitSceen = ({ changeLang }) => {
     const formattedDate = newValue ? dayjs(newValue).format("DD.MM.YYYY") : "";
 
     // Filter data by selected date
-    const selectedData = chooseData.map((item) => {
+  
+    // const selectedData = chooseData.map((item) => {
+    const selectedData = testData.filter((item) => {
+      return selectedSecondOptions?.title === item.name; // Only return data if the title matches
+    }).map((item) => {
       return {
         ...item, // Spread the existing item properties
         filteredSana: item.sana
           ? item.sana.filter((sanaItem) => sanaItem.date === formattedDate)
-          : [],
+          : [], // Filter based on selected date
       };
     });
 
@@ -278,6 +294,46 @@ const NetProfitSceen = ({ changeLang }) => {
     if (!dataArray) return [];
     return dataArray.map((value) => Math.round(value / 100));
   };
+
+// Example holidays (add your holidays here)
+const holidays = [
+  dayjs('2024-01-01'), // New Year's Day
+  dayjs('2024-01-02'), // New Year's Day
+  dayjs('2024-03-08'), // Women's Day
+  dayjs('2024-03-11'), // Ramazan Day
+  dayjs('2024-03-21'), // Navruz Happy Day
+  dayjs('2024-03-22'), // Navruz Happy Day
+  dayjs('2024-03-23'), // Navruz Happy Day
+  dayjs('2024-04-10'), // Eid Al Fitr Day
+  dayjs('2024-04-11'), // Eid Al Fitr Day
+  dayjs('2024-04-12'), // Eid Al Fitr Day
+  dayjs('2024-05-09'), // Remember Day
+  dayjs('2024-06-16'), // Eid Al Adha Day
+  dayjs('2024-06-17'), // Eid Al Adha Day
+  dayjs('2024-06-18'), // Eid Al Adha Day
+  dayjs('2024-08-31'), // Independence Day
+  dayjs('2024-09-01'), // Independence Day
+  dayjs('2024-09-02'), // Independence Day
+  dayjs('2024-09-03'), // Independence Day
+  dayjs('2024-12-08'), // Constitution Day
+  dayjs('2024-10-01'), // Constitution Day
+  dayjs('2024-12-09'), // Happy New Year Day
+  dayjs('2024-12-30'), // Happy New Year Day
+  dayjs('2024-12-31'), // Happy New Year Day
+  // Add more holidays as needed
+];
+
+// Function to disable weekends and holidays
+const shouldDisableDate = (date) => {
+  // Disable weekends (Saturday = 6, Sunday = 0)
+  // const isWeekend = date.day() === 0 || date.day() === 6;
+
+  // Disable holidays
+  const isHoliday = holidays.some((holiday) => date.isSame(holiday, 'day'));
+
+  return  isHoliday;
+};
+
 
   return (
     <Container
@@ -350,7 +406,7 @@ const NetProfitSceen = ({ changeLang }) => {
                         variant="standard"
                         sx={{
                           "& .MuiInput-underline:before": {
-                            borderBottomColor: "gray",
+                            borderBottomColor: "transparent",
                           },
                           "& .MuiInput-underline:after": {
                             borderBottomColor: "blue",
@@ -390,7 +446,7 @@ const NetProfitSceen = ({ changeLang }) => {
                         variant="standard"
                         sx={{
                           "& .MuiInput-underline:before": {
-                            borderBottomColor: "gray",
+                            borderBottomColor: "transparent",
                           },
                           "& .MuiInput-underline:after": {
                             borderBottomColor: "blue",
@@ -420,6 +476,7 @@ const NetProfitSceen = ({ changeLang }) => {
                     <DatePicker
                       value={selectNewData}
                       onChange={handleDateChange}
+                      shouldDisableDate={shouldDisableDate} // Disable weekends and holidays
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -451,8 +508,17 @@ const NetProfitSceen = ({ changeLang }) => {
                             },
                           },
                         }}
+                        slotProps={{
+                          day: {
+                            sx: {
+                              fontWeight: 700, // Apply font-weight to calendar dates
+                              fontSize: "14px", // Adjust font-size if needed
+                            },
+                          },
+                        }}
                     />
                   </LocalizationProvider>
+
                 </Box>
               </Grid>
             </Grid>
@@ -475,9 +541,13 @@ const NetProfitSceen = ({ changeLang }) => {
                         border: "1px solid #ddd",
                       }}
                     >
-                      {sanaItem.nointerestIncome &&
+                      {/* {sanaItem.nointerestIncome &&
                       sanaItem.nointerestIncome.planData &&
                       sanaItem.nointerestIncome.factData ? (
+                      
+                      ) : (
+                        <Typography>No data available for chart</Typography>
+                      )} */}
                         <Box sx={{ width: "100%", height: "350px" }}>
                           <NoIncomeLineChart
                             planData={divideAndRoundData(
@@ -488,727 +558,7 @@ const NetProfitSceen = ({ changeLang }) => {
                             )}
                           />
                         </Box>
-                      ) : (
-                        <Typography>No data available for chart</Typography>
-                      )}
-                      {/*<==== first grid div ====>*/}
-                      <Grid container sx={{ width: "100%", height: "200px" }}>
-                        {/* first number div */}
-                        <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              padding: "5px",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                fontWeight: "700",
-                                fontSize: "14px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                                textShadow: "0.5px 0.5px 2px gray",
-                              }}
-                            >
-                              {t("cleanincommain")}
-                            </Typography>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-evenly",
-                              }}
-                            >
-                              {/* Left side of text box */}
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "flex-end", // Aligns the content to the bottom
-                                  alignItems: "center",
-                                  gap: "5px",
-                                  height: "100%", // Ensure the parent Box has a height to push content to the bottom
-                                }}
-                              >
-                                <Typography
-                                  sx={{
-                                    fontSize: "64px", // 112px
-                                    fontWeight: "800",
-                                    textAlign: "start",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    whiteSpace: "nowrap",
-                                    textShadow: "2px 2px 5px gray",
-                                  }}
-                                >
-                                  {/* { insertSpaces(item.cleanProfit.netProfitData) || "нет информации"} */}
-                                  {item.cleanProfit.netProfitData
-                                    ? insertSpaces(
-                                        Math.round(
-                                          item.cleanProfit.netProfitData / 1000
-                                        )
-                                      )
-                                    : "00"}
-                                </Typography>
-                              </Box>
-                              {/* Right side of text box */}
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  gap: "5px",
-                                  alignItems: "center",
-                                }}
-                              >
-                                {/* Icon on the right side */}
-                                <MovingIcon
-                                  sx={{
-                                    color:
-                                      item.cleanProfit.netPercentageData <= 100
-                                        ? Colors.red
-                                        : Colors.green_dark,
-                                    fontSize: "48px",
-                                    padding: "0px",
-                                    transform:
-                                      item.cleanProfit.netPercentageData <= 100
-                                        ? "rotate(180deg)"
-                                        : "rotate(0deg)",
-                                    transition: "transform 0.3s ease",
-                                  }}
-                                />
-                                {/* Percentage text on the right side */}
-                                <Typography
-                                  sx={{
-                                    fontSize: "40px",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    whiteSpace: "nowrap",
-                                    fontWeight: "600",
-                                  }}
-                                >
-                                  {item.cleanProfit.netPercentageData ||
-                                    "нет информации"}
-                                  %
-                                </Typography>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </Grid>
-                        {/* second number div */}
-                        <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              padding: "5px",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                fontWeight: "700",
-                                fontSize: "14px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                                textShadow: "0.5px 0.5px 2px gray",
-                              }}
-                            >
-                              {t("cleanpercentagevalues")}
-                            </Typography>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-evenly",
-                                height: "100%",
-                              }}
-                            >
-                              {/* Left side Doxod */}
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  height: "auto",
-                                }}
-                              >
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly",
-                                  }}
-                                >
-                                  {/* Left side of BIG text box */}
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      justifyContent: "flex-end", // Aligns the content to the bottom
-                                      alignItems: "center",
-                                      gap: "5px",
-                                      height: "100%", // Ensure the parent Box has a height to push content to the bottom
-                                    }}
-                                  >
-                                    <Typography
-                                      sx={{
-                                        fontSize: "32px",
-                                        fontWeight: "900",
-                                        textAlign: "start",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "nowrap",
-                                        textShadow: "0.5px 0.5px 2px gray",
-                                      }}
-                                    >
-                                      {/* {insertSpaces(item.cleanPercentageIncome.netSoftProfitData) || "нет информации"} */}
-                                      {item.cleanPercentageIncome
-                                        .netSoftProfitData
-                                        ? insertSpaces(
-                                            Math.round(
-                                              item.cleanPercentageIncome
-                                                .netSoftProfitData / 1000
-                                            )
-                                          )
-                                        : "нет информации"}
-                                    </Typography>
-                                  </Box>
-                                  {/* Right side of text box */}
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      gap: "5px",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    {/* Icon on the right side */}
-                                    <MovingIcon
-                                      sx={{
-                                        color:
-                                          item.cleanPercentageIncome
-                                            .netSoftPercentageData <= 100
-                                            ? Colors.red
-                                            : Colors.green_dark,
-                                        fontSize: "24px",
-                                        padding: "0px",
-                                        transform:
-                                          item.cleanPercentageIncome
-                                            .netSoftPercentageData <= 100
-                                            ? "rotate(180deg)"
-                                            : "rotate(0deg)",
-                                        transition: "transform 0.3s ease",
-                                      }}
-                                    />
-                                    {/* Percentage text on the right side */}
-                                    <Typography
-                                      sx={{
-                                        fontSize: "18px",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "nowrap",
-                                        fontWeight: "600",
-                                      }}
-                                    >
-                                      {item.cleanPercentageIncome
-                                        .netSoftPercentageData ||
-                                        "нет информации"}
-                                      %
-                                    </Typography>
-                                  </Box>
-                                </Box>
-                              </Box>
-                              {/* Divider */}
-                              <Divider
-                                orientation="vertical"
-                                variant="middle"
-                                flexItem
-                                sx={{
-                                  width: "3px", // Sets the width of the divider
-                                  backgroundColor: Colors.gray_back, // Sets the color of the divider
-                                  margin: "0 10px", // Optional: Adds some space around the divider
-                                }}
-                              />
-                              {/* right side Rosxod */}
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  height: "auto",
-                                }}
-                              >
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly",
-                                  }}
-                                >
-                                  {/* Left side of BIG text box */}
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      justifyContent: "flex-end", // Aligns the content to the bottom
-                                      alignItems: "center",
-                                      gap: "5px",
-                                      height: "100%", // Ensure the parent Box has a height to push content to the bottom
-                                    }}
-                                  >
-                                    <Typography
-                                      sx={{
-                                        fontSize: "32px",
-                                        fontWeight: "900",
-                                        textAlign: "start",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "nowrap",
-                                        textShadow: "0.5px 0.5px 2px gray",
-                                      }}
-                                    >
-                                      {/* {insertSpaces(item.cleanNoPercentageIncome.netSoftNoProfitData)|| "нет информации"} */}
-                                      {item.cleanNoPercentageIncome
-                                        .netSoftNoProfitData
-                                        ? insertSpaces(
-                                            Math.round(
-                                              item.cleanNoPercentageIncome
-                                                .netSoftNoProfitData / 1000
-                                            )
-                                          )
-                                        : "нет информации"}
-                                    </Typography>
-                                  </Box>
-                                  {/* Right side of text box */}
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      gap: "5px",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    {/* Icon on the right side */}
-                                    <MovingIcon
-                                      sx={{
-                                        color:
-                                          item.cleanNoPercentageIncome
-                                            .netSoftNoPercentageData <= 100
-                                            ? Colors.red
-                                            : Colors.green_dark,
-                                        fontSize: "24px",
-                                        padding: "0px",
-                                        transform:
-                                          item.cleanNoPercentageIncome
-                                            .netSoftNoPercentageData <= 100
-                                            ? "rotate(180deg)"
-                                            : "rotate(0deg)",
-                                        transition: "transform 0.3s ease",
-                                      }}
-                                    />
-                                    {/* Percentage text on the right side */}
-                                    <Typography
-                                      sx={{
-                                        fontSize: "18px",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "nowrap",
-                                        fontWeight: "600",
-                                      }}
-                                    >
-                                      {item.cleanNoPercentageIncome
-                                        .netSoftNoPercentageData ||
-                                        "нет информации"}
-                                      %
-                                    </Typography>
-                                  </Box>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </Grid>
-                        {/* third number div */}
-                        <Grid item xs={5} md={5} lg={4} sx={{ padding: "5px" }}>
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              padding: "5px",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                fontWeight: "800",
-                                fontSize: "20px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                                textShadow: "0.5px 0.5px 2px gray",
-                              }}
-                            >
-                              CIR
-                            </Typography>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center", // Center the content vertically
-                                height: "100%", // Ensure the Box takes the full height of the viewport
-                              }}
-                            >
-                              {/* Inner Box to center content */}
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "center", // Center the content vertically
-                                  alignItems: "center", // Center the content horizontally
-                                  textAlign: "center",
-                                  gap: "5px",
-                                  width: "100%", // Optional: Ensures full width for content centering
-                                }}
-                              >
-                                <Typography
-                                  sx={{
-                                    fontSize: "96px",
-                                    fontWeight: "900",
-                                    textAlign: "center",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    whiteSpace: "nowrap",
-                                    textShadow: "4px 4px 4px gray",
-                                  }}
-                                >
-                                  {insertSpaces(
-                                    item.cirProfir.cirPercentageDate
-                                  ) || "нет информации"}{" "}
-                                  %
-                                </Typography>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </Grid>
-                      </Grid>
-                      {/*<==== second grid div ====>*/}
-                      <Grid container sx={{ width: "100%", height: "250px" }}>
-                        {/* left side */}
-                        <Grid item xs={5} md={5} lg={6} sx={{ padding: "5px" }}>
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              padding: "5px",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                fontWeight: "700",
-                                fontSize: "14px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                              }}
-                            >
-                              {t("percentageincome")}{" "}
-                            </Typography>
-                            <Box sx={{ width: "100%", height: "auto" }}>
-                              <NewLineChart
-                                planData={item.interestIncome.planData}
-                                factData={item.interestIncome.factData}
-                              />
-                            </Box>
-                          </Box>
-                        </Grid>
-                        {/* right side */}
-                        <Grid item xs={7} md={7} lg={6} sx={{ padding: "5px" }}>
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              padding: "5px",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                fontWeight: "700",
-                                fontSize: "14px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                              }}
-                            >
-                              {t("nopercentageincome")}
-                            </Typography>
-                            <Box sx={{ width: "100%", height: "auto" }}>
-                              <NoIncomeLineChart
-                                planData={item.nointerestIncome.planData}
-                                factData={item.nointerestIncome.factData}
-                              />
-                            </Box>
-                          </Box>
-                        </Grid>
-                      </Grid>
-                      {/*<==== third grid div ====>*/}
-                      <Grid container sx={{ width: "100%", height: "400px" }}>
-                        {/* left side of third div */}
-                        <Grid
-                          item
-                          xs={6}
-                          md={6}
-                          lg={6}
-                          sx={{ padding: "5px", height: "auto" }}
-                        >
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "10px",
-                              padding: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            {/* topside text of third div */}
-                            <Typography
-                              sx={{
-                                fontWeight: "700",
-                                fontSize: "14px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                              }}
-                            >
-                              {t("costpercentage")}
-                            </Typography>
-                            {/* Bottom side box of third div */}
-                            <Box sx={{ width: "100%", height: "350px" }}>
-                              <HorizontalCostBarChart
-                                planData={item.interestCost.planData}
-                                factData={item.interestCost.factData}
-                              />
-                            </Box>
-                          </Box>
-                        </Grid>
-                        {/* right side of third div */}
-                        <Grid item xs={6} md={6} lg={6} sx={{ padding: "5px" }}>
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "10px",
-                              padding: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            {/* topside text of third div */}
-                            <Typography
-                              sx={{
-                                fontWeight: "700",
-                                fontSize: "14px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                              }}
-                            >
-                              {t("costnopercentage")}
-                            </Typography>
-                            {/* Bottom side box of third div */}
-                            <Box sx={{ width: "100%", height: "350px" }}>
-                              <OpenHorizontalBarChart
-                                planData={item.nointerestCost.planData}
-                                factData={item.nointerestCost.factData}
-                              />
-                            </Box>
-                          </Box>
-                        </Grid>
-                      </Grid>
-                      {/*<==== fouth grid div ====>*/}
-                      <Grid container sx={{ width: "100%", height: "260px" }}>
-                        {/* left side */}
-                        <Grid item xs={5} md={5} lg={5} sx={{ padding: "5px" }}>
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              padding: "5px",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                fontWeight: "700",
-                                fontSize: "14px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                              }}
-                            >
-                              {t("operatsioncost")}
-                            </Typography>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-evenly",
-                              }}
-                            >
-                              {/* Left side of text box */}
-                              <OpenDoughnutChart
-                                chartData={item.operatingExpenses.planData}
-                              />
-                              {/* Right side of text box */}
-                            </Box>
-                          </Box>
-                        </Grid>
-                        {/* right side */}
-                        <Grid item xs={7} md={7} lg={7} sx={{ padding: "5px" }}>
-                          <Box
-                            sx={{
-                              bgcolor: Colors.white,
-                              borderRadius: "5px",
-                              width: "100%",
-                              height: "100%",
-                              padding: "5px",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "5px",
-                              boxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              WebkitBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                              MozBoxShadow:
-                                "0px -1px 12px 1px rgba(34, 60, 80, 0.2)",
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                fontWeight: "700",
-                                fontSize: "14px",
-                                color: Colors.dark,
-                                textAlign: "start",
-                                textTransform: "uppercase",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap", // Ensures text does not wrap and is cut off with ellipsis if overflowed
-                              }}
-                            >
-                              {t("reserve")}
-                            </Typography>
-                            <Box sx={{ width: "100%", height: "auto" }}>
-                              <OpenVerticalGroupBarChart
-                                planData={item.reserveData.planData}
-                                factData={item.reserveData.factData}
-                              />
-                            </Box>
-                          </Box>
-                        </Grid>
-                      </Grid>
+                    
                     </Box>
                   ))
                 ) : (
@@ -1216,6 +566,7 @@ const NetProfitSceen = ({ changeLang }) => {
                 )}
               </Box>
             ))}
+
           </Box>
           <Footer />
         </Box>

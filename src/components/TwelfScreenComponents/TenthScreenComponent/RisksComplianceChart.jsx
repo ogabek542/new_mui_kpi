@@ -4,11 +4,11 @@ import { Box, Card, CardContent } from '@mui/material';
 
 const PerformanceRadarChart = () => {
   const data = {
-    labels: ['Communication', 'Technical Skills', 'Problem Solving', 'Teamwork', 'Creativity'],
+    labels: ['Communication', 'Technical Skills', 'Problem Solving',"to'rt","besh"],
     datasets: [
       {
         label: 'Employee A',
-        data: [65, 75, 70, 80, 60],
+        data: [34987,7381,57955,10937,3837],
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         pointBackgroundColor: 'rgba(75, 192, 192, 1)',
@@ -16,7 +16,7 @@ const PerformanceRadarChart = () => {
       },
       {
         label: 'Employee B',
-        data: [80, 70, 60, 85, 75],
+        data: [35917,10327,56494,10700,3873],
         backgroundColor: 'rgba(144, 238, 144, 0.4)',
         borderColor: 'rgba(144, 238, 144, 1)',
         pointBackgroundColor: 'rgba(144, 238, 144, 1)',
