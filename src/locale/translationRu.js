@@ -103,11 +103,11 @@ const translationRu = {
         sixthText: "ЦИФРОВЫЕ ПОКАЗАТЕЛИ",
         seventhText: "ВАЛЮТНЫЕ ПОКАЗАТЕЛИ БАНКА",
         eighthText: "КАПИТАЛ БАНКА",
-        ninthText: "ДОХОДЫ И РАСХОДЫ БАНКА",
+        ninthText: "ДОХОДЫ БАНКА",
         tenthText: "РИСКИ БАНКА И СООТВЕТСТВИЕ ТРЕБОВАНИЯМ",
         eleventhText: "ФИНАНСОВАЯ СТАБИЛЬНОСТЬ БАНКА",
         twelfthText: "СТРАТЕГИЧЕСКИЕ ПЛАНЫ И ИНВЕСТИЦИОННАЯ ДЕЯТЕЛЬНОСТЬ БАНКА",
-
+        thirteenth:"БАНКОВСКИЕ СБОРЫ",
 
 }
 export default translationRu 

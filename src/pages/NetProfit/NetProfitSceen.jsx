@@ -529,7 +529,6 @@ const shouldDisableDate = (date) => {
                 key={index}
                 sx={{ width: "100%", height: "100%", marginTop: "5px" }}
               >
-             
 
                 {item.filteredSana && item.filteredSana.length > 0 ? (
                   item.filteredSana.map((sanaItem, idx) => (
@@ -1215,7 +1214,7 @@ const shouldDisableDate = (date) => {
                               >
                                 {/* Left side of text box */}
                                 <OpenDoughnutChart
-                                  chartData={sanaItem.operatingExpenses.planData}
+                                  chartData={sanaItem.operatingExpenses.factData}
                                 />
                                 {/* Right side of text box */}
                               </Box>

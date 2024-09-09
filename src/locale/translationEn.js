@@ -103,10 +103,11 @@ const translationEn = {
         sixthText: "DIGITAL INDICATORS",
         seventhText: "BANK CURRENCY INDICATORS",
         eighthText: "BANK CAPITAL",
-        ninthText: "BANK REVENUES AND EXPENSES",
+        ninthText: "BANK REVENUES",
         tenthText: "BANK RISKS AND COMPLIANCE ISSUES",
         eleventhText: "BANK FINANCIAL STABILITY",
         twelfthText: "BANK STRATEGIC PLANS AND INVESTMENT ACTIVITIES",
+        thirteenth:"BANK CHARGES",
         };
 
 export default translationEn;

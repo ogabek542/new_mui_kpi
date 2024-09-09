@@ -3938,3 +3938,125 @@ export default NetProfitSceen;
     </Box>
   </Box>
 </Grid>
+
+
+// kpi old vertical barcharts //
+     {/* second div */}
+      <Grid
+      item
+      xs={12}
+      sm={12}
+      md={6}
+      lg={4}
+      sx={{
+        height: "500px",
+        width:"auto",
+        padding:"5px",
+      }}
+    >
+      <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,  position: "relative",
+        "&:hover .hover-button": {
+          opacity: 1, // Show button when hovering over the box
+        },}}>
+        <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("thirdText")}</Typography>
+        <Box sx={{display:"flex",flexDirection:"column",height:"81%"}} >
+          {/* three text container Box */}
+          <Box sx={{width:"100%",height:"auto",display:"flex",alignItems:"center",justifyContent:"space-around",}}>
+            <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",}}>
+              <Typography sx={{lineHeight:"1.2",fontSize:{xs:"8px",md:"10px"},fontWeight:"600"}}>ЖАМИ</Typography>
+              <Typography component="span" sx={{lineHeight:"1.2",color:Colors.gray_text,fontSize:{xs:"8px",md:"10px"},fontWeight:"500",fontStyle:"italic"}}>млрд.сўм.экв</Typography>
+            </Box>
+            <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",textAlign:"center",width:"50px"}}>
+              <Typography sx={{lineHeight:"1.2",fontSize:{xs:"8px",md:"10px"},fontWeight:"600"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+              <Typography component="span" sx={{lineHeight:"1.2",color:Colors.gray_text,fontSize:{xs:"8px",md:"10px"},fontWeight:"500",fontStyle:"italic"}}>минг.долл</Typography>
+            </Box>
+            <Box sx={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+              <Typography sx={{lineHeight:"1.2",fontSize:{xs:"8px",md:"10px"},fontWeight:"600"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+              <Typography component="span" sx={{lineHeight:"1.2",color:Colors.gray_text,fontSize:{xs:"8px",md:"10px"},fontWeight:"500",fontStyle:"italic"}}>млрд.сўм.экв</Typography>
+            </Box>
+          </Box>
+          {/* plan fakt top text  */}
+          <Box sx={{height:"auto",width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <Box></Box>
+            <Box sx={{display:"flex",flexDirection:"column",gap:"5px"}}>
+              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"5px"}}> 
+                <Box sx={{width:"10px",height:"10px",borderRadius:"50%",bgcolor:Colors.gray_text}}></Box>
+                <Typography sx={{color:Colors.gray_text,lineHeight:"1",fontWeight:"500",fontSize:"14px"}}>План</Typography>
+              </Box>
+              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"5px"}}> 
+                <Box sx={{width:"10px",height:"10px",borderRadius:"50%",bgcolor:Colors.blue_middle}}></Box>
+                <Typography sx={{color:Colors.blue_middle,lineHeight:"1",fontWeight:"500",fontSize:"14px"}}>Факт</Typography>
+              </Box>
+            </Box>
+          </Box>
+          <Box sx={{height:"350px",width:"100%",position:"relative"}}>
+          <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                width={500}
+                height={400}
+                data={barchartdata}
+                margin={{
+                  top: 25,
+                }}
+                padding={{
+                  top: 45,
+                }}
+              >
+                <Tooltip />
+                <Bar
+                  dataKey="plan"
+                  fill={Colors.gray_text}
+                  minPointSize={5}
+                  shape={renderBlueShape}
+                >
+                  <LabelList
+                    dataKey="percentage"
+                    content={renderCustomizedLabel}
+                  />
+                </Bar>
+                <Bar
+                  dataKey="fact"
+                  fill={Colors.blue_middle}
+                  minPointSize={10}
+                  shape={renderShape}
+                />
+              </BarChart>
+          </ResponsiveContainer>
+          <Box  sx={{ marginTop:"-35px",position:"absolute",display:"flex",alignItems:"center",justifyContent:"space-around",width:"100%" }}>
+            <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+              <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
+              <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
+            </Box>
+            <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+              <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
+              <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
+            </Box>
+            <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+              <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
+              <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
+            </Box>
+          </Box>
+            <Box sx={{position:"absolute",bottom:"30%",left:"26%"}}>
+              <Box
+                  component="img"
+                  src={LeftSideSVG}
+                  sx={{ width: {xs:"35px",md:"45px"}, cursor: "pointer" }}
+                />
+            </Box>
+          </Box>
+        </Box>
+        <Box   className="hover-button"
+          sx={{
+            textAlign: "end",
+            position: "absolute",
+            bottom: "10px",
+            right: "10px",
+            opacity: 0, // Initially hidden
+            transition: "opacity 300ms ease", // Smooth transition for hover
+          }}>
+          <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+          <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+          </Button>
+        </Box>
+      </Box>
+    </Grid>

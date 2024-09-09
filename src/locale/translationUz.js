@@ -104,11 +104,11 @@ const translationUz = {
     sixthText:"RAQAMLI KO'RSATKICHLAR",
     seventhText:"BANK VALYUTA KO'RSATKICHLARI",
     eighthText:"BANK KAPITALI",
-    ninthText:"BANK DAROMADLARI VA XARAJATLARI",
+    ninthText:"BANK DAROMADLARI ",
     tenthText: "BANK RISKLARI VA UYQASH MASALALARI",
     eleventhText: "BANKNING MOLIYAVIY STABILLIGI",
     twelfthText: "BANKNING STRATEGIK REJALARI VA INVESTITSION FAOLIYATI",
-
+    thirteenth:"BANK XARAJATLARI"
 };
 
 export default translationUz;
