@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Pie } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -8,23 +8,24 @@ import {
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
 
-// Register the necessary components for Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChartMainChart = () => {
+  const chartRef = useRef(null);  // Ref for accessing chart instance
+
   const data = {
-    labels: ['Blue', 'Purple',],
+    labels: ['Blue', 'Purple'],
     datasets: [
       {
         label: 'My Pie Chart',
-        data: [12, 19,], // Example data
+        data: [25, 12], // Example data
         backgroundColor: [
-          'rgba(54, 162, 235, 0.6)', // Blue
-          'rgba(2, 13, 158, 1)', // Purple
+            'rgba(2, 13, 158, 1)',     
+            'rgba(54, 162, 235, 0.6)', 
         ],
         borderColor: [
-          'rgba(255, 255, 255, 1)', // Blue
-          'rgba(255, 255, 255, 1)', // Purple
+          'rgba(255, 255, 255, 1)',  // White border
+          'rgba(255, 255, 255, 1)',  // White border
         ],
         borderWidth: 3,
       },
@@ -35,10 +36,9 @@ const PieChartMainChart = () => {
     responsive: true,
     maintainAspectRatio: false, // This ensures the chart will fill the container's height
     plugins: {
-        legend: {
-            display: false, // Hide the legend
-          },
-    
+      legend: {
+        display: false, // Hide the legend
+      },
       tooltip: {
         callbacks: {
           label: (tooltipItem) => {
@@ -47,13 +47,67 @@ const PieChartMainChart = () => {
         },
       },
     },
+    // Animation complete callback to add text on each slice
+    animation: {
+      onComplete: () => {
+        const chartInstance = chartRef.current;
+        if (chartInstance) {
+          const ctx = chartInstance.ctx;
+          const dataset = chartInstance.data.datasets[0]; // Access the dataset
+          const meta = chartInstance.getDatasetMeta(0);   // Access meta information about the dataset
+          
+          meta.data.forEach((element, index) => {
+            // Get the center point of each slice
+            const { x, y } = element.tooltipPosition();
+            const value = dataset.data[index];  // Access the value for this slice
+            const padding = 4;  // Shortened padding around the text
+            const borderRadius = 6; // Border-radius for rounded corners
+          
+            // Set font properties
+            ctx.save();
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+          
+            // Measure the text width and height to create a background
+            const text = ` ${value}%`;
+            const textWidth = ctx.measureText(text).width;
+            const textHeight = 14;  // Approximate height for a 14px font
+          
+            // Draw rounded rectangle as background
+            const rectX = x - textWidth / 2 - padding;
+            const rectY = y - textHeight / 2 - padding;
+            const rectWidth = textWidth + padding * 2;
+            const rectHeight = textHeight + padding * 2;
+          
+            ctx.fillStyle = 'white';  // Set background color
+            ctx.beginPath();
+            // Top-left corner
+            ctx.moveTo(rectX + borderRadius, rectY);
+            ctx.arcTo(rectX + rectWidth, rectY, rectX + rectWidth, rectY + rectHeight, borderRadius); // Top-right corner
+            ctx.arcTo(rectX + rectWidth, rectY + rectHeight, rectX, rectY + rectHeight, borderRadius); // Bottom-right corner
+            ctx.arcTo(rectX, rectY + rectHeight, rectX, rectY, borderRadius); // Bottom-left corner
+            ctx.arcTo(rectX, rectY, rectX + rectWidth, rectY, borderRadius); // Top-left corner
+            ctx.closePath();
+            ctx.fill();
+          
+            // Set the text color to match the slice background color
+            ctx.fillStyle = dataset.backgroundColor[index];  // Set text color based on slice color
+            ctx.fillText(text, x, y);  // Add text inside each slice
+          
+            ctx.restore();
+          });
+          
+        }
+      },
+    },
   };
 
   return (
     <Card sx={{ height: '100%', width: '100%', bgcolor: 'transparent', border: 'none' }} elevation={0}>
       <CardContent sx={{ height: '100%', bgcolor: 'transparent', border: 'none' }}>
         <Box sx={{ width: '100%', height: '100%', bgcolor: 'transparent', border: 'none' }}>
-          <Pie data={data} options={options} />
+          <Pie ref={chartRef} data={data} options={options} />
         </Box>
       </CardContent>
     </Card>
@@ -61,6 +115,3 @@ const PieChartMainChart = () => {
 };
 
 export default PieChartMainChart;
-
-
-
