@@ -20,15 +20,15 @@ const PieChartMainChart = () => {
         label: 'My Pie Chart',
         data: [25, 12], // Example data
         backgroundColor: [
-            'rgba(2, 13, 158, 1)',     
-            'rgba(54, 162, 235, 0.6)', 
+            'rgba(255, 99, 132, 0.8)',  // Light red color
+            'rgba(144, 238, 144, 1)', // Light green color
         ],
         borderColor: [
-          'rgba(255, 255, 255, 1)',  // White border
-          'rgba(255, 255, 255, 1)',  // White border
+            'rgba(200, 50, 80, 0.9)',   // Proportional darker red border
+            'rgba(60, 179, 113, 1)',  // Proportional darker green border
         ],
-        borderWidth: 3,
-      },
+        borderWidth: 1,
+    },
     ],
   };
 

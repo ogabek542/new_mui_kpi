@@ -251,10 +251,21 @@ const params = useParams();
 const [usernameError, setUsernameError] = useState("");
 const [passwordError, setPasswordError] = useState("");
 
+// const insertSpaces = (text) => {
+//   if (!text) return ""; 
+//   return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+// };
+
 const insertSpaces = (text) => {
   if (!text) return ""; // Handle empty or undefined text
-  return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+  // Convert to string and ensure no more than 6 characters
+  const str = text.toString().slice(0, 6);
+
+  // Add spaces every 3 digits
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
+
 
 const handleLogin = async () => {
   // console.log("clicked ", username, password);
@@ -621,11 +632,8 @@ const handleLogin = async () => {
               <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                     {/* top side of div */}
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",}}>
-                        <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
-                      </Box>
-                      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
-                        {/* Icon with text */}
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                        <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(974212)}</Typography>
                         <Typography
                           sx={{
                             color: Colors.gray,
@@ -638,6 +646,9 @@ const handleLogin = async () => {
                         >
                           млрд.<br/> сўм.экв
                         </Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+                        {/* Icon with text */}
 
                         {/* Box containing Icon and percentage */}
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -672,7 +683,7 @@ const handleLogin = async () => {
                           <Box>
                             <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                              <Typography sx={{color:Colors.blue_light_table,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                              <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
                               <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                             </Box>
                           </Box>
@@ -682,7 +693,7 @@ const handleLogin = async () => {
                           <Box>
                             <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                              <Typography sx={{color:Colors.blue_nbu,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                              <Typography sx={{color:"rgba(0, 77, 77, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
                               <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                             </Box>
                           </Box>
@@ -741,23 +752,23 @@ const handleLogin = async () => {
                 <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                     {/* top side of div */}
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",}}>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10"}}>
                         <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+                          <Typography
+                            sx={{
+                              color: Colors.gray,
+                              width: "auto",
+                              lineHeight: "1.2",
+                              fontStyle: "italic",
+                              fontWeight: "500",
+                              wordWrap: "break-word",
+                            }}
+                          >
+                            млрд.<br/> сўм.экв
+                          </Typography>
                       </Box>
                       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
                         {/* Icon with text */}
-                        <Typography
-                          sx={{
-                            color: Colors.gray,
-                            width: "auto",
-                            lineHeight: "1.2",
-                            fontStyle: "italic",
-                            fontWeight: "500",
-                            wordWrap: "break-word",
-                          }}
-                        >
-                          млрд.<br/> сўм.экв
-                        </Typography>
 
                         {/* Box containing Icon and percentage */}
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -792,7 +803,7 @@ const handleLogin = async () => {
                           <Box>
                             <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                              <Typography sx={{color:Colors.blue_light_table,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                              <Typography sx={{color:"rgba(0, 129, 0, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
                               <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                             </Box>
                           </Box>
@@ -802,7 +813,7 @@ const handleLogin = async () => {
                           <Box>
                             <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                              <Typography sx={{color:Colors.blue_nbu,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                              <Typography sx={{color:"rgba(139, 0, 0, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
                               <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                             </Box>
                           </Box>
@@ -848,23 +859,23 @@ const handleLogin = async () => {
                 <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                     {/* top side of div */}
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",}}>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
                         <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+                          <Typography
+                            sx={{
+                              color: Colors.gray,
+                              width: "auto",
+                              lineHeight: "1.2",
+                              fontStyle: "italic",
+                              fontWeight: "500",
+                              wordWrap: "break-word",
+                            }}
+                          >
+                            млрд.<br/> сўм.экв
+                          </Typography>
                       </Box>
                       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
                         {/* Icon with text */}
-                        <Typography
-                          sx={{
-                            color: Colors.gray,
-                            width: "auto",
-                            lineHeight: "1.2",
-                            fontStyle: "italic",
-                            fontWeight: "500",
-                            wordWrap: "break-word",
-                          }}
-                        >
-                          млрд.<br/> сўм.экв
-                        </Typography>
 
                         {/* Box containing Icon and percentage */}
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -952,102 +963,85 @@ const handleLogin = async () => {
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
                 <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>  {t("firstText")}</Typography>
-                <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-evenly",
-                      height: "90%",
-                    }}
-                  >
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                       <Box
                         sx={{
                           display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          gap: "10px",
+                          flexDirection:"column",
+                          gap: "15px",
+                          height:"100%",
                         }}
                       >
-                        <Typography
-                          sx={{
-                            color: Colors.gray_text,
-                            fontSize: { xs: "22px", sm: "30px", md: "32px" },
-                            fontWeight: "400",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          ROA
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: Colors.blue_middle,
-                            fontSize: { xs: "22px", sm: "34px", md: "36px" },
-                            fontWeight: "900",
-                          }}
-                        >
-                          21%
-                        </Typography>
-                      </Box>
+                        <Box sx={{display:"flex",flexDirection:"column",gap:"15px"}}>
+                            <Typography sx={{fontSize:"24px",color:Colors.gray,textTransform:"uppercase",fontWeight:"bold",textAlign:"left"}}>Sof Foyda:</Typography>
+                            <Box sx={{display:"flex",alignItems:"center",justifyContent:"start",textAlign:"left",height:"20%"}}>
+                              <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,lineHeight:"1"}}>{insertSpaces(97421)}</Typography>
+                              <Typography
+                                sx={{
+                                  color: Colors.gray,
+                                  width: "auto",
+                                  lineHeight: "1",
+                                  fontStyle: "italic",
+                                  fontWeight: "500",
+                                  wordWrap: "break-word",
+                                }}
+                              >
+                                млрд.<br/> сўм.экв
+                              </Typography>
+                            </Box>
+                        </Box>
 
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          gap: "10px",
-                        }}
-                      >
-                        <Typography
+                          {/* bottom side */}
+                        <Box sx={{display:"flex",flexDirection:"column",height:"100%"}}>
+                          <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",height:"100%",width:"100%"}}> 
+                          {/* left side roa texts */}
+                          <Box
                           sx={{
-                            color: Colors.gray_text,
-                            fontSize: { xs: "22px", sm: "30px", md: "32px" },
-                            fontWeight: "400",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          ROE
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: Colors.blue_middle,
-                            fontSize: { xs: "22px", sm: "34px", md: "36px" },
-                            fontWeight: "900",
-                          }}
-                        >
-                          21%
-                        </Typography>
-                      </Box>
-
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          gap: "10px",
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            color: Colors.gray_text,
-                            fontSize: { xs: "22px", sm: "30px", md: "32px" },
-                            fontWeight: "400",
-                          }}
-                        >
-                          CIR
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: Colors.blue_middle,
-                            fontSize: { xs: "22px", sm: "34px", md: "36px" },
-                            fontWeight: "900",
-                          }}
-                        >
-                          21%
-                        </Typography>
-                      </Box>
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "25px",
+                            justifyContent: "center", // Centers the items vertically
+                            }}
+                          >
+                              <Typography
+                                sx={{
+                                  fontWeight: "bold",
+                                  fontSize: "40px",
+                                  color: Colors.gray,
+                                  lineHeight: "1",
+                                  textAlign: "end",
+                                }}
+                              >
+                                ROE
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontWeight: "bold",
+                                  fontSize: "40px",
+                                  color: Colors.gray,
+                                  lineHeight: "1.1",
+                                }}
+                              >
+                                CIR
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontWeight: "bold",
+                                  fontSize: "40px",
+                                  color: Colors.gray,
+                                  lineHeight: "1",
+                                }}
+                              >
+                                COR
+                              </Typography>
+                          </Box>
+                            {/* right side horizontal bar chart */}
+                            <Box sx={{height:"79%",}}>
+                              <LiabilitiesChart/>
+                            </Box>
+                          </Box>
+                        </Box>
                     </Box>
-                  </Box>
                   {/* button section */}
                 <Box   className="hover-button"
                   sx={{
@@ -1086,23 +1080,23 @@ const handleLogin = async () => {
                 <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                     {/* top side of div */}
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",}}>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
                         <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+                          <Typography
+                            sx={{
+                              color: Colors.gray,
+                              width: "auto",
+                              lineHeight: "1.2",
+                              fontStyle: "italic",
+                              fontWeight: "500",
+                              wordWrap: "break-word",
+                            }}
+                          >
+                            млрд.<br/> сўм.экв
+                          </Typography>
                       </Box>
                       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
                         {/* Icon with text */}
-                        <Typography
-                          sx={{
-                            color: Colors.gray,
-                            width: "auto",
-                            lineHeight: "1.2",
-                            fontStyle: "italic",
-                            fontWeight: "500",
-                            wordWrap: "break-word",
-                          }}
-                        >
-                          млрд.<br/> сўм.экв
-                        </Typography>
 
                         {/* Box containing Icon and percentage */}
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -1137,7 +1131,7 @@ const handleLogin = async () => {
                           <Box>
                             <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                              <Typography sx={{color:Colors.blue_light_table,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                              <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
                               <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                             </Box>
                           </Box>
@@ -1147,7 +1141,7 @@ const handleLogin = async () => {
                           <Box>
                             <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                              <Typography sx={{color:Colors.blue_nbu,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                              <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
                               <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                             </Box>
                           </Box>
@@ -1193,23 +1187,23 @@ const handleLogin = async () => {
                 <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                     {/* top side of div */}
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",}}>
+                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
                         <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+                          <Typography
+                            sx={{
+                              color: Colors.gray,
+                              width: "auto",
+                              lineHeight: "1.2",
+                              fontStyle: "italic",
+                              fontWeight: "500",
+                              wordWrap: "break-word",
+                            }}
+                          >
+                            млрд.<br/> сўм.экв
+                          </Typography>
                       </Box>
                       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
                         {/* Icon with text */}
-                        <Typography
-                          sx={{
-                            color: Colors.gray,
-                            width: "auto",
-                            lineHeight: "1.2",
-                            fontStyle: "italic",
-                            fontWeight: "500",
-                            wordWrap: "break-word",
-                          }}
-                        >
-                          млрд.<br/> сўм.экв
-                        </Typography>
 
                         {/* Box containing Icon and percentage */}
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>

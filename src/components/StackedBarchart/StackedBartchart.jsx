@@ -22,14 +22,14 @@ const StackedBarChart = () => {
             {
                 label: 'Blue',
                 data: [25], // Data for Blue bars
-                backgroundColor: 'rgba(2, 13, 158, 1)', // Blue color
+                backgroundColor: 'rgba(0, 77, 77, 0.7)', // Dark teal
                 borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 2,
             },
             {
                 label: 'Purple',
                 data: [35], // Data for Purple bars
-                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Purple color
+                backgroundColor: 'rgba(76, 0, 153, 0.7)', // Dark violet
                 borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 2,
                 borderRadius: { topLeft: 10, topRight: 10 }, // Add border-radius to top corners

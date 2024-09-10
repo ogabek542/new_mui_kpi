@@ -22,17 +22,17 @@ const VerticalBarchartTwo = () => {
             {
                 label: 'Purple',
                 data: [35], // Data for Purple bars
-                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Purple color
-                borderColor: 'rgba(255, 255, 255, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Light purple color
+                borderColor: 'rgba(54, 100, 200, 0.6)', // Proportional darker purple border
                 borderWidth: 2,
                 borderRadius: { topLeft: 10, topRight: 10 }, // Add border-radius to top corners
             },
             {
-                label: 'Blue',
-                data: [25], // Data for Blue bars
-                backgroundColor: 'rgba(2, 13, 158, 1)', // Blue color
-                borderColor: 'rgba(255, 255, 255, 1)',
-                borderWidth: 2,
+                label: 'Green', // Changing label to reflect the green color
+                data: [25], // Data for Green bars
+                backgroundColor: 'rgba(144, 238, 144, 1)', // Light green color
+                borderColor: 'rgba(60, 179, 113, 0.7)', // Darker green border
+                borderWidth: 3,
                 borderRadius: { topLeft: 10, topRight: 10 }, // Add border-radius to top corners
             },
         ],
