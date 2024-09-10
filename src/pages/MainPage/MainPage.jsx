@@ -42,6 +42,8 @@ import MovingIcon from "@mui/icons-material/Moving";
 // <=== Import New Charts ====> //
 import PieChartMainChart from "../../components/PieChartMainSection/PieChartMainChart.jsx";
 import HolePieChart from "../../components/HolePieChart/HolePieChart.jsx";
+import StackedBartchart from "../../components/StackedBarchart/StackedBartchart.jsx";
+import VerticalBarchartTwo from "../../components/VerticalBarchartTwo/VerticalBarchartTwo.jsx";
 // modal styles //
 
 // recharts elements //
@@ -610,7 +612,7 @@ const handleLogin = async () => {
                 sx={{
                   textAlign: "start",
                   fontWeight: "800",
-                  fontSize: { xs: "12px", md: "16px" },
+                  fontSize: { xs: "12px", md: "20px" },
                 }}
               >
                 {t("secontText")}
@@ -660,7 +662,7 @@ const handleLogin = async () => {
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                     {/* pie chart section  */}
                     <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                        <HolePieChart/>  
+                        <StackedBartchart/>  
                     </Box>
                     {/* right side Texts */}
                     <Box sx={{}}>
@@ -842,7 +844,7 @@ const handleLogin = async () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}> {t("eighthText")} </Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}> {t("eighthText")} </Typography>
                 <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                     {/* top side of div */}
@@ -949,7 +951,7 @@ const handleLogin = async () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>  {t("firstText")}</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>  {t("firstText")}</Typography>
                 <Box
                     sx={{
                       display: "flex",
@@ -1080,7 +1082,7 @@ const handleLogin = async () => {
               }}
             >
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("ninthText")}</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>{t("ninthText")}</Typography>
                 <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                     {/* top side of div */}
@@ -1125,7 +1127,7 @@ const handleLogin = async () => {
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                     {/* pie chart section  */}
                     <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                        <HolePieChart/>  
+                        <VerticalBarchartTwo/>  
                     </Box>
                     {/* right side Texts */}
                     <Box sx={{}}>
@@ -1187,7 +1189,7 @@ const handleLogin = async () => {
               }}
             >
               <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,position:"relative"}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("thirteenth")}</Typography>
+                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>{t("thirteenth")}</Typography>
                 <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                     {/* top side of div */}
@@ -1226,13 +1228,13 @@ const handleLogin = async () => {
                               %
                             </Typography>
                           </Box>
-                      </Box>
+                        </Box>
                     </Box>
                   </Box>
                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                     {/* pie chart section  */}
                     <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                        <HolePieChart/>  
+                        <VerticalBarchartTwo/>  
                     </Box>
                     {/* right side Texts */}
                     <Box sx={{}}>
