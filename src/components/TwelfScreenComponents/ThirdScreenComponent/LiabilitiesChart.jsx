@@ -21,12 +21,13 @@ const LiabilitiesChart = () => {
     datasets: [
       {
         label: 'Liabilities',
-        data: [200, 80, 150], // Data for the bars
+        data: [125, 21, 100], // Data for the bars
         backgroundColor: 'rgba(72, 209, 204, 0.9)', // Light teal color
         borderColor: 'rgba(0, 174, 239, 1)',
         borderWidth: 2, // Thin border for visual separation
-        borderRadius: 50, // Applies border-radius to all corners
+        borderRadius: 30, // Applies border-radius to all corners
         borderSkipped: false,
+        barThickness: 40, // Adjust the height of the bars (shorter bar height)s
       },
     ],
   };
@@ -73,7 +74,7 @@ const LiabilitiesChart = () => {
             const meta = chartInstance.getDatasetMeta(datasetIndex);
             meta.data.forEach((element, index) => {
               const value = dataset.data[index];
-              const fontSize = 16; // Font size for the text
+              const fontSize = 14; // Font size for the text
               
               // Set font properties
               ctx.save();
@@ -84,7 +85,7 @@ const LiabilitiesChart = () => {
               // Calculate text position and dimensions
               const text = `${value}%`; // Add '%' symbol to the value
               const textX = element.x - element.width / 4; // Horizontally center the text inside the bar
-              const textY = element.y - element.height / 15; // Vertically center the text inside the bar
+              const textY = element.y - element.height / 30; // Vertically center the text inside the bar
     
               // Draw the text itself (no background)
               ctx.fillStyle = 'white'; // Text color set to white

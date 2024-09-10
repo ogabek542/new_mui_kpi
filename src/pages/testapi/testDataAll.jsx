@@ -81,7 +81,7 @@
             },
             reserveData:{
               planData: [32166868, 99133530,70640587],// резервы ni planini qiymati quyidagi nomlar ketma ketligi asosida kutib olinadi: "Оценка убытков","Возмещение ранее созданных резервов","Досоздание резервов в текущем году", //
-              factData: [51643070, 72171076,81688024],// резервы ni faktini qiymati yuqoridagi nomlar ketma ketligi asosida kutib olinadi   //
+              factData: [-51643070, -72171076,-81688024],// резервы ni faktini qiymati yuqoridagi nomlar ketma ketligi asosida kutib olinadi   //
             },
           },
           {

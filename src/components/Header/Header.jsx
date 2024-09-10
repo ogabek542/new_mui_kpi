@@ -28,7 +28,7 @@ i18n.use(initReactI18next).init({
   fallbackLng: "uz",
 });
 
-const Header = () => {
+const Header = ({ value, onChange }) => {
   const { t, i18n } = useTranslation();
   const [age, setAge] = React.useState(localStorage.getItem("language") || "uz"); // Initialize with persisted language or default
   const [selectedDate, setSelectedDate] = React.useState(dayjs());
@@ -204,7 +204,7 @@ const Header = () => {
               "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
           }}
         >
-          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={age}>
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={age}>
             <DatePicker
               value={selectedDate}
               onChange={(newValue) => setSelectedDate(newValue)}
@@ -235,7 +235,44 @@ const Header = () => {
                 },
               }}
             />
-          </LocalizationProvider>
+          </LocalizationProvider> */}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  value={value}
+                  onChange={onChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      inputProps={{
+                        ...params.inputProps,
+                        placeholder: "DD.MM.YYYY",
+                        readOnly: true,
+                      }}
+                    />
+                  )}
+                  sx={{
+                    ".MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "white",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "white",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "white",
+                      },
+                      ".MuiInputAdornment-root .MuiIconButton-root": {
+                        color: Colors.blue_nbu,
+                      },
+                      ".MuiInputBase-input": {
+                        fontWeight: 700,
+                        fontSize: { xs: "12px", sm: "16px" },
+                      },
+                    },
+                  }}
+                />
+              </LocalizationProvider>
         </Box>
       </Box>
     </Box>

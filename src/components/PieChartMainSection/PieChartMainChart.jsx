@@ -10,7 +10,7 @@ import { Box, Card, CardContent } from '@mui/material';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChartMainChart = () => {
+const PieChartMainChart = ({piechartData}) => {
   const chartRef = useRef(null);  // Ref for accessing chart instance
 
   const data = {
@@ -18,16 +18,16 @@ const PieChartMainChart = () => {
     datasets: [
       {
         label: 'My Pie Chart',
-        data: [25, 12], // Example data
+        data: piechartData, // Example data
         backgroundColor: [
             'rgba(255, 99, 132, 0.8)',  // Light red color
             'rgba(144, 238, 144, 1)', // Light green color
         ],
         borderColor: [
-            'rgba(200, 50, 80, 0.9)',   // Proportional darker red border
-            'rgba(60, 179, 113, 1)',  // Proportional darker green border
+            'rgba(255, 255, 255, 1)',   // Proportional darker red border
+            'rgba(255, 255, 255, 1)',  // Proportional darker green border
         ],
-        borderWidth: 1,
+        borderWidth: 3,
     },
     ],
   };

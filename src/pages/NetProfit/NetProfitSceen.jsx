@@ -225,10 +225,9 @@ const NetProfitSceen = ({ changeLang }) => {
   useEffect(() => { 
     const fetchGraphicData = async () => {
       try {
-        const response =
-          await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
+        const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
         const graphicIndicators = response.data;
-        console.log(response);
+        console.log(response,"error");
         console.log(graphicIndicators, "Fetched data");
         setChooseData(graphicIndicators);
       } catch (error) {
@@ -265,22 +264,22 @@ const NetProfitSceen = ({ changeLang }) => {
 
   const handleDateChange = (newValue) => {
     setSelectNewData(newValue);
-    const formattedDate = newValue ? dayjs(newValue).format("DD.MM.YYYY") : "";
-
-    // Filter data by selected date
+    const formattedDate = newValue ? dayjs(newValue).format("MM.DD.YYYY") : "";
   
-    // const selectedData = chooseData.map((item) => {
-    const selectedData = testData.filter((item) => {
-      return selectedSecondOptions?.title === item.name; // Only return data if the title matches
+    // Filter data by selected date
+    // const selectedData = testData.filter((item) => {
+  
+    const selectedData = chooseData.map((item) => {
+      return selectedSecondOptions?.title === item.name; 
     }).map((item) => {
       return {
-        ...item, // Spread the existing item properties
+        ...item, 
         filteredSana: item.sana
           ? item.sana.filter((sanaItem) => sanaItem.date === formattedDate)
-          : [], // Filter based on selected date
+          : [], 
       };
     });
-
+  
     setChooseData(selectedData);
   };
 
@@ -472,7 +471,7 @@ const shouldDisableDate = (date) => {
                     boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
                   }}
                 >
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       value={selectNewData}
                       onChange={handleDateChange}
@@ -518,7 +517,44 @@ const shouldDisableDate = (date) => {
                         }}
                     />
                   </LocalizationProvider>
-
+                   */}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  value={selectNewData}
+                  onChange={handleDateChange}
+                  // shouldDisableDate={shouldDisableDate}
+                  slotProps={{
+                    textField: {
+                      inputProps: {
+                        placeholder: "MM/DD/YYYY",
+                        readOnly: true,
+                      },
+                      fullWidth: true,
+                      sx: {
+                        // Ensure no aria-hidden is added here
+                        ".MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none",
+                          },
+                          "&:hover fieldset": {
+                            border: "none",
+                          },
+                          // "&.Mui-focused fieldset": {
+                          //   border: "none",
+                          // },
+                          ".MuiInputAdornment-root .MuiIconButton-root": {
+                            color: Colors.blue_nbu,
+                          },
+                          ".MuiInputBase-input": {
+                            fontWeight: 700,
+                            fontSize: { xs: "12px", sm: "16px" },
+                          },
+                        },
+                      },
+                    },
+                  }}
+                />
+              </LocalizationProvider>
                 </Box>
               </Grid>
             </Grid>
@@ -530,29 +566,30 @@ const shouldDisableDate = (date) => {
                 sx={{ width: "100%", height: "100%", marginTop: "5px" }}
               >
 
-                {item.filteredSana && item.filteredSana.length > 0 ? (
+                {item.filteredSana  ? (
                   item.filteredSana.map((sanaItem, idx) => (
-                    // <Box
-                    //   key={idx}
-                    //   sx={{
-                    //     padding: "10px",
-                    //     marginBottom: "10px",
-                    //     border: "1px solid #ddd",
-                    //   }}
-                    // >
-                    //     <Box sx={{ width: "100%", height: "350px" }}>
-                    //       <NoIncomeLineChart
-                    //         planData={divideAndRoundData(
-                    //           sanaItem.nointerestIncome.planData
-                    //         )}
-                    //         factData={divideAndRoundData(
-                    //           sanaItem.nointerestIncome.factData
-                    //         )}
-                    //       />
-                    //     </Box>
                     
-                    // </Box>
                   <Box key={idx} sx={{width:"100%",height:"100%"}}>
+
+<Box
+                      sx={{
+                        padding: "10px",
+                        marginBottom: "10px",
+                        border: "1px solid #ddd",
+                      }}
+                    >
+                        <Box sx={{ width: "100%", height: "350px" }}>
+                          <NoIncomeLineChart
+                            planData={divideAndRoundData(
+                              sanaItem.nointerestIncome.planData
+                            )}
+                            factData={divideAndRoundData(
+                              sanaItem.nointerestIncome.factData
+                            )}
+                          />
+                        </Box>
+                    
+                    </Box>
                     {/* <=== first grid div ====> */}
                         <Grid container sx={{ width: "100%", height: "200px" }}>
                           {/* first number div */}
@@ -1266,7 +1303,7 @@ const shouldDisableDate = (date) => {
                   </Box>               
                   ))
                 ) : (
-                  <Typography sx={{fontWeight:"800",textTransform:"uppercase",color:"red"}}>tanlash uchun bu kunda malumot yo'q</Typography>
+                  <Typography sx={{fontWeight:"800",textTransform:"uppercase",color:"red"}}>tanlash uchun bu kunda malumot yoq</Typography>
                 )}
               </Box>
             ))}

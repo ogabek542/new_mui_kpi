@@ -13,7 +13,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const StackedBarChart = () => {
+const StackedBarChart = ({foreignCurrencyPercentage,nationalCurrencyPercentage}) => {
     const chartRef = useRef(null);
 
     const data = {
@@ -21,14 +21,14 @@ const StackedBarChart = () => {
         datasets: [
             {
                 label: 'Blue',
-                data: [25], // Data for Blue bars
+                data: [nationalCurrencyPercentage], // Data for Blue bars
                 backgroundColor: 'rgba(0, 77, 77, 0.7)', // Dark teal
                 borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 2,
             },
             {
                 label: 'Purple',
-                data: [35], // Data for Purple bars
+                data: [foreignCurrencyPercentage], // Data for Purple bars
                 backgroundColor: 'rgba(76, 0, 153, 0.7)', // Dark violet
                 borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 2,

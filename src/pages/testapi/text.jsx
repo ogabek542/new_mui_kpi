@@ -4060,3 +4060,802 @@ export default NetProfitSceen;
         </Box>
       </Box>
     </Grid>
+
+
+
+// recharts elements //
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Tooltip,
+  LabelList,
+} from "recharts";
+
+const barchartdata = [
+  {
+    // name: "PageA",
+    plan: 4000,
+    fact: 2400,
+    amt: 2400,
+    percentage:"120"
+  },
+  {
+    // name: "PageB",
+    plan: 6000,
+    fact: 1398,
+    amt: 2210,
+  },
+  {
+    // name: "PageC",
+    plan: 2000,
+    fact: 1000,
+    amt: 2290,
+  },
+];
+
+  // <=== BArchart styles ====> //
+  // Styled components
+
+
+const renderShape = ({ x, y, width, height }) => {
+  const translateX = width * (-0.25); // 10% of the width
+  const borderRadius = 5; // Radius for the top corners
+  return (
+    <>
+      <rect
+        className="shape_render"
+        x={x}
+        y={y}
+        width={`10%`}
+        height={height}
+        fill={Colors.blue_middle}
+        ry={borderRadius} // Apply radius to top-left and top-right corners
+        transform={`translate(${translateX}, 0)`}
+        
+      />
+    </>
+  )
+};
+const renderBlueShape = ({ x, y, width, height }) => {
+  const translateX = width * (0.4); // 10% of the width
+  return (
+    <>
+      <rect
+        className="shape_blue"
+        x={x}
+        y={y}
+        width={`10%`}
+        height={height}
+        fill={Colors.gray_back}
+        ry={5}
+        transform={`translate(${translateX}, 0)`}
+      />
+    </>
+
+  )
+};
+const renderCustomizedLabel = (props) => {
+  const { x, y, width, value } = props;
+  const rectWidth = 65;
+  const rectHeight = 20;
+  const rectX = x + width / 2 - rectWidth / 2 + 22;
+  const rectY = y - rectHeight - 5; // Adjust y position as needed
+  const loginValue = value >= 100 ? true : false;
+  return (
+    <g className="custom-label" >
+      <rect
+        x={rectX}
+        y={rectY}
+        width={rectWidth}
+        height={rectHeight}
+        fill={Colors.transparent}
+      />
+      <foreignObject
+        x={rectX}
+        y={rectY}
+        width={rectWidth}
+        height={rectHeight}
+      >
+      <Box
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+          <Box
+            sx={{
+              color: loginValue ? Colors.blue_middle : Colors.red,
+              fontSize: '14px', // Adjust the size as needed
+            }}
+          >
+            <FontAwesomeIcon icon={faCircleCheck} />
+          </Box>
+        <Typography
+          component="span"
+          sx={{
+            color: loginValue ? Colors.blue_middle : Colors.red,
+            fontWeight: '500', // Adjust font weight as needed
+            fontSize: '16px', // Adjust font size as needed
+          }}
+        >
+          {value}%
+        </Typography>
+      </Box>
+      </foreignObject>
+    </g>
+  );
+};
+// main section new datas cards // 
+  {/* <==== BARCHART CARDS SECTION ====> */}
+  <Grid
+  container
+  sx={{ margin: "auto" ,}}
+  direction="row"
+  width={"100%"}
+>
+
+{/* first div */}
+  <Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: { xs: "400px", md: "500px" },
+    width: "auto",
+    padding: "5px",
+  }}>
+<Box
+  sx={{
+    width: "100%",
+    height: "100%",
+    borderRadius: "5px",
+    padding: "10px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "30px",
+    bgcolor: Colors.gray_footer,
+    position: "relative",
+    "&:hover .hover-button": {
+      opacity: 1, // Show button when hovering over the box
+    },
+  }}
+>
+  <Typography
+    sx={{
+      textAlign: "start",
+      fontWeight: "800",
+      fontSize: { xs: "12px", md: "20px" },
+    }}
+  >
+    {t("secontText")}
+  </Typography>
+
+  <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+        {/* top side of div */}
+          <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(974212)}</Typography>
+            <Typography
+              sx={{
+                color: Colors.gray,
+                width: "auto",
+                lineHeight: "1.2",
+                fontStyle: "italic",
+                fontWeight: "500",
+                wordWrap: "break-word",
+              }}
+            >
+              млрд.<br/> сўм.экв
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+            {/* Icon with text */}
+
+            {/* Box containing Icon and percentage */}
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <MovingIcon
+                sx={{
+                  fontSize: "32px",
+                  transition: "transform 0.3s ease",
+                  color: Colors.green_area,
+                }}
+              />
+              <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                  72 <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                </Typography>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+        {/* pie chart section  */}
+        <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+            <StackedBartchart/>  
+        </Box>
+        {/* right side Texts */}
+        <Box sx={{}}>
+          <Typography sx={{fontSize:"12px",color:Colors.gray,fontStyle: "italic",textAlign:"left" }}>шу жумладан:</Typography>
+            {/* top side light blue */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+          {/* bottom side dark_blue national  */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:"rgba(0, 77, 77, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+    {/* Button at the bottom-right */}
+    <Box
+      className="hover-button"
+      sx={{
+        textAlign: "end",
+        position: "absolute",
+        bottom: "10px",
+        right: "10px",
+        opacity: 0, // Initially hidden
+        transition: "opacity 300ms ease", // Smooth transition for hover
+      }}
+    >
+      <Button
+        variant="contained"
+        size="medium"
+        onClick={handleOpenAuthModal}
+      >
+        <Typography
+          sx={{
+            color: Colors.white,
+            fontWeight: "800",
+            textTransform: "uppercase",
+          }}
+        >
+          {t("infobutton")}
+        </Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* second div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: "500px",
+    width:"auto",
+    padding:"5px",
+  }}
+>
+  <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,  position: "relative",
+    "&:hover .hover-button": {
+      opacity: 1, // Show button when hovering over the box
+    },}}>
+    <Typography sx={{textAlign:"start",fontWeight:"bold",fontSize:{xs:"12px",md:"20px"},}}>{t("thirdText")}</Typography>
+    <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+        {/* top side of div */}
+          <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10"}}>
+            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+              <Typography
+                sx={{
+                  color: Colors.gray,
+                  width: "auto",
+                  lineHeight: "1.2",
+                  fontStyle: "italic",
+                  fontWeight: "500",
+                  wordWrap: "break-word",
+                }}
+              >
+                млрд.<br/> сўм.экв
+              </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+            {/* Icon with text */}
+
+            {/* Box containing Icon and percentage */}
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <MovingIcon
+                sx={{
+                  fontSize: "32px",
+                  transition: "transform 0.3s ease",
+                  color: Colors.green_area,
+                }}
+              />
+              <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                  72 <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                </Typography>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+        {/* pie chart section  */}
+        <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+            <PieChartMainChart/>  
+        </Box>
+        {/* right side Texts */}
+        <Box sx={{}}>
+          <Typography sx={{fontSize:"12px",color:Colors.gray,fontStyle: "italic",textAlign:"left" }}>шу жумладан:</Typography>
+            {/* top side light blue */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:"rgba(0, 129, 0, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+          {/* bottom side dark_blue national  */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:"rgba(139, 0, 0, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+    {/* button styles */}
+    <Box   className="hover-button"
+      sx={{
+        textAlign: "end",
+        position: "absolute",
+        bottom: "10px",
+        right: "10px",
+        opacity: 0, // Initially hidden
+        transition: "opacity 300ms ease", // Smooth transition for hover
+      }}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* third div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px",
+    position: "relative",
+    "&:hover .hover-button": {
+      opacity: 1, // Show button when hovering over the box
+    },
+  }}
+>
+  <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}> {t("eighthText")} </Typography>
+    <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+        {/* top side of div */}
+          <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+              <Typography
+                sx={{
+                  color: Colors.gray,
+                  width: "auto",
+                  lineHeight: "1.2",
+                  fontStyle: "italic",
+                  fontWeight: "500",
+                  wordWrap: "break-word",
+                }}
+              >
+                млрд.<br/> сўм.экв
+              </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+            {/* Icon with text */}
+
+            {/* Box containing Icon and percentage */}
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <MovingIcon
+                sx={{
+                  fontSize: "32px",
+                  transition: "transform 0.3s ease",
+                  color: Colors.green_area,
+                }}
+              />
+              <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                  72 <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                </Typography>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+        {/* pie chart section  */}
+        <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+            <HolePieChart/>  
+        </Box>
+        {/* right side Texts */}
+        <Box sx={{}}>
+          <Typography sx={{fontSize:"12px",color:Colors.gray,fontStyle: "italic",textAlign:"left" }}>шу жумладан:</Typography>
+            {/* top side light blue */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:Colors.blue_light_table,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+          {/* bottom side dark_blue national  */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:Colors.blue_nbu,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+    {/* button section  */}
+    <Box   className="hover-button"
+      sx={{
+        textAlign: "end",
+        position: "absolute",
+        bottom: "15px",
+        right: "15px",
+        opacity: 0, // Initially hidden
+        transition: "opacity 300ms ease", // Smooth transition for hover
+      }}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* fourth div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px",
+    position: "relative",
+    "&:hover .hover-button": {
+      opacity: 1, // Show button when hovering over the box
+    },
+  }}
+>
+  <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>  {t("firstText")}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection:"column",
+              gap: "15px",
+              height:"100%",
+            }}
+          >
+            <Box sx={{display:"flex",flexDirection:"column",}}>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",textAlign:"left",height:"100%"}}>
+                  <Typography sx={{fontSize:"28px",color:Colors.gray,textTransform:"uppercase",fontWeight:"bold",textAlign:"left"}}>Sof Foyda:</Typography>
+                  <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,lineHeight:"1"}}>{insertSpaces(974212)}</Typography>
+                  <Typography
+                    sx={{
+                      color: Colors.gray,
+                      width: "auto",
+                      lineHeight: "1",
+                      fontStyle: "italic",
+                      fontWeight: "500",
+                      wordWrap: "break-word",
+                      fontSize:"16px"
+                    }}
+                  >
+                    млрд.<br/> сўм.экв
+                  </Typography>
+                </Box>
+            </Box>
+
+              {/* bottom side */}
+            <Box sx={{display:"flex",flexDirection:"column",height:"100%"}}>
+              <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",height:"100%",width:"100%",gap:"25px"}}> 
+              {/* left side roa texts */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems:"flex-end"
+                }}
+              >
+                <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>ROA</Typography>
+                <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>ROE</Typography>
+                <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>CIR</Typography>
+              </Box>
+                {/* right percentage */}
+                <Box sx={{display:"flex",flexDirection:"column"}}>
+                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>21<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>21<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>21<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                </Box>
+              </Box>
+            </Box>
+        </Box>
+      {/* button section */}
+    <Box   className="hover-button"
+      sx={{
+        textAlign: "end",
+        position: "absolute",
+        bottom: "15px",
+        right: "15px",
+        opacity: 0, // Initially hidden
+        transition: "opacity 300ms ease", // Smooth transition for hover
+      }}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* fifth div*/}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px",
+    position:"relative",
+    "&:hover .hovers-button": {
+      opacity: 1, // Show button when hovering over the box
+    },
+  }}
+>
+    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>{t("ninthText")}</Typography>
+    <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+        {/* top side of div */}
+          <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+              <Typography
+                sx={{
+                  color: Colors.gray,
+                  width: "auto",
+                  lineHeight: "1.2",
+                  fontStyle: "italic",
+                  fontWeight: "500",
+                  wordWrap: "break-word",
+                }}
+              >
+                млрд.<br/> сўм.экв
+              </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+            {/* Icon with text */}
+
+            {/* Box containing Icon and percentage */}
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <MovingIcon
+                sx={{
+                  fontSize: "32px",
+                  transition: "transform 0.3s ease",
+                  color: Colors.green_area,
+                }}
+              />
+              <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                  72 <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                </Typography>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+        {/* pie chart section  */}
+        <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+            <VerticalBarchartTwo/>  
+        </Box>
+        {/* right side Texts */}
+        <Box sx={{}}>
+          <Typography sx={{fontSize:"12px",color:Colors.gray,fontStyle: "italic",textAlign:"left" }}>шу жумладан:</Typography>
+            {/* top side light blue */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+          {/* bottom side dark_blue national  */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+        {/* button section */}
+    <Box    className="hovers-button"
+      sx={{
+        textAlign: "end",
+        position: "absolute",
+        bottom: "15px",
+        right: "15px",
+        opacity: 0, // Initially hidden
+        transition: "opacity 300ms ease", // Smooth transition for hover
+      }}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+{/* sixth div */}
+<Grid
+  item
+  xs={12}
+  sm={12}
+  md={6}
+  lg={4}
+  sx={{
+    height: {xs:"400px",md:"500px"},
+    width:"auto",
+    padding:"5px",
+    position: "relative",
+    "&:hover .hover-button": {
+      opacity: 1, // Show button when hovering over the box
+    },
+  }}
+>
+  <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,position:"relative"}}>
+    <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>{t("thirteenth")}</Typography>
+    <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+        {/* top side of div */}
+          <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+              <Typography
+                sx={{
+                  color: Colors.gray,
+                  width: "auto",
+                  lineHeight: "1.2",
+                  fontStyle: "italic",
+                  fontWeight: "500",
+                  wordWrap: "break-word",
+                }}
+              >
+                млрд.<br/> сўм.экв
+              </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+            {/* Icon with text */}
+
+            {/* Box containing Icon and percentage */}
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <MovingIcon
+                sx={{
+                  fontSize: "32px",
+                  transition: "transform 0.3s ease",
+                  color: Colors.green_area,
+                }}
+              />
+              <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                  72 <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                </Typography>
+              </Box>
+            </Box>
+        </Box>
+      </Box>
+      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+        {/* pie chart section  */}
+        <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+            <VerticalBarchartTwo/>  
+        </Box>
+        {/* right side Texts */}
+        <Box sx={{}}>
+          <Typography sx={{fontSize:"12px",color:Colors.gray,fontStyle: "italic",textAlign:"left" }}>шу жумладан:</Typography>
+            {/* top side light blue */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:Colors.blue_light_table,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+          {/* bottom side dark_blue national  */}
+          <Box sx={{display:"flex",flexDirection:"column"}}>
+              <Box>
+                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                  <Typography sx={{color:Colors.blue_nbu,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                </Box>
+              </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+    {/* button section */}
+    <Box   className="hover-button"
+      sx={{
+        textAlign: "end",
+        position: "absolute",
+        bottom: "10px",
+        right: "10px",
+        opacity: 0, // Initially hidden
+        transition: "opacity 300ms ease", // Smooth transition for hover
+      }}>
+      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+
+</Grid>
+</Box>
+
+
+const handleDateChange = (newValue) => {
+  setSelectNewData(newValue);
+  const formattedDate = newValue ? dayjs(newValue).format("MM.DD.YYYY") : "";
+
+  // Filter data by selected date
+  // const selectedData = testData.filter((item) => {
+
+  const selectedData = chooseData.map((item) => {
+  //   return selectedSecondOptions?.title === item.name; 
+  // }).map((item) => {
+    return {
+      ...item, 
+      filteredSana: item.sana
+        ? item.sana.filter((sanaItem) => sanaItem.date === formattedDate)
+        : [], 
+    };
+  });
+
+  setChooseData(selectedData);
+};
