@@ -74,7 +74,7 @@ export const REQUESTS = {
         getRealTimeLive:() => axiosInstance.get('/api/daily-visitors')
     },
     analysisScreenOne:{
-        getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes/?date=16.07.2024')
+        getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes')
     },
     mainCalendarScreen:{
         getMainCalendarScreen:() => axiosInstance.get("new api ")

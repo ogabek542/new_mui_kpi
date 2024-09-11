@@ -22,8 +22,8 @@ const VerticalGroupBarChart = ({  planData, factData }) => {
   const data = {
     // labels: ["Оценка убытков","Возмещение ранее созданных резервов","Досоздание резервов в текущем году"],
     labels:[
-      t("assessmentOfLosts"),
       t("recoveryPreviousReserves"),
+      t("assessmentOfLosts"),
       t("currenrYearReserves"),
     ],
     datasets: [
