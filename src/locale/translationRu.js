@@ -108,6 +108,12 @@ const translationRu = {
         eleventhText: "ФИНАНСОВАЯ СТАБИЛЬНОСТЬ БАНКА",
         twelfthText: "СТРАТЕГИЧЕСКИЕ ПЛАНЫ И ИНВЕСТИЦИОННАЯ ДЕЯТЕЛЬНОСТЬ БАНКА",
         thirteenth:"БАНКОВСКИЕ СБОРЫ",
+         // MAIN PAGE TEXTS // 
+        nationalCurrency:"В НАЦИОНАЛЬНОЙ ВАЛЮТЕ",
+        foreignCurrency:"В ИНОСТРАННОЙ ВАЛЮТЕ",
+        netProfitText:"ЧИСТАЯ ПРИБЫЛЬ",
+        including:"включая",
+        currencyText:"миллиард сум экв.",
 
 }
 export default translationRu 

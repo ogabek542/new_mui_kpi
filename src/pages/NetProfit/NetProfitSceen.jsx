@@ -377,12 +377,13 @@ const holidays = [
 // Function to disable weekends and holidays
 const shouldDisableDate = (date) => {
   // Disable weekends (Saturday = 6, Sunday = 0)
-  const isWeekend = date.day() === 0 || date.day() === 6;
+  // const isWeekend = date.day() === 0 || date.day() === 6;
 
   // Disable holidays
   const isHoliday = holidays.some((holiday) => date.isSame(holiday, 'day'));
 
-  return  isHoliday || isWeekend;
+  // return  isHoliday || isWeekend;
+  return  isHoliday ;
 };
 
 
@@ -529,7 +530,7 @@ const shouldDisableDate = (date) => {
                 <DatePicker
                   value={selectNewData}
                   onChange={handleDateChange}
-                  // shouldDisableDate={shouldDisableDate}
+                  shouldDisableDate={shouldDisableDate}
                   slotProps={{
                     textField: {
                       inputProps: {
@@ -572,7 +573,7 @@ const shouldDisableDate = (date) => {
               
               item.sana?.filter(sanaItem => sanaItem.date === formattedDate).map((sanaItem, idx) => (
                 <Box key={`${index}-${idx}`} sx={{ width: "100%", height: "100%", marginTop: "5px" }}>
-                  {sanaItem.date}
+                  {/* {sanaItem.date} */}
                  {/* <=== first grid div ====> */}
                 <Grid container sx={{ width: "100%", height: "200px" }}>
                     {/* first number div */}

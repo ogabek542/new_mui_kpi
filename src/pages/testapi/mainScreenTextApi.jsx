@@ -19,9 +19,10 @@ const testMainAPI = [
         bankCapitals:{           // BANK KAPITALI //
             totalCapitals:"25896", // totalCapitals serverdan olinadi //
             totalCapitalsPercentage:"133", // bugungi totalCapitals va bir kun oldingi totalCapitals lar nisbatidan kelib chiqadi //
-            foreignCurrency:"369852", // xorijiy valyutada raqamli malumot mlrd so'm //
-            nationalCurrency:"23589", // milliy valyutada raqamli malumot mlrd so'm //
-            doughtnutCapitalData:["94","45"] // 1-milliy valuta(totalCapitals va nationalCurrency larning nisbatidan kelib chiqadi butun son ) ,2-xorijiy valyuta (totalCapitals va foreignCurrency larning nisbatidan kelib chiqadi butun son ) //
+            charterCapital:"369852", // ustav kapitali raqamli malumot mlrd so'm //
+            issuedShareCapital:"23589", // chiqarilgan ustav kapitali raqamli malumot mlrd so'm //
+            retainedProfits:"43589", // chiqarilgan ustav kapitali raqamli malumot mlrd so'm //
+            doughtnutCapitalData:["94","45","65"] // 1-ustav kapitali valuta(totalCapitals va charterCapital larning nisbatidan kelib chiqadi butun son ) ,2-issuedShareCapital valyuta (totalCapitals va issuedShareCapital) 3-retainedProfits (totalCapitals va retainedProfits) larning nisbatidan kelib chiqadi butun son ) //
         },
         bankProfitability:{    // BANK RENTABILLIGI KO'RSATKICHLARI //
             netProfit:"147364", // serverdan olinadi //
@@ -32,18 +33,18 @@ const testMainAPI = [
         bankIncomes:{        // BANK DAROMADLARI // 
             totalIncomes:"672348", // servedan olinadi  //
             totalIncomesPercentage:"98", // bugungi totalIncomes va bir kun oldingi totalIncomes larning nisbatidan kelib chiqadi  //
-            foreignCurrency:"26495", // xorijiy valyutada raqamli malumot mlrd so'm //
-            nationalCurrency:"34672",// milliy valyutada raqamli malumot mlrd so'm //
-            foreignCurrencyPercentage:"100",  // totalIncomes bilan foreignCurrency ning o'zaro nisbatidan kelib chiqadi //
-            nationalCurrencyPercentage:"115", // totalIncomes bilan nationalCurrency ning o'zaro nisbatidan kelib chiqadi //
+            percentageIncome:"26495", // foizli daromad raqamli malumot mlrd so'm //
+            nopercentageIncome:"34672",// foizsiz daromad raqamli malumot mlrd so'm //
+            percentageIncomePercentage:"100",  // totalIncomes bilan percentageIncome ning o'zaro nisbatidan kelib chiqadi //
+            nopercentageIncomePercentage:"115", // totalIncomes bilan nopercentageIncome ning o'zaro nisbatidan kelib chiqadi //
         },
         bankExpenses:{          // BANK XARAJATLARI // 
             totalExpenses:"159873", // serverdan olinadi  //
             totalExpensesPercentage:"56", // bugungu totalExpenses va bir kun oldingi totalExpenses larning nisbatidan kelib chiqadi //
-            foreignCurrency:"26485",  // xorijiy valyutada raqamli malumot mlrd so'm //
-            nationalCurrency:"96248", // milliy valyutada raqamli malumot mlrd so'm //
-            foreignCurrencyPercentage:"110", // totalExpenses bilan foreignCurrency ning o'zaro nisbatidan kelib chiqadi //
-            nationalCurrencyPercentage:"85", // totalExpenses bilan nationalCurrency ning o'zaro nisbatidan kelib chiqadi //
+            percentageCost:"26485",  // foizli xarajatlar raqamli malumot mlrd so'm //
+            nopercentageCost:"96248", // foizsiz xarajatlar raqamli malumot mlrd so'm //
+            percentageCostPercentage:"110", // totalExpenses bilan percentageCost ning o'zaro nisbatidan kelib chiqadi //
+            nopercentageCostPercentage:"85", // totalExpenses bilan nopercentageCost ning o'zaro nisbatidan kelib chiqadi //
         },
     },
     {
@@ -158,11 +159,11 @@ const testMainAPI = [
             pieChartDatas:["58","100"],
         },
         bankCapitals:{
-            totalCapitals:"9874123",
+            totalCapitals:"17601",
             totalCapitalsPercentage:"116",
             foreignCurrency:"4125896",
             nationalCurrency:"4126398",
-            doughtnutCapitalData:["75","100"],
+            doughtnutCapitalData:["75","100","80"],
         },
         bankProfitability:{
             netProfit:"245896",

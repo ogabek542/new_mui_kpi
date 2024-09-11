@@ -22,6 +22,7 @@ const HolePieChart = ({doughtnutData}) => {
           backgroundColor: [
             'rgba(2, 13, 158, 1)',    // Blue
             'rgba(54, 162, 235, 0.6)', // Purple
+            'rgba(76, 0, 153, 0.7)',
           ],
           borderColor: [
             'rgba(255, 255, 255, 1)',  // White border

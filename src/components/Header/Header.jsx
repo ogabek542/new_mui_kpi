@@ -24,13 +24,13 @@ i18n.use(initReactI18next).init({
     uz: { translation: translationUz },
     ru: { translation: translationRu },
   },
-  lng: localStorage.getItem("language") || "uz", // Set initial language based on localStorage or default to 'uz'
-  fallbackLng: "uz",
+  lng: localStorage.getItem("language") || "ru", // Set initial language based on localStorage or default to 'uz'
+  fallbackLng: "ru",
 });
 
 const Header = ({ value, onChange }) => {
   const { t, i18n } = useTranslation();
-  const [age, setAge] = React.useState(localStorage.getItem("language") || "uz"); // Initialize with persisted language or default
+  const [age, setAge] = React.useState(localStorage.getItem("language") || "ru"); // Initialize with persisted language or default
   const [selectedDate, setSelectedDate] = React.useState(dayjs());
 
   useEffect(() => {

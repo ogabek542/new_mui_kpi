@@ -70,7 +70,7 @@ const DoughnutChart = ({ chartData }) => {
       tooltip: {
         callbacks: {
           label: (tooltipItem) => {
-            return `${tooltipItem.label}: ${tooltipItem.raw}`;
+            return ` ${tooltipItem.raw}`;
           },
         },
       },

@@ -148,7 +148,7 @@ const insertSpaces = (text) => {
 };
 
 
-const handleLogin = async () => {
+const handleLogin = async () => { 
   // console.log("clicked ", username, password);
   localStorage.clear();
 
@@ -233,10 +233,11 @@ const handleDateChange = (newValue) => {
     setChooseData([]); // Clear the data if no match is found
   }
 };
-console.log(chooseData)
-useEffect(() => {
-
-},[])
+console.log(chooseData) 
+  // Use useEffect to call handleDateChange whenever selectNewData changes
+  useEffect(() => {
+    handleDateChange(selectNewData);
+  }, [selectNewData]); //
 
   return (
     <Container
@@ -834,19 +835,31 @@ useEffect(() => {
                           {/* top side light blue */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>УСТАВ КАПИТАЛИ</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:Colors.blue_light_table,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                               </Box>
                             </Box>
                         </Box>
+                        {/* middle sie */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>CHIQARILGAN USTAV KAPITALI</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:Colors.blue_nbu,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                              </Box>
+                            </Box>
+                        </Box> 
+                        {/* 30318 chiqarilgan ustav kapitali */}
                         {/* bottom side dark_blue national  */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                              {/* 31203 TAQSIMLANMAGAN FOYDA  */}
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}> TAQSIMLANMAGAN FOYDA</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                <Typography sx={{color:Colors.blue_nbu,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                                <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                               </Box>
                             </Box>
@@ -1025,7 +1038,7 @@ useEffect(() => {
                           {/* top side light blue */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ФОИЗЛИ ДАРОМАДЛАР</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.foreignCurrency)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
@@ -1035,7 +1048,7 @@ useEffect(() => {
                         {/* bottom side dark_blue national  */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ФОИЗСИЗ ДАРОМАДЛАР</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.nationalCurrency)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
@@ -1129,7 +1142,7 @@ useEffect(() => {
                           {/* top side light blue */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ФОИЗЛИ ХАРАЖАТЛАР</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.foreignCurrency)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
@@ -1139,7 +1152,7 @@ useEffect(() => {
                         {/* bottom side dark_blue national  */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ФОИЗСИЗ ХАРАЖАТЛАР</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.nationalCurrency)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>

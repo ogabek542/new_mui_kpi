@@ -108,7 +108,13 @@ const translationUz = {
     tenthText: "BANK RISKLARI VA UYQASH MASALALARI",
     eleventhText: "BANKNING MOLIYAVIY STABILLIGI",
     twelfthText: "BANKNING STRATEGIK REJALARI VA INVESTITSION FAOLIYATI",
-    thirteenth:"BANK XARAJATLARI"
+    thirteenth:"BANK XARAJATLARI",
+    // MAIN PAGE TEXTS // 
+    nationalCurrency:"MILLIY VALYUTADA ",
+    foreignCurrency:"XORIJIY VALYUTADA",
+    netProfitText:"SOF FOYDA",
+    including:"shu jumladan",
+    currencyText:"milliard so'm ek.",
 };
 
 export default translationUz;
