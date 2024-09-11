@@ -17,17 +17,17 @@ const StackedBarChart = ({foreignCurrencyPercentage,nationalCurrencyPercentage})
     const chartRef = useRef(null);
 
     const data = {
-        labels: ['Category 1'], // Labels for the x-axis
+        labels: [''], // Labels for the x-axis
         datasets: [
             {
-                label: 'Blue',
+                label: 'МИЛЛИЙ ВАЛЮТАДА',
                 data: [nationalCurrencyPercentage], // Data for Blue bars
                 backgroundColor: 'rgba(0, 77, 77, 0.7)', // Dark teal
                 borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 2,
             },
             {
-                label: 'Purple',
+                label: 'ХОРИЖИЙ ВАЛЮТАДА',
                 data: [foreignCurrencyPercentage], // Data for Purple bars
                 backgroundColor: 'rgba(76, 0, 153, 0.7)', // Dark violet
                 borderColor: 'rgba(255, 255, 255, 1)',
@@ -57,7 +57,7 @@ const StackedBarChart = ({foreignCurrencyPercentage,nationalCurrencyPercentage})
             },
             tooltip: {
                 callbacks: {
-                    label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`,
+                    label: (tooltipItem) => ` ${tooltipItem.dataset.label}: ${tooltipItem.raw}%`,
                 },
             },
         },

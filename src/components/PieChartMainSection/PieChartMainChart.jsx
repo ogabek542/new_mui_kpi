@@ -14,10 +14,10 @@ const PieChartMainChart = ({piechartData}) => {
   const chartRef = useRef(null);  // Ref for accessing chart instance
 
   const data = {
-    labels: ['Blue', 'Purple'],
+    labels: ['МИЛЛИЙ ВАЛЮТАДА', 'ХОРИЖИЙ ВАЛЮТАДА'],
     datasets: [
       {
-        label: 'My Pie Chart',
+        label: '',
         data: piechartData, // Example data
         backgroundColor: [
             'rgba(255, 99, 132, 0.8)',  // Light red color
@@ -42,7 +42,7 @@ const PieChartMainChart = ({piechartData}) => {
       tooltip: {
         callbacks: {
           label: (tooltipItem) => {
-            return `${tooltipItem.label}: ${tooltipItem.raw}`;
+            return ` ${tooltipItem.raw}%`;
           },
         },
       },

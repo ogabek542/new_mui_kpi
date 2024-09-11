@@ -1,51 +1,49 @@
 const testMainAPI = [
     {
         calenDate:"08.09.2024",
-        bankAssets:{
-            totalActive:"896321",
-            totalActivePercentage:"48",
-            foreignCurrency:"425896",
-            nationalCurrency:"357896",
-            foreignCurrencyPercentage:"95",
-            nationalCurrencyPercentage:"74",
-
+        bankAssets:{               // BANK AKTIVLARI //
+            totalActive:"896321", // serverdan olinadi //
+            totalActivePercentage:"48", // bir kun oldingi  bankAssets ning totalActive qiymatlari nisbatidan kelib chiqadigan qiymat foiz shaklida ko'rsatiladi butun son holida olinadi //
+            foreignCurrency:"425896",  // xorijiy valyutada raqamli malumot mlrd so'm //
+            nationalCurrency:"357896", // milliy valyutada raqamli malumot mlrd so'm //
+            foreignCurrencyPercentage:"95", // totalActive bilan foreignCurrency ning o'zaro nisbatidan kelib chiqadi //
+            nationalCurrencyPercentage:"74", // totalActive bilan nationalCurrency ning o'zaro nisbatidan kelib chiqadi //
         },
-        bankObligations:{
-            totalObligations:"14785",
-            totalObligationsPercentage:"105",
-            foreignCurrency:"54696",
-            nationalCurrency:"324896",
-            pieChartDatas:["52","99"] // 1-milliy valuta ,2-xorijiy valyuta //
+        bankObligations:{           // BANK MAJBURIYATLARI //
+            totalObligations:"14785", // totalObligations serverdan olinadi //
+            totalObligationsPercentage:"105", // totalObligations va bir kun oldingi totalObligations larning nisbatidan kelib chiqadigan foiz //
+            foreignCurrency:"54696", // xorijiy valyutada raqamli malumot mlrd so'm //
+            nationalCurrency:"324896", // milliy valyutada raqamli malumot mlrd so'm //
+            pieChartDatas:["52","99"] // 1-milliy valuta(totalObligations va nationalCurrency larning nisbatidan kelib chiqadi butun son ) ,2-xorijiy valyuta (totalObligations va foreignCurrency larning nisbatidan kelib chiqadi butun son ) //
         },
-        bankCapitals:{
-            totalCapitals:"25896",
-            totalCapitalsPercentage:"133",
-            foreignCurrency:"369852",
-            nationalCurrency:"23589",
-            foreignCurrencyPercentage:"45",
-            nationalCurrencyPercentage:"94",
+        bankCapitals:{           // BANK KAPITALI //
+            totalCapitals:"25896", // totalCapitals serverdan olinadi //
+            totalCapitalsPercentage:"133", // bugungi totalCapitals va bir kun oldingi totalCapitals lar nisbatidan kelib chiqadi //
+            foreignCurrency:"369852", // xorijiy valyutada raqamli malumot mlrd so'm //
+            nationalCurrency:"23589", // milliy valyutada raqamli malumot mlrd so'm //
+            doughtnutCapitalData:["94","45"] // 1-milliy valuta(totalCapitals va nationalCurrency larning nisbatidan kelib chiqadi butun son ) ,2-xorijiy valyuta (totalCapitals va foreignCurrency larning nisbatidan kelib chiqadi butun son ) //
         },
-        bankProfitability:{
-            netProfit:"147364",
-            totalRoa:"44",
-            totalRoe:"81",
-            totalCir:"69",
+        bankProfitability:{    // BANK RENTABILLIGI KO'RSATKICHLARI //
+            netProfit:"147364", // serverdan olinadi //
+            totalRoa:"44", // formuladan kelib chiqadi // 
+            totalRoe:"81", // formuladan kelib chiqadi //
+            totalCir:"69", // formuladan kelib chiqadi //
         },
-        bankIncomes:{
-            totalIncomes:"672348",
-            totalIncomesPercentage:"98",
-            foreignCurrency:"26495",
-            nationalCurrency:"34672",
-            foreignCurrencyPercentage:"100",
-            nationalCurrencyPercentage:"115",
+        bankIncomes:{        // BANK DAROMADLARI // 
+            totalIncomes:"672348", // servedan olinadi  //
+            totalIncomesPercentage:"98", // bugungi totalIncomes va bir kun oldingi totalIncomes larning nisbatidan kelib chiqadi  //
+            foreignCurrency:"26495", // xorijiy valyutada raqamli malumot mlrd so'm //
+            nationalCurrency:"34672",// milliy valyutada raqamli malumot mlrd so'm //
+            foreignCurrencyPercentage:"100",  // totalIncomes bilan foreignCurrency ning o'zaro nisbatidan kelib chiqadi //
+            nationalCurrencyPercentage:"115", // totalIncomes bilan nationalCurrency ning o'zaro nisbatidan kelib chiqadi //
         },
-        bankExpenses:{
-            totalExpenses:"159873",
-            totalExpensesPercentage:"56",
-            foreignCurrency:"26485",
-            nationalCurrency:"96248",
-            foreignCurrencyPercentage:"110",
-            nationalCurrencyPercentage:"85",
+        bankExpenses:{          // BANK XARAJATLARI // 
+            totalExpenses:"159873", // serverdan olinadi  //
+            totalExpensesPercentage:"56", // bugungu totalExpenses va bir kun oldingi totalExpenses larning nisbatidan kelib chiqadi //
+            foreignCurrency:"26485",  // xorijiy valyutada raqamli malumot mlrd so'm //
+            nationalCurrency:"96248", // milliy valyutada raqamli malumot mlrd so'm //
+            foreignCurrencyPercentage:"110", // totalExpenses bilan foreignCurrency ning o'zaro nisbatidan kelib chiqadi //
+            nationalCurrencyPercentage:"85", // totalExpenses bilan nationalCurrency ning o'zaro nisbatidan kelib chiqadi //
         },
     },
     {
@@ -63,16 +61,14 @@ const testMainAPI = [
             totalObligationsPercentage:"35",
             foreignCurrency:"689477",
             nationalCurrency:"362478",
-            foreignCurrencyPercentage:"89",
-            nationalCurrencyPercentage:"102",
+            pieChartDatas:["102","89"],
         },
         bankCapitals:{
             totalCapitals:"2649853",
             totalCapitalsPercentage:"113",
             foreignCurrency:"478632",
             nationalCurrency:"986423",
-            foreignCurrencyPercentage:"95",
-            nationalCurrencyPercentage:"84",
+            doughtnutCapitalData:["84","95"],
         },
         bankProfitability:{
             netProfit:"78562",
@@ -112,16 +108,14 @@ const testMainAPI = [
             totalObligationsPercentage:"125",
             foreignCurrency:"896324",
             nationalCurrency:"362478",
-            foreignCurrencyPercentage:"99",
-            nationalCurrencyPercentage:"95",
+            pieChartDatas:["95","99"],
         },
         bankCapitals:{
             totalCapitals:"589632",
             totalCapitalsPercentage:"13",
             foreignCurrency:"965418",
             nationalCurrency:"325489",
-            foreignCurrencyPercentage:"105",
-            nationalCurrencyPercentage:"108",
+            doughtnutCapitalData:["108","105"],
         },
         bankProfitability:{
             netProfit:"743598",
@@ -161,16 +155,14 @@ const testMainAPI = [
             totalObligationsPercentage:"75",
             foreignCurrency:"964128",
             nationalCurrency:"7859632",
-            foreignCurrencyPercentage:"100",
-            nationalCurrencyPercentage:"58",
+            pieChartDatas:["58","100"],
         },
         bankCapitals:{
             totalCapitals:"9874123",
             totalCapitalsPercentage:"116",
             foreignCurrency:"4125896",
             nationalCurrency:"4126398",
-            foreignCurrencyPercentage:"100",
-            nationalCurrencyPercentage:"75",
+            doughtnutCapitalData:["75","100"],
         },
         bankProfitability:{
             netProfit:"245896",

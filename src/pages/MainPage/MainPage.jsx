@@ -684,7 +684,7 @@ useEffect(() => {
                   <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                       {/* top side of div */}
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10"}}>
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
                           <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankObligations.totalObligations)}</Typography>
                             <Typography
                               sx={{
@@ -789,7 +789,7 @@ useEffect(() => {
                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                       {/* top side of div */}
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankCapitals.totalCapitals)}</Typography>
                             <Typography
                               sx={{
                                 color: Colors.gray,
@@ -817,7 +817,7 @@ useEffect(() => {
                             />
                             <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
                               <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                72 <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                {item.bankCapitals.totalCapitalsPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
                               </Typography>
                             </Box>
                         </Box>
@@ -826,7 +826,7 @@ useEffect(() => {
                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                       {/* pie chart section  */}
                       <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                          <HolePieChart/>  
+                          <HolePieChart doughtnutData={item.bankCapitals.doughtnutCapitalData}/>  
                       </Box>
                       {/* right side Texts */}
                       <Box sx={{}}>
@@ -900,7 +900,7 @@ useEffect(() => {
                           <Box sx={{display:"flex",flexDirection:"column",}}>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",textAlign:"left",height:"100%"}}>
                                 <Typography sx={{fontSize:"28px",color:Colors.gray,textTransform:"uppercase",fontWeight:"bold",textAlign:"left"}}>Sof Foyda:</Typography>
-                                <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,lineHeight:"1"}}>{insertSpaces(974212)}</Typography>
+                                <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,lineHeight:"1"}}>{insertSpaces(item.bankProfitability.netProfit)}</Typography>
                                 <Typography
                                   sx={{
                                     color: Colors.gray,
@@ -934,9 +934,9 @@ useEffect(() => {
                             </Box>
                               {/* right percentage */}
                               <Box sx={{display:"flex",flexDirection:"column"}}>
-                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>21<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
-                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>21<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
-                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>21<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalRoa}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalRoe}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalCir}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
                               </Box>
                             </Box>
                           </Box>
@@ -980,7 +980,7 @@ useEffect(() => {
                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                       {/* top side of div */}
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankIncomes.totalIncomes)}</Typography>
                             <Typography
                               sx={{
                                 color: Colors.gray,
@@ -1008,7 +1008,7 @@ useEffect(() => {
                             />
                             <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
                               <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                72 <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                {item.bankIncomes.totalIncomesPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
                               </Typography>
                             </Box>
                         </Box>
@@ -1017,7 +1017,7 @@ useEffect(() => {
                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                       {/* pie chart section  */}
                       <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                          <VerticalBarchartTwo/>  
+                          <VerticalBarchartTwo foreignCurrencyPercentage={item.bankIncomes.foreignCurrencyPercentage} nationalCurrencyPercentage={item.bankIncomes.nationalCurrencyPercentage} />  
                       </Box>
                       {/* right side Texts */}
                       <Box sx={{}}>
@@ -1027,7 +1027,7 @@ useEffect(() => {
                             <Box>
                               <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                                <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.foreignCurrency)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                               </Box>
                             </Box>
@@ -1037,7 +1037,7 @@ useEffect(() => {
                             <Box>
                               <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                                <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.nationalCurrency)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                               </Box>
                             </Box>
@@ -1084,7 +1084,7 @@ useEffect(() => {
                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                       {/* top side of div */}
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(97421)}</Typography>
+                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankExpenses.totalExpenses)}</Typography>
                             <Typography
                               sx={{
                                 color: Colors.gray,
@@ -1112,7 +1112,7 @@ useEffect(() => {
                             />
                             <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
                               <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                72 <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                {item.bankExpenses.totalExpensesPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
                               </Typography>
                             </Box>
                           </Box>
@@ -1121,7 +1121,7 @@ useEffect(() => {
                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                       {/* pie chart section  */}
                       <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                          <VerticalBarchartTwo/>  
+                      <VerticalBarchartTwo foreignCurrencyPercentage={item.bankExpenses.foreignCurrencyPercentage} nationalCurrencyPercentage={item.bankExpenses.nationalCurrencyPercentage} />  
                       </Box>
                       {/* right side Texts */}
                       <Box sx={{}}>
@@ -1131,7 +1131,7 @@ useEffect(() => {
                             <Box>
                               <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                <Typography sx={{color:Colors.blue_light_table,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(98256)}</Typography>
+                                <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.foreignCurrency)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                               </Box>
                             </Box>
@@ -1141,7 +1141,7 @@ useEffect(() => {
                             <Box>
                               <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                <Typography sx={{color:Colors.blue_nbu,fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(12785)}</Typography>
+                                <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.nationalCurrency)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
                               </Box>
                             </Box>

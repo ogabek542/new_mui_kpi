@@ -10,15 +10,15 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const HolePieChart = () => {
+const HolePieChart = ({doughtnutData}) => {
     const chartRef = useRef(null);
 
     const data = {
-      labels: ['Blue', 'Purple'],
+      labels: ['МИЛЛИЙ ВАЛЮТАДА', 'ХОРИЖИЙ ВАЛЮТАДА'],
       datasets: [
         {
-          label: 'My Doughnut Chart',
-          data: [25, 12], // Example data
+          label: '',
+          data: doughtnutData, // Example data
           backgroundColor: [
             'rgba(2, 13, 158, 1)',    // Blue
             'rgba(54, 162, 235, 0.6)', // Purple
@@ -42,7 +42,7 @@ const HolePieChart = () => {
         },
         tooltip: {
           callbacks: {
-            label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+            label: (tooltipItem) => ` ${tooltipItem.raw}%`,
           },
         },
       },

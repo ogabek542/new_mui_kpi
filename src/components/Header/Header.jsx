@@ -43,7 +43,7 @@ const Header = ({ value, onChange }) => {
     i18n.changeLanguage(newLanguage); // Change language using i18n
     localStorage.setItem("language", newLanguage); // Persist language in localStorage
   };
-
+  
   return (
     <Box
       sx={{
