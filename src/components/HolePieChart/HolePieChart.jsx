@@ -14,7 +14,7 @@ const HolePieChart = ({doughtnutData}) => {
     const chartRef = useRef(null);
 
     const data = {
-      labels: ['МИЛЛИЙ ВАЛЮТАДА', 'ХОРИЖИЙ ВАЛЮТАДА'],
+      labels: ['МИЛЛИЙ ВАЛЮТАДА', 'ХОРИЖИЙ ВАЛЮТАДА',"dwdw","fefe"],
       datasets: [
         {
           label: '',
@@ -23,8 +23,11 @@ const HolePieChart = ({doughtnutData}) => {
             'rgba(2, 13, 158, 1)',    // Blue
             'rgba(54, 162, 235, 0.6)', // Purple
             'rgba(76, 0, 153, 0.7)',
+            'rgba(144, 238, 144, 1)',
           ],
           borderColor: [
+            'rgba(255, 255, 255, 1)',  // White border
+            'rgba(255, 255, 255, 1)',  // White border
             'rgba(255, 255, 255, 1)',  // White border
             'rgba(255, 255, 255, 1)',  // White border
           ],

@@ -6400,3 +6400,235 @@ const handleDateChange = (newValue) => {
           
                       </Box>
                     ))}
+
+
+                    <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={6}
+                    lg={4}
+                    sx={{
+                      height: { xs: "400px", md: "500px" },
+                      width: "auto",
+                      padding: "5px",
+                    }}>
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "5px",
+                      padding: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "30px",
+                      bgcolor: Colors.gray_footer,
+                      position: "relative",
+                      "&:hover .hover-button": {
+                        opacity: 1, // Show button when hovering over the box
+                      },
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        textAlign: "start",
+                        fontWeight: "800",
+                        fontSize: { xs: "12px", md: "20px" },
+                      }}
+                    >
+                      {t("secontText")}
+                    </Typography>
+    
+                    <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+                          {/* top side of div */}
+                            <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                              <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankAssets.totalActive)}</Typography>
+                              <Typography
+                                sx={{
+                                  color: Colors.gray,
+                                  width: "auto",
+                                  lineHeight: "1.2",
+                                  fontStyle: "italic",
+                                  fontWeight: "500",
+                                  wordWrap: "break-word",
+                                }}
+                              >
+                                млрд.<br/> сўм.экв
+                              </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+                              {/* Icon with text */}
+                              {/* Box containing Icon and percentage */}
+                              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                                <MovingIcon
+                                  sx={{
+                                    fontSize: "32px",
+                                    transition: "transform 0.3s ease",
+                                    color: Colors.green_area,
+                                  }}
+                                />
+                                <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                                  <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                                    {item.bankAssets.totalActivePercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                  </Typography>
+                                </Box>
+                            </Box>
+                          </Box>
+                        </Box>
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+                          {/* pie chart section  */}
+                          <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+                              <StackedBartchart foreignCurrencyPercentage={item.bankAssets.foreignCurrencyPercentage} nationalCurrencyPercentage={item.bankAssets.nationalCurrencyPercentage}/>  
+                          </Box>
+                          {/* right side Texts */}
+                          <Box sx={{}}>
+                            <Typography sx={{fontSize:"12px",color:Colors.gray,fontStyle: "italic",textAlign:"left" }}>шу жумладан:</Typography>
+                              {/* top side light blue */}
+                            <Box sx={{display:"flex",flexDirection:"column"}}>
+                                <Box>
+                                  <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
+                                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                    <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.foreignCurrency)}</Typography>
+                                    <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                  </Box>
+                                </Box>
+                            </Box>
+                            {/* bottom side dark_blue national  */}
+                            <Box sx={{display:"flex",flexDirection:"column"}}>
+                                <Box>
+                                  <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
+                                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                    <Typography sx={{color:"rgba(0, 77, 77, 0.7)",fontSize:"40px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.nationalCurrency)}</Typography>
+                                    <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                  </Box>
+                                </Box>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+                      {/* Button at the bottom-right */}
+                      <Box
+                        className="hover-button"
+                        sx={{
+                          textAlign: "end",
+                          position: "absolute",
+                          bottom: "10px",
+                          right: "10px",
+                          opacity: 0, // Initially hidden
+                          transition: "opacity 300ms ease", // Smooth transition for hover
+                        }}
+                      >
+                        <Button
+                          variant="contained"
+                          size="medium"
+                          onClick={handleOpenAuthModal}
+                        >
+                          <Typography
+                            sx={{
+                              color: Colors.white,
+                              fontWeight: "800",
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            {t("infobutton")}
+                          </Typography>
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Grid>
+
+
+<StackedBartchart foreignCurrencyPercentage={item.bankAssets.foreignCurrencyPercentage} nationalCurrencyPercentage={item.bankAssets.nationalCurrencyPercentage}/>  
+
+<HolePieChart doughtnutData={item.bankCapitals.doughtnutCapitalData}/>  
+
+<PieChartMainChart piechartData={item.bankObligations.pieChartDatas}/> 
+
+
+
+     {/* top side light blue */}
+     <Box sx={{display:"flex",flexDirection:"column"}}>
+     <Box>
+       <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Kreditlar</Typography>
+       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+         <Typography sx={{color:"rgba(0, 129, 0, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.foreignCurrency)}</Typography>
+         <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+       </Box>
+     </Box>
+ </Box>
+ {/* bottom side dark_blue national  */}
+ <Box sx={{display:"flex",flexDirection:"column"}}>
+     <Box>
+       <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Depozitlar</Typography>
+       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+         <Typography sx={{color:"rgba(139, 0, 0, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.nationalCurrency)}</Typography>
+         <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+       </Box>
+     </Box>
+ </Box>
+ <Box sx={{display:"flex",flexDirection:"column"}}>
+     <Box>
+       <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Investitsiyalar</Typography>
+       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+         <Typography sx={{color:"rgba(139, 0, 0, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.nationalCurrency)}</Typography>
+         <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+       </Box>
+     </Box>
+ </Box>
+ <Box sx={{display:"flex",flexDirection:"column"}}>
+     <Box>
+       <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Boshqalar</Typography>
+       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+         <Typography sx={{color:"rgba(139, 0, 0, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.nationalCurrency)}</Typography>
+         <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+       </Box>
+     </Box>
+ </Box>
+
+<Typography sx={{fontSize:"12px",color:Colors.gray,fontStyle: "italic",textAlign:"left" }}>шу жумладан:</Typography>
+
+
+<Box sx={{display:"flex",flexDirection:"column"}}>
+<Box>
+  <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Kreditlar</Typography>
+  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+    <Typography sx={{color:"rgba(0, 129, 0, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.foreignCurrency)}</Typography>
+    <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+  </Box>
+</Box>
+{/* bottom side dark_blue national  */}
+<Box sx={{display:"flex",flexDirection:"column"}}>
+  <Box>
+    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Depozitlar</Typography>
+    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+      <Typography sx={{color:"rgba(139, 0, 0, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.nationalCurrency)}</Typography>
+      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+    </Box>
+  </Box>
+</Box>
+<Box sx={{display:"flex",flexDirection:"column"}}>
+  <Box>
+    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Investitsiyalar</Typography>
+    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+      <Typography sx={{color:"rgba(139, 0, 0, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.nationalCurrency)}</Typography>
+      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+    </Box>
+  </Box>
+</Box>
+<Box sx={{display:"flex",flexDirection:"column"}}>
+  <Box>
+    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Boshqalar</Typography>
+    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+      <Typography sx={{color:"rgba(139, 0, 0, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.nationalCurrency)}</Typography>
+      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+    </Box>
+  </Box>
+</Box>
+</Box>
+
+<Box sx={{}}>
+<Typography sx={{fontSize:"12px",color:Colors.gray,fontStyle: "italic",textAlign:"left" }}>шу жумладан:</Typography>
+      {/* top side light blue */}
+
+</Box>

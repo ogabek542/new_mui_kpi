@@ -107,7 +107,7 @@ const translationRu = {
         tenthText: "РИСКИ БАНКА И СООТВЕТСТВИЕ ТРЕБОВАНИЯМ",
         eleventhText: "ФИНАНСОВАЯ СТАБИЛЬНОСТЬ БАНКА",
         twelfthText: "СТРАТЕГИЧЕСКИЕ ПЛАНЫ И ИНВЕСТИЦИОННАЯ ДЕЯТЕЛЬНОСТЬ БАНКА",
-        thirteenth:"БАНКОВСКИЕ СБОРЫ",
+        thirteenth:"БАНКОВСКИЕ РАСХОДЫ",
          // MAIN PAGE TEXTS // 
         nationalCurrency:"В НАЦИОНАЛЬНОЙ ВАЛЮТЕ",
         foreignCurrency:"В ИНОСТРАННОЙ ВАЛЮТЕ",

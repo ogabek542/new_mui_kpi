@@ -51,7 +51,7 @@ const NetProfitSceen = ({ changeLang }) => {
 
   const setSelectedSecondMap = {
     // NBU//
-    1: [{ title: "НБУ" }],
+    1: [{ title: "Республика" }],
     // Тошкент шаҳри //
     2: [
       { title: "Головной офис" },
@@ -450,9 +450,7 @@ const shouldDisableDate = (date) => {
                     getOptionLabel={(option) => option.title}
                     value={selectedFirstOption}
                     onChange={(event, value) => setSelectedFirstOption(value)}
-                    isOptionEqualToValue={(option, value) =>
-                      option.title === value?.title
-                    }
+                    isOptionEqualToValue={(option, value) => option.title === value?.title}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -571,7 +569,7 @@ const shouldDisableDate = (date) => {
 
             { chooseData.flatMap((item, index) => (
               
-              item.sana?.filter(sanaItem => sanaItem.date === formattedDate).map((sanaItem, idx) => (
+              item.sana?.filter(sanaItem => sanaItem.date === formattedDate ).map((sanaItem, idx) => (
                 <Box key={`${index}-${idx}`} sx={{ width: "100%", height: "100%", marginTop: "5px" }}>
                   {/* {sanaItem.date} */}
                  {/* <=== first grid div ====> */}

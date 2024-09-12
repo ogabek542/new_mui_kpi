@@ -13,23 +13,23 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const VerticalBarchartTwo = ({nationalCurrencyPercentage,foreignCurrencyPercentage}) => {
+const VerticalBarchartTwo = ({percentageIncome,nopercentageIncome}) => {
     const chartRef = useRef(null);
 
     const data = {
         labels: [''], // Labels for the x-axis
         datasets: [
             {
-                label: 'ХОРИЖИЙ ВАЛЮТАДА',
-                data: [foreignCurrencyPercentage], // Data for Purple bars
+                label: 'ФОИЗЛИ ДАРОМАДЛАР',
+                data: [percentageIncome], // Data for Purple bars
                 backgroundColor: 'rgba(54, 162, 235, 0.6)', // Light purple color
                 borderColor: 'rgba(54, 100, 200, 0.6)', // Proportional darker purple border
                 borderWidth: 2,
                 borderRadius: { topLeft: 10, topRight: 10 }, // Add border-radius to top corners
             },
             {
-                label: 'МИЛЛИЙ ВАЛЮТАДА', // Changing label to reflect the green color
-                data: [nationalCurrencyPercentage], // Data for Green bars
+                label: 'ФОИЗСИЗ ДАРОМАДЛАР', // Changing label to reflect the green color
+                data: [nopercentageIncome], // Data for Green bars
                 backgroundColor: 'rgba(144, 238, 144, 1)', // Light green color
                 borderColor: 'rgba(60, 179, 113, 0.7)', // Darker green border
                 borderWidth: 3,

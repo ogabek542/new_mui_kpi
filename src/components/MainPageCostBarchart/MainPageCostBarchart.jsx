@@ -13,39 +13,28 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLine,}) => {
+const MainPageCostBarchart = ({percentageCost,nopercentageCost}) => {
     const chartRef = useRef(null);
 
     const data = {
         labels: [''], // Labels for the x-axis
         datasets: [
-         
-           
             {
-                label: 'TAQSIMLANMAGAN FOYDA',
-                data: [retainedEarningsLine], // Data for Blue bars
-                backgroundColor: 'rgba(0, 77, 77, 0.7)', // Dark teal
-                borderColor: 'rgba(255, 255, 255, 1)',
-                borderWidth: 2,
-            },
-            {
-                label: 'USTAV KAPITALI',
-                data: [charterCapitalLine], // Data for Purple bars
-                backgroundColor:  'rgba(54, 162, 235, 0.6)', // Dark violet
-                borderColor: 'rgba(255, 255, 255, 1)',
-                borderWidth: 2,
-                
-            },
-            {
-                label: 'ZAXIRA FONDI',
-                data: [reserveFundLine], // Data for Purple bars
-                backgroundColor: 'rgba(76, 0, 153, 0.7)', // Dark violet
-                borderColor: 'rgba(255, 255, 255, 1)',
+                label: 'ФОИЗЛИ ХАРАЖАТЛАР',
+                data: [percentageCost], // Data for Purple bars
+                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Light purple color
+                borderColor: 'rgba(54, 100, 200, 0.6)', // Proportional darker purple border
                 borderWidth: 2,
                 borderRadius: { topLeft: 10, topRight: 10 }, // Add border-radius to top corners
             },
-         
-        
+            {
+                label: 'ФОИЗСИЗ ХАРАЖАТЛАР', // Changing label to reflect the green color
+                data: [nopercentageCost], // Data for Green bars
+                backgroundColor: 'rgba(144, 238, 144, 1)', // Light green color
+                borderColor: 'rgba(60, 179, 113, 0.7)', // Darker green border
+                borderWidth: 3,
+                borderRadius: { topLeft: 10, topRight: 10 }, // Add border-radius to top corners
+            },
         ],
     };
 
@@ -54,11 +43,11 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
         maintainAspectRatio: false,
         scales: {
             x: {
-                stacked: true, // Enable stacking on the x-axis
+                stacked: false, // Enable stacking on the x-axis
                 display: false, // Hide x-axis
             },
             y: {
-                stacked: true, // Enable stacking on the y-axis
+                stacked: false, // Enable stacking on the y-axis
                 beginAtZero: true,
                 display: false, // Hide y-axis
             },
@@ -69,7 +58,7 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
             },
             tooltip: {
                 callbacks: {
-                    label: (tooltipItem) => ` ${tooltipItem.dataset.label}: ${tooltipItem.raw}%`,
+                    label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}%`,
                 },
             },
         },
@@ -82,7 +71,7 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
                         const meta = chartInstance.getDatasetMeta(datasetIndex);
                         meta.data.forEach((element, index) => {
                             const value = dataset.data[index];
-                            const padding = 4; // Padding around the text
+                            const padding = 6; // Padding around the text
                             const fontSize = 14;
                             const borderRadius = 5; // Border radius for the background
 
@@ -97,7 +86,7 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
                             const textHeight = fontSize;
 
                             const textX = element.x;
-                            const textY = element.y + (element.height / 2); // Position text inside the bar
+                            const textY = element.y + (element.height -25); // Position text inside the bar
 
                             // Draw rounded background for the text
                             ctx.fillStyle = 'white';
@@ -133,4 +122,5 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
     );
 };
 
-export default StackedBarChart;
+export default MainPageCostBarchart;
+

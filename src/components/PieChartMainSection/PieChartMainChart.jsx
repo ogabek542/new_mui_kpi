@@ -14,7 +14,7 @@ const PieChartMainChart = ({piechartData}) => {
   const chartRef = useRef(null);  // Ref for accessing chart instance
 
   const data = {
-    labels: ['МИЛЛИЙ ВАЛЮТАДА', 'ХОРИЖИЙ ВАЛЮТАДА'],
+    labels: ['KREDITLAR', 'DEPOZITLAR',"INVESTITSIYALAR","BOSHQALAR"],
     datasets: [
       {
         label: '',
@@ -22,6 +22,9 @@ const PieChartMainChart = ({piechartData}) => {
         backgroundColor: [
             'rgba(255, 99, 132, 0.8)',  // Light red color
             'rgba(144, 238, 144, 1)', // Light green color
+            'rgba(54, 162, 235, 0.6)', // Blue
+            'rgba(76, 0, 153, 0.7)', // Purple
+
         ],
         borderColor: [
             'rgba(255, 255, 255, 1)',   // Proportional darker red border
@@ -102,6 +105,7 @@ const PieChartMainChart = ({piechartData}) => {
       },
     },
   };
+  
 
   return (
     <Card sx={{ height: '100%', width: '100%', bgcolor: 'transparent', border: 'none' }} elevation={0}>
