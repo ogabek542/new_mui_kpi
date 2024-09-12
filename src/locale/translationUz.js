@@ -111,7 +111,7 @@ const translationUz = {
     thirteenth:"BANK XARAJATLARI",
     // MAIN PAGE TEXTS // 
     // first card texts //
-    currencyText:"milliard so'm ek.",
+    currencyText:"milliard so'm ekv.",
     partoneBillion:" mlrd.",
     parttwoBillion:" so'm.ekv.",
     assetsCredits:"KREDITLAR",

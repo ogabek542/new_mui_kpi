@@ -108,12 +108,34 @@ const translationRu = {
         eleventhText: "ФИНАНСОВАЯ СТАБИЛЬНОСТЬ БАНКА",
         twelfthText: "СТРАТЕГИЧЕСКИЕ ПЛАНЫ И ИНВЕСТИЦИОННАЯ ДЕЯТЕЛЬНОСТЬ БАНКА",
         thirteenth:"БАНКОВСКИЕ РАСХОДЫ",
-         // MAIN PAGE TEXTS // 
-        nationalCurrency:"В НАЦИОНАЛЬНОЙ ВАЛЮТЕ",
-        foreignCurrency:"В ИНОСТРАННОЙ ВАЛЮТЕ",
-        netProfitText:"ЧИСТАЯ ПРИБЫЛЬ",
-        including:"включая",
-        currencyText:"миллиард сум экв.",
+        // MAIN PAGE TEXTS // 
+        // first card texts //
+        currencyText:"milliard so'm ek.",
+        partoneBillion:"млрд.",
+        parttwoBillion:" сум экв.",
+        assetsCredits:"КРЕДИТЫ",
+        assetsBankDeposits:"ДЕПОЗИТЫ В БАНКЕ",
+        assetsInvestments:"ИНВЕСТИЦИИ",
+        othersText:"ДРУГИЕ",
+        // second card texts //
+        obligationCrediteLine:"КРЕДИТНЫЕ ЛИНИИ",
+        clientsDeposits:"ДЕПОЗИТЫ КЛИЕНТОВ",
+        bankDeposits:"БАНКОВСКИЕ ДЕПОЗИТЫ",
+        // othersText:"Boshqalar",
+        // bank rentabilligi //
+        // third card //
+        reserveFundText:"РЕЗЕРВНЫЙ ФОНД",
+        charterCapital:"УСТАВНЫЙ КАПИТАЛ",
+        retainedEarnings:"НЕРАСПРЕДЕЛЕННАЯ ПРИБЫЛЬ",
+        // fouth screen //
+        netProfitText:"ЧИСТАЯ...",
+        // fifth screen //
+        percentageIncomeText:"ПРОЦЕНТНЫЙ ДОХОД",
+        noPercenteageIncomeText:"БЕСПРОЦЕНТНЫЙ ДОХОД",
+        // sixth screen //
+        percentageCostText:"ПРОЦЕНТНЫЕ ЗАТРАТЫ",
+        nopercentageCostText:"БЕПРОСТЕРЕЖЕНИЯ",
+        
 
 }
 export default translationRu 

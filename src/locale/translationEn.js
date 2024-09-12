@@ -108,6 +108,34 @@ const translationEn = {
         eleventhText: "BANK FINANCIAL STABILITY",
         twelfthText: "BANK STRATEGIC PLANS AND INVESTMENT ACTIVITIES",
         thirteenth:"BANK CHARGES",
+        // MAIN PAGE TEXTS // 
+        // first card texts //
+        currencyText:"billion sum eqk.",
+        partoneBillion:" blln.",
+        parttwoBillion:" sum.eqv.",
+        assetsCredits:"CREDITS",
+        assetsBankDeposits:"DEPOSITS IN BANKS",
+        assetsInvestments:"INVESTMENTS",
+        othersText:"OTHERS",
+        // second card texts //
+        obligationCrediteLine:"CREDIT LINES",
+        clientsDeposits:"CUSTOMER DEPOSITS",
+        bankDeposits:"BANK DEPOSITS",
+        // othersText:"Boshqalar",
+        // bank rentabilligi //
+        // third card //
+        reserveFundText:"RESERVE FUND",
+        charterCapital:"CHARTER CAPITAL",
+        retainedEarnings:"RETAINED PROFITS",
+        // fouth screen //
+        netProfitText:"NET PROFIT",
+        // fifth screen //
+        percentageIncomeText:"INTEREST INCOME",
+        noPercenteageIncomeText:"INTEREST FREE INCOME",
+        // sixth screen //
+        percentageCostText:"INTEREST COSTS",
+        nopercentageCostText:"NON-INTEREST COSTS",
         };
+        
 
 export default translationEn;
