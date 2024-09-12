@@ -7,14 +7,23 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+// LANGUAGE SECTION //
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HolePieChart = ({doughtnutData}) => {
     const chartRef = useRef(null);
+    const {t} = useTranslation()
 
     const data = {
-      labels: ['МИЛЛИЙ ВАЛЮТАДА', 'ХОРИЖИЙ ВАЛЮТАДА',"dwdw","fefe"],
+      labels: [
+        t('obligationCrediteLine'), // Translate each label
+        t('clientsDeposits'),
+        t('bankDeposits'),
+        t('othersText')
+      ],
       datasets: [
         {
           label: '',

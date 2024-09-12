@@ -10,17 +10,20 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const VerticalBarchartTwo = ({percentageIncome,nopercentageIncome}) => {
     const chartRef = useRef(null);
+    const {t} = useTranslation();
 
     const data = {
         labels: [''], // Labels for the x-axis
         datasets: [
             {
-                label: 'ФОИЗЛИ ДАРОМАДЛАР',
+                label: t('percentageIncomeText'),
                 data: [percentageIncome], // Data for Purple bars
                 backgroundColor: 'rgba(54, 162, 235, 0.6)', // Light purple color
                 borderColor: 'rgba(54, 100, 200, 0.6)', // Proportional darker purple border
@@ -28,7 +31,7 @@ const VerticalBarchartTwo = ({percentageIncome,nopercentageIncome}) => {
                 borderRadius: { topLeft: 10, topRight: 10 }, // Add border-radius to top corners
             },
             {
-                label: 'ФОИЗСИЗ ДАРОМАДЛАР', // Changing label to reflect the green color
+                label: t('noPercenteageIncomeText'), // Changing label to reflect the green color
                 data: [nopercentageIncome], // Data for Green bars
                 backgroundColor: 'rgba(144, 238, 144, 1)', // Light green color
                 borderColor: 'rgba(60, 179, 113, 0.7)', // Darker green border

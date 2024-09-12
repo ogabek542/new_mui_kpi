@@ -110,11 +110,37 @@ const translationUz = {
     twelfthText: "BANKNING STRATEGIK REJALARI VA INVESTITSION FAOLIYATI",
     thirteenth:"BANK XARAJATLARI",
     // MAIN PAGE TEXTS // 
-    nationalCurrency:"MILLIY VALYUTADA ",
-    foreignCurrency:"XORIJIY VALYUTADA",
-    netProfitText:"SOF FOYDA",
-    including:"shu jumladan",
+    // first card texts //
     currencyText:"milliard so'm ek.",
+    partoneBillion:" mlrd.",
+    parttwoBillion:" so'm.ekv.",
+    assetsCredits:"KREDITLAR",
+    assetsBankDeposits:"BANKLARGA DEPOZITLAR",
+    assetsInvestments:"INVESTITSIYALAR",
+    othersText:"BOSHQALAR",
+    // second card texts //
+    obligationCrediteLine:"KREDIT LINIYALRI",
+    clientsDeposits:"MIJOZLAR DEPOZITLARI",
+    bankDeposits:"BANKLAR DEPOZITLARI",
+    // othersText:"Boshqalar",
+    // bank rentabilligi //
+    // third card //
+    reserveFundText:"ZAXIRA FONDI",
+    charterCapital:"USTAV KAPITALI",
+    retainedEarnings:"TAQSIMLANMAGAN FOYDA",
+    // fouth screen //
+    netProfitText:"SOF FOYDA",
+    // fifth screen //
+    percentageIncomeText:"FOIZLI DAROMADLAR",
+    noPercenteageIncomeText:"FOIZSIZ DAROMADLAR",
+    // sixth screen //
+    percentageCostText:"FOIZLI XARAJATLAR",
+    nopercentageCostText:"FOIZSIZ XARAJATLAR",
+
+
+
+
+
 };
 
 export default translationUz;

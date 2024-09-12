@@ -2,12 +2,12 @@ const testMainAPI = [
     {
         calenDate:"12.09.2024",
         bankAssets:{               // BANK AKTIVLARI //
-            totalActive:"896321", // serverdan olinadi //
-            totalActivePercentage:"48", // bir kun oldingi  bankAssets ning totalActive qiymatlari nisbatidan kelib chiqadigan qiymat foiz shaklida ko'rsatiladi butun son holida olinadi //
-            creditsActive:"59932858", // kredit qiymatlari mlrd sum //
-            depositActive:"48784915", // deposit qiymatlari mlrd sum //
-            investmentActive:"745826", // investitiya qiymati mlrd sum //
-            othersActive:"4589632", // boshqa qiymatlar yig'indi asosida keltirib chiqrailadi mlrd sum //
+            totalActive:"135799", // serverdan olinadi //
+            totalActivePercentage:"102", // bir kun oldingi  bankAssets ning totalActive qiymatlari nisbatidan kelib chiqadigan qiymat foiz shaklida ko'rsatiladi butun son holida olinadi //
+            creditsActive:"104626", // kredit qiymatlari mlrd sum //
+            depositActive:"17341", // deposit qiymatlari mlrd sum //
+            investmentActive:"10143", // investitiya qiymati mlrd sum //
+            othersActive:"4687", // boshqa qiymatlar yig'indi asosida keltirib chiqrailadi mlrd sum //
             pieChartDatas:["71","31","9","12"] 
             //1-qiymat kreditni nisbat foizi totalActive bilan nisbati creditsActive  //
             //2-qiymat depozitni nisbat foizi totalActive bilan nisbati depositActive  //
@@ -15,12 +15,12 @@ const testMainAPI = [
             //4-qiymat boshqalarni nisbat foizi totalActive bilan nisbati othersActive  //
         },
         bankObligations:{           // BANK MAJBURIYATLARI //
-            totalObligations:"147859", // totalObligations serverdan olinadi //
-            totalObligationsPercentage:"105", // totalObligations va bir kun oldingi totalObligations larning nisbatidan kelib chiqadigan foiz //
-            creditLines:"369852", // kredit liniyalri raqamli malumot mlrd so'm //
-            clientsDeposits:"288941", // mijozlar depozitlari raqamli malumot mlrd so'm //
-            banksDeposits:"288941", //banklar depozitlari raqamli malumot mlrd so'm //
-            othersObligations:"288941", // boshqa obligatsiya malumotlari yig'indi asosida chiqadi malumot mlrd so'm //
+            totalObligations:"117312", // totalObligations serverdan olinadi //
+            totalObligationsPercentage:"100", // totalObligations va bir kun oldingi totalObligations larning nisbatidan kelib chiqadigan foiz //
+            creditLines:"56494", // kredit liniyalri raqamli malumot mlrd so'm //
+            clientsDeposits:"35917", // mijozlar depozitlari raqamli malumot mlrd so'm //
+            banksDeposits:"10328", //banklar depozitlari raqamli malumot mlrd so'm //
+            othersObligations:"14573", // boshqa obligatsiya malumotlari yig'indi asosida chiqadi malumot mlrd so'm //
             doughtnutData:["48","31","9","12"] 
             // 1- kredit liniya malumotlari bilan creditLines, totalObligations ninig nisbati  //
             // 2- mijozlar depozitlari  malumotlari bilan clientsDeposits ,totalObligations ninig nisbati  //
@@ -28,11 +28,11 @@ const testMainAPI = [
             // 4- boshqa obligatsiya malumotlari bilan othersObligations ,totalObligations ninig nisbati  //
         },
         bankCapitals:{           // BANK KAPITALI //
-            totalCapitals:"258968", // totalCapitals serverdan olinadi //
-            totalCapitalsPercentage:"133", // bugungi totalCapitals va bir kun oldingi totalCapitals lar nisbatidan kelib chiqadi //
-            charterCapital:"369852", // ustav kapitali raqamli malumot mlrd so'm //
-            reserveFund:"235896", // zaxira fondi raqamli malumot mlrd so'm //
-            retainedEarnings:"435899", // taqsimlangan foyda raqamli malumot mlrd so'm //
+            totalCapitals:"18486", // totalCapitals serverdan olinadi //
+            totalCapitalsPercentage:"99", // bugungi totalCapitals va bir kun oldingi totalCapitals lar nisbatidan kelib chiqadi //
+            charterCapital:"16251", // ustav kapitali raqamli malumot mlrd so'm //
+            reserveFund:"689", // zaxira fondi raqamli malumot mlrd so'm //
+            retainedEarnings:"1546", // taqsimlangan foyda raqamli malumot mlrd so'm //
             charterCapitalLine:"88", // ustav kapitalini charterCapital, totalCapitals ga nisbati butun son foiz qiymat chiqarish uchun //
             reserveFundLine:"4",// zaxira fondi reserveFund , totalCapitals ga nisbati butun son foiz qiymat chiqarish uchun //
             retainedEarningsLine:"8",// taqsimlangan foyda retainedEarnings, totalCapitals ga nisbati butun son foiz qiymat chiqarish uchun //

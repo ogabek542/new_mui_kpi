@@ -14,8 +14,6 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { REQUESTS } from "../../api/requests.js";
 // backdrop //
 import Backdrop from "@mui/material/Backdrop";
@@ -26,7 +24,6 @@ import Modal from "@mui/material/Modal";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 // MODAL FOTO //
 import ModalImage from "../../assets/photo/NewQualityNbuModalFoto.jpg";
-import LeftSideSVG from "../../assets/svg/Left_SVG.svg";
 // IMAGE MAGNIFIER //
 import ReactImageMagnify from "react-image-magnify";
 import { useState} from 'react';
@@ -50,27 +47,7 @@ import MainPageCostBarchart from "../../components/MainPageCostBarchart/MainPage
 
 
 // IMPORT CARDS //
-import HorizontalBarChart from "../../components/HorizontalBarchart/HorizontalBarchart.jsx";
-import AreaChart from "../../components/AreaChart/AreaChart.jsx"
-import SteppedLineChart from "../../components/SteppedLineChart/SteppedLineChart.jsx";
-import DoughnutChart from "../../components/Doughnut/Doughnut.jsx";
-import PieChart from "../../components/PieChart/PieChart.jsx";
-import VerticalBarChart from "../../components/VerticalBarChart/VerticalBarChart.jsx";
-import SynchronizedLineCharts from "../../components/SynchronizedLineCharts/SynchronizedLineCharts.jsx";
-import RadialBarChartComponent from "../../components/RadialBarChart/RadialBarChart.jsx";
-import RadarChart from "../../components/RadarChart/RadarChart.jsx";
-import SparklineApp from "../../components/Sparkline/Sparkline.jsx";
-// 12 Screen Components //
-import LiabilitiesChart from "../../components/TwelfScreenComponents/ThirdScreenComponent/LiabilitiesChart.jsx";
-import LoanPortfolioChart from "../../components/TwelfScreenComponents/FouthScreenComponent/LoanPortfolioChart .jsx";
-import NetProfitChart from "../../components/TwelfScreenComponents/FifthScreenComponent/NetProfitChart.jsx";
-import DigitalIndicatorsChart from "../../components/TwelfScreenComponents/SixthScreenComponent/DigitalIndicatorsChart.jsx";
-import CurrencyIndicatorsChart from "../../components/TwelfScreenComponents/SeventhScreenComponent/CurrencyIndicatorsChart.jsx";
-import CapitalChart from "../../components/TwelfScreenComponents/EightScreenComponent/CapitalChart.jsx";
-import RevenuesExpensesChart from "../../components/TwelfScreenComponents/NinthScreenComponent/RevenuesExpensesChart.jsx";
-import RisksComplianceChart from "../../components/TwelfScreenComponents/TenthScreenComponent/RisksComplianceChart.jsx";
-import FinancialStabilityChart from "../../components/TwelfScreenComponents/EleventhScreenComponent/FinancialStabilityChart.jsx";
-import StrategicPlansChart from "../../components/TwelfScreenComponents/TwelfScreen/StrategicPlansChart.jsx";
+
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 // for holidays data //
@@ -561,7 +538,7 @@ console.log(chooseData)
                                 wordWrap: "break-word",
                               }}
                             >
-                              млрд.<br/> сўм.экв
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
                             </Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
@@ -594,38 +571,38 @@ console.log(chooseData)
                             {/* top side light blue */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Kreditlar</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsCredits")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(255, 99, 132, 0.8)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.creditsActive)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                           {/* bottom side dark_blue national  */}
                           <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
-                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>banklarga Depozitlar</Typography>
+                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsBankDeposits")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                   <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.depositActive)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
                           </Box>
                           <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
-                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Investitsiyalar</Typography>
+                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsInvestments")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                   <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.investmentActive)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
                           </Box>
                         
                           <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
-                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>Boshqalar</Typography>
+                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                   <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.othersActive)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
                           </Box>
@@ -682,7 +659,7 @@ console.log(chooseData)
                                 wordWrap: "break-word",
                               }}
                             >
-                              млрд.<br/> сўм.экв
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
                             </Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
@@ -715,38 +692,38 @@ console.log(chooseData)
                           {/* top side light blue */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>KREDIT LINIYALRI</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("obligationCrediteLine")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(2, 13, 158, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.creditLines)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
                         {/* bottom side dark_blue national  */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>MIJOZLAR DEPOZITLARI</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("clientsDeposits")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.clientsDeposits)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>BANKlar DEPOZITLARI</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("bankDeposits")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.banksDeposits)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>BOSHQALAR</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.othersObligations)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
@@ -803,7 +780,7 @@ console.log(chooseData)
                                 wordWrap: "break-word",
                               }}
                             >
-                              млрд.<br/> сўм.экв
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
                             </Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
@@ -837,20 +814,20 @@ console.log(chooseData)
                         {/* middle sie */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>ZAXIRA FONDI</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("reserveFundText")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.reserveFund)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box> 
                             {/* top side light blue */}
                             <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>USTAV KAPITALI</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("charterCapital")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.charterCapital)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
@@ -859,10 +836,10 @@ console.log(chooseData)
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
                               {/* 31203 TAQSIMLANMAGAN FOYDA  */}
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}> TAQSIMLANMAGAN FOYDA</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}> {t("retainedEarnings")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(0, 77, 77, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.retainedEarnings)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
@@ -915,7 +892,7 @@ console.log(chooseData)
                                 alignItems:"flex-end",
                               }}
                             >
-                              <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"42px"}}>SOF FOYDA</Typography>
+                              <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"42px",overflow: "hidden", whiteSpace: "nowrap",textOverflow:"ellipsis", display: 'block', maxWidth: '100%', }}>{t("netProfitText")}</Typography>
                               <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>ROA</Typography>
                               <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>ROE</Typography>
                               <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>CIR</Typography>
@@ -923,7 +900,7 @@ console.log(chooseData)
                               {/* right percentage */}
                               <Box sx={{display:"flex",flexDirection:"column",alignItems:"start",justifyContent:"center" }}>
                                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",textAlign:"left",height:"100%",gap:"10px"}}>
-                                    <Typography sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,fontSize:"42px"}}>{insertSpaces(item.bankProfitability.netProfit)}</Typography>
+                                    <Typography sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,fontSize:"40px"}}>{insertSpaces(item.bankProfitability.netProfit)}</Typography>
                                     <Typography
                                       sx={{
                                         color: Colors.gray,
@@ -935,7 +912,7 @@ console.log(chooseData)
                                         lineHeight:"1.2",
                                       }}
                                     >
-                                      млрд. <br/> сўм.экв
+                                      {t("partoneBillion")}<br/>{t("parttwoBillion")}
                                     </Typography>
                                   </Box>
 
@@ -995,12 +972,10 @@ console.log(chooseData)
                                 wordWrap: "break-word",
                               }}
                             >
-                              млрд.<br/> сўм.экв
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
                             </Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
-                          {/* Icon with text */}
-
                           {/* Box containing Icon and percentage */}
                           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                             <MovingIcon
@@ -1028,20 +1003,20 @@ console.log(chooseData)
                           {/* top side light blue */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ФОИЗЛИ ДАРОМАДЛАР</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageIncomeText")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.percentageIncome)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
                         {/* bottom side dark_blue national  */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ФОИЗСИЗ ДАРОМАДЛАР</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("noPercenteageIncomeText")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.nopercentageIncome)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
@@ -1098,7 +1073,7 @@ console.log(chooseData)
                                 wordWrap: "break-word",
                               }}
                             >
-                              млрд.<br/> сўм.экв
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
                             </Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
@@ -1131,20 +1106,20 @@ console.log(chooseData)
                           {/* top side light blue */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ФОИЗЛИ ХАРАЖАТЛАР</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageCostText")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.percentageCost)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>
                         {/* bottom side dark_blue national  */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1"}}>ФОИЗСИЗ ХАРАЖАТЛАР</Typography>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("nopercentageCostText")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.nopercentageCost)}</Typography>
-                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>млрд <br/> сўм.экв</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                               </Box>
                             </Box>
                         </Box>

@@ -7,14 +7,23 @@ import {
   Legend,
 } from 'chart.js';
 import { Box, Card, CardContent } from '@mui/material';
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChartMainChart = ({piechartData}) => {
   const chartRef = useRef(null);  // Ref for accessing chart instance
+  const {t} = useTranslation()
+
 
   const data = {
-    labels: ['KREDITLAR', 'DEPOZITLAR',"INVESTITSIYALAR","BOSHQALAR"],
+    labels: [
+      t('assetsCredits'), // Translate each label
+      t('assetsBankDeposits'),
+      t('assetsInvestments'),
+      t('othersText')
+    ],
     datasets: [
       {
         label: '',

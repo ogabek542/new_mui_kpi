@@ -2,34 +2,35 @@ import React, { useRef, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Box, Card, CardContent } from '@mui/material';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
 } from 'chart.js';
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLine,}) => {
     const chartRef = useRef(null);
+    const {t} = useTranslation();
 
     const data = {
         labels: [''], // Labels for the x-axis
         datasets: [
-         
-           
             {
-                label: 'TAQSIMLANMAGAN FOYDA',
+                label: t('retainedEarnings'),
                 data: [retainedEarningsLine], // Data for Blue bars
                 backgroundColor: 'rgba(0, 77, 77, 0.7)', // Dark teal
                 borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 2,
             },
             {
-                label: 'USTAV KAPITALI',
+                label: t('charterCapital'),
                 data: [charterCapitalLine], // Data for Purple bars
                 backgroundColor:  'rgba(54, 162, 235, 0.6)', // Dark violet
                 borderColor: 'rgba(255, 255, 255, 1)',
@@ -37,7 +38,7 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
                 
             },
             {
-                label: 'ZAXIRA FONDI',
+                label: t('retainedEarnings'),
                 data: [reserveFundLine], // Data for Purple bars
                 backgroundColor: 'rgba(76, 0, 153, 0.7)', // Dark violet
                 borderColor: 'rgba(255, 255, 255, 1)',
