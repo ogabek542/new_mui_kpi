@@ -128,7 +128,7 @@ const translationEn = {
         charterCapital:"CHARTER CAPITAL",
         retainedEarnings:"RETAINED PROFITS",
         // fouth screen //
-        netProfitText:"NET PROFIT",
+        netProfitText:"NET PRO.",
         // fifth screen //
         percentageIncomeText:"INTEREST INCOME",
         noPercenteageIncomeText:"INTEREST FREE INCOME",

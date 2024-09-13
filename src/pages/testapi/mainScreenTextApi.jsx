@@ -32,7 +32,7 @@ const testMainAPI = [
             totalCapitalsPercentage:"99", // bugungi totalCapitals va bir kun oldingi totalCapitals lar nisbatidan kelib chiqadi //
             charterCapital:"16251", // ustav kapitali raqamli malumot mlrd so'm //
             reserveFund:"689", // zaxira fondi raqamli malumot mlrd so'm //
-            retainedEarnings:"1546", // taqsimlangan foyda raqamli malumot mlrd so'm //
+            retainedEarnings:"1546", // taqsimlanmagan foyda raqamli malumot mlrd so'm //
             charterCapitalLine:"88", // ustav kapitalini charterCapital, totalCapitals ga nisbati butun son foiz qiymat chiqarish uchun //
             reserveFundLine:"4",// zaxira fondi reserveFund , totalCapitals ga nisbati butun son foiz qiymat chiqarish uchun //
             retainedEarningsLine:"8",// taqsimlangan foyda retainedEarnings, totalCapitals ga nisbati butun son foiz qiymat chiqarish uchun //
@@ -56,8 +56,8 @@ const testMainAPI = [
             totalExpensesPercentage:"56", // bugungu totalExpenses va bir kun oldingi totalExpenses larning nisbatidan kelib chiqadi //
             percentageCost:"264857",  // foizli xarajatlar raqamli malumot mlrd so'm //
             nopercentageCost:"962486", // foizsiz xarajatlar raqamli malumot mlrd so'm //
-            percentageCostPercentage:"110", // totalExpenses bilan percentageCost ning o'zaro nisbatidan kelib chiqadi //
-            nopercentageCostPercentage:"85", // totalExpenses bilan nopercentageCost ning o'zaro nisbatidan kelib chiqadi //
+            percentageCostPercentage:"5", // totalExpenses bilan percentageCost ning o'zaro nisbatidan kelib chiqadi //
+            nopercentageCostPercentage:"95", // totalExpenses bilan nopercentageCost ning o'zaro nisbatidan kelib chiqadi //
         },
     },
     {

@@ -6632,3 +6632,18 @@ const handleDateChange = (newValue) => {
       {/* top side light blue */}
 
 </Box>
+
+
+if (selectedData.length > 0) {
+  const filteredData = selectedData; // Assuming only one match per date
+
+  // Log or update any part of the filtered data as needed, for example:
+  console.log('Filtered Bank Assets:', filteredData.bankAssets);
+  console.log('Filtered Bank Profitability:', filteredData.bankProfitability);
+  
+  setChooseData(filteredData); // Update the state with the selected data
+} else {
+  console.log("No data found for the selected date");
+  setChooseData([]); // Clear the data if no match is found
+}
+};

@@ -38,7 +38,7 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
                 
             },
             {
-                label: t('retainedEarnings'),
+                label: t('reserveFundText'),
                 data: [reserveFundLine], // Data for Purple bars
                 backgroundColor: 'rgba(76, 0, 153, 0.7)', // Dark violet
                 borderColor: 'rgba(255, 255, 255, 1)',

@@ -11,10 +11,35 @@ const DatePickerComponent = ({
   locale,
   ...rest // Additional props if needed
 }) => {
+
+
+  const formatDateText = (value) => {
+    if (!value) return "";
+    const dateObj = new Date(value);
+    const monthNames = [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь",
+    ];
+    const day = dateObj.getDate();
+    const monthIndex = dateObj.getMonth();
+    const year = dateObj.getFullYear();
+
+    return `${day} ${monthNames[monthIndex]} ${year} ${"yil holatiga"}`;
+  };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
       <DatePicker
-        value={value}
+        value={formatDateText(value)}
         onChange={onChange}
         renderInput={(params) => (
           <TextField

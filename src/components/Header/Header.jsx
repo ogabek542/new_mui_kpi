@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, TextField, MenuItem, FormControl, Select } from "@mui/material";
+import { Box, Typography, TextField, MenuItem, FormControl, Select ,IconButton,Input,InputAdornment  } from "@mui/material";
 import backgroundImage from "../../assets/photo/newHomePageTopImage.jpg";
 import { Colors } from "../../styles/theme";
 import NBUlogo from "../../assets/svg/newForSVG.svg";
@@ -7,12 +7,14 @@ import { motion } from "framer-motion";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useEffect } from "react";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { useTranslation } from "react-i18next";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import translationEn from "../../locale/translationEn.js";
 import translationUz from "../../locale/translationUz.js";
@@ -31,7 +33,6 @@ i18n.use(initReactI18next).init({
 const Header = ({ value, onChange }) => {
   const { t, i18n } = useTranslation();
   const [age, setAge] = React.useState(localStorage.getItem("language") || "ru"); // Initialize with persisted language or default
-  const [selectedDate, setSelectedDate] = React.useState(dayjs());
 
   useEffect(() => {
     setAge(i18n.language);
@@ -43,6 +44,7 @@ const Header = ({ value, onChange }) => {
     i18n.changeLanguage(newLanguage); // Change language using i18n
     localStorage.setItem("language", newLanguage); // Persist language in localStorage
   };
+
   
   return (
     <Box
@@ -204,42 +206,13 @@ const Header = ({ value, onChange }) => {
               "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
           }}
         >
-          {/* <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={age}>
-            <DatePicker
-              value={selectedDate}
-              onChange={(newValue) => setSelectedDate(newValue)}
-              slotProps={{ textField: { size: "small" } }}
-              renderInput={(props) => (
-                <Box sx={{ width: { xs: "100px", sm: "100px", md: "200px" } }}>
-                  <TextField {...props} fullWidth />
-                </Box>
-              )}
-              sx={{
-                ".MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "white",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "white",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "white",
-                  },
-                  ".MuiInputAdornment-root .MuiIconButton-root": {
-                    color: Colors.blue_nbu,
-                  },
-                  ".MuiInputBase-input": {
-                    fontWeight: 700,
-                    fontSize: { xs: "12px", sm: "16px" },
-                  },
-                },
-              }}
-            />
-          </LocalizationProvider> */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
+                <DesktopDatePicker
                   value={value}
                   onChange={onChange}
+                  // components={{
+                  //   OpenPickerIcon:CalendarMonthIcon
+                  // }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -251,16 +224,21 @@ const Header = ({ value, onChange }) => {
                       }}
                     />
                   )}
+                  
+                  // renderInput={(props) => <TextField {...props}/>}
                   sx={{
                     ".MuiOutlinedInput-root": {
                       "& fieldset": {
                         borderColor: "white",
+                        display:"none",
+                        border:"none"
                       },
                       "&:hover fieldset": {
                         borderColor: "white",
                       },
                       "&.Mui-focused fieldset": {
                         borderColor: "white",
+                        border:"none"
                       },
                       ".MuiInputAdornment-root .MuiIconButton-root": {
                         color: Colors.blue_nbu,
@@ -273,7 +251,14 @@ const Header = ({ value, onChange }) => {
                   }}
                 />
               </LocalizationProvider>
+              
+              
+              
         </Box>
+
+
+
+  
       </Box>
     </Box>
   );

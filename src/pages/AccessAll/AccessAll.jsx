@@ -10,46 +10,34 @@ import { REQUESTS } from '../../api/requests';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 // icons //
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 // import screen components //
-import DoughnutChart from '../../components/Doughnut/Doughnut';
-import HorizontalBarChart from '../../components/HorizontalBarchart/HorizontalBarchart';
-import AreaChart from '../../components/AreaChart/AreaChart';
-import SteppedLineChart from '../../components/SteppedLineChart/SteppedLineChart';
-import PieChart from '../../components/PieChart/PieChart';
-import VerticalBarChart from '../../components/VerticalBarChart/VerticalBarChart';
-import SynchronizedLineCharts from "../../components/SynchronizedLineCharts/SynchronizedLineCharts.jsx";
-import RadialBarChartComponent from "../../components/RadialBarChart/RadialBarChart.jsx";
-import RadarChart from "../../components/RadarChart/RadarChart.jsx";
-import SparklineApp from "../../components/Sparkline/Sparkline.jsx";
-// 12 Screen Components //
-import LiabilitiesChart from "../../components/TwelfScreenComponents/ThirdScreenComponent/LiabilitiesChart.jsx";
-import LoanPortfolioChart from "../../components/TwelfScreenComponents/FouthScreenComponent/LoanPortfolioChart .jsx";
-import NetProfitChart from "../../components/TwelfScreenComponents/FifthScreenComponent/NetProfitChart.jsx";
-import DigitalIndicatorsChart from "../../components/TwelfScreenComponents/SixthScreenComponent/DigitalIndicatorsChart.jsx";
-import CurrencyIndicatorsChart from "../../components/TwelfScreenComponents/SeventhScreenComponent/CurrencyIndicatorsChart.jsx";
-import CapitalChart from "../../components/TwelfScreenComponents/EightScreenComponent/CapitalChart.jsx";
-import RevenuesExpensesChart from "../../components/TwelfScreenComponents/NinthScreenComponent/RevenuesExpensesChart.jsx";
-import RisksComplianceChart from "../../components/TwelfScreenComponents/TenthScreenComponent/RisksComplianceChart.jsx";
-import FinancialStabilityChart from "../../components/TwelfScreenComponents/EleventhScreenComponent/FinancialStabilityChart.jsx";
-import StrategicPlansChart from "../../components/TwelfScreenComponents/TwelfScreen/StrategicPlansChart.jsx";
 
 
+// <=== Import New Charts ====> //
+import PieChartMainChart from "../../components/PieChartMainSection/PieChartMainChart.jsx";
+import HolePieChart from "../../components/HolePieChart/HolePieChart.jsx";
+import StackedBartchart from "../../components/StackedBarchart/StackedBartchart.jsx";
+import VerticalBarchartTwo from "../../components/VerticalBarchartTwo/VerticalBarchartTwo.jsx";
+import MainPageCostBarchart from "../../components/MainPageCostBarchart/MainPageCostBarchart.jsx"
+
+import MovingIcon from "@mui/icons-material/Moving";
 
 
 // import image //
-import LeftSideSVG from "../../assets/svg/Left_SVG.svg";
 // recharts elements //
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  Tooltip,
-  LabelList,
-} from "recharts";
+
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
+
+import dayjs from "dayjs";
+import "dayjs/locale/ru";
+// for holidays data //
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
+
 
 const AccessAll = () => {
 
@@ -64,6 +52,9 @@ const AccessAll = () => {
   const [barlogin, setBarlogin] = React.useState(true);
   const [barpoint, setBarpoint] = React.useState("");
   const [openauthmodal,setOpenAuthModal] = React.useState(false);
+  const [chooseData, setChooseData] = useState([]);
+  const [selectNewData, setSelectNewData] = useState(dayjs());
+
 
   const {t} = useTranslation()
 
@@ -109,121 +100,78 @@ const AccessAll = () => {
       navigate("/kpidashboard");
   
     }
+
+    
+useEffect(() => { 
+  const fetchGraphicData = async () => {
+    try {
+      const respond =
+        await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
+      const calendarIndicators = respond.data;
+      console.log(respond);
+      console.log(calendarIndicators, "New Fetched data");
+      setChooseData(calendarIndicators);
+    } catch (error) {
+      console.error("Error fetching graphic indicator data:", error);
+      if (error.respond && error.respond.status === 404) {
+        console.error(
+          "Endpoint not found. Please check the URL or backend configuration."
+        );
+      } else {
+        console.error("An error occurred:", error.message);
+      }
+    }
+  };
+
+  fetchGraphicData();
+}, []);
   // barchart section code elements //
     // <----- BAR CHART DATA -----> //
-    const barchartdata = [
-      {
-        // name: "PageA",
-        plan: 4000,
-        fact: 2400,
-        amt: 2400,
-        percentage:"120"
-      },
-      {
-        // name: "PageB",
-        plan: 6000,
-        fact: 1398,
-        amt: 2210,
-      },
-      {
-        // name: "PageC",
-        plan: 2000,
-        fact: 1000,
-        amt: 2290,
-      },
-    ];
+ 
     
       // <=== BArchart styles ====> //
       // Styled components
 
-    const renderShape = ({ x, y, width, height }) => {
-      const translateX = width * (-0.25); // 10% of the width
-      const borderRadius = 5; // Radius for the top corners
-      return (
-        <>
-          <rect
-            className="shape_render"
-            x={x}
-            y={y}
-            width={`10%`}
-            height={height}
-            fill={Colors.blue_middle}
-            ry={borderRadius} // Apply radius to top-left and top-right corners
-            transform={`translate(${translateX}, 0)`}
-            
-          />
-        </>
-      )
-    };
-    const renderBlueShape = ({ x, y, width, height }) => {
-      const translateX = width * (0.4); // 10% of the width
-      return (
-        <>
-          <rect
-            className="shape_blue"
-            x={x}
-            y={y}
-            width={`10%`}
-            height={height}
-            fill={Colors.gray_back}
-            ry={5}
-            transform={`translate(${translateX}, 0)`}
-          />
-        </>
 
-      )
+    const insertSpaces = (text) => {
+      if (!text) return ""; // Handle empty or undefined text
+    
+      // Convert to string and ensure no more than 6 characters
+      const str = text.toString().slice(0, 6);
+    
+      // Add spaces every 3 digits
+      return str.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     };
-    const renderCustomizedLabel = (props) => {
-      const { x, y, width, value } = props;
-      const rectWidth = 65;
-      const rectHeight = 20;
-      const rectX = x + width / 2 - rectWidth / 2 + 22;
-      const rectY = y - rectHeight - 5; // Adjust y position as needed
-      const loginValue = value >= 100 ? true : false;
-      return (
-        <g className="custom-label" >
-          <rect
-            x={rectX}
-            y={rectY}
-            width={rectWidth}
-            height={rectHeight}
-            fill={Colors.transparent}
-          />
-          <foreignObject
-            x={rectX}
-            y={rectY}
-            width={rectWidth}
-            height={rectHeight}
-          >
-          <Box
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-              <Box
-                sx={{
-                  color: loginValue ? Colors.blue_middle : Colors.red,
-                  fontSize: '14px', // Adjust the size as needed
-                }}
-              >
-                <FontAwesomeIcon icon={faCircleCheck} />
-              </Box>
-            <Typography
-              component="span"
-              sx={{
-                color: loginValue ? Colors.blue_middle : Colors.red,
-                fontWeight: '500', // Adjust font weight as needed
-                fontSize: '16px', // Adjust font size as needed
-              }}
-            >
-              {value}%
-            </Typography>
-          </Box>
-          </foreignObject>
-        </g>
-      );
+
+    const handleDateChange = (newValue) => {
+      setSelectNewData(newValue);
+      const formattedDate = newValue ? dayjs(newValue).format("DD.MM.YYYY") : "";
+    
+      // Filter the data by selected date (calenDate) from testMainAPI
+      const selectedData = chooseData.filter((item) => item.calenDate === formattedDate);
+    
+      // If data is found for the selected date, update the state
+      if (selectedData.length > 0) {
+        const filteredData = selectedData; // Assuming only one match per date
+    
+        // Log or update any part of the filtered data as needed, for example:
+        console.log('Filtered Bank Assets:', filteredData.bankAssets);
+        console.log('Filtered Bank Profitability:', filteredData.bankProfitability);
+        
+        setChooseData(filteredData); // Update the state with the selected data
+      } else {
+        console.log("No data found for the selected date");
+        setChooseData([]); // Clear the data if no match is found
+      }
     };
+
+
+
+
+      useEffect(() => {
+        handleDateChange(selectNewData);
+      }, [selectNewData]); //
+    
 
   return (
     <Container    maxWidth={false} // This allows the container to expand beyond the default breakpoints
@@ -247,7 +195,7 @@ const AccessAll = () => {
         height: "100%", // Make sure the Box takes the full viewport height
       }}
     >
-      <Header changeLang={changeLang} />
+      <Header changeLang={changeLang} value={selectNewData} onChange={handleDateChange}/>
       <Box
           sx={{
             flexDirection: "column",
@@ -330,435 +278,658 @@ const AccessAll = () => {
               </Typography>
             </Button>
           </Box>
+          <Button onClick={() => navigate("/netprofit")}>kirish</Button>
           {/* <==== BARCHART CARDS SECTION ====> */}
-          <Grid
-            container
-            sx={{ margin: "auto" ,}}
-            direction="row"
-            width={"100%"}
-          >
-            {/* first div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-                
-              }}
-            >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"30px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("firstText")}</Typography>
-                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"73%"}} >
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px",}}>
+            {chooseData && chooseData.length > 0 ? (
+              chooseData.map((item, indx) => (
+              <Grid
+                container
+                sx={{ margin: "auto" ,}}
+                direction="row"
+                width={"100%"}
+                key={indx}
+              >
+              {/* first div */}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={6}
+                lg={4}
+                sx={{
+                  height: { xs: "400px", md: "500px" },
+                  width: "auto",
+                  padding: "5px",
+                }}>
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,  position: "relative",
+                  "&:hover .hover-button": {
+                    opacity: 1, // Show button when hovering over the box
+                  },}}>
+                  <Typography sx={{textAlign:"start",fontWeight:"bold",fontSize:{xs:"12px",md:"20px"},}}>{t("secontText")}</Typography>
+                  <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+                      {/* top side of div */}
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROA</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
+                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankAssets.totalActive)}</Typography>
+                            <Typography
+                              sx={{
+                                color: Colors.gray,
+                                width: "auto",
+                                lineHeight: "1.2",
+                                fontStyle: "italic",
+                                fontWeight: "500",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
+                            </Typography>
                         </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>ROE</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+                          {/* Icon with text */}
+
+                          {/* Box containing Icon and percentage */}
+                          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                            <MovingIcon
+                              sx={{
+                                fontSize: "32px",
+                                transition: "transform 0.3s ease",
+                                color: Colors.green_area,
+                              }}
+                            />
+                            <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                              <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                                {item.bankAssets.totalActivePercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                              </Typography>
+                            </Box>
                         </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",}}>CIR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>COR</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                    </Box>
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"10px"}}>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPL</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>NPS</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                          <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400",textTransform:"uppercase"}}>MAU</Typography>
-                          <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                        </Box>
-                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                        <Typography sx={{color:Colors.gray_text,fontSize:{xs:"22px",sm:"30px",md:"32px"},fontWeight:"400"}}>NIM</Typography>
-                        <Typography sx={{color:Colors.blue_middle,fontSize:{xs:"22px",sm:"34px",md:"36px"},fontWeight:"900"}}>21%</Typography>
-                      </Box>
-                    </Box>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={() => navigate("/netprofit")}>
-                      <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* second div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: "500px",
-                width:"auto",
-                padding:"5px",
-              }}
-            >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("secontText")}</Typography>
-                <Box sx={{display:"flex",flexDirection:"column",height:"81%"}} >
-                  {/* three text container Box */}
-                  <Box sx={{width:"100%",height:"auto",display:"flex",alignItems:"center",justifyContent:"space-around",}}>
-                    <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",}}>
-                      <Typography sx={{lineHeight:"1.2",fontSize:{xs:"8px",md:"10px"},fontWeight:"600"}}>ЖАМИ</Typography>
-                      <Typography component="span" sx={{lineHeight:"1.2",color:Colors.gray_text,fontSize:{xs:"8px",md:"10px"},fontWeight:"500",fontStyle:"italic"}}>млрд.сўм.экв</Typography>
-                    </Box>
-                    <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",textAlign:"center",width:"50px"}}>
-                      <Typography sx={{lineHeight:"1.2",fontSize:{xs:"8px",md:"10px"},fontWeight:"600"}}>ХОРИЖИЙ ВАЛЮТАДА</Typography>
-                      <Typography component="span" sx={{lineHeight:"1.2",color:Colors.gray_text,fontSize:{xs:"8px",md:"10px"},fontWeight:"500",fontStyle:"italic"}}>минг.долл</Typography>
-                    </Box>
-                    <Box sx={{display:"flex",flexDirection:"column",alignItems:"center"}}>
-                      <Typography sx={{lineHeight:"1.2",fontSize:{xs:"8px",md:"10px"},fontWeight:"600"}}>МИЛЛИЙ ВАЛЮТАДА</Typography>
-                      <Typography component="span" sx={{lineHeight:"1.2",color:Colors.gray_text,fontSize:{xs:"8px",md:"10px"},fontWeight:"500",fontStyle:"italic"}}>млрд.сўм.экв</Typography>
-                    </Box>
-                  </Box>
-                  {/* plan fakt top text  */}
-                  <Box sx={{height:"auto",width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                      <Box></Box>
-                    <Box sx={{display:"flex",flexDirection:"column",gap:"5px"}}>
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"5px"}}> 
-                        <Box sx={{width:"10px",height:"10px",borderRadius:"50%",bgcolor:Colors.gray_text}}></Box>
-                        <Typography sx={{color:Colors.gray_text,lineHeight:"1",fontWeight:"500",fontSize:"14px"}}>План</Typography>
-                      </Box>
-                      <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",gap:"5px"}}> 
-                        <Box sx={{width:"10px",height:"10px",borderRadius:"50%",bgcolor:Colors.blue_middle}}></Box>
-                        <Typography sx={{color:Colors.blue_middle,lineHeight:"1",fontWeight:"500",fontSize:"14px"}}>Факт</Typography>
                       </Box>
                     </Box>
-                  </Box>
-                  <Box sx={{height:"350px",width:"100%",position:"relative"}}>
-                  <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        width={500}
-                        height={400}
-                        data={barchartdata}
-                        margin={{
-                          top: 25,
-                        }}
-                        padding={{
-                          top: 45,
-                        }}
-                      >
-                        <Tooltip />
-                        <Bar
-                          dataKey="plan"
-                          fill={Colors.gray_text}
-                          minPointSize={5}
-                          shape={renderBlueShape}
-                        >
-                          <LabelList
-                            dataKey="percentage"
-                            content={renderCustomizedLabel}
-                          />
-                        </Bar>
-                        <Bar
-                          dataKey="fact"
-                          fill={Colors.blue_middle}
-                          minPointSize={10}
-                          shape={renderShape}
-                        />
-                      </BarChart>
-                  </ResponsiveContainer>
-                  <Box  sx={{ marginTop:"-35px",position:"absolute",display:"flex",alignItems:"center",justifyContent:"space-around",width:"100%" }}>
-                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                      <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
-                      <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
-                    </Box>
-                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                      <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
-                      <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
-                    </Box>
-                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                      <Typography sx={{border:"1px solid",borderColor:Colors.gray_text,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.gray_text,fontSize:{xs:"10px",md:"16px"}}}>4000</Typography>
-                      <Typography sx={{border:"1px solid",borderColor:Colors.blue_middle,padding:"4px",lineHeight:1 ,borderRadius:"5px",bgcolor:Colors.white,color:Colors.blue_middle,fontSize:{xs:"10px",md:"16px"}}}>2000</Typography>
-                    </Box>
-                  </Box>
-                    <Box sx={{position:"absolute",bottom:"30%",left:"26%"}}>
-                      <Box
-                          component="img"
-                          src={LeftSideSVG}
-                          sx={{ width: {xs:"35px",md:"45px"}, cursor: "pointer" }}
-                        />
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+                      {/* pie chart section  */}
+                      <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+                          <PieChartMainChart piechartData={item.bankAssets.pieChartDatas}/>  
+                      </Box>
+                      {/* right side Texts */}
+                      <Box sx={{}}>
+                            {/* top side light blue */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsCredits")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(255, 99, 132, 0.8)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.creditsActive)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                          {/* bottom side dark_blue national  */}
+                          <Box sx={{display:"flex",flexDirection:"column"}}>
+                              <Box>
+                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsBankDeposits")}</Typography>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                  <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.depositActive)}</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                </Box>
+                              </Box>
+                          </Box>
+                          <Box sx={{display:"flex",flexDirection:"column"}}>
+                              <Box>
+                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsInvestments")}</Typography>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                  <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.investmentActive)}</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                </Box>
+                              </Box>
+                          </Box>
+                        
+                          <Box sx={{display:"flex",flexDirection:"column"}}>
+                              <Box>
+                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.othersActive)}</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                </Box>
+                              </Box>
+                          </Box>
+                        </Box>
+                      </Box>
                     </Box>
                   </Box>
+                  {/* button styles */}
+                  <Box   className="hover-button"
+                    sx={{
+                      textAlign: "end",
+                      position: "absolute",
+                      bottom: "10px",
+                      right: "10px",
+                      opacity: 0, // Initially hidden
+                      transition: "opacity 300ms ease", // Smooth transition for hover
+                    }}>
+                    <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                    <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                    </Button>
+                  </Box>
                 </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
+              </Grid>
+              {/* second div */}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={6}
+                lg={4}
+                sx={{
+                  height: "500px",
+                  width:"auto",
+                  padding:"5px",
+                }}
+              >
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,  position: "relative",
+                  "&:hover .hover-button": {
+                    opacity: 1, // Show button when hovering over the box
+                  },}}>
+                  <Typography sx={{textAlign:"start",fontWeight:"bold",fontSize:{xs:"12px",md:"20px"},}}>{t("thirdText")}</Typography>
+                  <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+                      {/* top side of div */}
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankObligations.totalObligations)}</Typography>
+                            <Typography
+                              sx={{
+                                color: Colors.gray,
+                                width: "auto",
+                                lineHeight: "1.2",
+                                fontStyle: "italic",
+                                fontWeight: "500",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
+                            </Typography>
+                        </Box>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+                          {/* Icon with text */}
+
+                          {/* Box containing Icon and percentage */}
+                          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                            <MovingIcon
+                              sx={{
+                                fontSize: "32px",
+                                transition: "transform 0.3s ease",
+                                color: Colors.green_area,
+                              }}
+                            />
+                            <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                              <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                                {item.bankObligations.totalObligationsPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                              </Typography>
+                            </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+                      {/* pie chart section  */}
+                      <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+                          <HolePieChart doughtnutData={item.bankObligations.doughtnutData}/>  
+                      </Box>
+                      {/* right side Texts */}
+                      <Box sx={{}}>
+                          {/* top side light blue */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("obligationCrediteLine")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(2, 13, 158, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.creditLines)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                        {/* bottom side dark_blue national  */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("clientsDeposits")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.clientsDeposits)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("bankDeposits")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.banksDeposits)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.othersObligations)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  {/* button styles */}
+                  <Box   className="hover-button"
+                    sx={{
+                      textAlign: "end",
+                      position: "absolute",
+                      bottom: "10px",
+                      right: "10px",
+                      opacity: 0, // Initially hidden
+                      transition: "opacity 300ms ease", // Smooth transition for hover
+                    }}>
+                    <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                    <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
-            </Grid>
-            {/* third div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("thirdText")}</Typography>
-                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"77%",bgcolor:"transparent"}} >
-                  {/* <HorizontalBarChart /> */}
-                  <LiabilitiesChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* fourth div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("fourthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                    {/* <AreaChart/> */}
-                    <LoanPortfolioChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* fifth div*/}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
+              </Grid>
+              {/* third div */}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={6}
+                lg={4}
+                sx={{
+                  height: {xs:"400px",md:"500px"},
+                  width:"auto",
+                  padding:"5px",
+                  position: "relative",
+                  "&:hover .hover-button": {
+                    opacity: 1, // Show button when hovering over the box
+                  },
+                }}
+              >
                 <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("fifthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <NetProfitChart/>
+                  <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}> {t("eighthText")} </Typography>
+                  <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+                      {/* top side of div */}
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankCapitals.totalCapitals)}</Typography>
+                            <Typography
+                              sx={{
+                                color: Colors.gray,
+                                width: "auto",
+                                lineHeight: "1.2",
+                                fontStyle: "italic",
+                                fontWeight: "500",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
+                            </Typography>
+                        </Box>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+                          {/* Icon with text */}
+
+                          {/* Box containing Icon and percentage */}
+                          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                            <MovingIcon
+                              sx={{
+                                fontSize: "32px",
+                                transition: "transform 0.3s ease",
+                                color: Colors.green_area,
+                              }}
+                            />
+                            <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                              <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                                {item.bankCapitals.totalCapitalsPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                              </Typography>
+                            </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+                      {/* pie chart section  */}
+                      <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+                          <StackedBartchart  reserveFundLine={item.bankCapitals.reserveFundLine} retainedEarningsLine={item.bankCapitals.retainedEarningsLine} charterCapitalLine={item.bankCapitals.charterCapitalLine} />  
+                      </Box>
+                      {/* right side Texts */}
+                      <Box sx={{}}>
+                      
+                        {/* middle sie */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("reserveFundText")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.reserveFund)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box> 
+                            {/* top side light blue */}
+                            <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("charterCapital")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.charterCapital)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                        {/* 30318 chiqarilgan ustav kapitali */}
+                        {/* bottom side dark_blue national  */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              {/* 31203 TAQSIMLANMAGAN FOYDA  */}
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}> {t("retainedEarnings")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(0, 77, 77, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.retainedEarnings)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  {/* button section  */}
+                  <Box   className="hover-button"
+                    sx={{
+                      textAlign: "end",
+                      position: "absolute",
+                      bottom: "15px",
+                      right: "15px",
+                      opacity: 0, // Initially hidden
+                      transition: "opacity 300ms ease", // Smooth transition for hover
+                    }}>
+                    <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                    <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                    </Button>
+                  </Box>
                 </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
+              </Grid> 
+              {/* fourth div */}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={6}
+                lg={4}
+                sx={{
+                  height: {xs:"400px",md:"500px"},
+                  width:"auto",
+                  padding:"5px",
+                  position: "relative",
+                  "&:hover .hover-button": {
+                    opacity: 1, // Show button when hovering over the box
+                  },
+                }}
+              >
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",bgcolor:Colors.gray_footer,}}>
+                  <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>  {t("firstText")}</Typography>
+                            {/* bottom side */}
+                          <Box sx={{display:"flex",flexDirection:"column",height:"100%",justifyContent:"center",paddingBottom:"25px"}}>
+                            <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",height:"100%",width:"100%",gap:"20px"}}> 
+                            {/* left side roa texts */}
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems:"flex-end",
+                              }}
+                            >
+                              <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"42px",overflow: "hidden", whiteSpace: "nowrap",textOverflow:"ellipsis", display: 'block', maxWidth: '100%', }}>{t("netProfitText")}</Typography>
+                              <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>ROA</Typography>
+                              <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>ROE</Typography>
+                              <Typography sx={{color:Colors.gray,fontWeight:"normal",fontSize:"48px"}}>CIR</Typography>
+                            </Box>
+                              {/* right percentage */}
+                              <Box sx={{display:"flex",flexDirection:"column",alignItems:"start",justifyContent:"center" }}>
+                                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",textAlign:"left",height:"100%",gap:"10px"}}>
+                                    <Typography sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,fontSize:"40px"}}>{insertSpaces(item.bankProfitability.netProfit)}</Typography>
+                                    <Typography
+                                      sx={{
+                                        color: Colors.gray,
+                                        width: "auto",
+                                        fontStyle: "italic",
+                                        fontWeight: "500",
+                                        wordWrap: "break-word",
+                                        fontSize:"16px",
+                                        lineHeight:"1.2",
+                                      }}
+                                    >
+                                      {t("partoneBillion")}<br/>{t("parttwoBillion")}
+                                    </Typography>
+                                  </Box>
+
+                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalRoa}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalRoe}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                                <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalCir}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                              </Box>
+                            </Box>
+                          </Box>
+                    {/* button section */}
+                  <Box   className="hover-button"
+                    sx={{
+                      textAlign: "end",
+                      position: "absolute",
+                      bottom: "15px",
+                      right: "15px",
+                      opacity: 0, // Initially hidden
+                      transition: "opacity 300ms ease", // Smooth transition for hover
+                    }}>
+                    <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                    <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
+              </Grid>
+              {/* fifth div*/}
+                <Grid
+                item
+                xs={12}
+                sm={12}
+                md={6}
+                lg={4}
+                sx={{
+                  height: {xs:"400px",md:"500px"},
+                  width:"auto",
+                  padding:"5px",
+                  position:"relative",
+                  "&:hover .hovers-button": {
+                    opacity: 1, // Show button when hovering over the box
+                  },
+                }}
+              >
+                  <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
+                  <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>{t("ninthText")}</Typography>
+                  <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+                      {/* top side of div */}
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankIncomes.totalIncomes)}</Typography>
+                            <Typography
+                              sx={{
+                                color: Colors.gray,
+                                width: "auto",
+                                lineHeight: "1.2",
+                                fontStyle: "italic",
+                                fontWeight: "500",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
+                            </Typography>
+                        </Box>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+                          {/* Box containing Icon and percentage */}
+                          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                            <MovingIcon
+                              sx={{
+                                fontSize: "32px",
+                                transition: "transform 0.3s ease",
+                                color: Colors.green_area,
+                              }}
+                            />
+                            <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                              <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                                {item.bankIncomes.totalIncomesPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                              </Typography>
+                            </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+                      {/* pie chart section  */}
+                      <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+                          <VerticalBarchartTwo percentageIncome={item.bankIncomes.percentageIncomePercentage} nopercentageIncome={item.bankIncomes.nopercentageIncomePercentage} />  
+                      </Box>
+                      {/* right side Texts */}
+                      <Box sx={{}}>
+                          {/* top side light blue */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageIncomeText")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.percentageIncome)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                        {/* bottom side dark_blue national  */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("noPercenteageIncomeText")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.nopercentageIncome)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                      {/* button section */}
+                  <Box    className="hovers-button"
+                    sx={{
+                      textAlign: "end",
+                      position: "absolute",
+                      bottom: "15px",
+                      right: "15px",
+                      opacity: 0, // Initially hidden
+                      transition: "opacity 300ms ease", // Smooth transition for hover
+                    }}>
+                    <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                    <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                    </Button>
+                  </Box>
+                </Box>
+              </Grid>
+              {/* sixth div */}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={6}
+                lg={4}
+                sx={{
+                  height: {xs:"400px",md:"500px"},
+                  width:"auto",
+                  padding:"5px",
+                  position: "relative",
+                  "&:hover .hover-button": {
+                    opacity: 1, // Show button when hovering over the box
+                  },
+                }}
+              >
+                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,position:"relative"}}>
+                  <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>{t("thirteenth")}</Typography>
+                  <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+                      {/* top side of div */}
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                          <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankExpenses.totalExpenses)}</Typography>
+                            <Typography
+                              sx={{
+                                color: Colors.gray,
+                                width: "auto",
+                                lineHeight: "1.2",
+                                fontStyle: "italic",
+                                fontWeight: "500",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {t("partoneBillion")}<br/>{t("parttwoBillion")}
+                            </Typography>
+                        </Box>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+                          {/* Icon with text */}
+
+                          {/* Box containing Icon and percentage */}
+                          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                            <MovingIcon
+                              sx={{
+                                fontSize: "32px",
+                                transition: "transform 0.3s ease",
+                                color: Colors.green_area,
+                              }}
+                            />
+                            <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                              <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                                {item.bankExpenses.totalExpensesPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                              </Typography>
+                            </Box>
+                          </Box>
+                      </Box>
+                    </Box>
+                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+                      {/* pie chart section  */}
+                      <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+                      <MainPageCostBarchart percentageCost={item.bankExpenses.percentageCostPercentage} nopercentageCost={item.bankExpenses.nopercentageCostPercentage} />  
+                      </Box>
+                      {/* right side Texts */}
+                      <Box sx={{}}>
+                          {/* top side light blue */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageCostText")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.percentageCost)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                        {/* bottom side dark_blue national  */}
+                        <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box>
+                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("nopercentageCostText")}</Typography>
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.nopercentageCost)}</Typography>
+                                <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              </Box>
+                            </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  {/* button section */}
+                  <Box   className="hover-button"
+                    sx={{
+                      textAlign: "end",
+                      position: "absolute",
+                      bottom: "10px",
+                      right: "10px",
+                      opacity: 0, // Initially hidden
+                      transition: "opacity 300ms ease", // Smooth transition for hover
+                    }}>
+                    <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                    <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                    </Button>
+                  </Box>
+                </Box>
+              </Grid>
             </Grid>
-            {/* sixth div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-              }}
-            >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("sixthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <DigitalIndicatorsChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* seventh div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-              }}
-            >
-                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("seventhText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <CurrencyIndicatorsChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* eight div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
-            <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eighthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <CapitalChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* nineth div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
-                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("ninthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <RevenuesExpensesChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* tenth div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px"
-              }}
-            >
-                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("tenthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <RisksComplianceChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* eleventh div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-              }}
-            >
-                <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("eleventhText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <FinancialStabilityChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-            {/* twelveth div */}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              sx={{
-                height: {xs:"400px",md:"500px"},
-                width:"auto",
-                padding:"5px",
-              }}
-            >
-              <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"20px",bgcolor:Colors.gray_footer,}}>
-                <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"16px"},}}>{t("twelfthText")}</Typography>
-                <Box sx={{display:"flex",height:"77%"}} >
-                  <StrategicPlansChart/>
-                </Box>
-                <Box sx={{textAlign:"end"}}>
-                  <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                  <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+          ))
+        ) : (
+          <Typography>No data available</Typography> // Handle case where chooseData is empty or not an array
+        )}
                   {/* <=== AUTHORISATION MODAL ===>*/}
             <Modal
                 open={openauthmodal}

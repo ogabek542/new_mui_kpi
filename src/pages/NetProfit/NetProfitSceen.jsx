@@ -226,15 +226,15 @@ const NetProfitSceen = ({ changeLang }) => {
   useEffect(() => { 
     const fetchGraphicData = async () => {
       try {
-        const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
-        const graphicIndicators = response.data;
+        const respond = await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
+        const graphicIndicators = respond.data;
         // const graphicIndicators = response?.data?.[0]?.sana || [];
-        console.log(response,"error");
+        console.log(respond,"error");
         console.log(graphicIndicators, "Fetched data ");
         setChooseData(graphicIndicators);
       } catch (error) {
         console.error("Error fetching graphic indicator data:", error);
-        if (error.response && error.response.status === 404) {
+        if (error.respond && error.respond.status === 404) {
           console.error(
             "Endpoint not found. Please check the URL or backend configuration."
           );

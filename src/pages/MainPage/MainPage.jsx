@@ -164,29 +164,28 @@ const handleLogin = async () => {
   }
 };
 
-// useEffect(() => { 
-//   const fetchGraphicData = async () => {
-//     try {
-//       const response =
-//         await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
-//       const calendarIndicators = response.data;
-//       console.log(response);
-//       console.log(calendarIndicators, "Fetched data");
-//       setChooseData(calendarIndicators);
-//     } catch (error) {
-//       console.error("Error fetching graphic indicator data:", error);
-//       if (error.response && error.response.status === 404) {
-//         console.error(
-//           "Endpoint not found. Please check the URL or backend configuration."
-//         );
-//       } else {
-//         console.error("An error occurred:", error.message);
-//       }
-//     }
-//   };
+useEffect(() => { 
+  const fetchGraphicData = async () => {
+    try {
+      const respond = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
+      const calendarIndicators = respond.data;
+      console.log(respond);
+      console.log(calendarIndicators, "New Fetched data");
+      setChooseData(calendarIndicators);
+    } catch (error) {
+      console.error("Error fetching graphic indicator data:", error);
+      if (error.respond && error.respond.status === 404) {
+        console.error(
+          "Endpoint not found. Please check the URL or backend configuration."
+        );
+      } else {
+        console.error("An error occurred:", error.message);
+      }
+    }
+  };
 
-//   fetchGraphicData();
-// }, []);
+  fetchGraphicData();
+}, []);
 
 // use effect data picekr section //
 
@@ -195,7 +194,7 @@ const handleDateChange = (newValue) => {
   const formattedDate = newValue ? dayjs(newValue).format("DD.MM.YYYY") : "";
 
   // Filter the data by selected date (calenDate) from testMainAPI
-  const selectedData = MainTestApi.filter((item) => item.calenDate === formattedDate);
+  const selectedData = chooseData.filter((item) => item.calenDate === formattedDate);
 
   // If data is found for the selected date, update the state
   if (selectedData.length > 0) {
@@ -211,11 +210,10 @@ const handleDateChange = (newValue) => {
     setChooseData([]); // Clear the data if no match is found
   }
 };
-console.log(chooseData) 
   // Use useEffect to call handleDateChange whenever selectNewData changes
-  useEffect(() => {
-    handleDateChange(selectNewData);
-  }, [selectNewData]); //
+  // useEffect(() => {
+  //   handleDateChange(selectNewData);
+  // }, [selectNewData]); 
 
   return (
     <Container
@@ -497,7 +495,7 @@ console.log(chooseData)
             </Box>
           </Box>
           {/* <==== BARCHART CARDS SECTION ====> */}
-          {Array.isArray(chooseData) && chooseData.length > 0 ? (
+          {chooseData && chooseData.length > 0 ? (
               chooseData.map((item, indx) => (
               <Grid
                 container
@@ -861,7 +859,7 @@ console.log(chooseData)
                     </Button>
                   </Box>
                 </Box>
-              </Grid>
+              </Grid> 
               {/* fourth div */}
               <Grid
                 item
@@ -1003,7 +1001,7 @@ console.log(chooseData)
                           {/* top side light blue */}
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <Box>
-                              <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageIncomeText")}</Typography>
+                              <Typography  sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageIncomeText")}</Typography>
                               <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
                                 <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.percentageIncome)}</Typography>
                                 <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
