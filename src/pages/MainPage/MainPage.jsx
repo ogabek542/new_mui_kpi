@@ -43,7 +43,8 @@ import PieChartMainChart from "../../components/PieChartMainSection/PieChartMain
 import HolePieChart from "../../components/HolePieChart/HolePieChart.jsx";
 import StackedBartchart from "../../components/StackedBarchart/StackedBartchart.jsx";
 import VerticalBarchartTwo from "../../components/VerticalBarchartTwo/VerticalBarchartTwo.jsx";
-import MainPageCostBarchart from "../../components/MainPageCostBarchart/MainPageCostBarchart.jsx"
+import MainPageCostBarchart from "../../components/MainPageCostBarchart/MainPageCostBarchart.jsx";
+import { useLocation } from 'react-router-dom';
 // modal styles //
 
 
@@ -68,7 +69,7 @@ import { useTranslation } from "react-i18next";
 
 const MainPage = () => {
 
-
+  const location = useLocation();
   // change language function //
   const changeLang = (value) => {
     i18n.changeLanguage(value)
@@ -79,6 +80,7 @@ const MainPage = () => {
   const [openmodal, setOpenModal] = React.useState(false);
   const [loginError, setLoginError] = React.useState("");
   const [openauthmodal,setOpenAuthModal] = React.useState(false);
+  const [openacceptmodal,setAcceptModal] = React.useState(false);
   // PASSWORD SHOW HIDE FUNCTION //
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -90,6 +92,10 @@ const MainPage = () => {
   // AUTH  MODAL FUNCTION //
   const handleOpenAuthModal = () =>  setOpenAuthModal(true);
   const handleCloseAuthModal = () => setOpenAuthModal(false);
+  // This modal open After Authentification //
+  const handleOpenAcceptModal = () =>  setAcceptModal(true);
+  const handleCloseAcceptModal = () => setAcceptModal(false);
+  const handleNavigateFirstScreen = () => navigate("/netprofit")
     
   
 
@@ -221,6 +227,14 @@ const handleDateChange = (newValue) => {
 
   const formattedDate = dayjs(selectNewData).format("DD.MM.YYYY");
 
+  // Function to get the information passed from NewLoginScreen
+  const getLoginInfo = () => {
+    const { acceptNavigate } = location.state || { acceptNavigate: false }; // Default to false if no state is passed
+    return acceptNavigate;
+  };
+
+  const acceptNavigate = getLoginInfo(); // Call the function to retrieve the value
+
   return (
     <Container
     maxWidth={false} // This allows the container to expand beyond the default breakpoints
@@ -247,6 +261,7 @@ const handleDateChange = (newValue) => {
       >
 
             <Header changeLang={changeLang} value={selectNewData} onChange={handleDateChange}/>
+      
             <Outlet/>
           {/* <==== BARCHART CARDS SECTION ====> */}
 
@@ -261,185 +276,125 @@ const handleDateChange = (newValue) => {
               key={`${index}-${item.calenDate}`} // Use correct key prop
             >
                 {/* First div */}
-                <Grid
-                  item
-                  xs={12}
-                  sm={12}
-                  md={6}
-                  lg={4}
-                  sx={{
-                    height: { xs: "400px", md: "500px" },
-                    width: "auto",
-                    padding: "5px",
-                  }}
-                >
-                  <Box
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={6}
+                    lg={4}
                     sx={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "5px",
-                      padding: "10px",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                      bgcolor: Colors.gray_footer,
-                      position: "relative",
+                      height: { xs: "400px", md: "500px" },
+                      width: "auto",
+                      padding: "5px",
+                    }}>
+                    <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,  position: "relative",
                       "&:hover .hover-button": {
                         opacity: 1, // Show button when hovering over the box
-                      },
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        textAlign: "start",
-                        fontWeight: "bold",
-                        fontSize: { xs: "12px", md: "20px" },
-                      }}
-                    >
-                      {t("secontText")}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        height: "90%",
-                        width: "100%",
-                        gap: "10px",
-                        marginTop: "15px",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          height: "28%",
-                        }}
-                      >
-                        {/* Top side of div */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: "10px",
-                          }}
-                        >
-                          <Typography
-                            variant="h2"
-                            sx={{ fontWeight: "bold", textAlign: "start" }}
-                          >
-                            {insertSpaces(item.bankAssets.totalActive)}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: Colors.gray,
-                              width: "auto",
-                              lineHeight: "1.2",
-                              fontStyle: "italic",
-                              fontWeight: "500",
-                              wordWrap: "break-word",
-                            }}
-                          >
-                            {t("partoneBillion")}
-                            <br />
-                            {t("parttwoBillion")}
-                          </Typography>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: "10px",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <MovingIcon
-                              sx={{
-                                fontSize: "32px",
-                                transition: "transform 0.3s ease",
-                                color: Colors.green_area,
-                              }}
-                            />
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "flex-start",
-                                justifyContent: "center",
-                                gap: "2px",
-                              }}
-                            >
-                              <Typography
-                                variant="h4"
-                                sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}
-                              >
-                                {item.bankAssets.totalActivePercentage}
-                                <span
-                                  style={{
-                                    color: Colors.green_area,
-                                    fontSize: "20px",
-                                    lineHeight: "1",
+                      },}}>
+                      <Typography sx={{textAlign:"start",fontWeight:"bold",fontSize:{xs:"12px",md:"20px"},}}>{t("secontText")}</Typography>
+                      <Box sx={{display:"flex",flexDirection:"column",height:"90%",width:"100%",gap:"10px",marginTop:"15px"}} >
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
+                          {/* top side of div */}
+                            <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                              <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankAssets.totalActive)}</Typography>
+                                <Typography
+                                  sx={{
+                                    color: Colors.gray,
+                                    width: "auto",
+                                    lineHeight: "1.2",
+                                    fontStyle: "italic",
+                                    fontWeight: "500",
+                                    wordWrap: "break-word",
                                   }}
                                 >
-                                  %
-                                </span>
-                              </Typography>
+                                  {t("partoneBillion")}<br/>{t("parttwoBillion")}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+                              {/* Icon with text */}
+
+                              {/* Box containing Icon and percentage */}
+                              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                                <MovingIcon
+                                  sx={{
+                                    fontSize: "32px",
+                                    transition: "transform 0.3s ease",
+                                    color: Colors.green_area,
+                                  }}
+                                />
+                                <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
+                                  <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
+                                    {item.bankAssets.totalActivePercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                  </Typography>
+                                </Box>
+                            </Box>
+                          </Box>
+                        </Box>
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
+                          {/* pie chart section  */}
+                          <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
+                              <PieChartMainChart piechartData={item.bankAssets.pieChartDatas}/>  
+                          </Box>
+                          {/* right side Texts */}
+                          <Box sx={{}}>
+                                {/* top side light blue */}
+                            <Box sx={{display:"flex",flexDirection:"column"}}>
+                                <Box>
+                                  <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsCredits")}</Typography>
+                                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                    <Typography sx={{color:"rgba(255, 99, 132, 0.8)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.creditsActive)}</Typography>
+                                    <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                  </Box>
+                                </Box>
+                              {/* bottom side dark_blue national  */}
+                              <Box sx={{display:"flex",flexDirection:"column"}}>
+                                  <Box>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsBankDeposits")}</Typography>
+                                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                      <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.depositActive)}</Typography>
+                                      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                    </Box>
+                                  </Box>
+                              </Box>
+                              <Box sx={{display:"flex",flexDirection:"column"}}>
+                                  <Box>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsInvestments")}</Typography>
+                                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                      <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.investmentActive)}</Typography>
+                                      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                    </Box>
+                                  </Box>
+                              </Box>
+                            
+                              <Box sx={{display:"flex",flexDirection:"column"}}>
+                                  <Box>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
+                                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                      <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.othersActive)}</Typography>
+                                      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                    </Box>
+                                  </Box>
+                              </Box>
                             </Box>
                           </Box>
                         </Box>
                       </Box>
-          
-                      {/* Pie chart section */}
-                      <Box
+                      {/* button styles */}
+                      <Box   className="hover-button"
                         sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-around",
-                          height: "70%",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "60%",
-                            height: "100%",
-                          }}
-                        >
-                          <PieChartMainChart piechartData={item.bankAssets.pieChartDatas} />
-                        </Box>
-          
-                        {/* More rendering logic can go here */}
+                          textAlign: "end",
+                          position: "absolute",
+                          bottom: "10px",
+                          right: "10px",
+                          opacity: 0, // Initially hidden
+                          transition: "opacity 300ms ease", // Smooth transition for hover
+                        }}>
+                        <Button variant="contained" size={"medium"}  onClick={acceptNavigate ? handleNavigateFirstScreen : handleOpenAuthModal}>
+                        <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                        </Button>
                       </Box>
                     </Box>
-                    {/* Button section */}
-                    <Box
-                      className="hover-button"
-                      sx={{
-                        textAlign: "end",
-                        position: "absolute",
-                        bottom: "10px",
-                        right: "10px",
-                        opacity: 0, // Initially hidden
-                        transition: "opacity 300ms ease", // Smooth transition for hover
-                      }}
-                    >
-                      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
-                        <Typography sx={{ color: Colors.white, fontWeight: "800", textTransform: "uppercase" }}>
-                          {t("infobutton")}
-                        </Typography>
-                      </Button>
-                    </Box>
-                  </Box>
-                </Grid>
+                  </Grid>
                  {/* second div */}
                 <Grid
                   item
@@ -499,7 +454,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"50%",height:"100%",}} >
-                            <HolePieChart holeData={item.bankAssets.pieChartDatas}/>  
+                            <HolePieChart holeData={item.bankObligations.doughnutData}/>  
                             {/* <PieChartMainChart piechartData={item.bankAssets.pieChartDatas}/>   */}
                         </Box>
                         {/* right side Texts */}
@@ -555,7 +510,7 @@ const handleDateChange = (newValue) => {
                         opacity: 0, // Initially hidden
                         transition: "opacity 300ms ease", // Smooth transition for hover
                       }}>
-                      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Button variant="contained" size={"medium"}  onClick={acceptNavigate ? handleOpenAcceptModal : handleOpenAuthModal} >
                       <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                       </Button>
                     </Box>
@@ -672,7 +627,7 @@ const handleDateChange = (newValue) => {
                         opacity: 0, // Initially hidden
                         transition: "opacity 300ms ease", // Smooth transition for hover
                       }}>
-                      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Button variant="contained" size={"medium"}  onClick={acceptNavigate ? handleOpenAcceptModal : handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                       </Button>
                     </Box>
@@ -748,7 +703,7 @@ const handleDateChange = (newValue) => {
                         opacity: 0, // Initially hidden
                         transition: "opacity 300ms ease", // Smooth transition for hover
                       }}>
-                      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Button variant="contained" size={"medium"}  onClick={acceptNavigate ? handleOpenAcceptModal : handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                       </Button>
                     </Box>
@@ -849,7 +804,7 @@ const handleDateChange = (newValue) => {
                         opacity: 0, // Initially hidden
                         transition: "opacity 300ms ease", // Smooth transition for hover
                       }}>
-                      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Button variant="contained" size={"medium"}  onClick={acceptNavigate ? handleOpenAcceptModal : handleOpenAuthModal} >
                       <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                       </Button>
                     </Box>
@@ -952,7 +907,7 @@ const handleDateChange = (newValue) => {
                         opacity: 0, // Initially hidden
                         transition: "opacity 300ms ease", // Smooth transition for hover
                       }}>
-                      <Button variant="contained" size={"medium"} onClick={handleOpenAuthModal}>
+                      <Button variant="contained" size={"medium"}  onClick={acceptNavigate ? handleOpenAcceptModal : handleOpenAuthModal}>
                       <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                       </Button>
                     </Box>
@@ -1091,6 +1046,28 @@ const handleDateChange = (newValue) => {
               </Alert>
           </Box>
         </Modal>
+        {/* <=== AFTER AUTHORISATION MODAL */}
+        <Modal
+                open={openacceptmodal}
+                onClose={handleCloseAcceptModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+              <Box sx={{position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: "auto",
+                  bgcolor: "blue",
+                  border: '1px solid gray',
+                  boxShadow: 24,
+                  borderRadius:"5px",
+                  }}>
+                  <Alert variant="filled" severity="info">
+                    {t("accessmodaltext")}
+                  </Alert>
+              </Box>
+            </Modal>
       </Box>
     </Container>
   );

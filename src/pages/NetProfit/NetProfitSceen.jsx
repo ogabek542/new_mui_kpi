@@ -256,15 +256,14 @@ const NetProfitSceen = ({ changeLang }) => {
     }
 
     // Initialize the screen with the previous day's date
-    // const initializeScreen = () => {
-    //   const initialDate = dayjs().subtract(1, "day");
-    //   handleDateChange(initialDate);
-    // };
+    const initializeScreen = () => {
+      const initialDate = dayjs().subtract(1, "day");
+      handleDateChange(initialDate);
+    };
 
-    // initializeScreen();
+    initializeScreen();
   }, [selectedFirstOption]);
 
- 
 
   // const handleDateChange = (newValue) => {
   //   setSelectNewData(newValue);
@@ -341,10 +340,10 @@ const NetProfitSceen = ({ changeLang }) => {
   };
 
   // General function to divide data by 100
-  const divideAndRoundData = (dataArray) => {
-    if (!dataArray) return [];
-    return dataArray.map((value) => Math.round(value / 100));
-  };
+  // const divideAndRoundData = (dataArray) => {
+  //   if (!dataArray) return [];
+  //   return dataArray.map((value) => Math.round(value / 100));
+  // };
 
 // Example holidays (add your holidays here)
 const holidays = [
@@ -386,6 +385,41 @@ const shouldDisableDate = (date) => {
   return  isHoliday ;
 };
 
+// useEffect(() => {
+//   const fetchGraphicData = async () => {
+//     try {
+//       // Check if data already exists in localStorage
+//       const storedData = localStorage.getItem('graphicIndicators');
+//       if (storedData) {
+//         // If data exists, use it
+//         setChooseData(JSON.parse(storedData));
+//         console.log('Using data from localStorage');
+//       } else {
+//         // Fetch data from API if not in localStorage
+//         const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
+//         const graphicIndicators = response.data;
+
+//         // Save fetched data to localStorage
+//         localStorage.setItem('graphicIndicators', JSON.stringify(graphicIndicators));
+
+//         // Update the state with the fetched data
+//         setChooseData(graphicIndicators);
+//         console.log('Fetched data and stored it in localStorage');
+//       }
+//     } catch (error) {
+//       console.error("Error fetching graphic indicator data:", error);
+//       if (error.response && error.response.status === 404) {
+//         console.error(
+//           "Endpoint not found. Please check the URL or backend configuration."
+//         );
+//       } else {
+//         console.error("An error occurred:", error.message);
+//       }
+//     }
+//   };
+
+//   fetchGraphicData();
+// }, []);
 
 
 

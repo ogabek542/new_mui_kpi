@@ -37,6 +37,9 @@ const NewLoginScreen = () => {
   const changeLang = (value) => {
     i18n.changeLanguage(value)
   }
+
+
+  const [acceptNavigate, setAcceptNavigate] = useState(false);
     const {t} = useTranslation();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -69,7 +72,7 @@ const NewLoginScreen = () => {
         // console.log("clicked ", username, password);
         localStorage.clear();
         // navigate("/accessall");
-          
+        // const isLoggedIn = true;
       
       
         try {
@@ -82,7 +85,8 @@ const NewLoginScreen = () => {
           console.log("opened login");
           setUsername(""); // Clear username
           setPassword(""); // Clear password
-          navigate("/newtestscreen");
+          navigate("/newtestscreen", { state: { acceptNavigate: true } });
+          // navigate('/');
       
           if (response && response.data) {
             dispatch(loginSuccess(response.data.access));

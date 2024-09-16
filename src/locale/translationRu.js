@@ -107,7 +107,7 @@ const translationRu = {
         tenthText: "РИСКИ БАНКА И СООТВЕТСТВИЕ ТРЕБОВАНИЯМ",
         eleventhText: "ФИНАНСОВАЯ СТАБИЛЬНОСТЬ БАНКА",
         twelfthText: "СТРАТЕГИЧЕСКИЕ ПЛАНЫ И ИНВЕСТИЦИОННАЯ ДЕЯТЕЛЬНОСТЬ БАНКА",
-        thirteenth:"БАНКОВСКИЕ РАСХОДЫ",
+        thirteenth:"РАСХОДЫ БАНКА ",
         // MAIN PAGE TEXTS // 
         // first card texts //
         currencyText:"milliard so'm ek.",
@@ -130,11 +130,11 @@ const translationRu = {
         // fouth screen //
         netProfitText:"ЧИСТАЯ...",
         // fifth screen //
-        percentageIncomeText:"ПРОЦЕНТНЫЙ ДОХОД",
-        noPercenteageIncomeText:"БЕСПРОЦЕНТНЫЙ ДОХОД",
+        percentageIncomeText:"ПРОЦЕНТНЫЕ ДОХОДЫ",
+        noPercenteageIncomeText:"БЕСПРОЦЕНТНЫЕ ДОХОДЫ",
         // sixth screen //
-        percentageCostText:"ПРОЦЕНТНЫЕ ЗАТРАТЫ",
-        nopercentageCostText:"БЕПРОСТЕРЕЖЕНИЯ",
+        percentageCostText:"ПРОЦЕНТНЫЕ РАСХОДЫ",
+        nopercentageCostText:"БЕСПРОЦЕНТНЫЕ РАСХОДЫ",
         
 
 }
