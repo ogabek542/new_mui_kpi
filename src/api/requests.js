@@ -59,7 +59,7 @@ axiosInstance.interceptors.request.use(
 
 export const REQUESTS = {
     mainCalendarScreen:{
-        getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/?date=29.06.2024")
+        getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
         // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
     },
     auth: {

@@ -143,34 +143,45 @@ useEffect(() => {
       return str.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     };
 
+    // const handleDateChange = (newValue) => {
+    //   setSelectNewData(newValue);
+    //   const formattedDate = newValue ? dayjs(newValue).format("DD.MM.YYYY") : "";
+    
+    //   // Filter the data by selected date (calenDate) from testMainAPI
+    //   const selectedData = chooseData.filter((item) => item.calenDate === formattedDate);
+    //   setChooseData(selectedData)
+    
+    //   // If data is found for the selected date, update the state
+    //   if (selectedData.length > 0) {
+    //     const filteredData = selectedData; // Assuming only one match per date
+    
+    //     // Log or update any part of the filtered data as needed, for example:
+    //     console.log('Filtered Bank Assets:', filteredData.bankAssets);
+    //     console.log('Filtered Bank Profitability:', filteredData.bankProfitability);
+        
+    //     setChooseData(filteredData); // Update the state with the selected data
+    //   } else {
+    //     console.log("No data found for the selected date");
+    //     setChooseData([]); // Clear the data if no match is found
+    //   }
+    // };
+
     const handleDateChange = (newValue) => {
       setSelectNewData(newValue);
       const formattedDate = newValue ? dayjs(newValue).format("DD.MM.YYYY") : "";
     
-      // Filter the data by selected date (calenDate) from testMainAPI
+      // Filter the data by selected date (calenDate) from chooseData
       const selectedData = chooseData.filter((item) => item.calenDate === formattedDate);
+      setChooseData(selectedData)
     
-      // If data is found for the selected date, update the state
-      if (selectedData.length > 0) {
-        const filteredData = selectedData; // Assuming only one match per date
-    
-        // Log or update any part of the filtered data as needed, for example:
-        console.log('Filtered Bank Assets:', filteredData.bankAssets);
-        console.log('Filtered Bank Profitability:', filteredData.bankProfitability);
-        
-        setChooseData(filteredData); // Update the state with the selected data
-      } else {
-        console.log("No data found for the selected date");
-        setChooseData([]); // Clear the data if no match is found
-      }
+   
     };
 
 
 
-
-      useEffect(() => {
-        handleDateChange(selectNewData);
-      }, [selectNewData]); //
+      // useEffect(() => {
+      //   handleDateChange(selectNewData);
+      // }, [selectNewData]); 
     
 
   return (
@@ -280,7 +291,7 @@ useEffect(() => {
           </Box>
           <Button onClick={() => navigate("/netprofit")}>kirish</Button>
           {/* <==== BARCHART CARDS SECTION ====> */}
-            {chooseData && chooseData.length > 0 ? (
+            { chooseData && chooseData.length > 0 ? (
               chooseData.map((item, indx) => (
               <Grid
                 container

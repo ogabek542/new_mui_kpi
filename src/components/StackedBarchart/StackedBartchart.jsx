@@ -23,9 +23,9 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
         labels: [''], // Labels for the x-axis
         datasets: [
             {
-                label: t('retainedEarnings'),
-                data: [retainedEarningsLine], // Data for Blue bars
-                backgroundColor: 'rgba(0, 77, 77, 0.7)', // Dark teal
+                label: t('reserveFundText'),
+                data: [reserveFundLine], // Data for Purple bars
+                backgroundColor: 'rgba(76, 0, 153, 0.7)', // Dark violet
                 borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 2,
             },
@@ -38,14 +38,13 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
                 
             },
             {
-                label: t('reserveFundText'),
-                data: [reserveFundLine], // Data for Purple bars
-                backgroundColor: 'rgba(76, 0, 153, 0.7)', // Dark violet
+                label: t('retainedEarnings'),
+                data: [retainedEarningsLine], // Data for Blue bars
+                backgroundColor: 'rgba(0, 77, 77, 0.7)', // Dark teal
                 borderColor: 'rgba(255, 255, 255, 1)',
                 borderWidth: 2,
                 borderRadius: { topLeft: 10, topRight: 10 }, // Add border-radius to top corners
             },
-         
         
         ],
     };

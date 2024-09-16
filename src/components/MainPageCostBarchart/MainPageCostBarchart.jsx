@@ -89,7 +89,7 @@ const MainPageCostBarchart = ({percentageCost,nopercentageCost}) => {
                             const textHeight = fontSize;
 
                             const textX = element.x;
-                            const textY = element.y + (element.height -25); // Position text inside the bar
+                            const textY = element.y + (element.height -20); // Position text inside the bar
 
                             // Draw rounded background for the text
                             ctx.fillStyle = 'white';
