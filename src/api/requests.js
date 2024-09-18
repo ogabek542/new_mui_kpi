@@ -62,9 +62,7 @@ export const REQUESTS = {
         getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/?date=29.06.2024")
         // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
     },
-    analysisScreenOne:{
-        getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes/')
-    },
+  
     auth: {
         login: (formData) => axiosInstance.post('/api/login/', formData),
         register: (username, password) =>
@@ -80,7 +78,13 @@ export const REQUESTS = {
     realtimelive:{
         getRealTimeLive:() => axiosInstance.get('/api/daily-visitors')
     },
+    analysisScreenOne:{
+        getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes')
+    },
   
 };
 console.log(getToken(), 'get token');
 // console.log(getRefreshToken(),'ok refresh')
+
+
+

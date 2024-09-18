@@ -8,6 +8,7 @@ import NBUlogo from "../../assets/svg/newForSVG.svg";
 // import framer motion //
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { Link } from 'react-router-dom';
 
 
 const LightHeader = ({changeLang}) => {
@@ -60,13 +61,13 @@ const LightHeader = ({changeLang}) => {
           },
         }}
       >
-        <a href="/">
+        <Link to="/">
           <Box
             component="img"
             src={NBUlogo}
-            sx={{ width: {xs:"35px",md:"55px"}, cursor: "pointer" }}
+            sx={{ width: { xs: "35px", md: "55px" }, cursor: "pointer" }}
           />
-        </a>
+        </Link>
       </motion.div>
       <Typography
         sx={{

@@ -230,7 +230,7 @@ const NetProfitSceen = ({ changeLang }) => {
         const graphicIndicators = respond.data;
         // const graphicIndicators = response?.data?.[0]?.sana || [];
         console.log(respond,"error");
-        console.log(graphicIndicators, "Fetched data ");
+        console.log(graphicIndicators, "Fetched data All Income ");
         setChooseData(graphicIndicators);
       } catch (error) {
         console.error("Error fetching graphic indicator data:", error);
@@ -558,52 +558,48 @@ const shouldDisableDate = (date) => {
                     boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",
                   }}
                 >
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  value={selectNewData}
-                  onChange={handleDateChange}
-                  shouldDisableDate={shouldDisableDate}
-                  slotProps={{
-                    textField: {
-                      inputProps: {
-                        placeholder: "DD/MM/YYYY",
-                        readOnly: true,
-                      },
-                      fullWidth: true,
-                      sx: {
-                        // Ensure no aria-hidden is added here
-                        ".MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            border: "none",
-                          },
-                          "&:hover fieldset": {
-                            border: "none",
-                          },
-                          // "&.Mui-focused fieldset": {
-                          //   border: "none",
-                          // },
-                          ".MuiInputAdornment-root .MuiIconButton-root": {
-                            color: Colors.blue_nbu,
-                          },
-                          ".MuiInputBase-input": {
-                            fontWeight: 700,
-                            fontSize: { xs: "12px", sm: "16px" },
-                          },
-                        },
-                      },
-                    },
-                  }}
-                />
-              </LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+  <DatePicker
+    value={selectNewData}
+    onChange={handleDateChange}
+    shouldDisableDate={shouldDisableDate}
+    // renderInput={(params) => (
+    //   <TextField
+    //     {...params}
+    //     placeholder="DD/MM/YYYY"
+    //     fullWidth
+    //     inputProps={{
+    //       ...params.inputProps,
+    //       readOnly: false, // Remove readOnly if not necessary
+    //     }}
+    //     sx={{
+    //       ".MuiOutlinedInput-root": {
+    //         "& fieldset": {
+    //           border: "none", // Remove borders if necessary
+    //         },
+    //         "&:hover fieldset": {
+    //           border: "none",
+    //         },
+    //         ".MuiInputAdornment-root .MuiIconButton-root": {
+    //           color: Colors.blue_nbu,
+    //         },
+    //         ".MuiInputBase-input": {
+    //           fontWeight: 700,
+    //           fontSize: { xs: "12px", sm: "16px" },
+    //         },
+    //       },
+    //     }}
+    //   />
+    // )}
+  />
+</LocalizationProvider>
                 </Box>
               </Grid>
             </Grid>
 
             {/* Display fetched data */}
 
-            { chooseData.flatMap((item, index) => (
-              
-              item.sana?.filter(sanaItem => sanaItem.date === formattedDate ).map((sanaItem, idx) => (
+            { chooseData.flatMap((item, index) => (item.sana?.filter(sanaItem => sanaItem.date === formattedDate ).map((sanaItem, idx) => (
                 <Box key={`${index}-${idx}`} sx={{ width: "100%", height: "100%", marginTop: "5px" }}>
                   {/* {sanaItem.date} */}
                  {/* <=== first grid div ====> */}

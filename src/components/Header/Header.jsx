@@ -1,5 +1,15 @@
 import * as React from "react";
-import { Box, Typography, TextField, MenuItem, FormControl, Select ,IconButton,Input,InputAdornment  } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  MenuItem,
+  FormControl,
+  Select,
+  IconButton,
+  Input,
+  InputAdornment,
+} from "@mui/material";
 import backgroundImage from "../../assets/photo/newHomePageTopImage.jpg";
 import { Colors } from "../../styles/theme";
 import NBUlogo from "../../assets/svg/newForSVG.svg";
@@ -14,7 +24,8 @@ import { useEffect } from "react";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { useTranslation } from "react-i18next";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { Link } from "react-router-dom";
 
 import translationEn from "../../locale/translationEn.js";
 import translationUz from "../../locale/translationUz.js";
@@ -32,7 +43,9 @@ i18n.use(initReactI18next).init({
 
 const Header = ({ value, onChange }) => {
   const { t, i18n } = useTranslation();
-  const [age, setAge] = React.useState(localStorage.getItem("language") || "ru"); // Initialize with persisted language or default
+  const [age, setAge] = React.useState(
+    localStorage.getItem("language") || "ru"
+  ); // Initialize with persisted language or default
 
   useEffect(() => {
     setAge(i18n.language);
@@ -45,7 +58,6 @@ const Header = ({ value, onChange }) => {
     localStorage.setItem("language", newLanguage); // Persist language in localStorage
   };
 
-  
   return (
     <Box
       sx={{
@@ -92,13 +104,13 @@ const Header = ({ value, onChange }) => {
             },
           }}
         >
-          <a href="/">
+          <Link to="/">
             <Box
               component="img"
               src={NBUlogo}
               sx={{ width: { xs: "35px", md: "55px" }, cursor: "pointer" }}
             />
-          </a>
+          </Link>
         </motion.div>
         <Typography
           sx={{
@@ -206,59 +218,51 @@ const Header = ({ value, onChange }) => {
               "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
           }}
         >
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DesktopDatePicker
-                  value={value}
-                  onChange={onChange}
-                  // components={{
-                  //   OpenPickerIcon:CalendarMonthIcon
-                  // }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      fullWidth
-                      inputProps={{
-                        ...params.inputProps,
-                        placeholder: "DD.MM.YYYY",
-                        readOnly: true,
-                      }}
-                    />
-                  )}
-                  
-                  // renderInput={(props) => <TextField {...props}/>}
-                  sx={{
-                    ".MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: "white",
-                        display:"none",
-                        border:"none"
-                      },
-                      "&:hover fieldset": {
-                        borderColor: "white",
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: "white",
-                        border:"none"
-                      },
-                      ".MuiInputAdornment-root .MuiIconButton-root": {
-                        color: Colors.blue_nbu,
-                      },
-                      ".MuiInputBase-input": {
-                        fontWeight: 700,
-                        fontSize: { xs: "12px", sm: "16px" },
-                      },
-                    },
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DesktopDatePicker
+              value={value}
+              onChange={onChange}
+              // components={{
+              //   OpenPickerIcon:CalendarMonthIcon
+              // }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  fullWidth
+                  inputProps={{
+                    ...params.inputProps,
+                    placeholder: "DD.MM.YYYY",
+                    readOnly: true,
                   }}
                 />
-              </LocalizationProvider>
-              
-              
-              
+              )}
+              // renderInput={(props) => <TextField {...props}/>}
+              sx={{
+                ".MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "white",
+                    display: "none",
+                    border: "none",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "white",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "white",
+                    border: "none",
+                  },
+                  ".MuiInputAdornment-root .MuiIconButton-root": {
+                    color: Colors.blue_nbu,
+                  },
+                  ".MuiInputBase-input": {
+                    fontWeight: 700,
+                    fontSize: { xs: "12px", sm: "16px" },
+                  },
+                },
+              }}
+            />
+          </LocalizationProvider>
         </Box>
-
-
-
-  
       </Box>
     </Box>
   );

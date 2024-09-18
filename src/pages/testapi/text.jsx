@@ -7960,3 +7960,32 @@ if (selectedData.length > 0) {
 : (
 <Typography>No data available</Typography> // Handle case where chooseData is empty or not an array
 )}
+
+<Autocomplete
+options={top128Filials}
+sx={{ width: "90%" }}
+getOptionLabel={(option) => `${option.title}`}
+id="movie-customized-option-demo"
+disableCloseOnSelect
+renderInput={(params) => (
+  <TextField
+    {...params}
+    label="Выбор филиала"
+    variant="standard"
+    sx={{
+      "& .MuiInput-underline:before": {
+        borderBottomColor: "red", // Change the color here
+      },
+      "& .MuiInput-underline:after": {
+        borderBottomColor: "green", // Change the color here
+      },
+      "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+        borderBottom: "none", // To remove the border
+      },
+    }}
+    InputLabelProps={{
+      style: { color: Colors.dark }, // Change the color to your desired value
+    }}
+  />
+)}
+/>

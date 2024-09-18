@@ -8,24 +8,28 @@ import NetProfitSceen from './pages/NetProfit/NetProfitSceen';
 import TestScreen from './pages/testapi/TestScreen';
 import NewTestScreen from './pages/testOutletPage/TestScreen';
 import NewLoginScreen from './pages/NewLoginScreen/NewLoginScreen';
-
+import KeyIndicatorTable from './pages/KeyIndicatorTable/KeyIndicatorTable';
+import BalanceTable from './pages/BalanceTable/BalanceTable';
+import IndicatorKey from './pages/IndicatorKey/IndicatorKey';
 
 function App() {
   return (
-        <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainPage />}>
-            {/* The NewLoginScreen will render inside the Outlet by default */}
-            <Route index element={<NewLoginScreen />} />
-            <Route path="/newtestscreen" element={<NewTestScreen />} />
-          </Route>
-          <Route path="/tablescreen" element={<TableScreen />} />
-          <Route path="/accessall" element={<AccessAll />} />
-          <Route path="/kpidashboard" element={<KpiScreen />} />
-          <Route path="/netprofit" element={<NetProfitSceen />} />
-          <Route path="/testscreen" element={<TestScreen />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainPage />}>
+          <Route index element={<NewLoginScreen />} />
+          <Route path="/newtestscreen" element={<NewTestScreen />} />
+        </Route>
+        <Route path="/keyindicatorscreen" element={<IndicatorKey />} />
+        {/* <Route path="/keyindicatorscreen" element={<KeyIndicatorTable />} /> */}
+        <Route path="/tablescreen" element={<TableScreen />} />
+        <Route path="/accessall" element={<AccessAll />} />
+        <Route path="/kpidashboard" element={<KpiScreen />} />
+        <Route path="/netprofit" element={<NetProfitSceen />} />
+        <Route path="/testscreen" element={<TestScreen />} />
+        <Route path="/balancescreen" element={<BalanceTable />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

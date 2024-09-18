@@ -1,24 +1,14 @@
 import * as React   from "react";
-import {useEffect} from "react"
+import {useEffect} from "react";
 import { useContext } from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import { Container, Box, Typography, Button, Grid,  } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
-// input elements //
-import IconButton from "@mui/material/IconButton";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 import { REQUESTS } from "../../api/requests.js";
 // backdrop //
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 // modal //
 import Modal from "@mui/material/Modal";
 // icon //
@@ -135,44 +125,12 @@ const insertSpaces = (text) => {
 };
 
 
-const handleLogin = async () => { 
-  // console.log("clicked ", username, password);
-  localStorage.clear();
-  // navigate("/accessall");
-  navigate("/newtestscreen");
-
-
-  try {
-    const formData = new FormData();
-    formData.append("username", username);
-    formData.append("password", password);
-    dispatch(loginStart());
-    const response = await REQUESTS.auth.login(formData);
-    setIsAuth(true);
-    console.log("opened login");
-    setUsername(""); // Clear username
-    setPassword(""); // Clear password
-
-    if (response && response.data) {
-      dispatch(loginSuccess(response.data.access));
-      localStorage.setItem("token", response.data.access);
-      params.setPassname();
-    } else {
-      throw new Error("Invalid response from server");
-    }
-  } catch (error) {
-    console.error("Login failed:", error);
-    let errorMessage = "Login failed";
-    if (error.response && error.response.status === 401) {
-      // errorMessage = "Invalid username or password";
-      errorMessage = "Login yoki Parol xato !!!";
-    } else if (error.response && error.response.status === 500) {
-      errorMessage = "Server error. Please try again later.";
-    }
-    dispatch(loginFailure(errorMessage));
-    setLoginError(errorMessage);
-    setIsAuth(!isAuth);
-  }
+const handleNavigateKeyIndicators = () => { 
+  // navigate("/keyindicatorscreen");
+  navigate("/keyindicatorscreen");
+};
+const handleNavigateBalanceScreen = () => { 
+  navigate("/balancescreen");
 };
 
 useEffect(() => { 
@@ -263,9 +221,51 @@ const handleDateChange = (newValue) => {
             <Header changeLang={changeLang} value={selectNewData} onChange={handleDateChange}/>
       
             <Outlet/>
+          <Box sx={{height:"55px",width:"100%",padding:"5px",bgcolor:Colors.gray_footer,marginBottom:"10px",borderRadius:"5px",display:"flex",alignItems:"center",paddingX:"10px",gap:"10px"}}>
+            <Button 
+                variant="text" 
+                sx={{
+                  textAlign: "start", 
+                  bgcolor: Colors.gray_footer, 
+                  '&:hover': {
+                    bgcolor: Colors.gray_footer, // Change this to your desired hover background color
+                  }
+                }}
+              >
+                <Typography sx={{fontWeight:"bold",color:Colors.blue_nbu,textTransform:"uppercase"}}>KUNLIK HISOBOTLAR</Typography>
+              </Button>
+              {/* <=== KEY INDEX BUTTON ====> */}
+            <Button 
+                variant="contained" 
+                sx={{
+                  textAlign: "start", 
+                  bgcolor: Colors.gray_common, 
+                  '&:hover': {
+                    bgcolor: Colors.gray_common, // Change this to your desired hover background color
+                  },
+                  marginLeft:"100px",
+                }}
+                onClick={handleNavigateKeyIndicators}
+              >
+                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>ASOSIY KO'RSATKICHLAR</Typography>
+              </Button>
+              {/* <=== BALANS BUTTON ====> */}
+            <Button 
+                variant="contained" 
+                sx={{
+                  textAlign: "start", 
+                  bgcolor: Colors.gray_common, 
+                  '&:hover': {
+                    bgcolor: Colors.gray_common, // Change this to your desired hover background color
+                  }
+                }}
+                onClick={handleNavigateBalanceScreen}
+              >
+                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>BALANS</Typography>
+              </Button>
+          </Box>
           {/* <==== BARCHART CARDS SECTION ====> */}
-
-
+          {/* <==== NEW TBALE BAR ====> */}
 
           {chooseData?.filter(item => item.calenDate === formattedDate).map((item, index) => (
             <Grid
@@ -296,7 +296,7 @@ const handleDateChange = (newValue) => {
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                           {/* top side of div */}
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                              <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankAssets.totalActive)}</Typography>
+                              <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item?.bankAssets?.totalActive || 0)}</Typography>
                                 <Typography
                                   sx={{
                                     color: Colors.gray,
@@ -324,7 +324,7 @@ const handleDateChange = (newValue) => {
                                 />
                                 <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
                                   <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                    {item.bankAssets.totalActivePercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                    {item?.bankAssets?.totalActivePercentage || 0} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
                                   </Typography>
                                 </Box>
                             </Box>
@@ -333,7 +333,7 @@ const handleDateChange = (newValue) => {
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                           {/* pie chart section  */}
                           <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                              <PieChartMainChart piechartData={item.bankAssets.pieChartDatas}/>  
+                          <PieChartMainChart piechartData={item?.bankAssets?.pieChartDatas ?? []} />
                           </Box>
                           {/* right side Texts */}
                           <Box sx={{}}>
@@ -342,7 +342,7 @@ const handleDateChange = (newValue) => {
                                 <Box>
                                   <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsCredits")}</Typography>
                                   <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                    <Typography sx={{color:"rgba(255, 99, 132, 0.8)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.creditsActive)}</Typography>
+                                    <Typography sx={{color:"rgba(255, 99, 132, 0.8)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankAssets?.creditsActive || 0)}</Typography>
                                     <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                   </Box>
                                 </Box>
@@ -351,7 +351,7 @@ const handleDateChange = (newValue) => {
                                   <Box>
                                     <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsBankDeposits")}</Typography>
                                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                      <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.depositActive)}</Typography>
+                                      <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankAssets?.depositActive || 0)}</Typography>
                                       <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                     </Box>
                                   </Box>
@@ -360,7 +360,7 @@ const handleDateChange = (newValue) => {
                                   <Box>
                                     <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsInvestments")}</Typography>
                                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                      <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.investmentActive)}</Typography>
+                                      <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankAssets?.investmentActive || 0)}</Typography>
                                       <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                     </Box>
                                   </Box>
@@ -370,7 +370,7 @@ const handleDateChange = (newValue) => {
                                   <Box>
                                     <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
                                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                      <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankAssets.othersActive)}</Typography>
+                                      <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankAssets?.othersActive || 0)}</Typography>
                                       <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                     </Box>
                                   </Box>
@@ -417,7 +417,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                         {/* top side of div */}
                           <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankObligations.totalObligations)}</Typography>
+                            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item?.bankObligations?.totalObligations || 0)}</Typography>
                               <Typography
                                 sx={{
                                   color: Colors.gray,
@@ -445,7 +445,7 @@ const handleDateChange = (newValue) => {
                               />
                               <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
                                 <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                  {item.bankObligations.totalObligationsPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                  {item?.bankObligations?.totalObligationsPercentage || 0} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
                                 </Typography>
                               </Box>
                           </Box>
@@ -454,7 +454,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"50%",height:"100%",}} >
-                            <HolePieChart holeData={item.bankObligations.doughnutData}/>  
+                            <HolePieChart holeData={item?.bankObligations?.doughnutData ?? []}/>  
                             {/* <PieChartMainChart piechartData={item.bankAssets.pieChartDatas}/>   */}
                         </Box>
                         {/* right side Texts */}
@@ -464,7 +464,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("obligationCrediteLine")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(2, 13, 158, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.creditLines)}</Typography>
+                                  <Typography sx={{color:"rgba(2, 13, 158, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankObligations?.creditLines || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -474,7 +474,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("clientsDeposits")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.clientsDeposits)}</Typography>
+                                  <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankObligations?.clientsDeposits || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -483,7 +483,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("bankDeposits")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.banksDeposits)}</Typography>
+                                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankObligations?.banksDeposits || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -492,7 +492,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankObligations.othersObligations)}</Typography>
+                                  <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankObligations?.othersObligations || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -539,7 +539,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                         {/* top side of div */}
                           <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankCapitals.totalCapitals)}</Typography>
+                            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item?.bankCapitals?.totalCapitals || 0)}</Typography>
                               <Typography
                                 sx={{
                                   color: Colors.gray,
@@ -567,7 +567,7 @@ const handleDateChange = (newValue) => {
                               />
                               <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
                                 <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                  {item.bankCapitals.totalCapitalsPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                  {item?.bankCapitals?.totalCapitalsPercentage || 0} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
                                 </Typography>
                               </Box>
                           </Box>
@@ -576,7 +576,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                            <StackedBartchart  reserveFundLine={item.bankCapitals.reserveFundLine} retainedEarningsLine={item.bankCapitals.retainedEarningsLine} charterCapitalLine={item.bankCapitals.charterCapitalLine} />  
+                            <StackedBartchart  reserveFundLine={item?.bankCapitals?.reserveFundLine || 0} retainedEarningsLine={item?.bankCapitals?.retainedEarningsLine || 0} charterCapitalLine={item?.bankCapitals?.charterCapitalLine || 0} />  
                         </Box>
                         {/* right side Texts */}
                         <Box sx={{}}>
@@ -597,7 +597,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("charterCapital")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.charterCapital)}</Typography>
+                                  <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankCapitals?.charterCapital || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -609,7 +609,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("reserveFundText")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.reserveFund)}</Typography>
+                                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankCapitals?.reserveFund || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -671,7 +671,7 @@ const handleDateChange = (newValue) => {
                                 {/* right percentage */}
                                 <Box sx={{display:"flex",flexDirection:"column",alignItems:"start",justifyContent:"center" }}>
                                     <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",textAlign:"left",height:"100%",gap:"10px"}}>
-                                      <Typography sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,fontSize:"40px"}}>{insertSpaces(item.bankProfitability.netProfit)}</Typography>
+                                      <Typography sx={{fontWeight:"bold",textAlign:"start",color:Colors.blue_middle,fontSize:"40px"}}>{insertSpaces(item?.bankProfitability?.netProfit || 0)}</Typography>
                                       <Typography
                                         sx={{
                                           color: Colors.gray,
@@ -687,9 +687,9 @@ const handleDateChange = (newValue) => {
                                       </Typography>
                                     </Box>
 
-                                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalRoa}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
-                                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalRoe}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
-                                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item.bankProfitability.totalCir}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item?.bankProfitability?.totalRoa || 0}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item?.bankProfitability?.totalRoe || 0}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
+                                  <Typography sx={{color:Colors.blue_middle,fontWeight:"bold",fontSize:"48px"}}>{item?.bankProfitability?.totalCir || 0}<span style={{color:Colors.blue_middle,fontSize:"28px"}}>%</span></Typography>
                                 </Box>
                               </Box>
                             </Box>
@@ -732,7 +732,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                         {/* top side of div */}
                           <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankIncomes.totalIncomes)}</Typography>
+                            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item?.bankIncomes?.totalIncomes || 0)}</Typography>
                               <Typography
                                 sx={{
                                   color: Colors.gray,
@@ -758,7 +758,7 @@ const handleDateChange = (newValue) => {
                               />
                               <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
                                 <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                  {item.bankIncomes.totalIncomesPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                  {item?.bankIncomes?.totalIncomesPercentage || 0} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
                                 </Typography>
                               </Box>
                           </Box>
@@ -767,7 +767,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                            <VerticalBarchartTwo percentageIncome={item.bankIncomes.percentageIncomePercentage} nopercentageIncome={item.bankIncomes.nopercentageIncomePercentage} />  
+                            <VerticalBarchartTwo percentageIncome={item?.bankIncomes?.percentageIncomePercentage || 0} nopercentageIncome={item?.bankIncomes?.nopercentageIncomePercentage || 0} />  
                         </Box>
                         {/* right side Texts */}
                         <Box sx={{}}>
@@ -776,7 +776,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography  sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageIncomeText")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.percentageIncome)}</Typography>
+                                  <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankIncomes?.percentageIncome || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -786,7 +786,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("noPercenteageIncomeText")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankIncomes.nopercentageIncome)}</Typography>
+                                  <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankIncomes?.nopercentageIncome || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -833,7 +833,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-evenly",height:"28%"}}>
                         {/* top side of div */}
                           <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
-                            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item.bankExpenses.totalExpenses)}</Typography>
+                            <Typography variant="h2" sx={{fontWeight:"bold",textAlign:"start"}}>{insertSpaces(item?.bankExpenses?.totalExpenses || 0)}</Typography>
                               <Typography
                                 sx={{
                                   color: Colors.gray,
@@ -870,7 +870,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                        <MainPageCostBarchart percentageCost={item.bankExpenses.percentageCostPercentage} nopercentageCost={item.bankExpenses.nopercentageCostPercentage} />  
+                        <MainPageCostBarchart percentageCost={item?.bankExpenses?.percentageCostPercentage || 0} nopercentageCost={item?.bankExpenses?.nopercentageCostPercentage || 0} />  
                         </Box>
                         {/* right side Texts */}
                         <Box sx={{}}>
@@ -879,7 +879,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageCostText")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.percentageCost)}</Typography>
+                                  <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankExpenses?.percentageCost || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -889,7 +889,7 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("nopercentageCostText")}</Typography>
                                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankExpenses.nopercentageCost)}</Typography>
+                                  <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankExpenses?.nopercentageCost || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
@@ -913,8 +913,6 @@ const handleDateChange = (newValue) => {
                     </Box>
                   </Box>
                 </Grid>
-          
-                {/* Repeat for the second, third div, etc. */}
               </Grid>
           ))}
 

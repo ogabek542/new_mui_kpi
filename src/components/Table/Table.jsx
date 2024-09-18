@@ -10,17 +10,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru'; // Import Russian locale
 
-const CustomGridTable = ({ data }) => {
-  const [selectedDate, setSelectedDate] = React.useState(dayjs());
-  const [selectenextdDate, setSelecteNextdDate] = React.useState(dayjs());
-  // data //
-  const top128Filials = [
-    { title: "Избоскан БХО" }, 
-    { title: "Шахрихон БХО" },
-    { title: "Асака БХМ" },
-    { title: "Зарафшон БХМ"},
+const CustomGridTable = () => {
   
-  ];
 
   return (
     <Box
@@ -67,72 +58,13 @@ const CustomGridTable = ({ data }) => {
         >
           {/* <Typography sx={{ fontWeight: "bold",}}>Filial Name</Typography> */}
           {/* choose filila name  */}
-          <Autocomplete
-            options={top128Filials}
-            sx={{ width: "90%" }}
-            getOptionLabel={(option) => `${option.title}`}
-            id="movie-customized-option-demo"
-            disableCloseOnSelect
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Выбор филиала"
-                variant="standard"
-                sx={{
-                  "& .MuiInput-underline:before": {
-                    borderBottomColor: "red", // Change the color here
-                  },
-                  "& .MuiInput-underline:after": {
-                    borderBottomColor: "green", // Change the color here
-                  },
-                  "& .MuiInput-underline:before, & .MuiInput-underline:after": {
-                    borderBottom: "none", // To remove the border
-                  },
-                }}
-                InputLabelProps={{
-                  style: { color: Colors.dark }, // Change the color to your desired value
-                }}
-              />
-            )}
-          />
+         
         </Grid>
         <Grid item xs={3} sx={{ borderRight: "1px solid #000" }}>
           <Typography
             sx={{ fontWeight: "bold", borderBottom: "1px solid #000" }}
           >
-            <LocalizationProvider dateAdapter={AdapterDayjs}  adapterLocale="ru" >
-          <DatePicker
-              value={selectedDate}
-              onChange={(newValue) => setSelectedDate(newValue)}
-              slotProps={{ textField: { size: 'small' } }}
-              renderInput={(props) => (
-              <Box sx={{ width: {xs:"100px",sm:"100px",md:"200px"} }}>
-                <TextField {...props} fullWidth />
-              </Box>
-            )}
-            sx={{
-              ".MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "white",
-                },
-                "&:hover fieldset": {
-                  borderColor: "white",
-
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "white",
-                },
-                '.MuiInputAdornment-root .MuiIconButton-root': {
-                  color: Colors.blue_nbu, // Custom color for the DatePicker icon
-                },
-                ".MuiInputBase-input": {
-                  fontWeight: 700, // Adjust the font weight of the DatePicker's text
-                  fontSize:{xs:"12px",sm:"16px"}
-                },
-              },
-            }}
-          />
-            </LocalizationProvider>
+       
           </Typography>
           <Typography sx={{ fontWeight: "bold" }}>Plan</Typography>
         </Grid>
@@ -142,39 +74,7 @@ const CustomGridTable = ({ data }) => {
           >
             {/* Fact Calendar */}
             <Box sx={{width:"100%",height:"100%",bgcolor:"transparent"}}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}  adapterLocale="ru" >
-          <DatePicker
-              value={selectenextdDate}
-              onChange={(newValue) => setSelecteNextdDate(newValue)}
-              slotProps={{ textField: { size: 'small' } }}
-              renderInput={(props) => (
-              <Box sx={{ width: {xs:"100px",sm:"100px",md:"200px"} }}>
-                <TextField {...props} fullWidth />
-              </Box>
-            )}
-            sx={{
-              ".MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "white",
-                },
-                "&:hover fieldset": {
-                  borderColor: "white",
-
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "white",
-                },
-                '.MuiInputAdornment-root .MuiIconButton-root': {
-                  color: Colors.blue_nbu, // Custom color for the DatePicker icon
-                },
-                ".MuiInputBase-input": {
-                  fontWeight: 700, // Adjust the font weight of the DatePicker's text
-                  fontSize:{xs:"12px",sm:"16px"}
-                },
-              },
-            }}
-          />
-            </LocalizationProvider>
+            
             </Box>
           </Typography>
           <Typography sx={{ fontWeight: "bold" }}>Fact</Typography>

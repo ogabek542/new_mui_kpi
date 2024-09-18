@@ -11,6 +11,7 @@ export const Colors = {
     nbu:"#083473",
     blue_nbu:"#020D9E",
     blue_middle:"#00AEEF",
+    blue_tableheader_light:"#66CFFF",
     blue_icon:"#0156B4",
     blue_light_table:"#94C7FB",
     blue_light_ultra:"#D6DEEA",
@@ -18,6 +19,7 @@ export const Colors = {
     blue_login:"#B5D3FF",
     // green //
     green_light:"#00FF00", 
+    green_tablerow_light:"#66FF66", 
     green_area:"#00C400", 
     green_dark:"#008000",
     green_dote:"#0A7F40",
