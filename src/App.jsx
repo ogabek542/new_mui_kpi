@@ -8,7 +8,6 @@ import NetProfitSceen from './pages/NetProfit/NetProfitSceen';
 import TestScreen from './pages/testapi/TestScreen';
 import NewTestScreen from './pages/testOutletPage/TestScreen';
 import NewLoginScreen from './pages/NewLoginScreen/NewLoginScreen';
-import KeyIndicatorTable from './pages/KeyIndicatorTable/KeyIndicatorTable';
 import BalanceTable from './pages/BalanceTable/BalanceTable';
 import IndicatorKey from './pages/IndicatorKey/IndicatorKey';
 
@@ -21,13 +20,12 @@ function App() {
           <Route path="/newtestscreen" element={<NewTestScreen />} />
         </Route>
         <Route path="/keyindicatorscreen" element={<IndicatorKey />} />
-        {/* <Route path="/keyindicatorscreen" element={<KeyIndicatorTable />} /> */}
+        <Route path="/balancescreen" element={<BalanceTable />} />
         <Route path="/tablescreen" element={<TableScreen />} />
         <Route path="/accessall" element={<AccessAll />} />
         <Route path="/kpidashboard" element={<KpiScreen />} />
         <Route path="/netprofit" element={<NetProfitSceen />} />
         <Route path="/testscreen" element={<TestScreen />} />
-        <Route path="/balancescreen" element={<BalanceTable />} />
       </Routes>
     </BrowserRouter>
   );

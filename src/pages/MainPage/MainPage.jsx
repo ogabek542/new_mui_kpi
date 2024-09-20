@@ -110,7 +110,8 @@ const params = useParams();
 const [usernameError, setUsernameError] = useState("");
 const [passwordError, setPasswordError] = useState("");
 const [chooseData, setChooseData] = useState([]);
-const [selectNewData, setSelectNewData] = useState(dayjs());
+
+const [selectNewData, setSelectNewData] = useState(dayjs("2024-06-29"));
 
 
 
@@ -134,7 +135,7 @@ const handleNavigateBalanceScreen = () => {
 };
 
 useEffect(() => { 
-  const fetchGraphicData = async () => {
+  const fetchMainPageData = async () => {
     try {
       const respond = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
       const calendarIndicators = respond.data;
@@ -153,8 +154,49 @@ useEffect(() => {
     }
   };
 
+  fetchMainPageData();
+}, []);
+
+
+useEffect(() => {
+  const fetchGraphicData = async () => {
+    try {
+      // Check if data exists in localStorage
+      const savedData = localStorage.getItem('calendarIndicators');
+      
+      if (savedData) {
+        // If data exists, parse it and set it to state
+        setChooseData(JSON.parse(savedData));
+        console.log("Data loaded from localStorage");
+      } else {
+        // If no data exists, fetch from API
+        const respond = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
+        const calendarIndicators = respond.data;
+        console.log(respond);
+        console.log(calendarIndicators, "New Fetched data");
+
+        // Set the fetched data to state
+        setChooseData(calendarIndicators);
+
+        // Save the fetched data to localStorage
+        localStorage.setItem('calendarIndicators', JSON.stringify(calendarIndicators));
+        console.log("Data saved to localStorage");
+      }
+    } catch (error) {
+      console.error("Error fetching graphic indicator data:", error);
+      if (error.respond && error.respond.status === 404) {
+        console.error(
+          "Endpoint not found. Please check the URL or backend configuration."
+        );
+      } else {
+        console.error("An error occurred:", error.message);
+      }
+    }
+  };
+
   fetchGraphicData();
 }, []);
+
 
 // use effect data picekr section //
 
@@ -170,6 +212,9 @@ useEffect(() => {
 
 // };
 
+useEffect(() => {
+  handleDateChange(selectNewData);
+}, [selectNewData]); 
 const handleDateChange = (newValue) => {
   setSelectNewData(newValue); // Update the selected date
 
@@ -179,9 +224,7 @@ const handleDateChange = (newValue) => {
   // Set the filtered data into chooseData
 };
   // Use useEffect to call handleDateChange whenever selectNewData changes
-  useEffect(() => {
-    handleDateChange(selectNewData);
-  }, [selectNewData]); 
+
 
   const formattedDate = dayjs(selectNewData).format("DD.MM.YYYY");
 
@@ -265,9 +308,8 @@ const handleDateChange = (newValue) => {
               </Button>
           </Box>
           {/* <==== BARCHART CARDS SECTION ====> */}
-          {/* <==== NEW TBALE BAR ====> */}
 
-          {chooseData?.filter(item => item.calenDate === formattedDate).map((item, index) => (
+          {chooseData?.filter(item => item?.calenDate === formattedDate).map((item, index) => (
             <Grid
               container
               sx={{ margin: "auto" }}
@@ -276,7 +318,7 @@ const handleDateChange = (newValue) => {
               key={`${index}-${item.calenDate}`} // Use correct key prop
             >
                 {/* First div */}
-                  <Grid
+                <Grid
                     item
                     xs={12}
                     sm={12}
@@ -317,14 +359,43 @@ const handleDateChange = (newValue) => {
                               <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                                 <MovingIcon
                                   sx={{
-                                    fontSize: "32px",
+                                    color:
+                                    item?.bankAssets?.totalActivePercentage <=
+                                      99
+                                        ? Colors.red
+                                        : Colors.green_dark,
+                                    fontSize: "48px",
+                                    padding: "0px",
+                                    transform:
+                                    item?.bankAssets?.totalActivePercentage <=
+                                      99
+                                        ? "rotate(180deg)"
+                                        : "rotate(0deg)",
                                     transition: "transform 0.3s ease",
-                                    color: Colors.green_area,
                                   }}
                                 />
                                 <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
-                                  <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                    {item?.bankAssets?.totalActivePercentage || 0} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                  <Typography variant="h4"
+                                    sx={{ 
+                                    color:
+                                    item?.bankAssets?.totalActivePercentage <=
+                                      99
+                                        ? Colors.red
+                                        : Colors.green_dark,
+                                    fontWeight: "800",
+                                    lineHeight: "1",
+                                      }}>
+                                    {item?.bankAssets?.totalActivePercentage || 0} <span style={{
+                                      color:
+                                    item?.bankAssets?.totalActivePercentage <=
+                                      99
+                                        ? Colors.red
+                                        : Colors.green_dark, 
+                                        fontSize: "20px", 
+                                        lineHeight: "1",
+                                      }}
+                                      >%
+                                      </span>
                                   </Typography>
                                 </Box>
                             </Box>
@@ -394,7 +465,7 @@ const handleDateChange = (newValue) => {
                         </Button>
                       </Box>
                     </Box>
-                  </Grid>
+                </Grid>
                  {/* second div */}
                 <Grid
                   item
@@ -437,15 +508,40 @@ const handleDateChange = (newValue) => {
                             {/* Box containing Icon and percentage */}
                             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                               <MovingIcon
-                                sx={{
-                                  fontSize: "32px",
-                                  transition: "transform 0.3s ease",
-                                  color: Colors.green_area,
-                                }}
+                                    sx={{
+                                      color:
+                                      item?.bankObligations?.totalObligationsPercentage <=
+                                        99
+                                        ? Colors.green_dark
+                                        : Colors.red,
+                                      fontSize: "48px",
+                                      padding: "0px",
+                                      transform:
+                                      item?.bankObligations?.totalObligationsPercentage <=
+                                        99
+                                          ? "rotate(180deg)"
+                                          : "rotate(0deg)",
+                                      transition: "transform 0.3s ease",
+                                    }}
                               />
                               <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
-                                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                  {item?.bankObligations?.totalObligationsPercentage || 0} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                <Typography variant="h4" sx={{  color:
+                                      item?.bankObligations?.totalObligationsPercentage <=
+                                        99
+                                          ? Colors.green_dark
+                                          : Colors.red
+                                          , fontWeight: "800", lineHeight: "1" }}>
+                                  {item?.bankObligations?.totalObligationsPercentage || 0} <span style={{ 
+                                      color:
+                                      item?.bankObligations?.totalObligationsPercentage <=
+                                        99
+                                        ? Colors.green_dark
+                                        : Colors.red, 
+                                          fontSize: "20px", 
+                                          lineHeight: "1",
+                                          }}>
+                                            %
+                                          </span>
                                 </Typography>
                               </Box>
                           </Box>
@@ -560,14 +656,32 @@ const handleDateChange = (newValue) => {
                             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                               <MovingIcon
                                 sx={{
-                                  fontSize: "32px",
-                                  transition: "transform 0.3s ease",
-                                  color: Colors.green_area,
-                                }}
+                                color:
+                                item?.bankCapitals?.totalCapitalsPercentage <=
+                                  99
+                                    ? Colors.red
+                                    : Colors.green_dark,
+                                fontSize: "48px",
+                                padding: "0px",
+                                transform:
+                                item?.bankCapitals?.totalCapitalsPercentage <=
+                                  99
+                                    ? "rotate(180deg)"
+                                    : "rotate(0deg)",
+                                transition: "transform 0.3s ease",
+                              }}
                               />
                               <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
-                                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                  {item?.bankCapitals?.totalCapitalsPercentage || 0} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                <Typography variant="h4" sx={{   color:
+                                item?.bankCapitals?.totalCapitalsPercentage <=
+                                  99
+                                    ? Colors.red
+                                    : Colors.green_dark, fontWeight: "800", lineHeight: "1" }}>
+                                  {item?.bankCapitals?.totalCapitalsPercentage || 0} <span style={{  color:
+                                item?.bankCapitals?.totalCapitalsPercentage <=
+                                  99
+                                    ? Colors.red
+                                    : Colors.green_dark, fontSize: "20px", lineHeight: "1"}}>%</span>
                                 </Typography>
                               </Box>
                           </Box>
@@ -750,15 +864,33 @@ const handleDateChange = (newValue) => {
                             {/* Box containing Icon and percentage */}
                             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                               <MovingIcon
-                                sx={{
-                                  fontSize: "32px",
-                                  transition: "transform 0.3s ease",
-                                  color: Colors.green_area,
-                                }}
+                                  sx={{
+                                    color:
+                                    item?.bankIncomes?.totalIncomesPercentage <=
+                                      99
+                                        ? Colors.red
+                                        : Colors.green_dark,
+                                    fontSize: "48px",
+                                    padding: "0px",
+                                    transform:
+                                    item?.bankIncomes?.totalIncomesPercentage <=
+                                      99
+                                        ? "rotate(180deg)"
+                                        : "rotate(0deg)",
+                                    transition: "transform 0.3s ease",
+                                  }}
                               />
                               <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
-                                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                  {item?.bankIncomes?.totalIncomesPercentage || 0} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                <Typography variant="h4" sx={{   color:
+                                    item?.bankIncomes?.totalIncomesPercentage <=
+                                      99
+                                        ? Colors.red
+                                        : Colors.green_dark, fontWeight: "800", lineHeight: "1" }}>
+                                  {item?.bankIncomes?.totalIncomesPercentage || 0} <span style={{  color:
+                                    item?.bankIncomes?.totalIncomesPercentage <=
+                                      99
+                                        ? Colors.red
+                                        : Colors.green_dark, fontSize: "20px", lineHeight: "1"}}>%</span>
                                 </Typography>
                               </Box>
                           </Box>
@@ -853,15 +985,33 @@ const handleDateChange = (newValue) => {
                             {/* Box containing Icon and percentage */}
                             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                               <MovingIcon
-                                sx={{
-                                  fontSize: "32px",
-                                  transition: "transform 0.3s ease",
-                                  color: Colors.green_area,
-                                }}
+                              sx={{
+                                color:
+                                item?.bankExpenses?.totalExpensesPercentage <=
+                                  100
+                                  ? Colors.green_dark
+                                  : Colors.red,
+                                fontSize: "48px",
+                                padding: "0px",
+                                transform:
+                                item?.bankExpenses?.totalExpensesPercentage <=
+                                  100
+                                    ? "rotate(0deg)"
+                                    : "rotate(180deg)",
+                                transition: "transform 0.3s ease",
+                              }}
                               />
                               <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
-                                <Typography variant="h4" sx={{ color: Colors.green_area, fontWeight: "800", lineHeight: "1" }}>
-                                  {item.bankExpenses.totalExpensesPercentage} <span style={{color: Colors.green_area, fontSize: "20px", lineHeight: "1"}}>%</span>
+                                <Typography variant="h4" sx={{   color:
+                                item?.bankExpenses?.totalExpensesPercentage <=
+                                  100
+                                  ? Colors.green_dark
+                                  : Colors.red, fontWeight: "800", lineHeight: "1" }}>
+                                  {item?.bankExpenses?.totalExpensesPercentage} <span style={{  color:
+                                item?.bankExpenses?.totalExpensesPercentage <=
+                                  100
+                                  ? Colors.green_dark
+                                  : Colors.red, fontSize: "20px", lineHeight: "1"}}>%</span>
                                 </Typography>
                               </Box>
                             </Box>

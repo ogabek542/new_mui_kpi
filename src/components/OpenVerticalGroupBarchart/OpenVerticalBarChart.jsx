@@ -33,7 +33,7 @@ const VerticalGroupBarChart = ({  planData, factData }) => {
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
-        barThickness: 30, // Adjust this value to make bars thicker
+        barThickness: 45, // Adjust this value to make bars thicker
       },
       {
         label: t('factlinechart'),
@@ -41,7 +41,7 @@ const VerticalGroupBarChart = ({  planData, factData }) => {
         backgroundColor: 'rgba(144, 238, 144, 0.6)', // Light green color
         borderColor: 'rgba(144, 238, 144, 1)', // Light green border color
         borderWidth: 1,
-        barThickness: 30, // Adjust this value to make bars thicker
+        barThickness: 45, // Adjust this value to make bars thicker
       },
     ],
   };

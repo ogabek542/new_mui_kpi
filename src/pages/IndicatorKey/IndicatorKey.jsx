@@ -56,7 +56,7 @@ const IndicatorKey = () => {
 
   //     try {
   //       // Format the date based on how your API expects it.
-  //       const formattedDate = selectedDate.format("YYYY-MM-DD"); 
+  //       const formattedDate = selectedDate.format("DD-MM-YYYY"); 
         
   //       // Fetch data using your REQUESTS object with the formatted date as a parameter
   //       const response = await REQUESTS.mainCalendarScreen.getMainCalendarScreen({
@@ -132,6 +132,7 @@ const IndicatorKey = () => {
               {/* <=== KEY INDEX BUTTON ====> */}
             <Button 
                 variant="contained" 
+                disabled
                 sx={{
                   textAlign: "start", 
                   bgcolor: Colors.gray_common, 
@@ -176,28 +177,21 @@ const IndicatorKey = () => {
         Основные показатели деятельности Национального банка Внешнеэкономической деятельности Республики Узбекистан по состоянию на 17.09.2024 года											
         </Typography>
       </Box>
-      <Box sx={{ marginY: "10px" }}>
-        <Box
-          sx={{
-            border: `2px solid ${Colors.gray_back}`,
-            height: "auto",
-            borderBottom: "none",
-            margin: "auto",
-            position:"relative"
-          }}
-        >
+      <Box  sx={{ marginY: "10px",position:"relative",width:"100%" }}>
+   
           {/* GRID HEADER SECTION */}
 
-          {/* <== gird 1-row ==> */}
+          {/* <== gird  HEADER SECTION ==> */}
           <Grid
             container
             sx={{
               borderBottom: `2px solid ${Colors.gray_back}`,
               borderRight: `2px solid ${Colors.gray_back}`,
-              // height: "auto",
-              height: "70px",
+              // width: "98.7%",
+              height: "90px",
               bgcolor: Colors.blue_tableheader_light,
-              // position:"fixed"
+              position: "sticky",
+              top: 0,
             }}
           >
             <Grid
@@ -597,13 +591,13 @@ const IndicatorKey = () => {
               </Box>
             </Grid>
           </Grid>
-          {/* 1 2-reow */}
+          {/* 1 1-reow */}
           <Grid
             container
             sx={{
               borderBottom: `2px solid ${Colors.gray_back}`,
               borderRight: `2px solid ${Colors.gray_back}`,
-              height: "40px",
+              height: "85px",
               bgcolor: Colors.gray_footer,
             }}
           >
@@ -625,6 +619,7 @@ const IndicatorKey = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   fontWeight: "bold",
+                  fontSize:"14px",
                 }}
               >
                 1
@@ -644,7 +639,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-start",
                   alignItems: "center",
@@ -654,9 +648,10 @@ const IndicatorKey = () => {
                   overflowWrap: "break-word",
                   wordBreak: "break-all",
                   fontWeight: "bold",
+                  fontSize:"14px",
                 }}
               >
-                Активы (нетто)
+               Начисленные проценты к получению, возмещаемые за счет субсидий Гос. Бюджета (16325+16327)
               </Typography>
             </Grid>
             {/* date div */}
@@ -673,7 +668,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignItems: "center",
@@ -702,7 +696,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignItems: "center",
@@ -731,7 +724,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignItems: "center",
@@ -760,7 +752,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignItems: "center",
@@ -922,13 +913,13 @@ const IndicatorKey = () => {
               </Box>
             </Grid>
           </Grid>
-          {/* 2 3-row */}
+          {/* 2 2-row */}
           <Grid
             container
             sx={{
               borderBottom: `2px solid ${Colors.gray_back}`,
               borderRight: `2px solid ${Colors.gray_back}`,
-              height: "40px",
+              height: "85px",
               bgcolor: Colors.gray_footer,
             }}
           >
@@ -950,9 +941,10 @@ const IndicatorKey = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   fontWeight: "bold",
+                  fontSize:"14px",
                 }}
               >
-                2
+                1
               </Typography>
             </Grid>
             <Grid
@@ -969,7 +961,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-start",
                   alignItems: "center",
@@ -979,9 +970,10 @@ const IndicatorKey = () => {
                   overflowWrap: "break-word",
                   wordBreak: "break-all",
                   fontWeight: "bold",
+                  fontSize:"14px",
                 }}
               >
-                Касса
+               Начисленные проценты к получению, возмещаемые за счет субсидий Гос. Бюджета (16325+16327)
               </Typography>
             </Grid>
             {/* date div */}
@@ -998,7 +990,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignItems: "center",
@@ -1027,7 +1018,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignItems: "center",
@@ -1056,7 +1046,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignItems: "center",
@@ -1085,7 +1074,6 @@ const IndicatorKey = () => {
               <Typography
                 component="span"
                 sx={{
-                  fontStyle: "uppercase",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignItems: "center",
@@ -1247,7 +1235,7 @@ const IndicatorKey = () => {
               </Box>
             </Grid>
           </Grid>
-        </Box>
+        
       </Box>
       <Footer />
     </Container>
