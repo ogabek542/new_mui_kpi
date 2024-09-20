@@ -111,7 +111,7 @@ const [usernameError, setUsernameError] = useState("");
 const [passwordError, setPasswordError] = useState("");
 const [chooseData, setChooseData] = useState([]);
 
-const [selectNewData, setSelectNewData] = useState(dayjs("2024-06-29"));
+const [selectNewData, setSelectNewData] = useState(dayjs("2024-07-29"));
 
 
 
@@ -140,7 +140,7 @@ useEffect(() => {
       const respond = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
       const calendarIndicators = respond.data;
       console.log(respond);
-      console.log(calendarIndicators, "New Fetched data");
+      console.log(calendarIndicators, "New MAIN SCREEN data");
       setChooseData(calendarIndicators);
     } catch (error) {
       console.error("Error fetching graphic indicator data:", error);
@@ -173,7 +173,7 @@ useEffect(() => {
         const respond = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
         const calendarIndicators = respond.data;
         console.log(respond);
-        console.log(calendarIndicators, "New Fetched data");
+        console.log(calendarIndicators, "New MAIN SCREEN data");
 
         // Set the fetched data to state
         setChooseData(calendarIndicators);

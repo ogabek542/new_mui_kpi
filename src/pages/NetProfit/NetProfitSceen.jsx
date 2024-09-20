@@ -255,12 +255,12 @@ const NetProfitSceen = ({ changeLang }) => {
     }
 
     // Initialize the screen with the previous day's date
-    const initializeScreen = () => {
-      const initialDate = dayjs().subtract(1, "day");
-      handleDateChange(initialDate);
-    };
+    // const initializeScreen = () => {
+    //   const initialDate = dayjs().subtract(1, "day");
+    //   handleDateChange(initialDate);
+    // };
 
-    initializeScreen();
+    // initializeScreen();
   }, [selectedFirstOption]);
 
   // const handleDateChange = (newValue) => {
