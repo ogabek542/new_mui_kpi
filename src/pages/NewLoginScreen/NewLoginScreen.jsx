@@ -22,6 +22,10 @@ import {
 // backdrop //
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import ReactImageMagnify from "react-image-magnify";
+import Modal from "@mui/material/Modal";
+import ModalImage from "../../assets/photo/NewQualityNbuModalFoto.jpg";
 
 
 // LANGUAGE SECTION //
@@ -68,13 +72,11 @@ const NewLoginScreen = () => {
       event.preventDefault();
     };
 
-    const handleLogin = async () => { 
+    const handleLogin = async () => {
         // console.log("clicked ", username, password);
         localStorage.clear();
         // navigate("/accessall");
         // const isLoggedIn = true;
-      
-      
         try {
           const formData = new FormData();
           formData.append("username", username);
@@ -87,7 +89,7 @@ const NewLoginScreen = () => {
           setPassword(""); // Clear password
           navigate("/newtestscreen", { state: { acceptNavigate: true } });
           // navigate('/');
-      
+
           if (response && response.data) {
             dispatch(loginSuccess(response.data.access));
             localStorage.setItem("token", response.data.access);
@@ -248,7 +250,7 @@ const NewLoginScreen = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoSave="off"
-          autoComplete="new-password" 
+          autoComplete="new-password"
           required
           endAdornment={
             <InputAdornment position="end">
@@ -335,7 +337,7 @@ const NewLoginScreen = () => {
             </Box>
             <Box>
             <Box display="flex" justifyContent="space-between" alignItems="center" className="nav-bottom-errlogin-section">
-      
+
       {/* Left section (can be customized with MUI styles if needed) */}
       <Box className="left-bottom" />
 
@@ -362,12 +364,115 @@ const NewLoginScreen = () => {
 
       {/* Right section (can be customized with MUI styles if needed) */}
       <Box className="right-bottom" />
-      
+
             </Box>
             </Box>
           </Box>
           {/*  */}
-      
+          <Modal
+          open={openmodal}
+          onClose={handleCloseModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <motion.div
+            className="modal__backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, transition: { delay: 0.3 } }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: { xs: "270px", sm: "450px", md: "500px", lg: "600px" },
+                height: { xs: "240px", sm: "400px", md: "400px", lg: "540px" },
+                bgcolor: Colors.gray_back,
+                border: "1px solid gray",
+                borderRadius: "10px",
+                boxShadow: 24,
+                pt: 2,
+                px: 4,
+                pb: 3,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  sx={{
+                    textTransform: "uppercase",
+                    fontWeight: "800",
+                    color: Colors.nbu,
+                    fontSize: { xs: "14px", md: "24px" },
+                  }}
+                >
+                  {t("maintextforgetpassword")}
+                </Typography>
+                <motion.div
+                  onClick={handleCloseModal}
+                  whileHover={{ scale: 1.3 }}
+                >
+                  <CancelRoundedIcon
+                    sx={{
+                      fontSize: { xs: "32px", md: "40px" },
+                      color: Colors.red,
+                      cursor: "pointer",
+                    }}
+                  />
+                </motion.div>
+              </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  // padding: "5px",
+                  textAlign: "center",
+                  margin: "auto",
+                  justifyContent: "center",
+                  objectFit: "fill",
+                  paddingBlock: "5px",
+                  borderRadius: "10px",
+                }}
+              >
+                <ReactImageMagnify
+                  {...{
+                    smallImage: {
+                      alt: "Wristwatch by Ted Baker London",
+                      isFluidWidth: true,
+                      src: ModalImage,
+                      className: "smallImage",
+                    },
+                    largeImage: {
+                      src: ModalImage,
+                      width: 1000,
+                      height: 800,
+                      className: "largeImage",
+                    },
+                    lensStyle: {
+                      backgroundColor: "rgba(255, 255, 255, 0.3)", // Semi-transparent background
+                      border: "2px solid #000", // Border styling
+                      borderRadius: "50%", // Make the lens circular
+                      width: "180px", // Width of the lens
+                      height: "180px", // Height of the lens
+                    },
+                    enlargedImageContainerDimensions: {
+                      width: "200%",
+                      height: "200%",
+                    },
+                    enlargedImagePosition: "over", // Display the magnified image over the original image
+                  }}
+                />
+              </Box>
+            </Box>
+          </motion.div>
+        </Modal>
         </Box>
   )
 }

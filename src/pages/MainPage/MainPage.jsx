@@ -3,9 +3,10 @@ import {useEffect} from "react";
 import { useContext } from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Container, Box, Typography, Button, Grid,  } from "@mui/material";
+import { Container, Box, Typography, Button, Grid, Divider,  } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { REQUESTS } from "../../api/requests.js";
 // backdrop //
@@ -64,7 +65,7 @@ const MainPage = () => {
   const changeLang = (value) => {
     i18n.changeLanguage(value)
   }
-  const {t} = useTranslation()
+  const {t} = useTranslation();
   const [showPassword, setShowPassword] = React.useState(false);
   const [backdrop, setBackdrop] = React.useState(false);
   const [openmodal, setOpenModal] = React.useState(false);
@@ -86,8 +87,8 @@ const MainPage = () => {
   const handleOpenAcceptModal = () =>  setAcceptModal(true);
   const handleCloseAcceptModal = () => setAcceptModal(false);
   const handleNavigateFirstScreen = () => navigate("/netprofit")
-    
-  
+
+
 
   // modal function //
   const handleCloseModal = () => {
@@ -110,8 +111,10 @@ const params = useParams();
 const [usernameError, setUsernameError] = useState("");
 const [passwordError, setPasswordError] = useState("");
 const [chooseData, setChooseData] = useState([]);
+const [loader,setLoader] = useState(true)
 
-const [selectNewData, setSelectNewData] = useState(dayjs("2024-07-29"));
+const [selectNewData, setSelectNewData] = useState(dayjs("2024-06-29"));
+// const [selectNewData, setSelectNewData] = useState(dayjs("2023-07-26"));
 
 
 
@@ -126,22 +129,23 @@ const insertSpaces = (text) => {
 };
 
 
-const handleNavigateKeyIndicators = () => { 
+const handleNavigateKeyIndicators = () => {
   // navigate("/keyindicatorscreen");
   navigate("/keyindicatorscreen");
 };
-const handleNavigateBalanceScreen = () => { 
+const handleNavigateBalanceScreen = () => {
+
   navigate("/balancescreen");
 };
 
-useEffect(() => { 
+useEffect(() => {
   const fetchMainPageData = async () => {
     try {
       const respond = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
       const calendarIndicators = respond.data;
       console.log(respond);
       console.log(calendarIndicators, "New MAIN SCREEN data");
-      setChooseData(calendarIndicators);
+      setChooseData(calendarIndicators); // Set fetched data
     } catch (error) {
       console.error("Error fetching graphic indicator data:", error);
       if (error.respond && error.respond.status === 404) {
@@ -151,6 +155,8 @@ useEffect(() => {
       } else {
         console.error("An error occurred:", error.message);
       }
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -158,44 +164,44 @@ useEffect(() => {
 }, []);
 
 
-useEffect(() => {
-  const fetchGraphicData = async () => {
-    try {
-      // Check if data exists in localStorage
-      const savedData = localStorage.getItem('calendarIndicators');
-      
-      if (savedData) {
-        // If data exists, parse it and set it to state
-        setChooseData(JSON.parse(savedData));
-        console.log("Data loaded from localStorage");
-      } else {
-        // If no data exists, fetch from API
-        const respond = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
-        const calendarIndicators = respond.data;
-        console.log(respond);
-        console.log(calendarIndicators, "New MAIN SCREEN data");
+// useEffect(() => {
+//   const fetchGraphicData = async () => {
+//     try {
+//       // Check if data exists in localStorage
+//       const savedData = localStorage.getItem('calendarIndicators');
 
-        // Set the fetched data to state
-        setChooseData(calendarIndicators);
+//       if (savedData) {
+//         // If data exists, parse it and set it to state
+//         setChooseData(JSON.parse(savedData));
+//         console.log("Data loaded from localStorage");
+//       } else {
+//         // If no data exists, fetch from API
+//         const respond = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
+//         const calendarIndicators = respond.data;
+//         console.log(respond);
+//         console.log(calendarIndicators, "New MAIN SCREEN data");
 
-        // Save the fetched data to localStorage
-        localStorage.setItem('calendarIndicators', JSON.stringify(calendarIndicators));
-        console.log("Data saved to localStorage");
-      }
-    } catch (error) {
-      console.error("Error fetching graphic indicator data:", error);
-      if (error.respond && error.respond.status === 404) {
-        console.error(
-          "Endpoint not found. Please check the URL or backend configuration."
-        );
-      } else {
-        console.error("An error occurred:", error.message);
-      }
-    }
-  };
+//         // Set the fetched data to state
+//         setChooseData(calendarIndicators);
 
-  fetchGraphicData();
-}, []);
+//         // Save the fetched data to localStorage
+//         localStorage.setItem('calendarIndicators', JSON.stringify(calendarIndicators));
+//         console.log("Data saved to localStorage");
+//       }
+//     } catch (error) {
+//       console.error("Error fetching graphic indicator data:", error);
+//       if (error.respond && error.respond.status === 404) {
+//         console.error(
+//           "Endpoint not found. Please check the URL or backend configuration."
+//         );
+//       } else {
+//         console.error("An error occurred:", error.message);
+//       }
+//     }
+//   };
+
+//   fetchGraphicData();
+// }, []);
 
 
 // use effect data picekr section //
@@ -212,9 +218,82 @@ useEffect(() => {
 
 // };
 
+
+useEffect(() => {
+  const fetchDataAndSave = async () => {
+    try {
+      const response = await REQUESTS.mainCalendarScreen.getMainCalendarScreen();
+      const calendarIndicators = response.data;
+      console.log(response);
+      console.log(calendarIndicators, "New MAIN SCREEN data");
+
+      // Set the fetched data to state
+      setChooseData(calendarIndicators);
+
+      // Save the fetched data to localStorage with expiration
+      const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000 * 365; // Expires in 24 hours
+      const dataToStore = {
+        data: calendarIndicators,
+        expirationTime,
+      };
+      localStorage.setItem('calendarIndicators', JSON.stringify(dataToStore));
+      console.log("Data saved to localStorage");
+    } catch (error) {
+      console.error("Error fetching data from API:", error);
+      if (error.response && error.response.status === 404) {
+        console.error(
+          "Endpoint not found. Please check the URL or backend configuration."
+        );
+      } else {
+        console.error("An error occurred:", error.message);
+      }
+    }
+  };
+
+  (async () => {
+    try {
+      const savedData = localStorage.getItem('calendarIndicators');
+
+      if (savedData) {
+        let parsedData;
+        try {
+          parsedData = JSON.parse(savedData);
+        } catch (parseError) {
+          console.error('Error parsing saved data from localStorage:', parseError);
+          // Remove the corrupted data from localStorage
+          localStorage.removeItem('calendarIndicators');
+          // Fetch new data since the saved data is invalid
+          await fetchDataAndSave();
+          return;
+        }
+
+        // Check if the data has expired
+        const currentTime = new Date().getTime();
+        if (currentTime < parsedData.expirationTime) {
+          // Data is still valid
+          setChooseData(parsedData.data);
+          console.log("Data loaded from localStorage");
+        } else {
+          // Data has expired, fetch new data
+          console.log("Data has expired, fetching new data");
+          localStorage.removeItem('calendarIndicators');
+          await fetchDataAndSave();
+        }
+      } else {
+        // No data in localStorage, fetch new data
+        await fetchDataAndSave();
+      }
+    } catch (error) {
+      console.error("Error in useEffect:", error);
+    }
+  })();
+  // Empty dependency array ensures this runs once on mount
+}, []);
+
+
 useEffect(() => {
   handleDateChange(selectNewData);
-}, [selectNewData]); 
+}, [selectNewData]);
 const handleDateChange = (newValue) => {
   setSelectNewData(newValue); // Update the selected date
 
@@ -245,7 +324,7 @@ const handleDateChange = (newValue) => {
       bgcolor: Colors.gray_back,
       width: '100%', // Ensure the container takes up 100% of the viewport width
       maxWidth: '100vw', // Ensure the container doesn't exceed the viewport width
-      '@media (min-width: 1920px)': {
+      '@media (max-width: 1920px)': {
         maxWidth: '100%', // For extra-large screens, allow full width
       },
     }}
@@ -262,71 +341,71 @@ const handleDateChange = (newValue) => {
       >
 
             <Header changeLang={changeLang} value={selectNewData} onChange={handleDateChange}/>
-      
+
             <Outlet/>
           <Box sx={{height:"55px",width:"100%",padding:"5px",bgcolor:Colors.gray_footer,marginBottom:"10px",borderRadius:"5px",display:"flex",alignItems:"center",paddingX:"10px",gap:"10px"}}>
-            <Button 
-                variant="text" 
+            <Button
+                variant="text"
                 sx={{
-                  textAlign: "start", 
-                  bgcolor: Colors.gray_footer, 
+                  textAlign: "start",
+                  bgcolor: Colors.gray_footer,
                   '&:hover': {
                     bgcolor: Colors.gray_footer, // Change this to your desired hover background color
                   }
                 }}
               >
-                <Typography sx={{fontWeight:"bold",color:Colors.blue_nbu,textTransform:"uppercase"}}>KUNLIK HISOBOTLAR</Typography>
+                <Typography sx={{fontWeight:"bold",color:Colors.blue_nbu,textTransform:"uppercase"}}>{t("dailiyInformation")}</Typography>
               </Button>
               {/* <=== KEY INDEX BUTTON ====> */}
-            <Button 
-                variant="contained" 
+            <Button
+                variant="contained"
                 sx={{
-                  textAlign: "start", 
-                  bgcolor: Colors.gray_common, 
+                  textAlign: "start",
+                  bgcolor: Colors.gray_common,
                   '&:hover': {
                     bgcolor: Colors.gray_common, // Change this to your desired hover background color
                   },
                   marginLeft:"100px",
                 }}
-                onClick={handleNavigateKeyIndicators}
+                // onClick={handleNavigateKeyIndicators}
+                onClick={handleOpenAcceptModal}
               >
-                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>ASOSIY KO'RSATKICHLAR</Typography>
+                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>{t("keyINdicatorMain")}</Typography>
               </Button>
               {/* <=== BALANS BUTTON ====> */}
-            <Button 
-                variant="contained" 
+            <Button
+                variant="contained"
                 sx={{
-                  textAlign: "start", 
-                  bgcolor: Colors.gray_common, 
+                  textAlign: "start",
+                  bgcolor: Colors.gray_common,
                   '&:hover': {
                     bgcolor: Colors.gray_common, // Change this to your desired hover background color
                   }
                 }}
-                onClick={handleNavigateBalanceScreen}
+                // onClick={handleNavigateBalanceScreen}
+                onClick={handleOpenAcceptModal}
               >
-                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>BALANS</Typography>
+                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>{t("balans")}</Typography>
               </Button>
           </Box>
           {/* <==== BARCHART CARDS SECTION ====> */}
 
-          {chooseData?.filter(item => item?.calenDate === formattedDate).map((item, index) => (
+             {chooseData?.filter(item => item?.calenDate === formattedDate).map((item, index) => (
             <Grid
               container
-              sx={{ margin: "auto" }}
               direction="row"
-              width={"100%"}
+              sx={{ margin: "auto", maxWidth: "1750px" ,marginBottom:"10px",display:"flex",justifyContent:"center"}}
               key={`${index}-${item.calenDate}`} // Use correct key prop
             >
                 {/* First div */}
                 <Grid
                     item
                     xs={12}
-                    sm={12}
+                    sm={9}
                     md={6}
                     lg={4}
                     sx={{
                       height: { xs: "400px", md: "500px" },
-                      width: "auto",
                       padding: "5px",
                     }}>
                     <Box sx={{width:"100%",height:"100%",borderRadius:"5px",padding:"10px",display:"flex",flexDirection:"column",gap:"10px",bgcolor:Colors.gray_footer,  position: "relative",
@@ -376,7 +455,7 @@ const handleDateChange = (newValue) => {
                                 />
                                 <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "center", gap: "2px" }}>
                                   <Typography variant="h4"
-                                    sx={{ 
+                                    sx={{
                                     color:
                                     item?.bankAssets?.totalActivePercentage <=
                                       99
@@ -390,8 +469,8 @@ const handleDateChange = (newValue) => {
                                     item?.bankAssets?.totalActivePercentage <=
                                       99
                                         ? Colors.red
-                                        : Colors.green_dark, 
-                                        fontSize: "20px", 
+                                        : Colors.green_dark,
+                                        fontSize: "20px",
                                         lineHeight: "1",
                                       }}
                                       >%
@@ -407,45 +486,42 @@ const handleDateChange = (newValue) => {
                           <PieChartMainChart piechartData={item?.bankAssets?.pieChartDatas ?? []} />
                           </Box>
                           {/* right side Texts */}
-                          <Box sx={{}}>
+                          <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
                                 {/* top side light blue */}
-                            <Box sx={{display:"flex",flexDirection:"column"}}>
+                            <Box sx={{display:"flex",alignItems:"center",flexDirection:"column"}}>
                                 <Box>
                                   <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsCredits")}</Typography>
-                                  <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                    <Typography sx={{color:"rgba(255, 99, 132, 0.8)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankAssets?.creditsActive || 0)}</Typography>
-                                    <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
-                                  </Box>
+                                    <Typography sx={{color:"rgba(255, 99, 132, 0.8)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankAssets?.creditsActive || 0)}</Typography>
+                                
                                 </Box>
                               {/* bottom side dark_blue national  */}
                               <Box sx={{display:"flex",flexDirection:"column"}}>
                                   <Box>
                                     <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsBankDeposits")}</Typography>
-                                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                      <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankAssets?.depositActive || 0)}</Typography>
-                                      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
-                                    </Box>
+                                      <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankAssets?.depositActive || 0)}</Typography>
                                   </Box>
                               </Box>
-                              <Box sx={{display:"flex",flexDirection:"column"}}>
+                              <Box sx={{display:"flex",flexDirection:"column",marginLeft:"-30px"}}>
                                   <Box>
-                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("assetsInvestments")}</Typography>
-                                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                      <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankAssets?.investmentActive || 0)}</Typography>
-                                      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
-                                    </Box>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"start",lineHeight:"1",textTransform:"uppercase",alignItems:"start"}}>{t("assetsInvestments")}</Typography>
+                                    <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start",alignItems:"start"}}>{insertSpaces(item?.bankAssets?.investmentActive || 0)}</Typography>
                                   </Box>
                               </Box>
                             
                               <Box sx={{display:"flex",flexDirection:"column"}}>
-                                  <Box>
-                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
-                                    <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                      <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankAssets?.othersActive || 0)}</Typography>
-                                      <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
-                                    </Box>
+                                  <Box sx={{display:"flex",flexDirection:"column",textAlign:"start",marginLeft:"-30px"}}>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"start",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
+                                    <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankAssets?.othersActive || 0)}</Typography>
                                   </Box>
                               </Box>
+                                    
+                            </Box>
+                            {/* RIGHT SIDE MLRD SECTION */}
+                            <Box sx={{display:"flex",flexDirection:"column",gap:"25px",marginTop:"15px"}}>
+                            <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                            <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                            <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                            <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                             </Box>
                           </Box>
                         </Box>
@@ -460,8 +536,11 @@ const handleDateChange = (newValue) => {
                           opacity: 0, // Initially hidden
                           transition: "opacity 300ms ease", // Smooth transition for hover
                         }}>
-                        <Button variant="contained" size={"medium"}  onClick={acceptNavigate ? handleNavigateFirstScreen : handleOpenAuthModal}>
+                        {/* <Button variant="contained" size={"medium"}  onClick={acceptNavigate ? handleNavigateFirstScreen : handleOpenAuthModal}>
                         <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
+                        </Button> */}
+                        <Button variant="contained" size={"medium"}  onClick={() => navigate("/netprofit")}>
+                         <Typography sx={{color:Colors.white,fontWeight:"800",textTransform:"uppercase"}} >{t("infobutton")}</Typography>
                         </Button>
                       </Box>
                     </Box>
@@ -470,12 +549,12 @@ const handleDateChange = (newValue) => {
                 <Grid
                   item
                   xs={12}
-                  sm={12}
+                  sm={9}
                   md={6}
                   lg={4}
                   sx={{
                     height: "500px",
-                    width:"auto",
+                    // width:"auto",
                     padding:"5px",
                   }}
                 >
@@ -531,13 +610,13 @@ const handleDateChange = (newValue) => {
                                           ? Colors.green_dark
                                           : Colors.red
                                           , fontWeight: "800", lineHeight: "1" }}>
-                                  {item?.bankObligations?.totalObligationsPercentage || 0} <span style={{ 
+                                  {item?.bankObligations?.totalObligationsPercentage || 0} <span style={{
                                       color:
                                       item?.bankObligations?.totalObligationsPercentage <=
                                         99
                                         ? Colors.green_dark
-                                        : Colors.red, 
-                                          fontSize: "20px", 
+                                        : Colors.red,
+                                          fontSize: "20px",
                                           lineHeight: "1",
                                           }}>
                                             %
@@ -550,49 +629,46 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"50%",height:"100%",}} >
-                            <HolePieChart holeData={item?.bankObligations?.doughnutData ?? []}/>  
+                            <HolePieChart holeData={item?.bankObligations?.doughnutData ?? []}/>
                             {/* <PieChartMainChart piechartData={item.bankAssets.pieChartDatas}/>   */}
                         </Box>
                         {/* right side Texts */}
-                        <Box sx={{}}>
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                             {/* top side light blue */}
-                          <Box sx={{display:"flex",flexDirection:"column"}}>
-                              <Box>
-                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("obligationCrediteLine")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(2, 13, 158, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankObligations?.creditLines || 0)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
-                                </Box>
+                            <Box sx={{display:"flex",flexDirection:"column"}}>
+                              <Box sx={{display:"flex",flexDirection:"column"}}>
+                                  <Box>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("obligationCrediteLine")}</Typography>
+                                    <Typography sx={{color:"rgba(2, 13, 158, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankObligations?.creditLines || 0)}</Typography>
+                                  </Box>
                               </Box>
-                          </Box>
-                          {/* bottom side dark_blue national  */}
-                          <Box sx={{display:"flex",flexDirection:"column"}}>
-                              <Box>
-                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("clientsDeposits")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankObligations?.clientsDeposits || 0)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
-                                </Box>
+                              {/* bottom side dark_blue national  */}
+                              <Box sx={{display:"flex",flexDirection:"column"}}>
+                                  <Box>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("clientsDeposits")}</Typography>
+                                    <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankObligations?.clientsDeposits || 0)}</Typography>
+                                  </Box>
                               </Box>
-                          </Box>
-                          <Box sx={{display:"flex",flexDirection:"column"}}>
-                              <Box>
-                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("bankDeposits")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankObligations?.banksDeposits || 0)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
-                                </Box>
+                              <Box sx={{display:"flex",flexDirection:"column"}}>
+                                  <Box>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("bankDeposits")}</Typography>
+                                    <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankObligations?.banksDeposits || 0)}</Typography>
+                                  </Box>
                               </Box>
-                          </Box>
-                          <Box sx={{display:"flex",flexDirection:"column"}}>
-                              <Box>
-                                <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankObligations?.othersObligations || 0)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
-                                </Box>
+                              <Box sx={{display:"flex",flexDirection:"column"}}>
+                                  <Box>
+                                    <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("othersText")}</Typography>
+                                    <Typography sx={{color:"rgba(144, 238, 144, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankObligations?.othersObligations || 0)}</Typography>
+                                  </Box>
                               </Box>
-                          </Box>
+                            </Box>
+                            {/* Right side mlrd text section */}
+                            <Box sx={{display:"flex",flexDirection:"column",gap:"20px"}}>
+                              <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                              <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                            </Box>
                         </Box>
                       </Box>
                     </Box>
@@ -616,12 +692,13 @@ const handleDateChange = (newValue) => {
                 <Grid
                   item
                   xs={12}
-                  sm={12}
+                  sm={9}
                   md={6}
                   lg={4}
                   sx={{
                     height: {xs:"400px",md:"500px"},
-                    width:"auto",
+                    width:{xs:"450"},
+                    // width:"auto",
                     padding:"5px",
                     position: "relative",
                     "&:hover .hover-button": {
@@ -690,7 +767,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                            <StackedBartchart  reserveFundLine={item?.bankCapitals?.reserveFundLine || 0} retainedEarningsLine={item?.bankCapitals?.retainedEarningsLine || 0} charterCapitalLine={item?.bankCapitals?.charterCapitalLine || 0} />  
+                            <StackedBartchart  reserveFundLine={item?.bankCapitals?.reserveFundLine || 0} retainedEarningsLine={item?.bankCapitals?.retainedEarningsLine || 0} charterCapitalLine={item?.bankCapitals?.charterCapitalLine || 0} />
                         </Box>
                         {/* right side Texts */}
                         <Box sx={{}}>
@@ -700,9 +777,9 @@ const handleDateChange = (newValue) => {
                               <Box>
                                 {/* 31203 TAQSIMLANMAGAN FOYDA  */}
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}> {t("retainedEarnings")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(0, 77, 77, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item.bankCapitals.retainedEarnings)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                                  <Typography sx={{color:"rgba(0, 77, 77, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"left"}}>{insertSpaces(item.bankCapitals.retainedEarnings)}</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "end",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
                           </Box>
@@ -710,9 +787,9 @@ const handleDateChange = (newValue) => {
                               <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("charterCapital")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankCapitals?.charterCapital || 0)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                                  <Typography sx={{color:"rgba(54, 162, 235, 0.6)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"left"}}>{insertSpaces(item?.bankCapitals?.charterCapital || 0)}</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "end",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
                           </Box>
@@ -722,9 +799,9 @@ const handleDateChange = (newValue) => {
                           <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("reserveFundText")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankCapitals?.reserveFund || 0)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                                  <Typography sx={{color:"rgba(76, 0, 153, 0.7)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"left"}}>{insertSpaces(item?.bankCapitals?.reserveFund || 0)}</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "end",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
                           </Box> 
@@ -746,12 +823,12 @@ const handleDateChange = (newValue) => {
                       </Button>
                     </Box>
                   </Box>
-                </Grid> 
+                </Grid>
                 {/* fourth div */}
                 <Grid
                   item
                   xs={12}
-                  sm={12}
+                  sm={9}
                   md={6}
                   lg={4}
                   sx={{
@@ -768,7 +845,7 @@ const handleDateChange = (newValue) => {
                     <Typography sx={{textAlign:"start",fontWeight:"800",fontSize:{xs:"12px",md:"20px"},}}>  {t("firstText")}</Typography>
                               {/* bottom side */}
                             <Box sx={{display:"flex",flexDirection:"column",height:"100%",justifyContent:"center",paddingBottom:"25px"}}>
-                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",height:"100%",width:"100%",gap:"20px"}}> 
+                              <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",height:"100%",width:"100%",gap:"20px"}}>
                               {/* left side roa texts */}
                               <Box
                                 sx={{
@@ -827,12 +904,12 @@ const handleDateChange = (newValue) => {
                   <Grid
                   item
                   xs={12}
-                  sm={12}
+                  sm={9}
                   md={6}
                   lg={4}
                   sx={{
                     height: {xs:"400px",md:"500px"},
-                    width:"auto",
+                    // width:"auto",
                     padding:"5px",
                     position:"relative",
                     "&:hover .hovers-button": {
@@ -899,7 +976,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                            <VerticalBarchartTwo percentageIncome={item?.bankIncomes?.percentageIncomePercentage || 0} nopercentageIncome={item?.bankIncomes?.nopercentageIncomePercentage || 0} />  
+                            <VerticalBarchartTwo percentageIncome={item?.bankIncomes?.percentageIncomePercentage || 0} nopercentageIncome={item?.bankIncomes?.nopercentageIncomePercentage || 0} />
                         </Box>
                         {/* right side Texts */}
                         <Box sx={{}}>
@@ -907,9 +984,9 @@ const handleDateChange = (newValue) => {
                           <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
                                 <Typography  sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageIncomeText")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankIncomes?.percentageIncome || 0)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+                                  <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankIncomes?.percentageIncome || 0)}</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "end",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
                           </Box>
@@ -917,9 +994,9 @@ const handleDateChange = (newValue) => {
                           <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("noPercenteageIncomeText")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
-                                  <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankIncomes?.nopercentageIncome || 0)}</Typography>
-                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-betweeen",gap:"10px"}}>
+                                  <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",textAlign:"start"}}>{insertSpaces(item?.bankIncomes?.nopercentageIncome || 0)}</Typography>
+                                  <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "end",lineHeight:"1",marginLeft:"18px"}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
                               </Box>
                           </Box>
@@ -946,12 +1023,12 @@ const handleDateChange = (newValue) => {
                 <Grid
                   item
                   xs={12}
-                  sm={12}
+                  sm={9}
                   md={6}
                   lg={4}
                   sx={{
                     height: {xs:"400px",md:"500px"},
-                    width:"auto",
+                    // width:"auto",
                     padding:"5px",
                     position: "relative",
                     "&:hover .hover-button": {
@@ -1020,7 +1097,7 @@ const handleDateChange = (newValue) => {
                       <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",height:"70%"}}>
                         {/* pie chart section  */}
                         <Box sx={{ display:"flex",alignItems:"center" ,width:"60%",height:"100%"}} >
-                        <MainPageCostBarchart percentageCost={item?.bankExpenses?.percentageCostPercentage || 0} nopercentageCost={item?.bankExpenses?.nopercentageCostPercentage || 0} />  
+                        <MainPageCostBarchart percentageCost={item?.bankExpenses?.percentageCostPercentage || 0} nopercentageCost={item?.bankExpenses?.nopercentageCostPercentage || 0} />
                         </Box>
                         {/* right side Texts */}
                         <Box sx={{}}>
@@ -1028,7 +1105,7 @@ const handleDateChange = (newValue) => {
                           <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("percentageCostText")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
                                   <Typography sx={{color:"rgba(54, 100, 200, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankExpenses?.percentageCost || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>
@@ -1038,7 +1115,7 @@ const handleDateChange = (newValue) => {
                           <Box sx={{display:"flex",flexDirection:"column"}}>
                               <Box>
                                 <Typography sx={{fontSize:"12px",color:Colors.dark,fontWeight:"bold",textAlign:"left",lineHeight:"1",textTransform:"uppercase"}}>{t("nopercentageCostText")}</Typography>
-                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-around",gap:"10px"}}>
+                                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
                                   <Typography sx={{color:"rgba(60, 179, 113, 1)",fontSize:"32px",fontWeight:"bold",width:"auto",lineHeight:"1.1",}}>{insertSpaces(item?.bankExpenses?.nopercentageCost || 0)}</Typography>
                                   <Typography sx={{color:Colors.gray,fontSize:"12px",width:"50px", wordWrap: "break-word",textAlign: "start",lineHeight:"1",}}>{t("partoneBillion")}<br/>{t("parttwoBillion")}</Typography>
                                 </Box>

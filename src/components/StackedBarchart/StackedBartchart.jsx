@@ -125,7 +125,7 @@ const StackedBarChart = ({reserveFundLine,retainedEarningsLine,charterCapitalLin
     return (
         <Card sx={{ height: '100%', width: '100%', bgcolor: 'transparent', border: 'none' }} elevation={0}>
             <CardContent sx={{ height: '100%', bgcolor: 'transparent', border: 'none' }}>
-                <Box sx={{ width: '100%', height: '100%', bgcolor: 'transparent', border: 'none' }}>
+                <Box sx={{ width: '65%', height: '100%', bgcolor: 'transparent', border: 'none' }}>
                     <Bar ref={chartRef} data={data} options={options} />
                 </Box>
             </CardContent>

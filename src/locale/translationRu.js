@@ -2,7 +2,7 @@ const translationRu = {
         // header section text //
         headerText:'ОТДЕЛ БУХГАЛТЕРСКОГО УЧЕТА И ФИНАНСОВОГО УПРАВЛЕНИЯ АО "УЗМИЛЛИЙБАНК"',
         // main section text //
-        kpicorner:"угол КПИ",
+        kpicorner:"система КПИ",
         login:"Войти",
         parol:"ПАРОЛЬ",
         access:"ВХОД",
@@ -11,6 +11,9 @@ const translationRu = {
         infobutton:"полная информация",
         maintextmodal:"После авторизации вы можете перейти на новую страницу !!!",
         maintextforgetpassword:"Взгляните !!!",
+        dailiyInformation:"ежедневные отчеты",
+        balans:"БАЛАНС",
+        keyINdicatorMain:"ОСНОВНЫЕ ПОКАЗАТЕЛИ",
         // footer section text //
         contactcenter:"Контактный центр",
         forreference:"Для корпоративных приложений",
@@ -128,7 +131,7 @@ const translationRu = {
         charterCapital:"УСТАВНЫЙ КАПИТАЛ",
         retainedEarnings:"НЕРАСПРЕДЕЛЕННАЯ ПРИБЫЛЬ",
         // fouth screen //
-        netProfitText:"ЧИСТАЯ...",
+        netProfitText:"Ч.ПРИБЫЛЬ",
         // fifth screen //
         percentageIncomeText:"ПРОЦЕНТНЫЕ ДОХОДЫ",
         noPercenteageIncomeText:"БЕСПРОЦЕНТНЫЕ ДОХОДЫ",

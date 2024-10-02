@@ -24,6 +24,11 @@ dayjs.extend(isSameOrBefore);
 const IndicatorKey = () => {
 
 
+
+  const changeLang = (value) => {
+    i18n.changeLanguage(value)
+  }
+  const {t} = useTranslation();
   const navigate = useNavigate();
   const [newdata, setNewData] = useState(dayjs());
   const [chooseData, setChooseData] = useState(null);
@@ -127,7 +132,7 @@ const IndicatorKey = () => {
                   }
                 }}
               >
-                <Typography sx={{fontWeight:"bold",color:Colors.blue_nbu,textTransform:"uppercase"}}>KUNLIK HISOBOTLAR</Typography>
+                <Typography sx={{fontWeight:"bold",color:Colors.blue_nbu,textTransform:"uppercase"}}>{t("dailiyInformation")}</Typography>
               </Button>
               {/* <=== KEY INDEX BUTTON ====> */}
             <Button 
@@ -143,7 +148,7 @@ const IndicatorKey = () => {
                 }}
                 onClick={handleNavigateKeyIndicators}
               >
-                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>ASOSIY KO'RSATKICHLAR</Typography>
+                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>{t("keyINdicatorMain")}</Typography>
               </Button>
               {/* <=== BALANS BUTTON ====> */}
             <Button 
@@ -157,7 +162,7 @@ const IndicatorKey = () => {
                 }}
                 onClick={handleNavigateBalanceScreen}
               >
-                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>BALANS</Typography>
+                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>{t("balans")}</Typography>
               </Button>
           </Box>
           {/* main title section */}

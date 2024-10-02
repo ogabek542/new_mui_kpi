@@ -2,7 +2,7 @@ const translationEn = {
         // header section text //
         headerText:"ACCOUNTING AND FINANCIAL MANAGEMENT DEPARTMENT OF UZMILLIY BANK JSC",
         // main section text //
-        kpicorner:"angle of KPI",
+        kpicorner:"CORNER of KPI",
         login:"LOGIN",
         parol:"PASSWORD",
         access:"OPEN",
@@ -11,6 +11,9 @@ const translationEn = {
         infobutton:"full information",
         maintextmodal:"After authorization you can go to a new page !!!",
         maintextforgetpassword:"Familiarize !!!",
+        dailiyInformation:"DAILY REPORTS",
+        balans:"BALANCE",
+        keyINdicatorMain:"MAIN INDICATORS",
         // footer section text //
         contactcenter:"Contact center",
         forreference:"For enterprise applications",
@@ -128,7 +131,7 @@ const translationEn = {
         charterCapital:"CHARTER CAPITAL",
         retainedEarnings:"RETAINED PROFITS",
         // fouth screen //
-        netProfitText:"NET PRO.",
+        netProfitText:"N.PROFIT",
         // fifth screen //
         percentageIncomeText:"INTEREST INCOME",
         noPercenteageIncomeText:"INTEREST FREE INCOME",

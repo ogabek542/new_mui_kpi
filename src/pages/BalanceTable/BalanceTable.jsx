@@ -26,6 +26,11 @@ dayjs.extend(isSameOrBefore);
 const BalanceTable = () => {
 
 
+
+  const changeLang = (value) => {
+    i18n.changeLanguage(value)
+  }
+  const {t} = useTranslation();
   const navigate = useNavigate();
 
   
@@ -65,7 +70,7 @@ const BalanceTable = () => {
                   }
                 }}
               >
-                <Typography sx={{fontWeight:"bold",color:Colors.blue_nbu,textTransform:"uppercase"}}>KUNLIK HISOBOTLAR</Typography>
+                <Typography sx={{fontWeight:"bold",color:Colors.blue_nbu,textTransform:"uppercase"}}>{t("dailiyInformation")}</Typography>
               </Button>
               {/* <=== KEY INDEX BUTTON ====> */}
             <Button 
@@ -80,7 +85,7 @@ const BalanceTable = () => {
                 }}
                 onClick={handleNavigateKeyIndicators}
               >
-                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>ASOSIY KO'RSATKICHLAR</Typography>
+                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>{t("keyINdicatorMain")}</Typography>
               </Button>
               {/* <=== BALANS BUTTON ====> */}
             <Button 
@@ -95,7 +100,7 @@ const BalanceTable = () => {
                 }}
                 onClick={handleNavigateBalanceScreen}
               >
-                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>BALANS</Typography>
+                <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>{t("balans")}</Typography>
               </Button>
           </Box>
     {/* <Typography sx={{display:"flex",alignItems:"center",justifyContent:"center",height:"100px"}}>Tez orada Malumot Yuklanadi</Typography> */}

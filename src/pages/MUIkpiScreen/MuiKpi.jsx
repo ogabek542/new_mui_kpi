@@ -436,7 +436,7 @@ const newDefaultImage = DefaultImage;
 
                         {/* Table Body */}
                         {tableData.map((rowData, id) => (
-                            <Grid container  key={id} sx={{gap:"4px",marginTop:"5px"}}>
+                            <Grid container  key={id} sx={{gap:"4px",marginTop:"5px",}}>
                             <Grid item xs={2.5} sm={2.5} sx={{bgcolor:Colors.blue_light_table,padding:"10px",borderRadius:"4px",display:"flex",alignItems: "center", }}>
                                 <Typography sx={{textTransform:"uppercase",fontSize:"10px",fontWeight:"bold",color:Colors.dark,display:"flex",alignItems:"center",justifyContent:"start"}}>{rowData.kpi_name}</Typography>
                             </Grid>

@@ -61,7 +61,7 @@ const LightHeader = ({changeLang}) => {
           },
         }}
       >
-        <Link to="/">
+        <Link to="#">
           <Box
             component="img"
             src={NBUlogo}

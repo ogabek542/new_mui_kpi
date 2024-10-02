@@ -104,7 +104,7 @@ const Header = ({ value, onChange }) => {
             },
           }}
         >
-          <Link to="/">
+          <Link to="#">
             <Box
               component="img"
               src={NBUlogo}
@@ -259,6 +259,10 @@ const Header = ({ value, onChange }) => {
                     fontSize: { xs: "12px", sm: "16px" },
                   },
                 },
+               height:"45px",
+                display:"flex",
+                alignItems:"center",
+                justifyContent:"center",
               }}
             />
           </LocalizationProvider>

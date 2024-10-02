@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // const API_URL = 'http://10.8.88.91:8000/';
-const API_URL = 'http://10.8.99.171:8000/';
+// const API_URL = 'http://127.0.0.1:8000/';
+const API_URL = 'http://10.8.18.31:8000/';
 const TOKEN_KEY = 'token';
 // const REFRESH_TOKEN_KEY = 'refresh_token';
 
@@ -20,20 +21,41 @@ export const axiosInstance = axios.create({
 });
 
 // export const API_BASE_URL = 'http://10.8.88.91:8000/api/';
-export const API_BASE_URL = 'http://10.8.99.171:8000/api';
+//export const API_BASE_URL = 'http://127.0.0.1:8000';
+// export const API_BASE_URL = 'http://127.0.0.1:8000/api/';
+export const API_BASE_URL = 'http://10.8.18.31:8000/api/';
 
+
+// axiosInstance.interceptors.request.use(
+//     (config) => {
+//         const token = localStorage.getItem('token');
+//         console.log('TOKEN SET', token);
+//         if (token) {
+//             config.headers['Authorization'] = `Bearer ${token}`;
+//         }
+//         return config;
+//     },
+//     (error) => Promise.reject(error)
+// );
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
-        console.log('TOKEN SET', token);
+      // Check for a custom flag to skip adding the Authorization header
+      if (!config.headers['Skip-Auth']) {
+        const token = localStorage.getItem("token");
+        console.log("TOKEN SET", token);
         if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
+          config.headers["Authorization"] = `Bearer ${token}`;
         }
-        return config;
+      } else {
+        // Remove the custom header before sending the request
+        delete config.headers['Skip-Auth'];
+        console.log("Skipping Authorization header for:", config.url);
+      }
+      return config;
     },
     (error) => Promise.reject(error)
-);
+  );
 
 // axiosInstance.interceptors.response.use(
 //     (response) => response,
@@ -58,15 +80,33 @@ axiosInstance.interceptors.request.use(
 //   );
 
 export const REQUESTS = {
-    mainCalendarScreen:{
-        getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
-        // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/?date=29.06.2024")
-        // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
-    },
-    analysisScreenOne:{
-        getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes/')
-    },
-    auth: {
+    // mainCalendarScreen:{
+    //     getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/2024/")
+    //      // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/?date=29.06.2024")
+    //     // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
+    // },
+
+    // analysisScreenOne:{
+    //     getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes/')
+    // },
+    
+mainCalendarScreen: {
+    getMainCalendarScreen: () =>
+      axiosInstance.get("/api/main-screen-data/2023/", {
+        headers: {
+          'Skip-Auth': true,
+        },
+      }),
+  },
+  analysisScreenOne: {
+    getAnalysisScreenOne: () =>
+      axiosInstance.get("/api/get-all-incomes/", {
+        headers: {
+          'Skip-Auth': true,
+        },
+      }),
+  },
+  auth: {
         login: (formData) => axiosInstance.post('/api/login/', formData),
         register: (username, password) =>
             axiosInstance.post('/register/', {username, password }),
@@ -81,6 +121,7 @@ export const REQUESTS = {
     realtimelive:{
         getRealTimeLive:() => axiosInstance.get('/api/daily-visitors')
     },
+
    
   
 };

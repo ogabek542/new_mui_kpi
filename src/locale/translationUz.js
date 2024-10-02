@@ -11,6 +11,9 @@ const translationUz = {
     infobutton:"to'liq ma'lumot",
     maintextmodal:"Aftorizatsiyadan o'tgandan keyin yangi sahifaga o'tish mumkin !!!",
     maintextforgetpassword:"Tanishib chiqing !!!",
+    dailiyInformation:"KUNLIK HISOBOTLAR",
+    balans:"BALANS",
+    keyINdicatorMain:"ASOSIY KO'RSATKICHLAR",
     // footer section text //
     contactcenter:"Kontakt markazi",
     forreference:"Korporativ murojaatlar uchun",

@@ -245,7 +245,7 @@ const NetProfitSceen = ({ changeLang }) => {
 
     fetchGraphicData();
   }, []);
-
+    // this function for select second option  //
   useEffect(() => {
     if (selectedFirstOption && selectedFirstOption.id) {
       setSecondOptions(setSelectedSecondMap[selectedFirstOption.id] || []);
@@ -303,31 +303,7 @@ const NetProfitSceen = ({ changeLang }) => {
   // };
   const handleDateChange = (newValue) => {
     setSelectNewData(newValue);
-    // const formattedDate = newValue ? dayjs(newValue).format("MM.DD.YYYY") : "";
-
-    // Filter data by selected date
-    // const selectedData = testData.filter((item) => {
-
-    // const selectedData = chooseData.map((item) => {
-    //   return selectedSecondOptions?.title === item.name;
-    // }).map((item) => {
-    //   return {
-    //     ...item,
-    //     filteredSana: item.sana
-    //       ? item.sana.filter((sanaItem) => sanaItem.date === formattedDate)
-    //       : [],
-    //   };
-    // });
-
-    // Filter and map the data
-    // const selectedData = chooseData.filter((item) => selectedSecondOptions?.title === item.name).map((item) => {
-    //   return {
-    //     ...item,
-    //     sana: item.sana ? item.sana.filter((sanaItem) => sanaItem.date === selectNewData) : [],
-    //   };
-    // });
-
-    // setChooseData(selectedData);
+   
   };
 
   const formattedDate = dayjs(selectNewData).format("DD.MM.YYYY");
@@ -423,6 +399,8 @@ const NetProfitSceen = ({ changeLang }) => {
     fetchAllIncomes();
   }, []);
 
+
+  
   return (
     <Container
       maxWidth={false}
