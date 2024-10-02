@@ -139,9 +139,13 @@ const translationUz = {
     // sixth screen //
     percentageCostText:"FOIZLI XARAJATLAR",
     nopercentageCostText:"FOIZSIZ XARAJATLAR",
-
-
-
+      // new kpi screen //
+    excel_title:"XODIMLARNING ISH KUNI ",
+    send_excel:"KUNLIK XISOBOT",
+    full_name_user:"Xodimning to'liq ismi:",
+    working_day:"Ish kuni sanasi:",
+    group_of_worker:"Hudud bo'yicha xodimlar guruhi:",
+    sector_of_worker:"Xodimlar bo'limi/ish sektori:",
 
 
 };

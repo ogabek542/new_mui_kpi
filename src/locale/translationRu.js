@@ -138,7 +138,13 @@ const translationRu = {
         // sixth screen //
         percentageCostText:"ПРОЦЕНТНЫЕ РАСХОДЫ",
         nopercentageCostText:"БЕСПРОЦЕНТНЫЕ РАСХОДЫ",
-        
+        // new kpi screen //
+        excel_title:"ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА",
+        send_excel:"ЕЖЕДНЕВНЫЙ ОТЧЕТ",
+        full_name_user:"ФИО сотрудника:",
+        working_day:"Дата рабочего дня:",
+        group_of_worker:"Группа сотрудника по направлениям:",
+        sector_of_worker:"Отдел/сектор работы сотрудника:",
 
 }
 export default translationRu 

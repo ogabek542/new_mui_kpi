@@ -28,6 +28,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 const KpiScreen = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [loader, setLoader] = React.useState(false);
   const pdfRef = useRef(null);
@@ -205,6 +206,7 @@ const KpiScreen = () => {
               </Button>
                 {/* <==== USER SEND EXCEL FILE BUTTON ====> */}
                 <Button
+                      onClick={() => navigate("kpidailiyworktable")}
                       variant="outlined"
                       sx={{
                         width: "100%",
@@ -234,7 +236,8 @@ const KpiScreen = () => {
               elevation={3}
               sx={{ height: "100%", padding: "5px", width: "100%" }}
             >
-              <MUIkpi />
+              {/* <==== SCREEN NAVIGATION ====> */}
+              <Outlet />
             </Paper>
           </Grid>
         </Grid>
