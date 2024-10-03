@@ -4,12 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite", 
-    "vite-build": "vite build", 
+    "dev": "vite",
+    "vite-build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview "
-  }
-,
+  },
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
@@ -22,7 +21,7 @@
     "@mui/icons-material": "^5.16.5",
     "@mui/material": "^5.16.6",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
-    "@mui/x-date-pickers": "^7.11.1",
+    "@mui/x-date-pickers": "^7.18.0",
     "@mui/x-date-pickers-pro": "^7.11.1",
     "@react-pdf/renderer": "^3.4.4",
     "@reduxjs/toolkit": "^2.2.7",
@@ -52,7 +51,6 @@
     "redux": "^5.0.1",
     "styled-components": "^6.1.12"
   },
-  
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

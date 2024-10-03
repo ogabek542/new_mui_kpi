@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 // const API_URL = 'http://10.8.88.91:8000/';
-// const API_URL = 'http://127.0.0.1:8000/';
 const API_URL = 'http://10.8.18.31:8000/';
 const TOKEN_KEY = 'token';
 // const REFRESH_TOKEN_KEY = 'refresh_token';
@@ -21,8 +20,6 @@ export const axiosInstance = axios.create({
 });
 
 // export const API_BASE_URL = 'http://10.8.88.91:8000/api/';
-//export const API_BASE_URL = 'http://127.0.0.1:8000';
-// export const API_BASE_URL = 'http://127.0.0.1:8000/api/';
 export const API_BASE_URL = 'http://10.8.18.31:8000/api/';
 
 
@@ -122,7 +119,6 @@ mainCalendarScreen: {
         getRealTimeLive:() => axiosInstance.get('/api/daily-visitors')
     },
 
-   
   
 };
 console.log(getToken(), 'get token');
