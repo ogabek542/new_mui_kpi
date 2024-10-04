@@ -87,7 +87,7 @@ const NewLoginScreen = () => {
           console.log("opened login");
           setUsername(""); // Clear username
           setPassword(""); // Clear password
-          navigate("/newtestscreen", { state: { acceptNavigate: true } });
+          navigate("newtestscreen", { state: { acceptNavigate: true } });
           // navigate('/');
 
           if (response && response.data) {

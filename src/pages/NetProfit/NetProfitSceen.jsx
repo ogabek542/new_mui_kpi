@@ -15,6 +15,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 import "dayjs/locale/ru";
 import { REQUESTS } from "../../api/requests.js";
 import MovingIcon from "@mui/icons-material/Moving";
@@ -23,6 +25,9 @@ import testData from "../testapi/testDataAll.jsx";
 // for holidays data //
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+// <== IMPORT LOADER ====> //
+
+import {HashLoader} from 'react-spinners';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -209,9 +214,12 @@ const NetProfitSceen = ({ changeLang }) => {
 
   // const [selectNewData, setSelectNewData] = useState(dayjs());
   const [loading, setLoading] = useState(true); // State to track loading
-  const [selectNewData, setSelectNewData] = useState(dayjs("2024-07-29"));
-  const [dateText, setDateText] = useState(dayjs().format("MM.DD.YYYY"));
+  const [selectNewData, setSelectNewData] = useState(dayjs("29.07.2024", "DD.MM.YYYY"));
+  const [dateText, setDateText] = useState(dayjs().format("DD.MM.YYYY"));
   const [chooseData, setChooseData] = useState([]);
+  // const [selectedFirstOption, setSelectedFirstOption] = useState({
+  //   title: "Республика",
+  // });
   const [selectedFirstOption, setSelectedFirstOption] = useState({
     title: "Республика",
   });
@@ -222,46 +230,73 @@ const NetProfitSceen = ({ changeLang }) => {
   const [formapData, setFormapData] = useState([]);
 
   useEffect(() => {
-    const fetchGraphicData = async () => {
-      try {
-        const respond = await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
-        const graphicIndicators = respond.data;
-        // const graphicIndicators = response?.data?.[0]?.sana || [];
-        console.log(respond, "error");
-        console.log(graphicIndicators, "Fetched data All Income ");
-        setChooseData(graphicIndicators);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching graphic indicator data:", error);
-        if (error.respond && error.respond.status === 404) {
-          console.error(
-            "Endpoint not found. Please check the URL or backend configuration."
-          );
-        } else {
-          console.error("An error occurred:", error.message);
-        }
-      }
-    };
-
-    fetchGraphicData();
-  }, []);
-    // this function for select second option  //
-  useEffect(() => {
     if (selectedFirstOption && selectedFirstOption.id) {
       setSecondOptions(setSelectedSecondMap[selectedFirstOption.id] || []);
       setSelectedSecondOptions(null); // Reset the second option
     } else {
       setSecondOptions([]);
     }
-
-    // Initialize the screen with the previous day's date
-    // const initializeScreen = () => {
-    //   const initialDate = dayjs().subtract(1, "day");
-    //   handleDateChange(initialDate);
-    // };
-
-    // initializeScreen();
   }, [selectedFirstOption]);
+
+  useEffect(() => {
+    const fetchGraphicData = async () => {
+      try {
+        setLoading(true);
+        const formattedDate = selectNewData.format("DD.MM.YYYY");
+        const params = {
+          date: formattedDate,
+          option: selectedSecondOptions?.title || "",
+        };
+        const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne(params);
+        const graphicIndicators = response.data;
+        console.log(response, "Fetched data All Income");
+        setChooseData(graphicIndicators);
+      } catch (error) {
+        console.error("Error fetching graphic indicator data:", error);
+        if (error.response && error.response.status === 404) {
+          console.error(
+            "Endpoint not found. Please check the URL or backend configuration."
+          );
+        } else {
+          console.error("An error occurred:", error.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (selectNewData && selectedSecondOptions) {
+      fetchGraphicData();
+    }
+  }, [selectNewData, selectedSecondOptions]);
+
+
+  // useEffect(() => {
+  //   const fetchGraphicData = async () => {
+  //     try {
+  //       const respond = await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
+  //       const graphicIndicators = respond.data;
+  //       console.log(respond, "error");
+  //       console.log(graphicIndicators, "Fetched data All Income ");
+  //       setChooseData(graphicIndicators);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching graphic indicator data:", error);
+  //       if (error.respond && error.respond.status === 404) {
+  //         console.error(
+  //           "Endpoint not found. Please check the URL or backend configuration."
+  //         );
+  //       } else {
+  //         console.error("An error occurred:", error.message);
+  //       }
+  //     }
+  //   };
+
+  //   fetchGraphicData();
+  // }, []);
+
+    // this function for select second option  //
+
 
   // const handleDateChange = (newValue) => {
   //   setSelectNewData(newValue);
@@ -303,7 +338,6 @@ const NetProfitSceen = ({ changeLang }) => {
   // };
   const handleDateChange = (newValue) => {
     setSelectNewData(newValue);
-   
   };
 
   const formattedDate = dayjs(selectNewData).format("DD.MM.YYYY");
@@ -321,29 +355,29 @@ const NetProfitSceen = ({ changeLang }) => {
 
   // Example holidays (add your holidays here)
   const holidays = [
-    dayjs("2024-01-01"), // New Year's Day
-    dayjs("2024-01-02"), // New Year's Day
-    dayjs("2024-03-08"), // Women's Day
-    dayjs("2024-03-11"), // Ramazan Day
-    dayjs("2024-03-21"), // Navruz Happy Day
-    dayjs("2024-03-22"), // Navruz Happy Day
-    dayjs("2024-03-23"), // Navruz Happy Day
-    dayjs("2024-04-10"), // Eid Al Fitr Day
-    dayjs("2024-04-11"), // Eid Al Fitr Day
-    dayjs("2024-04-12"), // Eid Al Fitr Day
-    dayjs("2024-05-09"), // Remember Day
-    dayjs("2024-06-16"), // Eid Al Adha Day
-    dayjs("2024-06-17"), // Eid Al Adha Day
-    dayjs("2024-06-18"), // Eid Al Adha Day
-    dayjs("2024-08-31"), // Independence Day
-    dayjs("2024-09-01"), // Independence Day
-    dayjs("2024-09-02"), // Independence Day
-    dayjs("2024-09-03"), // Independence Day
-    dayjs("2024-12-08"), // Constitution Day
-    dayjs("2024-10-01"), // Constitution Day
-    dayjs("2024-12-09"), // Happy New Year Day
-    dayjs("2024-12-30"), // Happy New Year Day
-    dayjs("2024-12-31"), // Happy New Year Day
+    dayjs("01.01.2024"), // New Year's Day
+    dayjs("02.01.2024"), // New Year's Day
+    dayjs("08.03.2024"), // Women's Day
+    dayjs("11.03.2024"), // Ramazan Day
+    dayjs("21.03.2024"), // Navruz Happy Day
+    dayjs("22.03.2024"), // Navruz Happy Day
+    dayjs("23.03.2024"), // Navruz Happy Day
+    dayjs("10.04.2024"), // Eid Al Fitr Day
+    dayjs("11.04.2024"), // Eid Al Fitr Day
+    dayjs("12.04.2024"), // Eid Al Fitr Day
+    dayjs("09.05.2024"), // Remember Day
+    dayjs("16.06.2024"), // Eid Al Adha Day
+    dayjs("17.06.2024"), // Eid Al Adha Day
+    dayjs("18.06.2024"), // Eid Al Adha Day
+    dayjs("31.08.2024"), // Independence Day
+    dayjs("01.09.2024"), // Independence Day
+    dayjs("02.09.2024"), // Independence Day
+    dayjs("03.09.2024"), // Independence Day
+    dayjs("12.08.2024"), // Constitution Day
+    dayjs("01.10.2024"), // Constitution Day
+    dayjs("09.12.2024"), // Happy New Year Day
+    dayjs("30.12.2024"), // Happy New Year Day
+    dayjs("31.12.2024"), // Happy New Year Day
     // Add more holidays as needed
   ];
 
@@ -359,48 +393,47 @@ const NetProfitSceen = ({ changeLang }) => {
     return isHoliday;
   };
 
-  useEffect(() => {
-    const fetchAllIncomes = async () => {
-      try {
-        // Check if data already exists in localStorage
-        const storedData = localStorage.getItem("graphicIndicators");
-        if (storedData) {
-          // If data exists, use it
-          setChooseData(JSON.parse(storedData));
-          console.log("Using data from localStorage");
-        } else {
-          // Fetch data from API if not in localStorage
-          const response =
-            await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
-          const graphicIndicators = response.data;
+  // useEffect(() => {
+  //   const fetchAllIncomes = async () => {
+  //     try {
+  //       // Check if data already exists in localStorage
+  //       const storedData = localStorage.getItem("graphicIndicators");
+  //       if (storedData) {
+  //         // If data exists, use it
+  //         setChooseData(JSON.parse(storedData));
+  //         console.log("Using data from localStorage");
+  //       } else {
+  //         // Fetch data from API if not in localStorage
+  //         const response =
+  //           await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
+  //         const graphicIndicators = response.data;
 
-          // Save fetched data to localStorage
-          localStorage.setItem(
-            "graphicIndicators",
-            JSON.stringify(graphicIndicators)
-          );
+  //         // Save fetched data to localStorage
+  //         localStorage.setItem(
+  //           "graphicIndicators",
+  //           JSON.stringify(graphicIndicators)
+  //         );
 
-          // Update the state with the fetched data
-          setChooseData(graphicIndicators);
-          console.log("Fetched data and stored it in localStorage");
-        }
-      } catch (error) {
-        console.error("Error fetching graphic indicator data:", error);
-        if (error.response && error.response.status === 404) {
-          console.error(
-            "Endpoint not found. Please check the URL or backend configuration."
-          );
-        } else {
-          console.error("An error occurred:", error.message);
-        }
-      }
-    };
+  //         // Update the state with the fetched data
+  //         setChooseData(graphicIndicators);
+  //         console.log("Fetched data and stored it in localStorage");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching graphic indicator data:", error);
+  //       if (error.response && error.response.status === 404) {
+  //         console.error(
+  //           "Endpoint not found. Please check the URL or backend configuration."
+  //         );
+  //       } else {
+  //         console.error("An error occurred:", error.message);
+  //       }
+  //     }
+  //   };
 
-    fetchAllIncomes();
-  }, []);
+  //   fetchAllIncomes();
+  // }, []);
 
 
-  
   return (
     <Container
       maxWidth={false}
@@ -543,15 +576,6 @@ const NetProfitSceen = ({ changeLang }) => {
                       value={selectNewData}
                       onChange={handleDateChange}
                       shouldDisableDate={shouldDisableDate}
-                      // renderInput={(params) => (
-                      //   <TextField
-                      //     {...params}
-                      //     placeholder="DD/MM/YYYY"
-                      //     fullWidth
-                      //     inputProps={{
-                      //       ...params.inputProps,
-                      //       readOnly: false, // Remove readOnly if not necessary
-                      //     }}
                           sx={{
                             ".MuiOutlinedInput-root": {
                               "& fieldset": {
@@ -595,8 +619,22 @@ const NetProfitSceen = ({ changeLang }) => {
             ))
         )
       )} */}
+    {loading ? ( <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "40vh",
+            }}
+          >
+            <HashLoader
+              color={Colors.blue_tableheader_light}
+              loading={loading}
+              size={100}
+            />
+          </Box>) : (
 
-            {chooseData.flatMap((item, index) =>
+            chooseData.flatMap((item, index) =>
               item.sana
                 ?.filter((sanaItem) => sanaItem.date === formattedDate)
                 .map((sanaItem, idx) => (
@@ -1452,8 +1490,8 @@ const NetProfitSceen = ({ changeLang }) => {
                     </Grid>
                   </Box>
                 ))
-            )}
-
+            )
+          ) }
 
           </Box>
           <Footer />

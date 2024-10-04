@@ -26,6 +26,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import SendIcon from "@mui/icons-material/Send";
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 // for holidays data //
@@ -705,7 +706,7 @@ const KpiDailiyWorkTable = () => {
                       margin: "0px", // Ensures no additional margins
                     }}
                   >
-                    <BorderColorIcon
+                    <ModeEditOutlineIcon
                       sx={{ color: Colors.nbu, width: "25px", height: "25px" }}
                     />
                   </Button>

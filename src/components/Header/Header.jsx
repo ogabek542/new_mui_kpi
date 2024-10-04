@@ -6,9 +6,6 @@ import {
   MenuItem,
   FormControl,
   Select,
-  IconButton,
-  Input,
-  InputAdornment,
 } from "@mui/material";
 import backgroundImage from "../../assets/photo/newHomePageTopImage.jpg";
 import { Colors } from "../../styles/theme";
@@ -19,6 +16,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 import "dayjs/locale/ru";
 import { useEffect } from "react";
 import i18n from "i18next";
@@ -225,17 +224,9 @@ const Header = ({ value, onChange }) => {
               // components={{
               //   OpenPickerIcon:CalendarMonthIcon
               // }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  fullWidth
-                  inputProps={{
-                    ...params.inputProps,
-                    placeholder: "DD.MM.YYYY",
-                    readOnly: true,
-                  }}
-                />
-              )}
+              format="DD.MM.YYYY" // For newer versions
+              // inputFormat="DD.MM.YYYY" // Uncomment if using older version
+              renderInput={(params) => <TextField {...params} />}
               // renderInput={(props) => <TextField {...props}/>}
               sx={{
                 ".MuiOutlinedInput-root": {
@@ -259,7 +250,7 @@ const Header = ({ value, onChange }) => {
                     fontSize: { xs: "12px", sm: "16px" },
                   },
                 },
-               height:"45px",
+                height:"45px",
                 display:"flex",
                 alignItems:"center",
                 justifyContent:"center",

@@ -1,27 +1,27 @@
-import axios from 'axios';
+import axios from "axios";
 
 // const API_URL = 'http://10.8.88.91:8000/';
-const API_URL = 'http://10.8.18.31:8000/';
-const TOKEN_KEY = 'token';
+const API_URL = "http://10.8.99.171:8000/";
+// const API_URL = 'http://10.8.18.31:8000/';
+const TOKEN_KEY = "token";
 // const REFRESH_TOKEN_KEY = 'refresh_token';
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
 export const setToken = (token) => {
-    localStorage.setItem(TOKEN_KEY, token);
+  localStorage.setItem(TOKEN_KEY, token);
 };
 
-
 export const clearToken = () => {
-localStorage.removeItem(TOKEN_KEY);
-}
+  localStorage.removeItem(TOKEN_KEY);
+};
 export const axiosInstance = axios.create({
-    baseURL: API_URL,
+  baseURL: API_URL,
 });
 
 // export const API_BASE_URL = 'http://10.8.88.91:8000/api/';
-export const API_BASE_URL = 'http://10.8.18.31:8000/api/';
-
+export const API_BASE_URL = "http://10.8.99.171:8000/api/";
+// export const API_BASE_URL = 'http://10.8.18.31:8000/api/';
 
 // axiosInstance.interceptors.request.use(
 //     (config) => {
@@ -36,23 +36,23 @@ export const API_BASE_URL = 'http://10.8.18.31:8000/api/';
 // );
 
 axiosInstance.interceptors.request.use(
-    (config) => {
-      // Check for a custom flag to skip adding the Authorization header
-      if (!config.headers['Skip-Auth']) {
-        const token = localStorage.getItem("token");
-        console.log("TOKEN SET", token);
-        if (token) {
-          config.headers["Authorization"] = `Bearer ${token}`;
-        }
-      } else {
-        // Remove the custom header before sending the request
-        delete config.headers['Skip-Auth'];
-        console.log("Skipping Authorization header for:", config.url);
+  (config) => {
+    // Check for a custom flag to skip adding the Authorization header
+    if (!config.headers["Skip-Auth"]) {
+      const token = localStorage.getItem("token");
+      console.log("TOKEN SET", token);
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
       }
-      return config;
-    },
-    (error) => Promise.reject(error)
-  );
+    } else {
+      // Remove the custom header before sending the request
+      delete config.headers["Skip-Auth"];
+      console.log("Skipping Authorization header for:", config.url);
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // axiosInstance.interceptors.response.use(
 //     (response) => response,
@@ -77,52 +77,65 @@ axiosInstance.interceptors.request.use(
 //   );
 
 export const REQUESTS = {
-    // mainCalendarScreen:{
-    //     getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/2024/")
-    //      // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/?date=29.06.2024")
-    //     // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
-    // },
+  // mainCalendarScreen:{
+  //     getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/2024/")
+  //      // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/?date=29.06.2024")
+  //     // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
+  // },
 
-    // analysisScreenOne:{
-    //     getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes/')
-    // },
-    
-mainCalendarScreen: {
-    getMainCalendarScreen: () =>
-      axiosInstance.get("/api/main-screen-data/2023/", {
+  // analysisScreenOne:{
+  //     getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes/')
+  // },
+
+  // mainCalendarScreen: {
+  //     getMainCalendarScreen: () =>
+  //       axiosInstance.get("/api/main-screen-data/2023/", {
+  //         headers: {
+  //           'Skip-Auth': true,
+  //         },
+  //       }),
+  //   },
+  mainCalendarScreen: {
+    getMainCalendarScreen: (params) =>
+      axiosInstance.get("/api/main-screen-data/", {
         headers: {
-          'Skip-Auth': true,
+          "Skip-Auth": true,
         },
+        params: params, // Include the params here
       }),
   },
+  // analysisScreenOne: {
+  //   getAnalysisScreenOne: () =>
+  //     axiosInstance.get("/api/get-all-incomes/", {
+  //       headers: {
+  //         "Skip-Auth": true,
+  //       },
+  //     }),
+  // },
   analysisScreenOne: {
-    getAnalysisScreenOne: () =>
+    getAnalysisScreenOne: (params) =>
       axiosInstance.get("/api/get-all-incomes/", {
         headers: {
-          'Skip-Auth': true,
+          "Skip-Auth": true,
         },
+        params: params,
       }),
   },
   auth: {
-        login: (formData) => axiosInstance.post('/api/login/', formData),
-        register: (username, password) =>
-            axiosInstance.post('/register/', {username, password }),
-        logout: () => axiosInstance.post('/logout/'),
-    },
-    user:{
-        getUser:() => axiosInstance.get('/api/employees/'),
-    },
-    live: {
-        getLive:() => axiosInstance.get('/api/daily-visitors')
-    },
-    realtimelive:{
-        getRealTimeLive:() => axiosInstance.get('/api/daily-visitors')
-    },
-
-  
+    login: (formData) => axiosInstance.post("/api/login/", formData),
+    register: (username, password) =>
+      axiosInstance.post("/register/", { username, password }),
+    logout: () => axiosInstance.post("/logout/"),
+  },
+  user: {
+    getUser: () => axiosInstance.get("/api/employees/"),
+  },
+  live: {
+    getLive: () => axiosInstance.get("/api/daily-visitors"),
+  },
+  realtimelive: {
+    getRealTimeLive: () => axiosInstance.get("/api/daily-visitors"),
+  },
 };
-console.log(getToken(), 'get token');
+console.log(getToken(), "get token");
 // console.log(getRefreshToken(),'ok refresh')
-
-
-
