@@ -120,8 +120,13 @@ const KpiScreen = () => {
           alignItems="stretch"
         >
           {/* Left side (3 columns) */}
-          <Grid item xs={2} sm={2} sx={{ height: "auto" }}>
-            <Paper elevation={3} sx={{ height: "100%", padding: "16px" }}>
+          <Grid
+            item
+            xs={2}
+            sm={2}
+            sx={{ height: "auto", position: "relative" }}
+          >
+            <Paper elevation={3} sx={{ height: "100%", padding: "15px" }}>
               <Typography
                 variant="h6"
                 sx={{ color: Colors.nbu, fontWeight: "bold" }}
@@ -165,73 +170,76 @@ const KpiScreen = () => {
                   />
                 )}
               />
-              {/* <== PRESS DPF FILE BUTTON ===> */}
+
+              {/* <==== USER SEND EXCEL FILE BUTTON ====> */}
               <Button
-  variant="outlined"
-  sx={{
-    width: "100%",
-    height: "30px",
-    marginTop: "15px",
-    borderColor: "#083473", // Button border color
-    color: "#083473", // Button text and icon color
-    "&:hover": {
-      borderColor: "#083473", // Border color on hover
-      backgroundColor: "#083473", // Light blue background on hover
-      color: "white", // Change text color to white on hover
+                onClick={() => navigate("kpidailiyworktable")}
+                variant="outlined"
+                sx={{
+                  width: "100%",
+                  height: "50px",
+                  marginTop: "15px",
+                  borderColor: "#083473", // Button border color
+                  color: "#083473", // Button text and icon color
+                  "&:hover": {
+                    borderColor: "#083473", // Border color on hover
+                    backgroundColor: "#083473", // Optional: Light blue background on hover
+                    color: "white",
+                  },
+                }}
+              >
+                {t("send_excel")}
+              </Button>
 
-      // Nested icon hover styles
-      ".MuiSvgIcon-root": {
-        color: "white", // Change icon color on hover
-      },
-    },
-  }}
-  disabled={loader}
-  onClick={downloadPDF}
-  endIcon={
-    loader ? (
-      <RefreshOutlinedIcon
-        sx={{
-          color: "#083473", // Icon color
-          animation: "spin 2s linear infinite",
-          "@keyframes spin": {
-            "0%": {
-              transform: "rotate(0deg)",
-            },
-            "100%": {
-              transform: "rotate(360deg)",
-            },
-          },
-        }}
-      />
-    ) : (
-      <PictureAsPdfIcon sx={{ color: "#083473" }} /> // Default icon color
-    )
-  }
->
-  {loader ? t("printing") : t("print")}
-</Button>
-
-                {/* <==== USER SEND EXCEL FILE BUTTON ====> */}
+              {/* <== PRESS DPF FILE BUTTON ===> */}
+              <Box sx={{ position: "absolute", bottom: 0, left: 0 ,width:"100%",padding:"16px"}}>
                 <Button
-                      onClick={() => navigate("kpidailiyworktable")}
-                      variant="outlined"
-                      sx={{
-                        width: "100%",
-                        height: "50px",
-                        marginTop: "15px",
-                        borderColor: "#083473", // Button border color
-                        color: "#083473", // Button text and icon color
-                        "&:hover": {
-                          borderColor: "#083473", // Border color on hover
-                          backgroundColor: "#083473", // Optional: Light blue background on hover
-                          color:"white"
-                        },
-                      }}>
-                    {t("send_excel")}
-                  </Button>
+                  variant="outlined"
+                  sx={{
+                    width: "100%",
+                    height: "40px",
+                    borderColor: "#083473", // Button border color
+                    color: "#083473", // Button text and icon color
+                    "&:hover": {
+                      borderColor: "#083473", // Border color on hover
+                      backgroundColor: "#083473", // Light blue background on hover
+                      color: "white", // Change text color to white on hover
+
+                      // Nested icon hover styles
+                      ".MuiSvgIcon-root": {
+                        color: "white", // Change icon color on hover
+                      },
+                    },
+                  }}
+                  disabled={loader}
+                  onClick={downloadPDF}
+                  endIcon={
+                    loader ? (
+                      <RefreshOutlinedIcon
+                        sx={{
+                          color: "#083473", // Icon color
+                          animation: "spin 2s linear infinite",
+                          "@keyframes spin": {
+                            "0%": {
+                              transform: "rotate(0deg)",
+                            },
+                            "100%": {
+                              transform: "rotate(360deg)",
+                            },
+                          },
+                        }}
+                      />
+                    ) : (
+                      <PictureAsPdfIcon sx={{ color: "#083473" }} /> // Default icon color
+                    )
+                  }
+                >
+                  {loader ? t("printing") : t("print")}
+                </Button>
+              </Box>
             </Paper>
           </Grid>
-          {/* Right side (9 columns) */}
+          {/* <=== Right side CHANGE SCREENS ===> */}
           <Grid
             item
             xs={10}

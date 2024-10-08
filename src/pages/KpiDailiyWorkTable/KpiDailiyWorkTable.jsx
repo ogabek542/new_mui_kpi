@@ -1,9 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Container,
   Box,
-  Grid,
-  Typography,
   Button,
   Dialog,
   DialogTitle,
@@ -14,6 +11,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Grid,
+  Typography,
 } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { Colors } from "../../styles/theme";
@@ -21,35 +20,65 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers";
 import { Reorder } from "framer-motion";
-// icons //
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import GetAppIcon from '@mui/icons-material/GetApp';
 import SendIcon from "@mui/icons-material/Send";
-import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-// for holidays data //
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-import { t } from "i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { useLocation } from 'react-router-dom';
+import { REQUESTS } from "../../api/requests";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 const KpiDailiyWorkTable = () => {
+
+
+
+
+  
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [open, setOpenChange] = useState(false);
   const [title, titlechange] = useState("");
   const [worktime, worktimechange] = useState("");
-  // const [startworktime,startworktimechange] = useState("");
-  // const [endworktime,endworktimechange] = useState("");
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [workType, workTypechange] = useState("");
   const [workingHistory, workingHistorychange] = useState("");
   const [workingComment, workingCommentchange] = useState("");
-  const [timeError, setTimeError] = useState(""); // To store validation errors
-  const [submitError, setSubmitError] = useState(""); // General form submit erro
+  const [timeError, setTimeError] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [editingItemId, setEditingItemId] = useState(null);
+  const { items: storedItems = [] } = useSelector((state) => state.data || {});
+  const [items, setItems] = useState(storedItems); // Local state for items
+  const [userdata, setUserData] = useState([]);
+  
+  
+  const [selectDate, setSelectDate] = useState(dayjs());
+  const formattedDate = dayjs(selectDate).format("DD.MM.YYYY");
+
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const responses = await REQUESTS.user.getUser();
+        console.log(responses);
+        const propsdata = responses.data[0];
+        setUserData(propsdata);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+   
+    getUserData();
+  }, [setUserData]);
 
   const addNewRow = () => {
     openPopup();
@@ -57,8 +86,10 @@ const KpiDailiyWorkTable = () => {
 
   const closePopup = () => {
     setOpenChange(false);
+    setEditingItemId(null);
     resetForm();
   };
+
   const openPopup = () => {
     setOpenChange(true);
   };
@@ -77,51 +108,15 @@ const KpiDailiyWorkTable = () => {
 
   useEffect(() => {
     if (!open) {
-      resetForm(); // Clear the form whenever the dialog is closed
+      resetForm();
     }
   }, [open]);
 
-  const [selectDate, setSelectDate] = useState(dayjs());
 
   const onChangeDate = (newValue) => {
     setSelectDate(newValue);
   };
 
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      title: "Идентификация юридических лиц",
-      workingTime: "15 мин",
-      startTime: "9:00",
-      endTime: "9:15",
-      workingType: "регулярная",
-      workingHistory: "да",
-      workingComment: "-",
-    },
-    {
-      id: 2,
-      title: "Оформление договоров",
-      workingTime: "30 мин",
-      startTime: "9:20",
-      endTime: "9:50",
-      workingType: "разовая",
-      workingHistory: "нет",
-      workingComment:
-        "Необходимо уточнить детали уточнить детали уточнить детали",
-    },
-    {
-      id: 3,
-      title: "Консультация клиентов",
-      workingTime: "45 мин",
-      startTime: "10:00",
-      endTime: "10:45",
-      workingType: "регулярная",
-      workingHistory: "да",
-      workingComment: "Особые случаи",
-    },
-  ]);
-
-  // <==== CALCULATE WORKING TIME =====> //
   const calculateWorkTime = () => {
     if (startTime && endTime) {
       if (dayjs(endTime).isAfter(dayjs(startTime))) {
@@ -129,20 +124,20 @@ const KpiDailiyWorkTable = () => {
         const hours = Math.floor(duration / 60);
         const minutes = duration % 60;
         worktimechange(`${hours}h ${minutes}min`);
-        setTimeError(""); // Clear error
+        setTimeError("");
       } else {
-        worktimechange(""); // Reset if invalid
-        setTimeError("End time must be after Start time."); // Custom error message
+        worktimechange("");
+        setTimeError("End time must be after Start time.");
       }
     } else {
-      setTimeError("Please select both Start Time and End Time."); // Custom error message for missing time fields
+      setTimeError("Please select both Start Time and End Time.");
     }
   };
 
-  // Whenever startTime or endTime changes, recalculate the work time
   useEffect(() => {
     calculateWorkTime();
   }, [startTime, endTime]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -157,29 +152,101 @@ const KpiDailiyWorkTable = () => {
       return;
     }
 
-    setSubmitError(""); // Clear any previous errors if form is valid
+    setSubmitError("");
 
-    // Format startTime and endTime into string representations
-    const formattedStartTime = dayjs(startTime).format("HH:mm");
-    const formattedEndTime = dayjs(endTime).format("HH:mm");
-
-    const object = {
-      id: Date.now(), // Assuming you want a unique ID based on timestamp
+    const newItem = {
+      id: editingItemId || Date.now(), // Use editingItemId if editing
       title,
-      worktime,
-      startTime: formattedStartTime, // Use formatted time
-      endTime: formattedEndTime, // Use formatted time
-      workType,
+      workingTime: worktime,
+      startTime: dayjs(startTime).format("HH:mm"),
+      endTime: dayjs(endTime).format("HH:mm"),
+      workingType: workType,
       workingHistory,
       workingComment,
-      stingDateSelected,
+      date: formattedDate,
     };
 
-    console.log(object);
-    closePopup(); // Proceed with form submission
+    let updatedItems;
+    if (editingItemId) {
+      // Edit existing item
+      updatedItems = items.map((item) =>
+        item.id === editingItemId ? newItem : item
+      );
+    } else {
+      // Add new item
+      updatedItems = [...items, newItem];
+    }
+
+    setItems(updatedItems);
+    localStorage.setItem("workItems", JSON.stringify(updatedItems));
+    closePopup();
   };
 
-  const stingDateSelected = selectDate.format("DD/MM/YYYY");
+  const handleDelete = (id) => {
+    const updatedItems = items.filter((item) => item.id !== id);
+    setItems(updatedItems);
+    localStorage.setItem("workItems", JSON.stringify(updatedItems));
+  };
+
+  const handleEdit = (item) => {
+    setEditingItemId(item.id);
+    titlechange(item.title);
+    worktimechange(item.workingTime);
+    setStartTime(dayjs(item.startTime, "HH:mm"));
+    setEndTime(dayjs(item.endTime, "HH:mm"));
+    workTypechange(item.workingType);
+    workingHistorychange(item.workingHistory);
+    workingCommentchange(item.workingComment);
+    openPopup();
+  };
+
+  const handleSend = () => {
+    const itemsForSelectedDate = items.filter(
+      (item) => item.date === formattedDate
+    );
+
+    const dataToSend = {
+      mainDate: formattedDate,
+      towDatas: itemsForSelectedDate,
+    };
+
+    console.log("Sending data to backend: ", dataToSend);
+    dispatch(REQUESTS.data.sendAllData(dataToSend))
+      .then((response) => {
+        console.log("Data sent successfully: ", response);
+      })
+      .catch((error) => {
+        console.error("Error sending data: ", error);
+      });
+  };
+
+  const handleRefresh = () => {
+    dispatch(REQUESTS.data.getData())
+      .then((response) => {
+        const filteredItems = response.data.filter(
+          (item) => item.date === formattedDate
+        );
+        setItems(filteredItems);
+        localStorage.setItem("workItems", JSON.stringify(filteredItems));
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  };
+
+
+  useEffect(() => {
+    // Load data from localStorage on component mount
+    const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
+    setItems(savedItems);
+  }, []);
+
+
+
+  const location = useLocation();
+
+
+
 
   return (
     <Box sx={{ width: "100%", height: "auto", padding: "5px" }}>
@@ -209,7 +276,10 @@ const KpiDailiyWorkTable = () => {
             <DesktopDatePicker
               value={selectDate}
               onChange={onChangeDate}
+              format="DD.MM.YYYY"
               maxDate={dayjs()}
+              onClick={handleRefresh}
+              renderInput={(params) => <TextField {...params} />}
               sx={{
                 ".MuiOutlinedInput-root": {
                   "& fieldset": {
@@ -265,16 +335,16 @@ const KpiDailiyWorkTable = () => {
             height: "50px",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold" }}>
+          <Typography sx={{ width: "50%", fontWeight: "bold",textTransform:"uppercase" }}>
             {t("full_name_user")}
           </Typography>
           <Typography
-            sx={{ width: "50%", fontWeight: "bold", textAlign: "start" }}
+            sx={{ width: "50%", fontWeight: "bold", textAlign: "start" ,color:"black"}}
           >
-            Хайдаров Достон Низомиддинович
+            { userdata.name || "нет информации"}
           </Typography>
         </Box>
-        {/* <===== WORK DAY SECTION =====> */}
+        {/* <===== WORKER FILIAL/BRANCH SECTION =====> */}
         <Box
           sx={{
             display: "flex",
@@ -287,15 +357,16 @@ const KpiDailiyWorkTable = () => {
           }}
         >
           <Typography sx={{ width: "50%", fontWeight: "bold" }}>
-            {t("working_day")}
+            {t("filial")}
           </Typography>
           <Typography
-            sx={{ width: "50%", fontWeight: "bold", textAlign: "start" }}
+            sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
           >
-            {stingDateSelected}
+            {userdata.branch || "нет информации"}
           </Typography>
         </Box>
-        {/* <=== GROUP SECTION ====> */}
+     
+        {/* <=== DIVIDION SECTION ====> */}
         <Box
           sx={{
             display: "flex",
@@ -307,33 +378,55 @@ const KpiDailiyWorkTable = () => {
             height: "50px",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold" }}>
+          <Typography sx={{ width: "50%", fontWeight: "bold",textTransform:"uppercase" }}>
             {t("group_of_worker")}
           </Typography>
           <Typography
             sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
           >
-            Группа корпоративного обслуживания
+          {userdata.division || "нет информации"}
           </Typography>
         </Box>
-        {/* <===== DEPAERTMEN SECTION =====> */}
+        {/* <===== DEPARTMENT SECTION =====> */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            borderBottom: "2px solid #AAAAAE",
             width: "100%",
             paddingLeft: "5px",
             height: "50px",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold" }}>
+          <Typography sx={{ width: "50%", fontWeight: "bold",textTransform:"uppercase" }}>
             {t("sector_of_worker")}
           </Typography>
           <Typography
             sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
           >
-            Обслуживания юр.лиц
+            {userdata.department || "нет информации"}
+          </Typography>
+        </Box>
+           {/* <==== WORKER POSITION =====>  */}
+          <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            
+            paddingLeft: "5px",
+            height: "50px",
+          }}
+        >
+          <Typography sx={{ width: "50%", fontWeight: "bold" }}>
+            {t("positionjob")}
+          </Typography>
+          <Typography
+            sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
+          >
+            {userdata.position ||  "нет информации"}
           </Typography>
         </Box>
       </Box>
@@ -507,241 +600,259 @@ const KpiDailiyWorkTable = () => {
           </Grid>
         </Grid>
       </Box>
-      {/* <==== TABLE BODY SECTION ====> */}
-      <Reorder.Group axis="y" onReorder={setItems} values={items} as="div">
-        {items.map((item, index) => (
-          <Reorder.Item key={item.id} value={item} as="div">
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                borderRadius: "5px",
-                boxShadow:
-                  "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
-                marginBottom: "5px",
-                paddingY: "5px",
-                paddingX: "4px",
-              }}
-            >
-              <Grid
-                container
+      {/* <==== TABLE BODY SECTION ====> */} 
+
+      <Reorder.Group
+        axis="y"
+        onReorder={(updatedItems) => setItems(updatedItems)}
+        values={items || []}
+        as="div"
+      >
+        {items && items.length > 0 ? (
+          items.map((item, index) => (
+            <Reorder.Item key={item.id} value={item} as="div">
+              <Box
                 sx={{
-                  height: "auto",
-                  position: "sticky",
-                  top: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  borderRadius: "5px",
+                  boxShadow:
+                    "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
+                  marginBottom: "5px",
+                  paddingY: "5px",
+                  paddingX: "4px",
                 }}
               >
                 <Grid
-                  item
-                  xs={0.3}
+                  container
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    height: "auto",
+                    position: "sticky",
+                    top: 0,
                   }}
                 >
-                  <Typography sx={{}}>{item.id}</Typography>
-                </Grid>
+                  <Grid
+                    item
+                    xs={0.3}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {/* <Typography sx={{}}>{item.id}</Typography> */}
+                  </Grid>
 
-                {/* <==== WORK TITLE ====> */}
-                <Grid
-                  item
-                  xs={3.3}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "start",
-                    textAlign: "start",
-                  }}
-                >
-                  <Typography
+                  {/* <==== WORK TITLE ====> */}
+                  <Grid
+                    item
+                    xs={3.3}
                     sx={{
-                      height: "auto",
-                      overflowWrap: "break-word",
-                      wordBreak: "break-all",
-                      lineHeight: "1.1",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "start",
+                      textAlign: "start",
                     }}
                   >
-                    {item.title}
-                  </Typography>
-                </Grid>
-                {/* <==== WORKING TIME =====> */}
-                <Grid
-                  item
-                  xs={1}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      height: "auto",
-                      overflowWrap: "break-word",
-                      wordBreak: "break-all",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {item.workingTime}
-                  </Typography>
-                </Grid>
-                {/* <==== START TIME ====> */}
-                <Grid
-                  item
-                  xs={1}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      height: "auto",
-                      overflowWrap: "break-word",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {item.startTime}
-                  </Typography>
-                </Grid>
-                {/* <==== END TIME ====> */}
-                <Grid
-                  item
-                  xs={1}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      height: "auto",
-                      overflowWrap: "break-word",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {item.endTime}
-                  </Typography>
-                </Grid>
-                {/* <==== WORK TYPE ====> */}
-                <Grid
-                  item
-                  xs={1.5}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      height: "auto",
-                      overflowWrap: "break-word",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {item.workingType}
-                  </Typography>
-                </Grid>
-                {/* <==== WORK HISTORY ====> */}
-                <Grid
-                  item
-                  xs={1.2}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      height: "auto",
-                      overflowWrap: "break-word",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    {item.workingHistory}
-                  </Typography>
-                </Grid>
-                {/* <==== WORK COMMENT ====> */}
-                <Grid
-                  item
-                  xs={2}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      height: "auto",
-                      overflowWrap: "break-word",
-                      wordBreak: "break-all",
-                      lineHeight: "1.1",
-                    }}
-                  >
-                    {item.workingComment}
-                  </Typography>
-                </Grid>
-                {/* <==== EDIT ====> */}
-                <Grid
-                  item
-                  xs={0.3}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button
-                    variant="text"
-                    sx={{
-                      minWidth: "auto", // Ensures the button adjusts to the icon size
-                      padding: "0px", // Removes padding around the button
-                      margin: "0px", // Ensures no additional margins
-                    }}
-                  >
-                    <ModeEditOutlineIcon
-                      sx={{ color: Colors.nbu, width: "25px", height: "25px" }}
-                    />
-                  </Button>
-                </Grid>
-                {/* <==== DELETE =====> */}
-                <Grid
-                  item
-                  xs={0.3}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button
-                    variant="text"
-                    sx={{
-                      minWidth: "auto", // Ensures the button adjusts to the icon size
-                      padding: "0px", // Removes padding around the button
-                      margin: "0px", // Ensures no additional margins
-                    }}
-                  >
-                    <DeleteForeverIcon
+                    <Typography
                       sx={{
-                        color: "red",
-                        width: "25px", // Adjusted icon width
-                        height: "25px", // Adjusted icon height
+                        height: "auto",
+                        overflowWrap: "break-word",
+                        wordBreak: "break-all",
+                        lineHeight: "1.1",
                       }}
-                    />
-                  </Button>
+                    >
+                      {item.title}
+                    </Typography>
+                  </Grid>
+                  {/* <==== WORKING TIME =====> */}
+                  <Grid
+                    item
+                    xs={1}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        height: "auto",
+                        overflowWrap: "break-word",
+                        wordBreak: "break-all",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {item.workingTime}
+                    </Typography>
+                  </Grid>
+                  {/* <==== START TIME ====> */}
+                  <Grid
+                    item
+                    xs={1}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        height: "auto",
+                        overflowWrap: "break-word",
+                        wordBreak: "break-all",
+                      }}
+                    >
+                      {item.startTime}
+                    </Typography>
+                  </Grid>
+                  {/* <==== END TIME ====> */}
+                  <Grid
+                    item
+                    xs={1}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        height: "auto",
+                        overflowWrap: "break-word",
+                        wordBreak: "break-all",
+                      }}
+                    >
+                      {item.endTime}
+                    </Typography>
+                  </Grid>
+                  {/* <==== WORK TYPE ====> */}
+                  <Grid
+                    item
+                    xs={1.5}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        height: "auto",
+                        overflowWrap: "break-word",
+                        wordBreak: "break-all",
+                      }}
+                    >
+                      {item.workingType}
+                    </Typography>
+                  </Grid>
+                  {/* <==== WORK HISTORY ====> */}
+                  <Grid
+                    item
+                    xs={1.2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        height: "auto",
+                        overflowWrap: "break-word",
+                        wordBreak: "break-all",
+                      }}
+                    >
+                      {item.workingHistory}
+                    </Typography>
+                  </Grid>
+                  {/* <==== WORK COMMENT ====> */}
+                  <Grid
+                    item
+                    xs={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        height: "auto",
+                        overflowWrap: "break-word",
+                        wordBreak: "break-all",
+                        lineHeight: "1.1",
+                      }}
+                    >
+                      {item.workingComment}
+                    </Typography>
+                  </Grid>
+                  {/* <==== EDIT ====> */}
+                  <Grid
+                    item
+                    xs={0.3}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Button
+                      variant="text"
+                      sx={{
+                        minWidth: "auto", // Ensures the button adjusts to the icon size
+                        padding: "0px", // Removes padding around the button
+                        margin: "0px", // Ensures no additional margins
+                      }}
+                      onClick={() => handleEdit(item)}
+                    >
+                      <ModeEditOutlineIcon
+                        sx={{
+                          color: Colors.nbu,
+                          width: "25px",
+                          height: "25px",
+                        }}
+                      />
+                    </Button>
+                  </Grid>
+                  {/* <==== DELETE =====> */}
+                  <Grid
+                    item
+                    xs={0.3}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Button
+                      variant="text"
+                      sx={{
+                        minWidth: "auto", // Ensures the button adjusts to the icon size
+                        padding: "0px", // Removes padding around the button
+                        margin: "0px", // Ensures no additional margins
+                      }}
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      <DeleteForeverIcon
+                        sx={{
+                          color: "red",
+                          width: "25px", // Adjusted icon width
+                          height: "25px", // Adjusted icon height
+                        }}
+                      />
+                    </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Box>
-          </Reorder.Item>
-        ))}
+              </Box>
+            </Reorder.Item>
+          ))
+        ) : (
+          <Typography sx={{ textAlign: "center", margin: "20px" }}>
+            No items available
+          </Typography>
+        )}
       </Reorder.Group>
 
       {/* <=== CREATE AND SEND BUTTON ====> */}
@@ -753,29 +864,57 @@ const KpiDailiyWorkTable = () => {
           justifyContent: "space-between",
         }}
       >
-        <Button
-          onClick={addNewRow}
-          variant="contained"
-          sx={{ background: Colors.nbu }}
-          endIcon={
-            <AddCircleIcon
-              sx={{ color: "white", fontSize: "20px", fontWeight: "bold" }}
-            />
-          }
-        >
-          <Typography
-            sx={{
-              fontSize: "16px",
-              fontWeight: "bold",
-              color: "white",
-              textTransform: "uppercase",
-            }}
+        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+          {/* <=== ADD NEW ROW INFORMATION ====> */}
+          <Button
+            onClick={addNewRow}
+            variant="contained"
+            sx={{ background: Colors.nbu }}
+            endIcon={
+              <AddCircleIcon
+                sx={{ color: "white", fontSize: "20px", fontWeight: "bold" }}
+              />
+            }
           >
-            Yangi Qator qo'shish{" "}
-          </Typography>
-        </Button>
+            <Typography
+              sx={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                color: "white",
+                textTransform: "uppercase",
+              }}
+            >
+              Ma'lumot qo'shish{" "}
+            </Typography>
+          </Button>
+          {/* <=== REFRESH DATA ===> */}
+          <Button
+            variant="contained"
+            onClick={handleRefresh}
+            sx={{ background: Colors.nbu }}
+            endIcon={
+              <GetAppIcon
+                sx={{ color: "white", fontSize: "20px", fontWeight: "bold" }}
+              />
+            } 
+          > 
+            <Typography
+              sx={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                color: "white",
+                textTransform: "uppercase",
+              }}
+            >
+              Yangilash
+            </Typography>
+          </Button>
+
+        </Box>
+        {/* <=== SENT BUTTON ===> */}
         <Button
           variant="contained"
+          onClick={handleSend}
           sx={{ background: Colors.nbu }}
           endIcon={
             <SendIcon
@@ -802,82 +941,49 @@ const KpiDailiyWorkTable = () => {
           <span>ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА</span>
         </DialogTitle>
         <DialogContent>
-          {/* <form > */}
           <form onSubmit={handleSubmit}>
             <Stack spacing={2} margin={2}>
-              {/* !!! NAME TEXT !!! */}
               <TextField
                 value={title}
-                onChange={(e) => {
-                  titlechange(e.target.value);
-                }}
+                onChange={(e) => titlechange(e.target.value)}
                 variant="outlined"
                 label="Что делалось на этапе"
-                required // This makes the field mandatory
+                required
               />
-
-              {/* !!!! WORKING TIME !!!! */}
               <TextField
                 value={worktime}
-                onChange={(e) => {
-                  worktimechange(e.target.value);
-                }}
+                onChange={(e) => worktimechange(e.target.value)}
                 variant="outlined"
                 label="Потраченное время"
-                required // Mandatory field
-                disabled // Disabled because it's calculated automatically
+                required
+                disabled
               />
-              {/* <==== TIME SLECTION SECTION ====> */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                {/* !!!! START TIME !!!! */}
                 <TimePicker
                   label="Начало работы"
                   value={startTime}
                   onChange={(newValue) => setStartTime(newValue)}
                   renderInput={(params) => <TextField {...params} required />}
-                  // renderInput={(params) => (
-                  //   <TextField
-                  //     {...params}
-                  //     required
-                  //     error={!startTime && Boolean(timeError)}
-                  //     helperText={!startTime ? "Start Time is required." : ""}
-                  //   />
-                  // )}
                   ampm={false}
                 />
-
-                {/* !!!! END TIME !!!! */}
                 <TimePicker
                   label="Конец работы"
                   value={endTime}
                   onChange={(newValue) => setEndTime(newValue)}
                   renderInput={(params) => <TextField {...params} required />}
-                  // renderInput={(params) => (
-                  //   <TextField
-                  //     {...params}
-                  //     required
-                  //     error={!endTime && Boolean(timeError)}
-                  //     helperText={!endTime ? "End Time is required." : ""}
-                  //   />
-                  // )}
                   ampm={false}
                 />
               </LocalizationProvider>
-              {/* General error for time validation */}
               {timeError && (
                 <Typography color="error" sx={{ fontSize: 14 }}>
                   {timeError}
                 </Typography>
               )}
-
-              {/* Custom form submit error */}
               {submitError && (
                 <Typography color="error" sx={{ fontSize: 14 }}>
                   {submitError}
                 </Typography>
               )}
-
-              {/* !!!! WORKING TYPE !!!! */}
               <FormControl variant="outlined" required>
                 <InputLabel id="work-type-label">Тип работы</InputLabel>
                 <Select
@@ -890,8 +996,6 @@ const KpiDailiyWorkTable = () => {
                   <MenuItem value="regular">регулярная</MenuItem>
                 </Select>
               </FormControl>
-
-              {/* !!!! WORKING HISTORY !!!! */}
               <FormControl variant="outlined" required>
                 <InputLabel id="working-history-label">
                   задачи в рамки должностной инструкции
@@ -906,20 +1010,15 @@ const KpiDailiyWorkTable = () => {
                   <MenuItem value="no">нет</MenuItem>
                 </Select>
               </FormControl>
-
-              {/* !!!! USER COMMENT !!!! */}
               <TextField
                 value={workingComment}
-                onChange={(e) => {
-                  workingCommentchange(e.target.value);
-                }}
+                onChange={(e) => workingCommentchange(e.target.value)}
                 variant="outlined"
                 label="Комментарии"
                 multiline
                 inputProps={{ maxLength: 180 }}
-                required // Mandatory field
+                required
               />
-              {/* <=== SUBMIT BUTTON ====> */}
               <Button
                 variant="contained"
                 type="submit"

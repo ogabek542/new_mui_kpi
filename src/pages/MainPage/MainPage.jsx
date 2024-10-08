@@ -213,12 +213,13 @@ const MainPage = () => {
           height: "100%", // Make sure the Box takes the full viewport height
         }}
       >
+
         <Header
           changeLang={changeLang}
           value={selectNewData}
           onChange={handleDateChange}
         />
-
+        
         <Outlet />
         <Box
           sx={{

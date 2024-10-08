@@ -77,24 +77,7 @@ axiosInstance.interceptors.request.use(
 //   );
 
 export const REQUESTS = {
-  // mainCalendarScreen:{
-  //     getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/2024/")
-  //      // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data/?date=29.06.2024")
-  //     // getMainCalendarScreen:() => axiosInstance.get("/api/main-screen-data")
-  // },
 
-  // analysisScreenOne:{
-  //     getAnalysisScreenOne:() => axiosInstance.get('/api/get-all-incomes/')
-  // },
-
-  // mainCalendarScreen: {
-  //     getMainCalendarScreen: () =>
-  //       axiosInstance.get("/api/main-screen-data/2023/", {
-  //         headers: {
-  //           'Skip-Auth': true,
-  //         },
-  //       }),
-  //   },
   mainCalendarScreen: {
     getMainCalendarScreen: (params) =>
       axiosInstance.get("/api/main-screen-data/", {
@@ -104,14 +87,7 @@ export const REQUESTS = {
         params: params, // Include the params here
       }),
   },
-  // analysisScreenOne: {
-  //   getAnalysisScreenOne: () =>
-  //     axiosInstance.get("/api/get-all-incomes/", {
-  //       headers: {
-  //         "Skip-Auth": true,
-  //       },
-  //     }),
-  // },
+
   analysisScreenOne: {
     getAnalysisScreenOne: (params) =>
       axiosInstance.get("/api/get-all-incomes/", {
@@ -136,6 +112,29 @@ export const REQUESTS = {
   realtimelive: {
     getRealTimeLive: () => axiosInstance.get("/api/daily-visitors"),
   },
+  data: {
+    getData: () =>
+      axiosInstance.get('/api/data/', {
+        headers: {
+          'Skip-Auth': true,
+        },
+      }),
+    addData: (newData) => axiosInstance.post('/api/data/', newData),
+    editData: (id, updatedData) => axiosInstance.put(`/api/data/${id}/`, updatedData),
+    deleteData: (id) => axiosInstance.delete(`/api/data/${id}/`),
+    sendAllData: (items) => axiosInstance.post('/api/data/bulk/', items),
+  },
+  // data: {
+    //   addData: (newData) => axiosInstance.post('/api/data/', newData),
+    //   editData: (id, updatedData) => axiosInstance.put(`/api/data/${id}/`, updatedData),
+    //   deleteData: (id) => axiosInstance.delete(`/api/data/${id}/`),
+      // getData: () =>
+      //   axiosInstance.get('/api/data/', {
+      //     headers: {
+      //       'Skip-Auth': true,
+      //     },
+      //   }),
+  // },
 };
 console.log(getToken(), "get token");
 // console.log(getRefreshToken(),'ok refresh')

@@ -81,19 +81,20 @@ const newDefaultImage = DefaultImage;
     //   .catch((error) => {
     //     console.error("Error fetching the image:", error);
     //   });
-    useEffect(() => {
-        const fetchImage = async () => {
-            try {
-                const response = await fetch(imageUrl);
-                setValidImage(response.ok);
-            } catch (error) {
-                console.error("Error fetching the image:", error);
-                setValidImage(false);
-            }
-        };
 
-        fetchImage();
-    }, [imageUrl]);
+    // useEffect(() => {
+    //     const fetchImage = async () => {
+    //         try {
+    //             const response = await fetch(imageUrl);
+    //             setValidImage(response.ok);
+    //         } catch (error) {
+    //             console.error("Error fetching the image:", error);
+    //             setValidImage(false);
+    //         }
+    //     };
+
+    //     fetchImage();
+    // }, [imageUrl]);
 
     // useEffect(() => {
     //     const fetchUserData = async () => {
@@ -142,6 +143,35 @@ const newDefaultImage = DefaultImage;
     //     return () => clearInterval(interval);
     //   }, [setTableData, setCircleData, setData, setLine, setNumberlive]);
 
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            if (!imageUrl) {
+                console.warn("Image URL is undefined or empty. Skipping fetch.");
+                setValidImage(false);
+                return;
+            }
+    
+            try {
+                const response = await fetch(imageUrl);
+                setValidImage(response.ok);
+            } catch (error) {
+                console.error("Error fetching the image:", error);
+                setValidImage(false);
+            }
+        };
+    
+        if (imageUrl) {
+            fetchImage();
+        }
+    }, [imageUrl]);
+
+    const dataToPass = {
+        someKey: "someValue",
+        anotherKey: 123,
+      };
+    
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -153,6 +183,8 @@ const newDefaultImage = DefaultImage;
                 setCircleData(newOverall);
                 setData(propsdata);
                 setLine(propsdata);
+
+
             } catch (error) {
                 console.error("Error fetching user data:", error);
             }
