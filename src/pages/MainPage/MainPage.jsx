@@ -119,7 +119,7 @@ const MainPage = () => {
   const [loading, setLoading] = useState(true); // Start with loading as true
 
   const [selectNewData, setSelectNewData] = useState(
-    dayjs("29.06.2024", "DD.MM.YYYY")
+    dayjs("29.07.2024", "DD.MM.YYYY")
   );
   // const [selectNewData, setSelectNewData] = useState(dayjs("2023-07-26"));
 
@@ -221,6 +221,8 @@ const MainPage = () => {
         />
         
         <Outlet />
+        {/* <=== TABLES BUTTON'S SECTION ===> */}
+
         <Box
           sx={{
             height: "55px",
@@ -235,6 +237,7 @@ const MainPage = () => {
             gap: "10px",
           }}
         >
+
           <Button
             variant="text"
             sx={{
@@ -288,6 +291,22 @@ const MainPage = () => {
           >
             <Typography sx={{ fontWeight: "bold", textTransform: "uppercase" }}>
               {t("balans")}
+            </Typography>
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              textAlign: "start",
+              bgcolor: Colors.gray_common,
+              "&:hover": {
+                bgcolor: Colors.gray_common, // Change this to your desired hover background color
+              },
+            }}
+            // onClick={handleNavigateBalanceScreen}
+            onClick={handleOpenAcceptModal}
+          >
+            <Typography sx={{ fontWeight: "bold", textTransform: "uppercase" }}>
+              {t("analysis")}
             </Typography>
           </Button>
         </Box>

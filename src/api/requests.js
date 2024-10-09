@@ -123,18 +123,19 @@ export const REQUESTS = {
     editData: (id, updatedData) => axiosInstance.put(`/api/data/${id}/`, updatedData),
     deleteData: (id) => axiosInstance.delete(`/api/data/${id}/`),
     sendAllData: (items) => axiosInstance.post('/api/data/bulk/', items),
+
+    // getData: () =>
+    //   axiosInstance.get('/api/data/', {
+    //     headers: {
+    //       'Skip-Auth': true,
+    //     },
+    //   }),
+    // addData: (newData) => axiosInstance.post("/api/get-all-incomes/", newData),
+    // editData: (id, updatedData) => axiosInstance.put(`/api/get-all-incomes/${id}/`, updatedData),
+    // deleteData: (id) => axiosInstance.delete(`/api/get-all-incomes/${id}/`),
+    // sendAllData: (items) => axiosInstance.post('/api/get-all-incomes/', items),
   },
-  // data: {
-    //   addData: (newData) => axiosInstance.post('/api/data/', newData),
-    //   editData: (id, updatedData) => axiosInstance.put(`/api/data/${id}/`, updatedData),
-    //   deleteData: (id) => axiosInstance.delete(`/api/data/${id}/`),
-      // getData: () =>
-      //   axiosInstance.get('/api/data/', {
-      //     headers: {
-      //       'Skip-Auth': true,
-      //     },
-      //   }),
-  // },
+  
 };
-console.log(getToken(), "get token");
+// console.log(getToken(), "get token");
 // console.log(getRefreshToken(),'ok refresh')

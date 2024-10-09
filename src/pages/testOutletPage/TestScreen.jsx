@@ -2,11 +2,13 @@ import React from 'react';
 import { Container, Box, Typography, Button, Grid ,Modal,Alert} from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from 'react';
+import { useEffect,useCallback } from 'react';
 import { useState} from 'react';
 import { REQUESTS } from '../../api/requests';
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import { logout } from "../../store/slice/userSlice";
+import {useReduxDispatch } from "../../hooks/useReduxHook"
 
 
 import { useTranslation } from "react-i18next";
@@ -19,10 +21,12 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 const NewTestScreen = () => {
+  
     const navigate = useNavigate();
     const {t} = useTranslation()
     const [userdata, setUserData] = React.useState([]);
     const [barlogin, setBarlogin] = React.useState(true);
+    const dispatch = useReduxDispatch();
     
 
     const handleOpenKPI = () => {
@@ -44,7 +48,12 @@ const NewTestScreen = () => {
        
         getUserData();
       }, [setUserData]);
-     
+      // <=== LOG OUT FUNCTION ====> /
+      const handleLogOut = useCallback(() => {
+        dispatch(logout());
+        navigate("/");
+        localStorage.clear();
+      }, [dispatch]);
 
   return (
          <Container    maxWidth={false} // This allows the container to expand beyond the default breakpoints
@@ -71,7 +80,7 @@ const NewTestScreen = () => {
               px: "10px",
               my: "5px",
               marginBottom: "10px",
-              py: { xs: "5px", sm: "5px", md: "0px" },
+              py: { xs: "5px", sm: "5px", md: "5px" },
               lineHeight: "1",
               flexDirection: {
                 xs: "column",
@@ -106,32 +115,54 @@ const NewTestScreen = () => {
         
               {/* <=== USERNAME SECTION ====> */}
               <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",gap:{xs:"0px",md:"5px"}}}>
-                <Typography variant="text" sx={{fontSize:{xs:"10px",md:"14px",lg:"16px"},fontWeight:"500",color:Colors.green_dark,textTransform:"uppercase"}}>
+                <Typography variant="text" sx={{fontSize:{xs:"10px",md:"14px",lg:"16px"},fontWeight:"400",color:Colors.green_dark,textTransform:"uppercase"}}>
                 {t("welcomekpi")}
                 </Typography>
-                <Typography variant="text" sx={{fontSize:{xs:"10px",md:"14px",lg:"16px",textTransform:"uppercase"},fontWeight:"bold",color:Colors.green_dark}}>
+                <Typography variant="text" sx={{fontSize:{xs:"10px",md:"14px",lg:"18px",textTransform:"uppercase"},fontWeight:"800",color:Colors.green_dark}}>
                 {userdata ? userdata.name : "no exist name"}
                 </Typography>
 
               </Box>
             </Box>
-            {/* <=== Forget Password ===> */}
-            <Button variant="text" color="secondary">
-              <Typography
-                sx={{
-                  fontWeight: "800",
-                  fontSize:{ xs:"10px",md:"14px",lg:"16px"},
-                  lineHeight: "1",
-                  color:Colors.blue_nbu,
-                  textTransform:"uppercase",
-                }}
-                onClick={handleOpenKPI}
-              >
-                {t("resultkpi")}
-              </Typography>
-            </Button>
+            {/* <=== ENTER KPI SCREEN BUTTON ===> */}
+            <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",gap:"10px"}}>
+              <Button variant="contained" sx={{ backgroundColor:Colors.green_dark ,   '&:hover': {
+              bgcolor: Colors.green_dark, // Set hover background color to be the same as default
+            },}}>
+                <Typography
+                  sx={{
+                    fontWeight: "800",
+                    fontSize:{ xs:"10px",md:"14px",lg:"16px"},
+                    lineHeight: "1",
+                    color:Colors.white,
+                    textTransform:"uppercase",
+                  }}
+                  onClick={handleOpenKPI}
+                >
+                  {t("resultkpi")}
+                </Typography>
+              </Button>
+              {/* <=== LOGOUT BUTTON ====> */}
+              <Button variant="contained" sx={{backgroundColor:Colors.nbu,   '&:hover': {
+              bgcolor: Colors.nbu, // Set hover background color to be the same as default
+            },}}>
+                <Typography
+                  sx={{
+                    fontWeight: "800",
+                    fontSize:{ xs:"10px",md:"14px",lg:"16px"},
+                    lineHeight: "1",
+                    color:Colors.white,
+                    textTransform:"uppercase",
+                  }}
+                  onClick={handleLogOut}
+                >
+                  {t("close")}
+                </Typography>
+              </Button>
+
+            </Box>
           </Box>
-   </Container>
+    </Container>
   )
 }
 

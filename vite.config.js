@@ -5,10 +5,10 @@ export default defineConfig({
   plugins: [react()],
 // server:{
 //   host: "10.8.18.31",
-//   port:8000,
+//   port:80,
 //   strictPort: false, 
 // },
 // preview: {
-//   port: 8000,
+//   port: 80,
 // },
 })

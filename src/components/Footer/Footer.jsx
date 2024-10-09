@@ -95,9 +95,9 @@ const Footer = ({changeLang}) => {
                     textAlign: "left",
                   }}
                 >
-                  <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.2",md:"1.5"},fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"18px"},textTransform:"capitalize"}}  color={Colors.dark}>{t("forreference")}</Typography>
+                  <Typography sx={{fontWeight:"700",lineHeight:{xl:"1.2",md:"2"},fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"18px",marginBottom:"12px"},textTransform:"capitalize"}}  color={Colors.dark}>{t("forreference")}</Typography>
                   <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>U_Rajabov@nbu.uz</Typography>
-                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>webmaster@nbu.uz</Typography>
+                  <Typography sx={{fontWeight:"600",lineHeight:"1",fontSize:{xs:"14px",sm:"10px",md:"12px",lg:"14px",xl:"16px"}}}>OOtaxonov@nbu.uz</Typography>
                 </Box>
               </Box>
             </motion.div>

@@ -114,7 +114,12 @@ const NewLoginScreen = () => {
 
         // BACKDROP FUNCTION //
   const handleCloseBackdrop = () => setBackdrop(false);
-
+// <===== ENTER PRESS FUNCTION =====> //
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin(); // Call the handleLogin function when Enter is pressed
+    }
+  };
 
 
   return (
@@ -161,97 +166,101 @@ const NewLoginScreen = () => {
                   {t("kpicorner")}
                 </Typography>
               </Button>
+              {/* <== LOGIN INPUTS BOX ===> */}
+
               <Box
-                sx={{
-                  display: { xs: "", md: "flex" },
-                  flexDirection: {
-                    xs: "column",
-                    sm: "column",
-                    md: "row",
-                  },
-                  alignItems: "center",
-                  justifyContent: "space-around",
-                }}
-              >
-                {/* <=== Login Section ===> */}
-                <TextField
-                  id="outlined-basic"
-                  label={t("login")}
-                  variant="outlined"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  size="small"
-                  autoComplete="off"
-                  autoSave="off"
-                  required
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.blue_nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    bgcolor: "white",
-                    borderRadius: "5px",
-                    marginTop: { xs: "8px", sm: "8px", md: "0px" },
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
-                {/* <== Password section ===> */}
-                  <FormControl
-                  sx={{
-                    m: 1,
-                    width: "25ch",
-                    bgcolor: "white",
-                    borderRadius: "5px",
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Default border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                  }}
-                  variant="outlined"
-                  size="small"
-                      >
-        <InputLabel htmlFor="outlined-adornment-password">{t("parol")}</InputLabel>
+      sx={{
+        display: { xs: '', md: 'flex' },
+        flexDirection: {
+          xs: 'column',
+          sm: 'column',
+          md: 'row',
+        },
+        alignItems: 'center',
+        justifyContent: 'space-around',
+      }}
+    >
+      {/* <=== Login Section ===> */}
+      <TextField
+        id="outlined-basic"
+        label={t('login')}
+        variant="outlined"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        size="small"
+        autoComplete="off"
+        autoSave="off"
+        required
+        onKeyDown={handleKeyPress} // Handle key press for Enter key
+        InputLabelProps={{
+          sx: {
+            color: Colors.blue_nbu, // Custom label text color
+            '&.Mui-focused': {
+              color: Colors.blue_nbu, // Custom label text color on focus
+            },
+          },
+        }}
+        sx={{
+          bgcolor: 'white',
+          borderRadius: '5px',
+          marginTop: { xs: '8px', sm: '8px', md: '0px' },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: Colors.blue_nbu, // Custom border color
+            },
+            '&:hover fieldset': {
+              borderColor: Colors.blue_nbu, // Border color on hover
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: Colors.blue_nbu, // Border color on focus
+            },
+          },
+          '& .MuiInputLabel-root': {
+            color: Colors.blue_nbu, // Custom label text color
+          },
+          '& .MuiInputLabel-root.Mui-focused': {
+            color: Colors.blue_nbu, // Custom label text color on focus
+          },
+        }}
+      />
+      {/* <== Password section ===> */}
+      <FormControl
+        sx={{
+          m: 1,
+          width: '25ch',
+          bgcolor: 'white',
+          borderRadius: '5px',
+          '& .MuiInputLabel-root': {
+            color: Colors.blue_nbu, // Custom label text color
+            '&.Mui-focused': {
+              color: Colors.blue_nbu, // Custom label text color on focus
+            },
+          },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: Colors.blue_nbu, // Default border color
+            },
+            '&:hover fieldset': {
+              borderColor: Colors.blue_nbu, // Border color on hover
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: Colors.blue_nbu, // Border color on focus
+            },
+          },
+        }}
+        variant="outlined"
+        size="small"
+      >
+        <InputLabel htmlFor="outlined-adornment-password">{t('parol')}</InputLabel>
         <OutlinedInput
           id="outlined-adornment-password"
-          type={showPassword ? "text" : "password"}
+          type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoSave="off"
           autoComplete="new-password"
           required
+          onKeyDown={handleKeyPress} // Handle key press for Enter key
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -270,41 +279,32 @@ const NewLoginScreen = () => {
           }
           label="ПАРОЛ"
         />
-                  </FormControl>
-                {/* <=== OPEN button ====> */}
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <Button
-                  size="medium"
-                    variant="contained"
-                    onClick={handleLogin}
-                    sx={{
-                      bgcolor: Colors.nbu,
-                      "&:hover": {
-                        bgcolor: Colors.nbu, // Set hover background color to be the same as default
-                      },
-                    }}
-                  >
-                    <Typography sx={{ color: Colors.white, fontWeight: "700" }}>
-                      {t("access")}
-                    </Typography>
-                  </Button>
-                </motion.div>
-                {/* <=== Backdrop ===> */}
-                <Backdrop
-                  sx={{
-                    color: "#fff",
-                    zIndex: (theme) => theme.zIndex.drawer + 1,
-                  }}
-                  open={backdrop}
-                  onClick={handleCloseBackdrop}
-                >
-                  <CircularProgress color="inherit" />
-                </Backdrop>
+      </FormControl>
+      {/* <=== OPEN button ====> */}
+      <motion.div
+        whileHover={{ scale: 1.1 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+      >
+        <Button
+          size="medium"
+          variant="contained"
+          onClick={handleLogin}
+          sx={{
+            bgcolor: Colors.nbu,
+            '&:hover': {
+              bgcolor: Colors.nbu, // Set hover background color to be the same as default
+            },
+          }}
+        >
+          <Typography sx={{ color: Colors.white, fontWeight: '700' }}>
+            {t('access')}
+          </Typography>
+        </Button>
+      </motion.div>
+              </Box>
 
-                {/* <=== Register section ===> */}
+              <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+                     {/* <=== Register section ===> */}
                 <Button variant="text" color="secondary" size="medium">
                   <Typography
                     sx={{
@@ -318,7 +318,6 @@ const NewLoginScreen = () => {
                     {t("register")}
                   </Typography>
                 </Button>
-              </Box>
               {/* <=== Forget Password ===> */}
               <Button variant="text" color="secondary">
                 <Typography
@@ -334,6 +333,7 @@ const NewLoginScreen = () => {
                   {t("forgetpassword")}
                 </Typography>
               </Button>
+              </Box>
             </Box>
             <Box>
             <Box display="flex" justifyContent="space-between" alignItems="center" className="nav-bottom-errlogin-section">

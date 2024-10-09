@@ -19,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />}>
           <Route index element={<NewLoginScreen />} />
+          {/* Remove the leading slash to make it a relative path */}
           <Route path="newtestscreen" element={<NewTestScreen />} />
         </Route>
         <Route path="keyindicatorscreen" element={<IndicatorKey />} />
@@ -27,6 +28,7 @@ function App() {
         <Route path="accessall" element={<AccessAll />} />
         <Route path="kpidashboard" element={<KpiScreen />}>
           <Route index element={<MuiKpi />} />
+          {/* Remove the leading slash to make it a relative path */}
           <Route path="kpidailiyworktable" element={<KpiDailiyWorkTable />} />
         </Route>
         <Route path="netprofit" element={<NetProfitSceen />} />
