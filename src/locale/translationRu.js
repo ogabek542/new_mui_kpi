@@ -29,7 +29,7 @@ const translationRu = {
         addresstextthree:"101-я авеню",
         footertext: '© 2023-2024 АО «УЗМИЛЛИЙ БАНК» ОТДЕЛ УЧЕТА И ФИНАНСОВОГО УПРАВЛЕНИЯ',
         // access all section text //
-        welcomekpi:"Добро пожаловать на нашу страницу, дорогая",
+        welcomekpi:"Добро пожаловать на нашу страницу, дорог(ая/ой)",
         resultkpi:"узнать результаты KPI",
         accessmodaltext:"Скоро будет добавлена ​​новая страница !!!",
         // KPI screen text //

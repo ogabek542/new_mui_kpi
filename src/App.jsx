@@ -32,7 +32,7 @@ function App() {
           <Route path="kpidailiyworktable" element={<KpiDailiyWorkTable />} />
         </Route>
         <Route path="netprofit" element={<NetProfitSceen />} />
-        <Route path="testscreen" element={<TestScreen />} />
+        {/* <Route path="testscreen" element={<TestScreen />} /> */}
       </Routes>
     </BrowserRouter>
   );

@@ -23,7 +23,7 @@ import { Reorder } from "framer-motion";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-import GetAppIcon from '@mui/icons-material/GetApp';
+import GetAppIcon from "@mui/icons-material/GetApp";
 import SendIcon from "@mui/icons-material/Send";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
@@ -31,18 +31,13 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { REQUESTS } from "../../api/requests";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 const KpiDailiyWorkTable = () => {
-
-
-
-
-  
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [open, setOpenChange] = useState(false);
@@ -59,11 +54,9 @@ const KpiDailiyWorkTable = () => {
   const { items: storedItems = [] } = useSelector((state) => state.data || {});
   const [items, setItems] = useState(storedItems); // Local state for items
   const [userdata, setUserData] = useState([]);
-  
-  
+
   const [selectDate, setSelectDate] = useState(dayjs());
   const formattedDate = dayjs(selectDate).format("DD.MM.YYYY");
-
 
   useEffect(() => {
     const getUserData = async () => {
@@ -76,7 +69,7 @@ const KpiDailiyWorkTable = () => {
         console.error("Error fetching user data:", error);
       }
     };
-   
+
     getUserData();
   }, [setUserData]);
 
@@ -112,7 +105,6 @@ const KpiDailiyWorkTable = () => {
     }
   }, [open]);
 
-
   const onChangeDate = (newValue) => {
     setSelectDate(newValue);
   };
@@ -123,21 +115,18 @@ const KpiDailiyWorkTable = () => {
         const duration = dayjs(endTime).diff(dayjs(startTime), "minute");
         const hours = Math.floor(duration / 60);
         const minutes = duration % 60;
-        worktimechange(`${hours}h ${minutes}min`);
+        worktimechange(`${hours} hours ${minutes} min`);
         setTimeError("");
       } else {
         worktimechange("");
         setTimeError("End time must be after Start time.");
       }
-    } else {
-      setTimeError("Please select both Start Time and End Time.");
     }
   };
 
   useEffect(() => {
     calculateWorkTime();
   }, [startTime, endTime]);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -234,19 +223,13 @@ const KpiDailiyWorkTable = () => {
       });
   };
 
-
   useEffect(() => {
     // Load data from localStorage on component mount
     const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
     setItems(savedItems);
   }, []);
 
-
-
   const location = useLocation();
-
-
-
 
   return (
     <Box sx={{ width: "100%", height: "auto", padding: "5px" }}>
@@ -335,13 +318,24 @@ const KpiDailiyWorkTable = () => {
             height: "50px",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold",textTransform:"uppercase" }}>
+          <Typography
+            sx={{
+              width: "50%",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
             {t("full_name_user")}
           </Typography>
           <Typography
-            sx={{ width: "50%", fontWeight: "bold", textAlign: "start" ,color:"black"}}
+            sx={{
+              width: "50%",
+              fontWeight: "bold",
+              textAlign: "start",
+              color: "black",
+            }}
           >
-            { userdata.name || "нет информации"}
+            {userdata.name || "нет информации"}
           </Typography>
         </Box>
         {/* <===== WORKER FILIAL/BRANCH SECTION =====> */}
@@ -365,7 +359,7 @@ const KpiDailiyWorkTable = () => {
             {userdata.branch || "нет информации"}
           </Typography>
         </Box>
-     
+
         {/* <=== DIVIDION SECTION ====> */}
         <Box
           sx={{
@@ -378,13 +372,19 @@ const KpiDailiyWorkTable = () => {
             height: "50px",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold",textTransform:"uppercase" }}>
+          <Typography
+            sx={{
+              width: "50%",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
             {t("group_of_worker")}
           </Typography>
           <Typography
             sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
           >
-          {userdata.division || "нет информации"}
+            {userdata.division || "нет информации"}
           </Typography>
         </Box>
         {/* <===== DEPARTMENT SECTION =====> */}
@@ -399,7 +399,13 @@ const KpiDailiyWorkTable = () => {
             height: "50px",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold",textTransform:"uppercase" }}>
+          <Typography
+            sx={{
+              width: "50%",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
             {t("sector_of_worker")}
           </Typography>
           <Typography
@@ -408,14 +414,14 @@ const KpiDailiyWorkTable = () => {
             {userdata.department || "нет информации"}
           </Typography>
         </Box>
-           {/* <==== WORKER POSITION =====>  */}
-          <Box
+        {/* <==== WORKER POSITION =====>  */}
+        <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             width: "100%",
-            
+
             paddingLeft: "5px",
             height: "50px",
           }}
@@ -426,7 +432,7 @@ const KpiDailiyWorkTable = () => {
           <Typography
             sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
           >
-            {userdata.position ||  "нет информации"}
+            {userdata.position || "нет информации"}
           </Typography>
         </Box>
       </Box>
@@ -600,7 +606,7 @@ const KpiDailiyWorkTable = () => {
           </Grid>
         </Grid>
       </Box>
-      {/* <==== TABLE BODY SECTION ====> */} 
+      {/* <==== TABLE BODY SECTION ====> */}
 
       <Reorder.Group
         axis="y"
@@ -864,7 +870,14 @@ const KpiDailiyWorkTable = () => {
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"10px"}}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "10px",
+          }}
+        >
           {/* <=== ADD NEW ROW INFORMATION ====> */}
           <Button
             onClick={addNewRow}
@@ -896,8 +909,8 @@ const KpiDailiyWorkTable = () => {
               <GetAppIcon
                 sx={{ color: "white", fontSize: "20px", fontWeight: "bold" }}
               />
-            } 
-          > 
+            }
+          >
             <Typography
               sx={{
                 fontSize: "16px",
@@ -909,7 +922,6 @@ const KpiDailiyWorkTable = () => {
               Yangilash
             </Typography>
           </Button>
-
         </Box>
         {/* <=== SENT BUTTON ===> */}
         <Button
@@ -936,105 +948,369 @@ const KpiDailiyWorkTable = () => {
       </Box>
 
       {/* <==== MAKE MODAL SECTION ====> */}
-      <Dialog open={open} onClose={closePopup} fullWidth maxWidth="sm">
-        <DialogTitle>
+      <Dialog open={open} onClose={closePopup} fullWidth maxWidth="md">
+        <DialogTitle sx={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
           <span>ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА</span>
+          <Typography sx={{fontWeight:"bold",fontSize:"20px",textTransform:"uppercase"}}>SANA : {formattedDate?.toString()}</Typography>
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
-            <Stack spacing={2} margin={2}>
-              <TextField
-                value={title}
-                onChange={(e) => titlechange(e.target.value)}
-                variant="outlined"
-                label="Что делалось на этапе"
-                required
-              />
-              <TextField
-                value={worktime}
-                onChange={(e) => worktimechange(e.target.value)}
-                variant="outlined"
-                label="Потраченное время"
-                required
-                disabled
-              />
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <TimePicker
-                  label="Начало работы"
-                  value={startTime}
-                  onChange={(newValue) => setStartTime(newValue)}
-                  renderInput={(params) => <TextField {...params} required />}
-                  ampm={false}
-                />
-                <TimePicker
-                  label="Конец работы"
-                  value={endTime}
-                  onChange={(newValue) => setEndTime(newValue)}
-                  renderInput={(params) => <TextField {...params} required />}
-                  ampm={false}
-                />
-              </LocalizationProvider>
-              {timeError && (
-                <Typography color="error" sx={{ fontSize: 14 }}>
-                  {timeError}
-                </Typography>
-              )}
-              {submitError && (
-                <Typography color="error" sx={{ fontSize: 14 }}>
-                  {submitError}
-                </Typography>
-              )}
-              <FormControl variant="outlined" required>
-                <InputLabel id="work-type-label">Тип работы</InputLabel>
-                <Select
-                  labelId="work-type-label"
-                  value={workType}
-                  onChange={(e) => workTypechange(e.target.value)}
-                  label="Work Type"
-                >
-                  <MenuItem value="onetime">разовая</MenuItem>
-                  <MenuItem value="regular">регулярная</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl variant="outlined" required>
-                <InputLabel id="working-history-label">
-                  задачи в рамки должностной инструкции
-                </InputLabel>
-                <Select
-                  labelId="working-history-label"
-                  value={workingHistory}
-                  onChange={(e) => workingHistorychange(e.target.value)}
-                  label="задачи в рамки должностной инструкции?"
-                >
-                  <MenuItem value="yes">да</MenuItem>
-                  <MenuItem value="no">нет</MenuItem>
-                </Select>
-              </FormControl>
-              <TextField
-                value={workingComment}
-                onChange={(e) => workingCommentchange(e.target.value)}
-                variant="outlined"
-                label="Комментарии"
-                multiline
-                inputProps={{ maxLength: 180 }}
-                required
-              />
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{ backgroundColor: Colors.nbu }}
+            <Stack
+              margin={2}
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "10px",
+              }}
+            >
+              {/* <=== LEFT SIDE ===> */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "50%",
+                  gap: "10px",
+                }}
               >
-                <Typography
+                {/* <=== TITLE INPUT ===> */}
+                <TextField
+                  value={title}
+                  onChange={(e) => titlechange(e.target.value)}
+                  variant="outlined"
+                  label="Что делалось на этапе"
+                  required
+                  multiline // To increase the height
+                  minRows={7} // Set the minimum number of rows for the TextField
+                  maxLength={50}
+                  InputLabelProps={{
+                    sx: {
+                      color: Colors.nbu, // Custom label text color
+                      "&.Mui-focused": {
+                        color: Colors.blue_nbu, // Custom label text color on focus
+                      },
+                    },
+                  }}
                   sx={{
-                    fontWeight: "bold",
-                    color: Colors.white,
-                    textTransform: "uppercase",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: Colors.blue_nbu, // Custom border color
+                      },
+                      "&:hover fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on hover
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on focus
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: Colors.blue_nbu, // Custom label text color
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: Colors.blue_nbu, // Custom label text color on focus
+                    },
+                  }}
+                />
+                {/* <=== WORKING TYPE ===> */}
+                <FormControl
+                  variant="outlined"
+                  required
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: Colors.nbu, // Custom border color
+                      },
+                      "&:hover fieldset": {
+                        borderColor: Colors.nbu, // Border color on hover
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: Colors.nbu, // Border color on focus
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: Colors.blue_nbu, // Custom label text color
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: Colors.blue_nbu, // Custom label text color on focus
+                    },
+                    "& .MuiSelect-root": {
+                      color: Colors.blue_nbu, // Custom text color inside the Select component
+                    },
                   }}
                 >
-                  qabul qilish
-                </Typography>
-              </Button>
+                  <InputLabel id="work-type-label">Тип работы</InputLabel>
+                  <Select
+                    labelId="work-type-label"
+                    value={workType}
+                    onChange={(e) => workTypechange(e.target.value)}
+                    label="Тип работы"
+                  >
+                    <MenuItem value="onetime">разовая</MenuItem>
+                    <MenuItem value="regular">регулярная</MenuItem>
+                  </Select>
+                </FormControl>
+                {/* <=== WORKING BOLLEAN YES/NO ====> */}
+                <FormControl
+                  variant="outlined"
+                  required
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: Colors.blue_nbu, // Custom border color
+                      },
+                      "&:hover fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on hover
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on focus
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: Colors.blue_nbu, // Custom label text color
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: Colors.blue_nbu, // Custom label text color on focus
+                    },
+                    "& .MuiSelect-root": {
+                      color: Colors.blue_nbu, // Custom text color inside the Select component
+                    },
+                  }}
+                >
+                  <InputLabel id="working-history-label">
+                    задачи в рамки должностной инструкции
+                  </InputLabel>
+                  <Select
+                    labelId="working-history-label"
+                    value={workingHistory}
+                    onChange={(e) => workingHistorychange(e.target.value)}
+                    label="задачи в рамки должностной инструкции?"
+                  >
+                    <MenuItem value="yes">да</MenuItem>
+                    <MenuItem value="no">нет</MenuItem>
+                  </Select>
+                </FormControl>
+                {/* <TextField
+            value={formattedDate}
+            variant="outlined"
+            label="время"
+            required
+            disabled
+            InputLabelProps={{
+              sx: {
+                color: Colors.nbu, // Custom label text color
+                "&.Mui-focused": {
+                  color: Colors.blue_nbu, // Custom label text color on focus
+                },
+              },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: Colors.blue_nbu, // Custom border color
+                },
+                "&:hover fieldset": {
+                  borderColor: Colors.blue_nbu, // Border color on hover
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: Colors.blue_nbu, // Border color on focus
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: Colors.blue_nbu, // Custom label text color
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: Colors.blue_nbu, // Custom label text color on focus
+              },
+            }}
+          /> */}
+              </Box>
+              {/* <==== RIGHT SIDE ====> */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "50%",
+                  gap: "10px",
+                }}
+              >
+                {/* <=== WORKING TIME ===> */}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  {/* <=== START TIME INPUT ====> */}
+                  <TimePicker
+                    label="Начало работы"
+                    value={startTime}
+                    onChange={(newValue) => setStartTime(newValue)}
+                    renderInput={(params) => <TextField {...params} required />}
+                    ampm={false}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: Colors.nbu, // Custom border color
+                        },
+                        "&:hover fieldset": {
+                          borderColor: Colors.nbu, // Border color on hover
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: Colors.nbu, // Border color on focus
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: Colors.nbu, // Custom label text color
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: Colors.nbu, // Custom label text color on focus
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        color: "#000", // Custom text color
+                      },
+                      "& .MuiIconButton-root": {
+                        color: Colors.nbu, // Custom color for the TimePicker icon
+                      },
+                    }}
+                  />
+                  {/* <=== END TIME INPUT ===> */}
+                  <TimePicker
+                    label="Конец работы"
+                    value={endTime}
+                    onChange={(newValue) => setEndTime(newValue)}
+                    renderInput={(params) => <TextField {...params} required />}
+                    ampm={false}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: Colors.nbu, // Custom border color
+                        },
+                        "&:hover fieldset": {
+                          borderColor: Colors.nbu, // Border color on hover
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: Colors.nbu, // Border color on focus
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: Colors.nbu, // Custom label text color
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: Colors.nbu, // Custom label text color on focus
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        color: "#000", // Custom text color
+                      },
+                      "& .MuiIconButton-root": {
+                        color: Colors.nbu, // Custom color for the TimePicker icon
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+                {/* <==== WORK TIME ====> */}
+                <TextField
+                  value={worktime}
+                  variant="standard" // Use "standard" to remove the outline
+                  label="Потраченное время"
+                  required
+                  disabled
+                  InputLabelProps={{
+                    sx: {
+                      color: Colors.nbu, // Custom label text color
+                      "&.Mui-focused": {
+                        color: Colors.blue_nbu, // Custom label text color on focus
+                      },
+                      paddingX: "20px",
+                      border: "none",
+                    },
+                  }}
+                  sx={{
+                    px: "15px", // Adjust padding shorthand
+                    mb: "10px", // Adjust margin shorthand
+                    color: Colors.nbu,
+                    border: "none",
+                    "& .MuiInput-underline:before": {
+                      borderBottom: "none !important", // Remove underline before hover/focus
+                    },
+                    "& .MuiInput-underline:hover:before": {
+                      borderBottom: "none !important", // Remove underline on hover
+                    },
+                    "& .MuiInput-underline:after": {
+                      borderBottom: "none !important", // Remove underline on focus
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: Colors.blue_nbu, // Custom label text color
+                      border: "none",
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: Colors.blue_nbu, // Custom label text color on focus
+                      border: "none",
+                    },
+                  }}
+                />
+
+                {timeError && (
+                  <Typography color="error" sx={{ fontSize: 14 }}>
+                    {timeError}
+                  </Typography>
+                )}
+                {submitError && (
+                  <Typography color="error" sx={{ fontSize: 14 }}>
+                    {submitError}
+                  </Typography>
+                )}
+                {/* <=== WORKING COMMENT ===> */}
+                <TextField
+                  value={workingComment}
+                  onChange={(e) => workingCommentchange(e.target.value)}
+                  variant="outlined"
+                  label="Комментарии"
+                  inputProps={{ maxLength: 180 }}
+                  required
+                  multiline // To increase the height
+                  minRows={4} // Set the minimum number of rows for the TextField
+                  InputLabelProps={{
+                    sx: {
+                      color: Colors.nbu, // Custom label text color
+                      "&.Mui-focused": {
+                        color: Colors.blue_nbu, // Custom label text color on focus
+                      },
+                    },
+                  }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: Colors.blue_nbu, // Custom border color
+                      },
+                      "&:hover fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on hover
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: Colors.blue_nbu, // Border color on focus
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      color: Colors.blue_nbu, // Custom label text color
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: Colors.blue_nbu, // Custom label text color on focus
+                    },
+                  }}
+                />
+              </Box>
             </Stack>
+            {/* <=== SUBMIT BUTTON ===> */}
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ backgroundColor: Colors.nbu, width: "100%" }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: "bold",
+                  color: Colors.white,
+                  textTransform: "uppercase",
+                }}
+              >
+                qabul qilish
+              </Typography>
+            </Button>
           </form>
         </DialogContent>
       </Dialog>

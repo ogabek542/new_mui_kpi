@@ -221,6 +221,7 @@ const Header = ({ value, onChange }) => {
             <DesktopDatePicker
               value={value}
               onChange={onChange}
+              maxDate={dayjs()}
               // components={{
               //   OpenPickerIcon:CalendarMonthIcon
               // }}
