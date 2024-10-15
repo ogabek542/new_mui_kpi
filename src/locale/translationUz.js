@@ -148,6 +148,12 @@ const translationUz = {
     working_day:"Ish kuni sanasi:",
     group_of_worker:"Hudud bo'yicha xodimlar guruhi:",
     sector_of_worker:"Xodimlar bo'limi/ish sektori:",
+    // kpidaily screen elements //
+    date_text:"SANA",
+     // worker list //
+  worker_list:"Xodimni tanlang",
+  // KPIDAILY TEXTS //
+  starttime_text:"ISH BOSHLANGAN VAQTNI TANLASH",
 
 
 };

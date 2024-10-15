@@ -113,27 +113,11 @@ export const REQUESTS = {
     getRealTimeLive: () => axiosInstance.get("/api/daily-visitors"),
   },
   data: {
-    getData: () =>
-      axiosInstance.get('/api/data/', {
-        headers: {
-          'Skip-Auth': true,
-        },
-      }),
+    getData: (date) => axiosInstance.get('/api/data/', { params: { date } }), // Adjust endpoint
     addData: (newData) => axiosInstance.post('/api/data/', newData),
     editData: (id, updatedData) => axiosInstance.put(`/api/data/${id}/`, updatedData),
     deleteData: (id) => axiosInstance.delete(`/api/data/${id}/`),
-    sendAllData: (items) => axiosInstance.post('/api/data/bulk/', items),
-
-    // getData: () =>
-    //   axiosInstance.get('/api/data/', {
-    //     headers: {
-    //       'Skip-Auth': true,
-    //     },
-    //   }),
-    // addData: (newData) => axiosInstance.post("/api/get-all-incomes/", newData),
-    // editData: (id, updatedData) => axiosInstance.put(`/api/get-all-incomes/${id}/`, updatedData),
-    // deleteData: (id) => axiosInstance.delete(`/api/get-all-incomes/${id}/`),
-    // sendAllData: (items) => axiosInstance.post('/api/get-all-incomes/', items),
+    sendAllData: (data) => axiosInstance.post('/api/data/bulk/', data),
   },
   
 };

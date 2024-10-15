@@ -118,6 +118,7 @@ const Header = ({ value, onChange }) => {
             textAlign: "left",
             fontWeight: "900",
             lineHeight: "1.3",
+            textTransform:"uppercase",
           }}
           color={Colors.dark}
         >

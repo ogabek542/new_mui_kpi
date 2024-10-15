@@ -116,10 +116,13 @@ const MainPage = () => {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [chooseData, setChooseData] = useState([]);
+   const [displayData, setDisplayData] = useState([]);
   const [loading, setLoading] = useState(true); // Start with loading as true
 
   const [selectNewData, setSelectNewData] = useState(
-    dayjs("29.07.2024", "DD.MM.YYYY")
+    // dayjs("29.07.2024", "DD.MM.YYYY")
+    // dayjs(dayjs(), "DD.MM.YYYY")
+    dayjs().subtract(1, 'day')
   );
   // const [selectNewData, setSelectNewData] = useState(dayjs("2023-07-26"));
 

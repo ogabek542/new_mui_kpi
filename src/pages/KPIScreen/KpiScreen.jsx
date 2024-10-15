@@ -146,7 +146,7 @@ const KpiScreen = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Выбор сотрудник"
+                    label={t("worker_list")}
                     variant="outlined"
                     sx={{
                       "& .MuiOutlinedInput-root": {
@@ -166,6 +166,7 @@ const KpiScreen = () => {
                           color: "#083473", // Label color when focused
                         },
                       },
+                      // textTransform:"initial"
                     }}
                   />
                 )}

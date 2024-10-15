@@ -31,7 +31,7 @@ const {t} = useTranslation()
 // elements //
 const dispatch = useReduxDispatch();
 const [tableData, setTableData] = useState([]);
-const [data, setData] = useState([]); // imported api data
+const [data, setData] = useState([]); // imported api user data
 const [circleData, setCircleData] = useState([]);
 const [line, setLine] = useState([]);
 const [numberLive, setNumberLive] = useState([]);

@@ -1,6 +1,6 @@
 const translationRu = {
         // header section text //
-        headerText:'ОТДЕЛ БУХГАЛТЕРСКОГО УЧЕТА И ФИНАНСОВОГО УПРАВЛЕНИЯ АО "УЗМИЛЛИЙБАНК"',
+        headerText:'ДЕПАРТАМЕНТ БУХГАЛТЕРСКОГО УЧЕТА И ФИНАНСОВОГО МЕНЕДЖМЕНТА"',
         // main section text //
         kpicorner:"система КПИ",
         login:"Войти",
@@ -147,6 +147,12 @@ const translationRu = {
         working_day:"Дата рабочего дня:",
         group_of_worker:"Группа сотрудника по направлениям:",
         sector_of_worker:"Отдел/сектор работы сотрудника:",
+        // kpidaily screen elements //
+        date_text:"ДАТА",
+        // worker list //
+        worker_list:"Выбор сотрудника",
+        // KPIDAILY TEXTS //
+        starttime_text:"ВЫБЕРИТЕ ВРЕМЯ НАЧАЛА РАБОТЫ"
 
 }
 export default translationRu 

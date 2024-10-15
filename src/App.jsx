@@ -12,6 +12,7 @@ import BalanceTable from './pages/BalanceTable/BalanceTable';
 import IndicatorKey from './pages/IndicatorKey/IndicatorKey';
 import KpiDailiyWorkTable from './pages/KpiDailiyWorkTable/KpiDailiyWorkTable';
 import MuiKpi from './pages/MUIkpiScreen/MuiKpi';
+import DynamicIncomeScreen from "./pages/DynamicIncomeScreen/DynamicIncomeScreen"
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         </Route>
         <Route path="keyindicatorscreen" element={<IndicatorKey />} />
         <Route path="balancescreen" element={<BalanceTable />} />
-        <Route path="tablescreen" element={<TableScreen />} />
+        {/* <Route path="tablescreen" element={<TableScreen />} /> */}
         <Route path="accessall" element={<AccessAll />} />
         <Route path="kpidashboard" element={<KpiScreen />}>
           <Route index element={<MuiKpi />} />
@@ -33,6 +34,7 @@ function App() {
         </Route>
         <Route path="netprofit" element={<NetProfitSceen />} />
         {/* <Route path="testscreen" element={<TestScreen />} /> */}
+        <Route path="/dynamicincome" element={<DynamicIncomeScreen />} />
       </Routes>
     </BrowserRouter>
   );

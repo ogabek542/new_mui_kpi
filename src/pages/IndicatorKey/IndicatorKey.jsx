@@ -740,7 +740,7 @@ const IndicatorKey = () => {
                   fontWeight: "bold",
                 }}
               >
-               {insertSpaces( 137240940.28)}
+                {insertSpaces( 137240940.28)}
               </Typography>
             </Grid>
             {/* date div */}

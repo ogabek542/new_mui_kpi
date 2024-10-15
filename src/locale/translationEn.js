@@ -150,6 +150,10 @@ const translationEn = {
   working_day:"Business day date:",
   group_of_worker:"Area staff group:",
   sector_of_worker:"Personnel Department/Job Sector:",
+  // kpidaily screen elements //
+  date_text:"DATE",
+  // worker list //
+  worker_list:"Select stuff",
 };
 
 export default translationEn;
