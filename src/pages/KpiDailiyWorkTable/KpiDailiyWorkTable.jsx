@@ -17,7 +17,7 @@ import {
   Alert,
 } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { Colors } from "../../styles/theme";
+import { Colors } from "../../styles/theme"; // Ensure this path is correct
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers";
@@ -32,6 +32,7 @@ import "dayjs/locale/ru";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useTranslation } from "react-i18next";
+import { v4 as uuidv4 } from "uuid"; // Importing uuid
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -39,44 +40,55 @@ dayjs.extend(isSameOrBefore);
 const KpiDailiyWorkTable = () => {
   const { t } = useTranslation();
 
+  // Dialog States
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
 
+  // Add Form States
   const [addTitle, setAddTitle] = useState("");
-  const [addWorkHours, setAddWorkHours] = useState("");
-  const [addWorkMinutes, setAddWorkMinutes] = useState("");
+  const [addWorkDuration, setAddWorkDuration] = useState(dayjs("00:00", "HH:mm"));
   const [addWorkType, setAddWorkType] = useState("");
   const [addWorkingHistory, setAddWorkingHistory] = useState("");
   const [addWorkingComment, setAddWorkingComment] = useState("");
-  const [addStartTime, setAddStartTime] = useState(null);
+  const [addStartTime, setAddStartTime] = useState(dayjs("09:00", "HH:mm"));
+  const [addEndTime, setAddEndTime] = useState(dayjs("09:00", "HH:mm"));
 
+  // Edit Form States
   const [editItemId, setEditItemId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
-  const [editWorkHours, setEditWorkHours] = useState("");
-  const [editWorkMinutes, setEditWorkMinutes] = useState("");
+  const [editWorkDuration, setEditWorkDuration] = useState(dayjs("00:00", "HH:mm"));
   const [editWorkType, setEditWorkType] = useState("");
   const [editWorkingHistory, setEditWorkingHistory] = useState("");
   const [editWorkingComment, setEditWorkingComment] = useState("");
-  const [editStartTime, setEditStartTime] = useState(null);
+  const [editStartTime, setEditStartTime] = useState(dayjs("09:00", "HH:mm"));
+  const [editEndTime, setEditEndTime] = useState(dayjs("09:00", "HH:mm"));
 
+  // Items and Date States
   const [items, setItems] = useState([]);
   const [userData, setUserData] = useState({});
   const [selectDate, setSelectDate] = useState(dayjs());
   const formattedDate = dayjs(selectDate).format("DD.MM.YYYY");
+  const [defaultStartTime, setDefaultStartTime] = useState(dayjs("09:00", "HH:mm"));
 
+  // Snackbar State
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
+  // Overlapping Items State
+  const [overlappingIds, setOverlappingIds] = useState([]);
+
+  // Ref for Previous Items (used in Reorder)
   const prevItemsRef = useRef([]);
 
-  const parseWorkTime = (hours, minutes) => {
-    const h = parseInt(hours, 10);
-    const m = parseInt(minutes, 10);
-    if (isNaN(h) || isNaN(m)) return 0;
-    return h * 60 + m;
+  // Helper Functions
+  const parseWorkTime = (timeValue) => {
+    if (!timeValue || !timeValue.isValid()) return 0;
+    const hours = timeValue.hour();
+    const minutes = timeValue.minute();
+    return hours * 60 + minutes;
   };
 
   const formatTime = (dayjsObj) => {
@@ -86,7 +98,7 @@ const KpiDailiyWorkTable = () => {
   const calculateEndTime = (start, totalMinutes) => {
     const startMoment = dayjs(start, "HH:mm");
     const endMoment = startMoment.add(totalMinutes, "minute");
-    return formatTime(endMoment);
+    return endMoment;
   };
 
   const calculateWorkingTime = (totalMinutes) => {
@@ -106,9 +118,16 @@ const KpiDailiyWorkTable = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
+  // Fetch User Data on Mount
   useEffect(() => {
-    const getUserData = async () => {
+    const fetchUserData = async () => {
       try {
+        // Fetch user data from API
+        // const response = await REQUESTS.user.getUser();
+        // const propsdata = response.data[0];
+        // setData(propsdata);
+
+        // For demonstration, using mock data
         setUserData({
           name: "Иван Иванов",
           branch: "Филиал 1",
@@ -118,292 +137,216 @@ const KpiDailiyWorkTable = () => {
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
+        showSnackbar("Ошибка при получении данных пользователя.", "error");
       }
     };
-    getUserData();
+    fetchUserData();
   }, []);
 
-  const resetAddForm = () => {
-    setAddTitle("");
-    setAddWorkHours("");
-    setAddWorkMinutes("");
-    setAddWorkType("");
-    setAddWorkingHistory("");
-    setAddWorkingComment("");
-    setAddStartTime(null);
-  };
-
-  const resetEditForm = () => {
-    setEditItemId(null);
-    setEditTitle("");
-    setEditWorkHours("");
-    setEditWorkMinutes("");
-    setEditWorkType("");
-    setEditWorkingHistory("");
-    setEditWorkingComment("");
-    setEditStartTime(null);
-  };
-
-  const handleOpenAddDialog = () => {
-    if (items.length > 0) {
-      const lastItem = items[items.length - 1];
-      setAddStartTime(dayjs(lastItem.endTime, "HH:mm"));
-    } else {
-      setAddStartTime(dayjs("09:00", "HH:mm"));
-    }
-    setOpenAddDialog(true);
-  };
-
-  const handleCloseAddDialog = () => {
-    setOpenAddDialog(false);
-    resetAddForm();
-  };
-
-  const handleOpenEditDialog = (item) => {
-    setEditItemId(item.id);
-    setEditTitle(item.title);
-    setEditWorkHours(item.workHours);
-    setEditWorkMinutes(item.workMinutes);
-    setEditWorkType(item.workType);
-    setEditWorkingHistory(item.workingHistory);
-    setEditWorkingComment(item.workingComment);
-    setEditStartTime(dayjs(item.startTime, "HH:mm"));
-    setOpenEditDialog(true);
-  };
-
-  const handleCloseEditDialog = () => {
-    setOpenEditDialog(false);
-    resetEditForm();
-  };
-
-//   const assignTimesBasedOnOrder = (itemsList) => {
-//     let updatedItems = [...itemsList];
-  
-//     // Loop through each item and reassign the times based on the previous item
-//     for (let i = 0; i < updatedItems.length; i++) {
-//       if (i === 0) {
-//         // For the first item, use its startTime or default to '07:00'
-//         updatedItems[i].startTime = updatedItems[i].startTime || "07:00";
-//       } else {
-//         // For subsequent items, set the startTime based on the previous item's endTime
-//         updatedItems[i].startTime = updatedItems[i - 1].endTime;
-//       }
-  
-//       // Calculate the work time in minutes
-//       const workTimeMinutes = parseWorkTime(updatedItems[i].workHours, updatedItems[i].workMinutes);
-  
-//       // Calculate the endTime based on the current startTime and workTime
-//       updatedItems[i].workTime = calculateWorkingTime(workTimeMinutes);
-//       updatedItems[i].endTime = calculateEndTime(updatedItems[i].startTime, workTimeMinutes);
-//     }
-  
-//     return updatedItems;
-//   };
-  
-const assignTimesBasedOnOrder = (itemsList) => {
-    let updatedItems = [...itemsList];
-  
-    // Loop through each item and reassign the times based on the previous item
-    for (let i = 0; i < updatedItems.length; i++) {
-      if (i === 0) {
-        // For the first item, use its startTime or default to '07:00'
-        updatedItems[i].startTime = updatedItems[i].startTime || "07:00";
-      } else {
-        // For subsequent items, set the startTime based on the previous item's endTime
-        updatedItems[i].startTime = updatedItems[i - 1].endTime;
+  // Check for Time Overlaps
+  const findOverlappingItems = (itemsList) => {
+    const overlappingIdsSet = new Set();
+    // No need to sort since times are recalculated
+    for (let i = 0; i < itemsList.length - 1; i++) {
+      const currentEnd = dayjs(itemsList[i].endTime, "HH:mm");
+      const nextStart = dayjs(itemsList[i + 1].startTime, "HH:mm");
+      if (currentEnd.isAfter(nextStart)) {
+        overlappingIdsSet.add(itemsList[i].id);
+        overlappingIdsSet.add(itemsList[i + 1].id);
       }
-  
-      // Calculate the work time in minutes
-      const workTimeMinutes = parseWorkTime(updatedItems[i].workHours, updatedItems[i].workMinutes);
-  
-      // Calculate the endTime based on the current startTime and workTime
-      updatedItems[i].workTime = calculateWorkingTime(workTimeMinutes);
-      updatedItems[i].endTime = calculateEndTime(updatedItems[i].startTime, workTimeMinutes);
     }
-  
-    return updatedItems;
+    return Array.from(overlappingIdsSet);
   };
-  
 
-  const isTimeOverlap = (
-    newStart,
-    newEnd,
-    itemsList,
-    currentEditingId = null
-  ) => {
-    return itemsList.some((item) => {
-      if (currentEditingId && item.id === currentEditingId) {
-        return false;
-      }
-      const existingStart = dayjs(item.startTime, "HH:mm");
-      const existingEnd = dayjs(item.endTime, "HH:mm");
-      return newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart);
+  // Function to Recalculate Times
+  const recalculateTimes = (itemsList) => {
+    let currentTime = defaultStartTime;
+    return itemsList.map((item) => {
+      const workTimeMinutes = item.workHours * 60 + item.workMinutes;
+      const startTime = currentTime;
+      const endTime = currentTime.add(workTimeMinutes, "minute");
+      const newItem = {
+        ...item,
+        startTime: formatTime(startTime),
+        endTime: formatTime(endTime),
+      };
+      currentTime = endTime;
+      return newItem;
     });
   };
 
-  const handleAddSubmit = (e) => {
+  // Handle Reorder with Time Recalculation
+  const handleReorder = (reorderedItems) => {
+    // Recalculate times based on new order
+    const updatedItems = recalculateTimes(reorderedItems);
+
+    // Update state and localStorage
+    setItems(updatedItems);
+    localStorage.setItem("workItems", JSON.stringify(updatedItems));
+    prevItemsRef.current = updatedItems;
+
+    showSnackbar("Строки успешно изменены!", "success");
+
+    // Check for overlaps after reordering
+    const overlapping = findOverlappingItems(updatedItems);
+    if (overlapping.length > 0) {
+      showSnackbar(
+        "Внимание: Некоторые строки имеют пересекающиеся времена.",
+        "warning"
+      );
+      setOverlappingIds(overlapping);
+    } else {
+      setOverlappingIds([]);
+    }
+  };
+
+  // Handle Add Submit
+  const handleAddSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate Required Fields
     if (
       !addTitle ||
-      addWorkHours === "" ||
-      addWorkMinutes === "" ||
       !addWorkType ||
       !addWorkingHistory ||
-      !addStartTime
+      !addWorkDuration
     ) {
-      showSnackbar("Please fill in all required fields.", "error");
+      showSnackbar("Пожалуйста, заполните все обязательные поля.", "error");
       return;
     }
 
-    const workTimeMinutes = parseWorkTime(addWorkHours, addWorkMinutes);
+    // Validate Time Values
+    if (!addWorkDuration.isValid()) {
+      showSnackbar("Некорректные значения времени.", "error");
+      return;
+    }
+
+    const workHours = addWorkDuration.hour();
+    const workMinutes = addWorkDuration.minute();
+    const workTimeMinutes = workHours * 60 + workMinutes;
+
     if (workTimeMinutes <= 0) {
-      showSnackbar("Work Time must be greater than 0 minutes.", "error");
+      showSnackbar("Время работы должно быть больше 0 минут.", "error");
       return;
     }
 
-    const calculatedEndTime = calculateEndTime(
-      formatTime(addStartTime),
-      workTimeMinutes
-    );
-
-    const startMoment = dayjs(formatTime(addStartTime), "HH:mm");
-    const endMoment = dayjs(calculatedEndTime, "HH:mm");
-    if (!endMoment.isAfter(startMoment)) {
-      showSnackbar("End Time must be after Start Time.", "error");
-      return;
-    }
-
-    if (isTimeOverlap(startMoment, endMoment, items)) {
-      showSnackbar(
-        "Diqqat Xato !! 'Kiritilgan Vaqtlar oralig'i boshqa Vaqt ortaliqlari bilan mos emas!!!'",
-        "error"
-      );
-      return;
-    }
+    // Generate a unique ID for the new item
+    const uniqueId = uuidv4();
 
     const newItem = {
-      id: Date.now(),
+      id: uniqueId, // Assign the unique ID
       title: addTitle,
-      workHours: addWorkHours,
-      workMinutes: addWorkMinutes,
+      workHours: workHours,
+      workMinutes: workMinutes,
       workTime: calculateWorkingTime(workTimeMinutes),
-      startTime: formatTime(startMoment),
-      endTime: calculatedEndTime,
       workType: addWorkType,
       workingHistory: addWorkingHistory,
       workingComment: addWorkingComment,
       date: formattedDate,
     };
 
-    const updatedItems = [...items, newItem];
-    const reassignedItems = assignTimesBasedOnOrder(updatedItems);
+    try {
+      // Add the new item locally
+      const updatedItems = [...items, newItem];
 
-    for (let i = 0; i < reassignedItems.length - 1; i++) {
-      const currentEnd = dayjs(reassignedItems[i].endTime, "HH:mm");
-      const nextStart = dayjs(reassignedItems[i + 1].startTime, "HH:mm");
-      if (currentEnd.isAfter(nextStart)) {
-        showSnackbar("Time overlaps detected after assignment.", "error");
-        return;
-      }
+      // Recalculate times
+      const recalculatedItems = recalculateTimes(updatedItems);
+
+      setItems(recalculatedItems);
+      showSnackbar("Строка успешно добавлена!", "success");
+      handleCloseAddDialog();
+      prevItemsRef.current = recalculatedItems;
+
+      // Save to local storage
+      localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+    } catch (error) {
+      console.error("Error adding item:", error);
+      showSnackbar(error.message || "Ошибка при добавлении строки.", "error");
     }
-
-    setItems(reassignedItems);
-    localStorage.setItem("workItems", JSON.stringify(reassignedItems));
-    showSnackbar("Row added successfully!", "success");
-    handleCloseAddDialog();
-    prevItemsRef.current = reassignedItems;
   };
 
-  const handleEditSubmit = (e) => {
+  // Handle Edit Submit
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
-  
+
+    // Validate Required Fields
     if (
       !editTitle ||
-      editWorkHours === "" ||
-      editWorkMinutes === "" ||
       !editWorkType ||
       !editWorkingHistory ||
-      !editStartTime
+      !editWorkDuration
     ) {
-      showSnackbar("Please fill in all required fields.", "error");
+      showSnackbar("Пожалуйста, заполните все обязательные поля.", "error");
       return;
     }
-  
-    const workTimeMinutes = parseWorkTime(editWorkHours, editWorkMinutes);
+
+    // Validate Time Values
+    if (!editWorkDuration.isValid()) {
+      showSnackbar("Некорректные значения времени.", "error");
+      return;
+    }
+
+    const workHours = editWorkDuration.hour();
+    const workMinutes = editWorkDuration.minute();
+    const workTimeMinutes = workHours * 60 + workMinutes;
+
     if (workTimeMinutes <= 0) {
-      showSnackbar("Work Time must be greater than 0 minutes.", "error");
+      showSnackbar("Время работы должно быть больше 0 минут.", "error");
       return;
     }
-  
-    const calculatedEndTime = calculateEndTime(
-      formatTime(editStartTime),
-      workTimeMinutes
-    );
-  
-    const startMoment = dayjs(formatTime(editStartTime), "HH:mm");
-    const endMoment = dayjs(calculatedEndTime, "HH:mm");
-    if (!endMoment.isAfter(startMoment)) {
-      showSnackbar("End Time must be after Start Time.", "error");
-      return;
-    }
-  
+
     const editedItem = {
       id: editItemId,
       title: editTitle,
-      workHours: editWorkHours,
-      workMinutes: editWorkMinutes,
+      workHours: workHours,
+      workMinutes: workMinutes,
       workTime: calculateWorkingTime(workTimeMinutes),
-      startTime: formatTime(startMoment),
-      endTime: calculatedEndTime,
       workType: editWorkType,
       workingHistory: editWorkingHistory,
       workingComment: editWorkingComment,
       date: formattedDate,
     };
-  
-    const editedItemIndex = items.findIndex((item) => item.id === editItemId);
-    let updatedItems = [...items];
-    updatedItems[editedItemIndex] = editedItem;
-  
-    // Adjust subsequent items
-    for (let i = editedItemIndex + 1; i < updatedItems.length; i++) {
-      const prevItem = updatedItems[i - 1];
-      const currentItem = updatedItems[i];
-      
-      currentItem.startTime = prevItem.endTime;
-      const currentWorkTimeMinutes = parseWorkTime(currentItem.workHours, currentItem.workMinutes);
-      currentItem.endTime = calculateEndTime(currentItem.startTime, currentWorkTimeMinutes);
+
+    try {
+      // Update the item locally
+      const editedItemIndex = items.findIndex((item) => item.id === editItemId);
+      let updatedItems = [...items];
+      updatedItems[editedItemIndex] = editedItem;
+
+      // Recalculate times
+      const recalculatedItems = recalculateTimes(updatedItems);
+
+      setItems(recalculatedItems);
+      showSnackbar("Строка успешно отредактирована!", "success");
+      handleCloseEditDialog();
+      prevItemsRef.current = recalculatedItems;
+
+      // Save to local storage
+      localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+    } catch (error) {
+      console.error("Error editing item:", error);
+      showSnackbar(error.message || "Ошибка при редактировании строки.", "error");
     }
-  
-    // Check for time overlaps
-    for (let i = 0; i < updatedItems.length - 1; i++) {
-      const currentEnd = dayjs(updatedItems[i].endTime, "HH:mm");
-      const nextStart = dayjs(updatedItems[i + 1].startTime, "HH:mm");
-      if (currentEnd.isAfter(nextStart)) {
-        showSnackbar("Time overlaps detected after adjustment.", "error");
-        return;
-      }
-    }
-  
-    setItems(updatedItems);
-    localStorage.setItem("workItems", JSON.stringify(updatedItems));
-    showSnackbar("Row edited and subsequent rows adjusted successfully!", "success");
-    handleCloseEditDialog();
-    prevItemsRef.current = updatedItems;
   };
 
+  // Handle Delete
   const handleDelete = (id) => {
     const updatedItems = items.filter((item) => item.id !== id);
-    const reassignedItems = assignTimesBasedOnOrder(updatedItems);
-    setItems(reassignedItems);
-    localStorage.setItem("workItems", JSON.stringify(reassignedItems));
-    showSnackbar("Row deleted successfully!", "info");
-    prevItemsRef.current = reassignedItems;
+
+    // Recalculate times
+    const recalculatedItems = recalculateTimes(updatedItems);
+
+    setItems(recalculatedItems);
+    localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+    showSnackbar("Строка успешно удалена!", "info");
+    prevItemsRef.current = recalculatedItems;
   };
 
+  // Handle Send
   const handleSend = async () => {
-    const itemsForSelectedDate = items.filter((item) => item.date === formattedDate);
+    const itemsForSelectedDate = items.filter(
+      (item) => item.date === formattedDate
+    );
 
     const dataToSend = {
       mainDate: formattedDate,
@@ -412,102 +355,149 @@ const assignTimesBasedOnOrder = (itemsList) => {
 
     console.log("Sending data to backend: ", dataToSend);
     try {
-      showSnackbar("Data sent successfully!", "success");
+      // Replace with actual API call
+      // await REQUESTS.data.sendAllData(dataToSend);
+      showSnackbar("Данные успешно отправлены!", "success");
     } catch (error) {
       console.error("Error sending data:", error);
-      showSnackbar("Error sending data.", "error");
+      showSnackbar("Ошибка при отправке данных.", "error");
     }
   };
 
+  // Handle Refresh
   const handleRefresh = () => {
     const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
-    const reassignedItems = assignTimesBasedOnOrder(savedItems);
-    setItems(reassignedItems);
-    localStorage.setItem("workItems", JSON.stringify(reassignedItems));
-    showSnackbar("Data refreshed successfully!", "success");
-    prevItemsRef.current = reassignedItems;
+    const recalculatedItems = recalculateTimes(savedItems);
+    setItems(recalculatedItems);
+    showSnackbar("Данные успешно обновлены!", "success");
+    prevItemsRef.current = recalculatedItems;
+
+    // Recheck overlaps
+    const overlapping = findOverlappingItems(recalculatedItems);
+    if (overlapping.length > 0) {
+      setOverlappingIds(overlapping);
+      showSnackbar(
+        "Внимание: Некоторые строки имеют пересекающиеся времена.",
+        "warning"
+      );
+    } else {
+      setOverlappingIds([]);
+    }
   };
 
-  useEffect(() => {
-    const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
-    const reassignedItems = assignTimesBasedOnOrder(savedItems);
-    setItems(reassignedItems);
-    prevItemsRef.current = reassignedItems;
-  }, []);
-
-//   const handleReorder = (reorderedItems) => {
-//     const prevItems = prevItemsRef.current;
-//     const newItems = reorderedItems;
-
-//     const prevItemsMap = new Map(prevItems.map((item) => [item.id, item]));
-
-//     const updatedItems = newItems.map((item, index) => {
-//       const prevItem = prevItemsMap.get(item.id);
-//       if (!prevItem) return item;
-
-//       return {
-//         ...item,
-//         title: prevItem.title,
-//         workType: prevItem.workType,
-//         workingHistory: prevItem.workingHistory,
-//         workingComment: prevItem.workingComment,
-//         startTime: item.startTime,
-//         endTime: item.endTime,
-//         workTime: item.workTime,
-//       };
-//     });
-
-//     for (let i = 0; i < updatedItems.length - 1; i++) {
-//       const currentEnd = dayjs(updatedItems[i].endTime, "HH:mm");
-//       const nextStart = dayjs(updatedItems[i + 1].startTime, "HH:mm");
-//       if (currentEnd.isAfter(nextStart)) {
-//         showSnackbar("Time overlaps detected after reordering.", "error");
-//         return;
-//       }
-//     }
-
-//     setItems(updatedItems);
-//     localStorage.setItem("workItems", JSON.stringify(updatedItems));
-//     showSnackbar("Rows reordered and data swapped successfully!", "success");
-//     prevItemsRef.current = updatedItems;
-//   };
-
-const handleReorder = (reorderedItems) => {
-    const prevItems = prevItemsRef.current; // The original list of items before reordering
-    const newItems = [...reorderedItems]; // The reordered items
-  
-    const updatedItems = newItems.map((item, newIndex) => {
-      const prevItem = prevItems[newIndex]; // Item in the original position (before reorder)
-  
-      // Swap timing fields between the reordered element and the one in its new position
-      return {
-        ...item, // Keep everything else the same for the item
-        startTime: prevItem.startTime, // Adopt the startTime from the element now in this position
-        endTime: prevItem.endTime, // Adopt the endTime from the element now in this position
-        workHours: prevItem.workHours, // Adopt the workHours from the element now in this position
-      };
-    });
-  
-    // Update the state with the newly updated items
-    setItems(updatedItems);
-    localStorage.setItem("workItems", JSON.stringify(updatedItems)); // Store updated items
-    showSnackbar("Items reordered successfully!", "success");
-  
-    // Update the reference for the next reorder operation
-    prevItemsRef.current = updatedItems;
-  };
-  
-  
-  
-  
-  
-  
-  
-
+  // Handle Date Change
   const onChangeDate = (newDate) => {
     setSelectDate(newDate);
     handleRefresh();
   };
+
+  // Load Items from Local Storage on Mount
+  useEffect(() => {
+    const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
+    const recalculatedItems = recalculateTimes(savedItems);
+    setItems(recalculatedItems);
+    prevItemsRef.current = recalculatedItems;
+
+    // Check for overlaps on initial load
+    const overlapping = findOverlappingItems(recalculatedItems);
+    if (overlapping.length > 0) {
+      setOverlappingIds(overlapping);
+      showSnackbar(
+        "Внимание: Некоторые строки имеют пересекающиеся времена.",
+        "warning"
+      );
+    }
+  }, []);
+
+  // Synchronize prevItemsRef whenever items change (excluding reorder)
+  useEffect(() => {
+    // This ensures that prevItemsRef is always up-to-date except during reorder
+    // Prevent updating prevItemsRef inside handleReorder
+    // Only update after successful add/edit/delete operations
+    // Since handleReorder already updates prevItemsRef
+    if (!prevItemsRef.current.length || items !== prevItemsRef.current) {
+      prevItemsRef.current = items;
+    }
+  }, [items]);
+
+  // Reset Add Form
+  const resetAddForm = () => {
+    setAddTitle("");
+    setAddWorkDuration(dayjs("00:00", "HH:mm"));
+    setAddWorkType("");
+    setAddWorkingHistory("");
+    setAddWorkingComment("");
+    setAddStartTime(dayjs("09:00", "HH:mm"));
+    setAddEndTime(dayjs("09:00", "HH:mm"));
+  };
+
+  // Reset Edit Form
+  const resetEditForm = () => {
+    setEditItemId(null);
+    setEditTitle("");
+    setEditWorkDuration(dayjs("00:00", "HH:mm"));
+    setEditWorkType("");
+    setEditWorkingHistory("");
+    setEditWorkingComment("");
+    setEditStartTime(dayjs("09:00", "HH:mm"));
+    setEditEndTime(dayjs("09:00", "HH:mm"));
+  };
+
+  // Open Add Dialog
+  const handleOpenAddDialog = () => {
+    if (items.length > 0) {
+      const lastItem = items[items.length - 1];
+      setAddStartTime(dayjs(lastItem.endTime, "HH:mm"));
+      setAddEndTime(dayjs(lastItem.endTime, "HH:mm").add(addWorkDuration.hour(), "hour").add(addWorkDuration.minute(), "minute"));
+    } else {
+      setAddStartTime(defaultStartTime);
+      setAddEndTime(defaultStartTime);
+    }
+    setOpenAddDialog(true);
+  };
+
+  // Close Add Dialog
+  const handleCloseAddDialog = () => {
+    setOpenAddDialog(false);
+    resetAddForm();
+  };
+
+  // Open Edit Dialog
+  const handleOpenEditDialog = (item) => {
+    setEditItemId(item.id);
+    setEditTitle(item.title);
+    setEditWorkDuration(dayjs().hour(item.workHours).minute(item.workMinutes));
+    setEditWorkType(item.workType);
+    setEditWorkingHistory(item.workingHistory);
+    setEditWorkingComment(item.workingComment);
+    setEditStartTime(dayjs(item.startTime, "HH:mm"));
+    setEditEndTime(dayjs(item.endTime, "HH:mm"));
+    setOpenEditDialog(true);
+  };
+
+  // Close Edit Dialog
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+    resetEditForm();
+  };
+
+  // Update End Time when Work Duration changes in Add Dialog
+  useEffect(() => {
+    if (openAddDialog) {
+      const updatedEndTime = addStartTime.add(addWorkDuration.hour(), "hour").add(addWorkDuration.minute(), "minute");
+      setAddEndTime(updatedEndTime);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addWorkDuration, addStartTime]);
+
+  // Update End Time when Work Duration changes in Edit Dialog
+  useEffect(() => {
+    if (openEditDialog) {
+      const updatedEndTime = editStartTime.add(editWorkDuration.hour(), "hour").add(editWorkDuration.minute(), "minute");
+      setEditEndTime(updatedEndTime);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editWorkDuration, editStartTime]);
 
   return (
     <Box sx={{ width: "100%", height: "auto", padding: "5px" }}>
@@ -536,7 +526,7 @@ const handleReorder = (reorderedItems) => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
               value={selectDate}
-              onChange={onChangeDate} // Now defined
+              onChange={onChangeDate}
               format="DD.MM.YYYY"
               maxDate={dayjs()}
               renderInput={(params) => <TextField {...params} />}
@@ -664,6 +654,7 @@ const handleReorder = (reorderedItems) => {
             {userData.division || "нет информации"}
           </Typography>
         </Box>
+
         {/* <===== DEPARTMENT SECTION =====> */}
         <Box
           sx={{
@@ -691,7 +682,29 @@ const handleReorder = (reorderedItems) => {
             {userData.department || "нет информации"}
           </Typography>
         </Box>
+
         {/* <==== WORKER POSITION =====>  */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            paddingLeft: "5px",
+            height: "40px",
+            borderBottom: "2px solid #AAAAAE",
+          }}
+        >
+          <Typography sx={{ width: "50%", fontWeight: "bold" }}>
+            {t("positionjob")}
+          </Typography>
+          <Typography
+            sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
+          >
+            {userData.position || "нет информации"}
+          </Typography>
+        </Box>
+        {/* <===== START TIME SELECTION SECTION =====> */}
         <Box
           sx={{
             display: "flex",
@@ -702,13 +715,20 @@ const handleReorder = (reorderedItems) => {
             height: "40px",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold" }}>
-            {t("positionjob")}
+          <Typography
+            sx={{
+              width: "50%",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
+            {t("default_startTime")}
           </Typography>
+          {/* <=== START TIME DISPLAY ====> */}
           <Typography
             sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
           >
-            {userData.position || "нет информации"}
+            {formatTime(defaultStartTime)}
           </Typography>
         </Box>
       </Box>
@@ -889,26 +909,26 @@ const handleReorder = (reorderedItems) => {
               Комментарии
             </Typography>
           </Grid>
-          {/* Action Column */}
+          {/* Actions Column (Hidden for Table Header) */}
           <Grid
             item
-            xs={0.3}
+            xs={0.6}
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "5px",
-              boxShadow:
-                "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
+              display: "none",
             }}
           >
-            <Typography sx={{}}>Actions</Typography>
+            {/* Placeholder for Actions Column */}
           </Grid>
         </Grid>
       </Box>
       {/* <==== TABLE BODY SECTION ====> */}
       {items && items.length > 0 ? (
-        <Reorder.Group axis="y" onReorder={handleReorder} values={items} as="div">
+        <Reorder.Group
+          axis="y"
+          onReorder={handleReorder}
+          values={items}
+          as="div"
+        >
           {items.map((item, index) => (
             <Reorder.Item key={item.id} value={item} as="div">
               <Box
@@ -922,6 +942,9 @@ const handleReorder = (reorderedItems) => {
                   marginBottom: "5px",
                   paddingY: "5px",
                   paddingX: "4px",
+                  backgroundColor: overlappingIds.includes(item.id)
+                    ? "#ffcccc"
+                    : "white", // Highlight if overlapping
                 }}
               >
                 <Grid container>
@@ -933,9 +956,6 @@ const handleReorder = (reorderedItems) => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      borderRadius: "5px",
-                      boxShadow:
-                        "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
                     }}
                   >
                     <Typography>{index + 1}</Typography>
@@ -957,6 +977,7 @@ const handleReorder = (reorderedItems) => {
                         overflowWrap: "break-word",
                         wordBreak: "break-all",
                         lineHeight: "1.1",
+                        paddingX: "4px",
                       }}
                     >
                       {item.title}
@@ -1040,7 +1061,9 @@ const handleReorder = (reorderedItems) => {
                         wordBreak: "break-all",
                       }}
                     >
-                      {item.workType === "regular" ? "регулярная" : "разовая"}
+                      {item.workType === "regular"
+                        ? "регулярная"
+                        : "разовая"}
                     </Typography>
                   </Grid>
                   {/* <==== WORK HISTORY ====> */}
@@ -1079,6 +1102,7 @@ const handleReorder = (reorderedItems) => {
                         overflowWrap: "break-word",
                         wordBreak: "break-all",
                         lineHeight: "1.1",
+                        paddingX: "4px",
                       }}
                     >
                       {item.workingComment}
@@ -1087,7 +1111,7 @@ const handleReorder = (reorderedItems) => {
                   {/* <==== ACTIONS ====> */}
                   <Grid
                     item
-                    xs={0.3}
+                    xs={0.6}
                     sx={{
                       display: "flex",
                       alignItems: "center",
@@ -1107,8 +1131,8 @@ const handleReorder = (reorderedItems) => {
                       <ModeEditOutlineIcon
                         sx={{
                           color: Colors.nbu,
-                          width: "25px",
-                          height: "25px",
+                          width: "22px",
+                          height: "22px",
                         }}
                       />
                     </Button>
@@ -1126,8 +1150,8 @@ const handleReorder = (reorderedItems) => {
                       <DeleteForeverIcon
                         sx={{
                           color: "red",
-                          width: "25px",
-                          height: "25px",
+                          width: "22px",
+                          height: "22px",
                         }}
                       />
                     </Button>
@@ -1139,7 +1163,7 @@ const handleReorder = (reorderedItems) => {
         </Reorder.Group>
       ) : (
         <Typography sx={{ textAlign: "center", margin: "20px" }}>
-          No items available
+          Нет доступных строк
         </Typography>
       )}
 
@@ -1179,7 +1203,7 @@ const handleReorder = (reorderedItems) => {
                 textTransform: "uppercase",
               }}
             >
-              Ma'lumot qo'shish
+              Добавить данные
             </Typography>
           </Button>
           {/* <=== REFRESH DATA ===> */}
@@ -1201,7 +1225,7 @@ const handleReorder = (reorderedItems) => {
                 textTransform: "uppercase",
               }}
             >
-              Yangilash
+              Обновить
             </Typography>
           </Button>
         </Box>
@@ -1224,34 +1248,38 @@ const handleReorder = (reorderedItems) => {
               textTransform: "uppercase",
             }}
           >
-            Yuborish
+            Отправить
           </Typography>
         </Button>
       </Box>
 
       {/* <==== ADD ROW MODAL ====> */}
-      <Dialog open={openAddDialog} onClose={handleCloseAddDialog} fullWidth maxWidth="md">
+      <Dialog
+        open={openAddDialog}
+        onClose={handleCloseAddDialog}
+        fullWidth
+        maxWidth="md"
+      >
         <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
           <Typography sx={{ fontSize: "20px" }}>
             ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА ЗА {formattedDate} г.
           </Typography>
         </DialogTitle>
         <DialogContent>
-          {/* Display Previous End Time if exists */}
-          {items.length > 0 && (
-            <Box sx={{ marginBottom: "10px" }}>
-              <Typography variant="subtitle1" color="textSecondary">
-                {`Предыдущий конец времени: ${items[items.length - 1].endTime}`}
-              </Typography>
-            </Box>
-          )}
+          {/* Display Task Timing */}
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="subtitle1" color="textSecondary">
+              Время начала задачи: {formatTime(addStartTime)} и время окончания задачи:{" "}
+              {formatTime(addEndTime)}
+            </Typography>
+          </Box>
           <form onSubmit={handleAddSubmit}>
             <Stack
               margin={2}
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "center",
+                alignItems: "flex-start",
                 justifyContent: "space-between",
                 gap: "10px",
               }}
@@ -1391,115 +1419,43 @@ const handleReorder = (reorderedItems) => {
                   gap: "10px",
                 }}
               >
-                {/* <=== START TIME INPUT ====> */}
+                {/* <=== WORK DURATION INPUT ===> */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    label="Начало работы"
-                    value={addStartTime}
-                    onChange={(newValue) => setAddStartTime(newValue)}
-                    renderInput={(params) => <TextField {...params} required />}
+                    label="Потраченное время"
+                    value={addWorkDuration}
+                    onChange={(newValue) =>
+                      setAddWorkDuration(
+                        newValue && newValue.isValid()
+                          ? newValue
+                          : dayjs("00:00", "HH:mm")
+                      )
+                    }
+                    views={["hours", "minutes"]}
+                    format="HH:mm"
                     ampm={false}
+                    renderInput={(params) => <TextField {...params} required />}
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         "& fieldset": {
-                          borderColor: Colors.nbu, // Custom border color
+                          borderColor: Colors.blue_nbu, // Custom border color
                         },
                         "&:hover fieldset": {
-                          borderColor: Colors.nbu, // Border color on hover
+                          borderColor: Colors.blue_nbu, // Border color on hover
                         },
                         "&.Mui-focused fieldset": {
-                          borderColor: Colors.nbu, // Border color on focus
+                          borderColor: Colors.blue_nbu, // Border color on focus
                         },
                       },
                       "& .MuiInputLabel-root": {
-                        color: Colors.nbu, // Custom label text color
+                        color: Colors.blue_nbu, // Custom label text color
                       },
                       "& .MuiInputLabel-root.Mui-focused": {
-                        color: Colors.nbu, // Custom label text color on focus
-                      },
-                      "& .MuiOutlinedInput-input": {
-                        color: "#000", // Custom text color
-                      },
-                      "& .MuiIconButton-root": {
-                        color: Colors.nbu, // Custom color for the TimePicker icon
+                        color: Colors.blue_nbu, // Custom label text color on focus
                       },
                     }}
                   />
                 </LocalizationProvider>
-                {/* <=== WORK HOURS INPUT ===> */}
-                <TextField
-                  value={addWorkHours}
-                  onChange={(e) => setAddWorkHours(e.target.value)}
-                  variant="outlined"
-                  label="Потраченное время - Часы"
-                  required
-                  type="number"
-                  inputProps={{ min: 0, step: 1 }}
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
-                {/* <=== WORK MINUTES INPUT ===> */}
-                <TextField
-                  value={addWorkMinutes}
-                  onChange={(e) => setAddWorkMinutes(e.target.value)}
-                  variant="outlined"
-                  label="Потраченное время - Минуты"
-                  required
-                  type="number"
-                  inputProps={{ min: 0, max: 59, step: 1 }}
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
 
                 {/* <=== WORKING COMMENT ===> */}
                 <TextField
@@ -1509,7 +1465,7 @@ const handleReorder = (reorderedItems) => {
                   label="Комментарии"
                   required
                   multiline // To increase the height
-                  minRows={4} // Set the minimum number of rows for the TextField
+                  minRows={6} // Set the minimum number of rows for the TextField
                   inputProps={{ maxLength: 150 }} // Set the maximum length of the input
                   InputLabelProps={{
                     sx: {
@@ -1554,7 +1510,7 @@ const handleReorder = (reorderedItems) => {
                   textTransform: "uppercase",
                 }}
               >
-                Qabul qilish
+                Принять
               </Typography>
             </Button>
           </form>
@@ -1562,21 +1518,32 @@ const handleReorder = (reorderedItems) => {
       </Dialog>
 
       {/* <==== EDIT ROW MODAL ====> */}
-      <Dialog open={openEditDialog} onClose={handleCloseEditDialog} fullWidth maxWidth="md">
+      <Dialog
+        open={openEditDialog}
+        onClose={handleCloseEditDialog}
+        fullWidth
+        maxWidth="md"
+      >
         <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
           <Typography sx={{ fontSize: "20px" }}>
             ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА ЗА {formattedDate} г.
           </Typography>
         </DialogTitle>
         <DialogContent>
-          {/* No need to display Previous End Time when editing */}
+          {/* Display Task Timing */}
+          <Box sx={{ marginBottom: "10px" }}>
+            <Typography variant="subtitle1" color="textSecondary">
+              Время начала задачи: {formatTime(editStartTime)} и время окончания задачи:{" "}
+              {formatTime(editEndTime)}
+            </Typography>
+          </Box>
           <form onSubmit={handleEditSubmit}>
             <Stack
               margin={2}
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "center",
+                alignItems: "flex-start",
                 justifyContent: "space-between",
                 gap: "10px",
               }}
@@ -1597,34 +1564,34 @@ const handleReorder = (reorderedItems) => {
                   variant="outlined"
                   label="Что делалось на этапе"
                   required
-                  multiline // To increase the height
-                  minRows={3} // Reduced rows for better UX
-                  inputProps={{ maxLength: 290 }} // Set the maximum length of the input
+                  multiline
+                  minRows={3}
+                  inputProps={{ maxLength: 290 }}
                   InputLabelProps={{
                     sx: {
-                      color: Colors.nbu, // Custom label text color
+                      color: Colors.nbu,
                       "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
+                        color: Colors.blue_nbu,
                       },
                     },
                   }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
+                        borderColor: Colors.blue_nbu,
                       },
                       "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
+                        borderColor: Colors.blue_nbu,
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
+                        borderColor: Colors.blue_nbu,
                       },
                     },
                     "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
+                      color: Colors.blue_nbu,
                     },
                     "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
+                      color: Colors.blue_nbu,
                     },
                   }}
                 />
@@ -1635,23 +1602,23 @@ const handleReorder = (reorderedItems) => {
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
-                        borderColor: Colors.nbu, // Custom border color
+                        borderColor: Colors.nbu,
                       },
                       "&:hover fieldset": {
-                        borderColor: Colors.nbu, // Border color on hover
+                        borderColor: Colors.nbu,
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: Colors.nbu, // Border color on focus
+                        borderColor: Colors.nbu,
                       },
                     },
                     "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
+                      color: Colors.blue_nbu,
                     },
                     "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
+                      color: Colors.blue_nbu,
                     },
                     "& .MuiSelect-root": {
-                      color: Colors.blue_nbu, // Custom text color inside the Select component
+                      color: Colors.blue_nbu,
                     },
                   }}
                 >
@@ -1673,23 +1640,23 @@ const handleReorder = (reorderedItems) => {
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
+                        borderColor: Colors.blue_nbu,
                       },
                       "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
+                        borderColor: Colors.blue_nbu,
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
+                        borderColor: Colors.blue_nbu,
                       },
                     },
                     "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
+                      color: Colors.blue_nbu,
                     },
                     "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
+                      color: Colors.blue_nbu,
                     },
                     "& .MuiSelect-root": {
-                      color: Colors.blue_nbu, // Custom text color inside the Select component
+                      color: Colors.blue_nbu,
                     },
                   }}
                 >
@@ -1716,115 +1683,43 @@ const handleReorder = (reorderedItems) => {
                   gap: "10px",
                 }}
               >
-                {/* <=== START TIME INPUT ====> */}
+                {/* <=== WORK DURATION INPUT ===> */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    label="Начало работы"
-                    value={editStartTime}
-                    onChange={(newValue) => setEditStartTime(newValue)}
-                    renderInput={(params) => <TextField {...params} required />}
+                    label="Потраченное время"
+                    value={editWorkDuration}
+                    onChange={(newValue) =>
+                      setEditWorkDuration(
+                        newValue && newValue.isValid()
+                          ? newValue
+                          : dayjs("00:00", "HH:mm")
+                      )
+                    }
+                    views={["hours", "minutes"]}
+                    format="HH:mm"
                     ampm={false}
+                    renderInput={(params) => <TextField {...params} required />}
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         "& fieldset": {
-                          borderColor: Colors.nbu, // Custom border color
+                          borderColor: Colors.blue_nbu,
                         },
                         "&:hover fieldset": {
-                          borderColor: Colors.nbu, // Border color on hover
+                          borderColor: Colors.blue_nbu,
                         },
                         "&.Mui-focused fieldset": {
-                          borderColor: Colors.nbu, // Border color on focus
+                          borderColor: Colors.blue_nbu,
                         },
                       },
                       "& .MuiInputLabel-root": {
-                        color: Colors.nbu, // Custom label text color
+                        color: Colors.blue_nbu,
                       },
                       "& .MuiInputLabel-root.Mui-focused": {
-                        color: Colors.nbu, // Custom label text color on focus
-                      },
-                      "& .MuiOutlinedInput-input": {
-                        color: "#000", // Custom text color
-                      },
-                      "& .MuiIconButton-root": {
-                        color: Colors.nbu, // Custom color for the TimePicker icon
+                        color: Colors.blue_nbu,
                       },
                     }}
                   />
                 </LocalizationProvider>
-                {/* <=== WORK HOURS INPUT ===> */}
-                <TextField
-                  value={editWorkHours}
-                  onChange={(e) => setEditWorkHours(e.target.value)}
-                  variant="outlined"
-                  label="Потраченное время - Часы"
-                  required
-                  type="number"
-                  inputProps={{ min: 0, step: 1 }}
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
-                {/* <=== WORK MINUTES INPUT ===> */}
-                <TextField
-                  value={editWorkMinutes}
-                  onChange={(e) => setEditWorkMinutes(e.target.value)}
-                  variant="outlined"
-                  label="Потраченное время - Минуты"
-                  required
-                  type="number"
-                  inputProps={{ min: 0, max: 59, step: 1 }}
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
 
                 {/* <=== WORKING COMMENT ===> */}
                 <TextField
@@ -1833,34 +1728,34 @@ const handleReorder = (reorderedItems) => {
                   variant="outlined"
                   label="Комментарии"
                   required
-                  multiline // To increase the height
-                  minRows={4} // Set the minimum number of rows for the TextField
-                  inputProps={{ maxLength: 150 }} // Set the maximum length of the input
+                  multiline
+                  minRows={6}
+                  inputProps={{ maxLength: 150 }}
                   InputLabelProps={{
                     sx: {
-                      color: Colors.nbu, // Custom label text color
+                      color: Colors.nbu,
                       "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
+                        color: Colors.blue_nbu,
                       },
                     },
                   }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
+                        borderColor: Colors.blue_nbu,
                       },
                       "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
+                        borderColor: Colors.blue_nbu,
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
+                        borderColor: Colors.blue_nbu,
                       },
                     },
                     "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
+                      color: Colors.blue_nbu,
                     },
                     "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
+                      color: Colors.blue_nbu,
                     },
                   }}
                 />
@@ -1879,332 +1774,7 @@ const handleReorder = (reorderedItems) => {
                   textTransform: "uppercase",
                 }}
               >
-                Qabul qilish
-              </Typography>
-            </Button>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      {/* <==== EDIT ROW MODAL ====> */}
-      <Dialog open={openEditDialog} onClose={handleCloseEditDialog} fullWidth maxWidth="md">
-        <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
-          <Typography sx={{ fontSize: "20px" }}>
-            ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА ЗА {formattedDate} г.
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          {/* No need to display Previous End Time when editing */}
-          <form onSubmit={handleEditSubmit}>
-            <Stack
-              margin={2}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "10px",
-              }}
-            >
-              {/* <=== LEFT SIDE ===> */}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "50%",
-                  gap: "10px",
-                }}
-              >
-                {/* <=== TITLE INPUT ===> */}
-                <TextField
-                  value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
-                  variant="outlined"
-                  label="Что делалось на этапе"
-                  required
-                  multiline // To increase the height
-                  minRows={3} // Reduced rows for better UX
-                  inputProps={{ maxLength: 290 }} // Set the maximum length of the input
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
-                {/* <=== WORKING TYPE ===> */}
-                <FormControl
-                  variant="outlined"
-                  required
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                    "& .MuiSelect-root": {
-                      color: Colors.blue_nbu, // Custom text color inside the Select component
-                    },
-                  }}
-                >
-                  <InputLabel id="edit-work-type-label">Тип работы</InputLabel>
-                  <Select
-                    labelId="edit-work-type-label"
-                    value={editWorkType}
-                    onChange={(e) => setEditWorkType(e.target.value)}
-                    label="Тип работы"
-                  >
-                    <MenuItem value="onetime">разовая</MenuItem>
-                    <MenuItem value="regular">регулярная</MenuItem>
-                  </Select>
-                </FormControl>
-                {/* <=== WORKING HISTORY BOOLEAN YES/NO ====> */}
-                <FormControl
-                  variant="outlined"
-                  required
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                    "& .MuiSelect-root": {
-                      color: Colors.blue_nbu, // Custom text color inside the Select component
-                    },
-                  }}
-                >
-                  <InputLabel id="edit-working-history-label">
-                    задачи в рамки должностной инструкции
-                  </InputLabel>
-                  <Select
-                    labelId="edit-working-history-label"
-                    value={editWorkingHistory}
-                    onChange={(e) => setEditWorkingHistory(e.target.value)}
-                    label="задачи в рамки должностной инструкции?"
-                  >
-                    <MenuItem value="yes">да</MenuItem>
-                    <MenuItem value="no">нет</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              {/* <=== RIGHT SIDE ====> */}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "50%",
-                  gap: "10px",
-                }}
-              >
-                {/* <=== START TIME INPUT ====> */}
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <TimePicker
-                    label="Начало работы"
-                    value={editStartTime}
-                    onChange={(newValue) => setEditStartTime(newValue)}
-                    renderInput={(params) => <TextField {...params} required />}
-                    ampm={false}
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderColor: Colors.nbu, // Custom border color
-                        },
-                        "&:hover fieldset": {
-                          borderColor: Colors.nbu, // Border color on hover
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: Colors.nbu, // Border color on focus
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: Colors.nbu, // Custom label text color
-                      },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: Colors.nbu, // Custom label text color on focus
-                      },
-                      "& .MuiOutlinedInput-input": {
-                        color: "#000", // Custom text color
-                      },
-                      "& .MuiIconButton-root": {
-                        color: Colors.nbu, // Custom color for the TimePicker icon
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-                {/* <=== WORK HOURS INPUT ===> */}
-                <TextField
-                  value={editWorkHours}
-                  onChange={(e) => setEditWorkHours(e.target.value)}
-                  variant="outlined"
-                  label="Потраченное время - Часы"
-                  required
-                  type="number"
-                  inputProps={{ min: 0, step: 1 }}
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
-                {/* <=== WORK MINUTES INPUT ===> */}
-                <TextField
-                  value={editWorkMinutes}
-                  onChange={(e) => setEditWorkMinutes(e.target.value)}
-                  variant="outlined"
-                  label="Потраченное время - Минуты"
-                  required
-                  type="number"
-                  inputProps={{ min: 0, max: 59, step: 1 }}
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
-
-                {/* <=== WORKING COMMENT ===> */}
-                <TextField
-                  value={editWorkingComment}
-                  onChange={(e) => setEditWorkingComment(e.target.value)}
-                  variant="outlined"
-                  label="Комментарии"
-                  required
-                  multiline // To increase the height
-                  minRows={4} // Set the minimum number of rows for the TextField
-                  inputProps={{ maxLength: 150 }} // Set the maximum length of the input
-                  InputLabelProps={{
-                    sx: {
-                      color: Colors.nbu, // Custom label text color
-                      "&.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: Colors.blue_nbu, // Custom border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: Colors.blue_nbu, // Border color on focus
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: Colors.blue_nbu, // Custom label text color
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: Colors.blue_nbu, // Custom label text color on focus
-                    },
-                  }}
-                />
-              </Box>
-            </Stack>
-            {/* <=== SUBMIT BUTTON ===> */}
-            <Button
-              variant="contained"
-              type="submit"
-              sx={{ backgroundColor: Colors.nbu, width: "100%" }}
-            >
-              <Typography
-                sx={{
-                  fontWeight: "bold",
-                  color: Colors.white,
-                  textTransform: "uppercase",
-                }}
-              >
-                Qabul qilish
+                Принять
               </Typography>
             </Button>
           </form>

@@ -154,6 +154,7 @@ const translationUz = {
   worker_list:"Xodimni tanlang",
   // KPIDAILY TEXTS //
   starttime_text:"ISH BOSHLANGAN VAQTNI TANLASH",
+  default_tartTime:"ISH BOSHLANISH VAQTI",
 
 
 };

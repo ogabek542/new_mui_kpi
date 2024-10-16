@@ -154,6 +154,9 @@ const translationEn = {
   date_text:"DATE",
   // worker list //
   worker_list:"Select stuff",
+  // KPIDAILY TEXTS //
+  starttime_text:"SELECT START TIME",
+  default_tartTime:"TIME TO START WORK",
 };
 
 export default translationEn;

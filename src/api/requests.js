@@ -113,11 +113,11 @@ export const REQUESTS = {
     getRealTimeLive: () => axiosInstance.get("/api/daily-visitors"),
   },
   data: {
-    getData: (date) => axiosInstance.get('/api/data/', { params: { date } }), // Adjust endpoint
-    addData: (newData) => axiosInstance.post('/api/data/', newData),
-    editData: (id, updatedData) => axiosInstance.put(`/api/data/${id}/`, updatedData),
-    deleteData: (id) => axiosInstance.delete(`/api/data/${id}/`),
-    sendAllData: (data) => axiosInstance.post('/api/data/bulk/', data),
+    getData: (date) => axiosInstance.get('/my-api-endpoint/', { params: { date } }), // Adjust endpoint
+    addData: (newData) => axiosInstance.post('/my-api-endpoint/', newData),
+    editData: (id, updatedData) => axiosInstance.put(`/api/my-api-endpoint/${id}/`, updatedData),
+    deleteData: (id) => axiosInstance.delete(`/my-api-endpoint/${id}/`),
+    sendAllData: (data) => axiosInstance.post('/my-api-endpoint/', data),
   },
   
 };

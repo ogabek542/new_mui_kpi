@@ -152,7 +152,8 @@ const translationRu = {
         // worker list //
         worker_list:"Выбор сотрудника",
         // KPIDAILY TEXTS //
-        starttime_text:"ВЫБЕРИТЕ ВРЕМЯ НАЧАЛА РАБОТЫ"
+        starttime_text:"ВЫБЕРИТЕ ВРЕМЯ НАЧАЛА РАБОТЫ",
+        default_tartTime:"ВРЕМЯ НАЧИНАТЬ РАБОТУ",
 
 }
 export default translationRu 
