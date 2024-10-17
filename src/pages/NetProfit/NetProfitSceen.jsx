@@ -217,9 +217,6 @@ const NetProfitSceen = ({ changeLang }) => {
   const [selectNewData, setSelectNewData] = useState(dayjs("29.07.2024", "DD.MM.YYYY"));
   const [dateText, setDateText] = useState(dayjs().format("DD.MM.YYYY"));
   const [chooseData, setChooseData] = useState([]);
-  // const [selectedFirstOption, setSelectedFirstOption] = useState({
-  //   title: "Республика",
-  // });
   const [selectedFirstOption, setSelectedFirstOption] = useState({
     title: "Республика",
   });
@@ -270,72 +267,6 @@ const NetProfitSceen = ({ changeLang }) => {
     }
   }, [selectNewData, selectedSecondOptions]);
 
-
-  // useEffect(() => {
-  //   const fetchGraphicData = async () => {
-  //     try {
-  //       const respond = await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
-  //       const graphicIndicators = respond.data;
-  //       console.log(respond, "error");
-  //       console.log(graphicIndicators, "Fetched data All Income ");
-  //       setChooseData(graphicIndicators);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error("Error fetching graphic indicator data:", error);
-  //       if (error.respond && error.respond.status === 404) {
-  //         console.error(
-  //           "Endpoint not found. Please check the URL or backend configuration."
-  //         );
-  //       } else {
-  //         console.error("An error occurred:", error.message);
-  //       }
-  //     }
-  //   };
-
-  //   fetchGraphicData();
-  // }, []);
-
-    // this function for select second option  //
-
-
-  // const handleDateChange = (newValue) => {
-  //   setSelectNewData(newValue);
-
-  //   // Format the date selected from DatePicker to match the format in 'sana'
-  //   const formattedDate = newValue ? dayjs(newValue).format("DD.MM.YYYY") : "";
-
-  //   // Filter 'chooseData' based on the selected region (title) and the specific date in 'sana'
-  //   const selectedData = chooseData
-  //     .filter((item) => selectedSecondOptions?.title === item.name) // Match the selected region/option
-  //     .map((item) => {
-  //       // Filter 'sana' array for only the selected date
-  //       const filteredSana = item.sana
-  //         ? item.sana.filter((sanaItem) => sanaItem.date === formattedDate)
-  //         : [];
-
-  //       return {
-  //         ...item,
-  //         sana: filteredSana, // Update 'sana' with only the filtered data for the selected date
-  //       };
-  //     });
-
-  //   // Update the state with the filtered data
-  //   setChooseData(selectedData);
-  // };
-
-  // const handleDateChange = (newValue) => {
-  //   setSelectNewData(newValue);
-  //   const formattedDate = newValue ? dayjs(newValue).format("MM.DD.YYYY") : "";
-
-  // const selectedData = chooseData.filter((item) => selectedSecondOptions?.title === item.name).map((item) => {
-  //   return {
-  //     ...item,
-  //     sana: item.sana? item.sana.filter((sanaItem) => sanaItem.date === formattedDate) : [],
-  //   };
-  // });
-
-  //   setChooseData(selectedData);
-  // };
   const handleDateChange = (newValue) => {
     setSelectNewData(newValue);
   };
@@ -346,12 +277,6 @@ const NetProfitSceen = ({ changeLang }) => {
     if (!text) return "";
     return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
-
-  // General function to divide data by 100
-  // const divideAndRoundData = (dataArray) => {
-  //   if (!dataArray) return [];
-  //   return dataArray.map((value) => Math.round(value / 100));
-  // };
 
   // Example holidays (add your holidays here)
   const holidays = [
@@ -383,55 +308,10 @@ const NetProfitSceen = ({ changeLang }) => {
 
   // Function to disable weekends and holidays
   const shouldDisableDate = (date) => {
-    // Disable weekends (Saturday = 6, Sunday = 0)
-    // const isWeekend = date.day() === 0 || date.day() === 6;
-
     // Disable holidays
     const isHoliday = holidays.some((holiday) => date.isSame(holiday, "day"));
-
-    // return  isHoliday || isWeekend;
     return isHoliday;
   };
-
-  // useEffect(() => {
-  //   const fetchAllIncomes = async () => {
-  //     try {
-  //       // Check if data already exists in localStorage
-  //       const storedData = localStorage.getItem("graphicIndicators");
-  //       if (storedData) {
-  //         // If data exists, use it
-  //         setChooseData(JSON.parse(storedData));
-  //         console.log("Using data from localStorage");
-  //       } else {
-  //         // Fetch data from API if not in localStorage
-  //         const response =
-  //           await REQUESTS.analysisScreenOne.getAnalysisScreenOne();
-  //         const graphicIndicators = response.data;
-
-  //         // Save fetched data to localStorage
-  //         localStorage.setItem(
-  //           "graphicIndicators",
-  //           JSON.stringify(graphicIndicators)
-  //         );
-
-  //         // Update the state with the fetched data
-  //         setChooseData(graphicIndicators);
-  //         console.log("Fetched data and stored it in localStorage");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching graphic indicator data:", error);
-  //       if (error.response && error.response.status === 404) {
-  //         console.error(
-  //           "Endpoint not found. Please check the URL or backend configuration."
-  //         );
-  //       } else {
-  //         console.error("An error occurred:", error.message);
-  //       }
-  //     }
-  //   };
-
-  //   fetchAllIncomes();
-  // }, []);
 
 
   return (
@@ -601,24 +481,6 @@ const NetProfitSceen = ({ changeLang }) => {
               </Grid>
             </Grid>
 
-            {/* Display fetched data */}
-            {/* {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        chooseData.flatMap((item, index) =>
-          item.sana
-            ?.filter((sanaItem) => sanaItem.date === formattedDate)
-            .map((sanaItem, idx) => (
-              <Box
-                key={`${index}-${idx}`}
-                sx={{ width: "100%", height: "100%", marginTop: "5px" }}
-              >
-              </Box>
-            ))
-        )
-      )} */}
     {loading ? ( <Box
             sx={{
               display: "flex",
@@ -711,7 +573,6 @@ const NetProfitSceen = ({ changeLang }) => {
                                     textShadow: "2px 2px 5px gray",
                                   }}
                                 >
-                                  {/* { insertSpaces(item.cleanProfit.netProfitData) || "нет информации"} */}
                                   {sanaItem.cleanProfit?.netProfitData
                                     ? insertSpaces(
                                         Math.round(

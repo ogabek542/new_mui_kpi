@@ -516,7 +516,7 @@ const newDefaultImage = DefaultImage;
                 </Grid>
             </Grid>
     </Box>
-  )
+    )
 }
 
 export default MuiKpi

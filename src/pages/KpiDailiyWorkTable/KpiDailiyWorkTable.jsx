@@ -15,13 +15,14 @@ import {
   Typography,
   Snackbar,
   Alert,
+  Modal ,
 } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { Colors } from "../../styles/theme"; // Ensure this path is correct
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers";
-import { Reorder } from "framer-motion";
+import { Reorder, color } from "framer-motion";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
@@ -33,6 +34,10 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useTranslation } from "react-i18next";
 import { v4 as uuidv4 } from "uuid"; // Importing uuid
+import {REQUESTS} from "../../api/requests";
+// import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import PriorityHighTwoToneIcon from '@mui/icons-material/PriorityHighTwoTone';
+import { keyframes } from '@emotion/react';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -43,6 +48,7 @@ const KpiDailiyWorkTable = () => {
   // Dialog States
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [openNoticeModal, setOpenNoticeModal] = useState(false);
 
   // Add Form States
   const [addTitle, setAddTitle] = useState("");
@@ -52,6 +58,7 @@ const KpiDailiyWorkTable = () => {
   const [addWorkingComment, setAddWorkingComment] = useState("");
   const [addStartTime, setAddStartTime] = useState(dayjs("09:00", "HH:mm"));
   const [addEndTime, setAddEndTime] = useState(dayjs("09:00", "HH:mm"));
+  const [totalWorkingTime, setTotalWorkingTime] = useState("0h 0m");
 
   // Edit Form States
   const [editItemId, setEditItemId] = useState(null);
@@ -70,6 +77,22 @@ const KpiDailiyWorkTable = () => {
   const formattedDate = dayjs(selectDate).format("DD.MM.YYYY");
   const [defaultStartTime, setDefaultStartTime] = useState(dayjs("09:00", "HH:mm"));
 
+
+
+  const waveAnimation = keyframes`
+  0%, 100% {
+    box-shadow: 0 0 0 0px rgba(255, 193, 7, 0.5), /* Increased opacity to 0.5 */
+                0 0 0 10px rgba(255, 193, 7, 0.5), /* Increased opacity to 0.5 */
+                0 0 0 20px rgba(255, 193, 7, 0.5); /* Increased opacity to 0.5 */
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 193, 7, 0.4), /* Increased opacity to 0.4 */
+                0 0 0 20px rgba(255, 193, 7, 0.4), /* Increased opacity to 0.4 */
+                0 0 0 30px rgba(255, 193, 7, 0.3); /* Increased opacity to 0.3 */
+  }
+`;
+
+
   // Snackbar State
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -84,12 +107,12 @@ const KpiDailiyWorkTable = () => {
   const prevItemsRef = useRef([]);
 
   // Helper Functions
-  const parseWorkTime = (timeValue) => {
-    if (!timeValue || !timeValue.isValid()) return 0;
-    const hours = timeValue.hour();
-    const minutes = timeValue.minute();
-    return hours * 60 + minutes;
-  };
+  // const parseWorkTime = (timeValue) => {
+  //   if (!timeValue || !timeValue.isValid()) return 0;
+  //   const hours = timeValue.hour();
+  //   const minutes = timeValue.minute();
+  //   return hours * 60 + minutes;
+  // };
 
   const formatTime = (dayjsObj) => {
     return dayjsObj.format("HH:mm");
@@ -335,6 +358,9 @@ const KpiDailiyWorkTable = () => {
 
   // Handle Send
   const handleSend = async () => {
+
+    setOpenNoticeModal(false)
+    
     const itemsForSelectedDate = items.filter(
       (item) => item.date === formattedDate
     );
@@ -345,14 +371,16 @@ const KpiDailiyWorkTable = () => {
     };
 
     console.log("Sending data to backend: ", dataToSend);
+  
     try {
       // Replace with actual API call
-      // await REQUESTS.data.sendAllData(dataToSend);
+      await REQUESTS.data.sendAllData(dataToSend);
       showSnackbar("Данные успешно отправлены!", "success");
     } catch (error) {
       console.error("Error sending data:", error);
       showSnackbar("Ошибка при отправке данных.", "error");
     }
+   
   };
 
   // Handle Refresh
@@ -434,6 +462,17 @@ const KpiDailiyWorkTable = () => {
     setEditEndTime(dayjs("09:00", "HH:mm"));
   };
 
+  // Function to Open Notice Modal
+const handleOpenNoticeDialog = () => {
+  setOpenNoticeModal(true);
+};
+
+// Function to Close Notice Modal
+const handleCloseNoticeDialog = () => {
+  setOpenNoticeModal(false);
+};
+
+
   // Open Add Dialog
   const handleOpenAddDialog = () => {
     if (items.length > 0) {
@@ -489,6 +528,35 @@ const KpiDailiyWorkTable = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editWorkDuration, editStartTime]);
+
+
+  const calculateTotalWorkingTime = () => {
+    if (items.length === 0) return "0h 0m"; // No items, no working time
+  
+    // Get the endTime of the last item
+    const lastItem = items[items.length - 1];
+    const lastEndTime = dayjs(lastItem.endTime, "HH:mm");
+  
+    // Get the default start time
+    const startTime = dayjs(defaultStartTime, "HH:mm"); // Ensure defaultStartTime is a dayjs object
+  
+    // Calculate the difference in minutes
+    const totalMinutes = lastEndTime.diff(startTime, 'minute');
+  
+    if (totalMinutes <= 0) return "0h 0m"; // Handle non-positive durations
+  
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+  
+    return `${hours}h ${minutes}m`;
+  };
+
+
+    // useEffect to Update Total Working Time Whenever Items Change
+    useEffect(() => {
+      const calculatedTime = calculateTotalWorkingTime();
+      setTotalWorkingTime(calculatedTime);
+    }, [items, defaultStartTime]);
 
   return (
     <Box sx={{ width: "100%", height: "auto", padding: "5px" }}>
@@ -1223,7 +1291,8 @@ const KpiDailiyWorkTable = () => {
         {/* <=== SEND BUTTON ===> */}
         <Button
           variant="contained"
-          onClick={handleSend}
+          
+          onClick={() => handleOpenNoticeDialog()}
           sx={{ background: Colors.nbu }}
           endIcon={
             <SendIcon
@@ -1771,6 +1840,80 @@ const KpiDailiyWorkTable = () => {
           </form>
         </DialogContent>
       </Dialog>
+
+        {/* <=== NOTICE MODAL OF SEND BUTTON ===> */}
+        <Modal
+        open={openNoticeModal}
+        onClose={handleCloseNoticeDialog}
+        fullWidth
+        maxWidth="md"
+        >
+        <Box sx={{  
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: "650px",
+              bgcolor: Colors.white,
+              boxShadow: 24,
+              p: 4,
+              borderRadius:"5px",
+              
+              
+              }}>
+                {/* <=== Upper Box of Notice Modal ===> */}
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",height:"80%",gap:"45px"}}>
+                <Box
+                    sx={{
+                      width: "100px",
+                      height: "auto",
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      animation: `${waveAnimation} 3s infinite ease-in-out`,
+                      borderRadius: '50%',
+                      marginLeft:"10px"
+                    }}
+                  >
+                    <PriorityHighTwoToneIcon
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        color: Colors.yellow_orange,
+                      }}
+                    />
+                  </Box>
+                    <Box>
+                      <Typography sx={{fontSize:"20px", fontWeight:"normal", textTransform:"initial", lineHeight:"1.2", color:Colors.gray, marginBottom:"10px"}}>
+                        Sizning sanasidagi <Box component="span" sx={{color: Colors.nbu,fontWeight:"bold",fontSize:"20px",}}>{formattedDate}</Box> ish faoliyatingiz davomiyligi <Box component="span" sx={{color: Colors.nbu,fontWeight:"bold",fontSize:"20px",}}> {totalWorkingTime}</Box> vaqtni tashkil etdi.
+                      </Typography>
+                        <Typography sx={{fontSize:"20px",fontWeight:"normal",textTransform:"initial",lineHeight:"1.2",color:Colors.gray}}>
+                              Kiritilgan ma'lumotlar to'g'riligiga aminmisiz ???
+                        </Typography>
+                        {/* <=== ModalButtons Section ===> */}
+                        <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:"15px"}}>
+                            <Button 
+                            variant="contained"
+                            sx={{bgcolor:Colors.nbu,color:Colors.white ,fontWeight:"bold"}}
+                            onClick={handleSend}
+                            >
+                              HA
+                            </Button>
+                            <Button 
+                            variant="contained" 
+                            sx={{bgcolor:Colors.blue_box,color:Colors.nbu ,fontWeight:"bold",'&:hover': {
+                              bgcolor:Colors.red, color:Colors.white
+                            }}}
+                            onClick={handleCloseNoticeDialog}
+                            >
+                              yo'q
+                            </Button>
+                        </Box>
+                    </Box>
+
+                  </Box>
+        </Box>
+      </Modal>
 
       {/* <==== SNACKBAR FOR USER FEEDBACK ====> */}
       <Snackbar

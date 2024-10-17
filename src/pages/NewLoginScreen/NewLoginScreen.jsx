@@ -27,8 +27,6 @@ import {
 } from "../../store/slice/userSlice.js";
 import { useNavigate } from "react-router-dom";
 // backdrop //
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import ReactImageMagnify from "react-image-magnify";
 import Modal from "@mui/material/Modal";
@@ -461,7 +459,6 @@ const NewLoginScreen = () => {
               sx={{
                 width: "100%",
                 height: "100%",
-                // padding: "5px",
                 textAlign: "center",
                 margin: "auto",
                 justifyContent: "center",

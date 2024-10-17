@@ -33,6 +33,7 @@ export const Colors = {
     gray_text:"#AAAAAE",
     gray_rentable:"#AAAAAE",
     yellow_light:"#F7F763",
+    yellow_orange:"#FFA500",
     // red //
     red:"#FF0000",
     red_light:"#FF3532",
