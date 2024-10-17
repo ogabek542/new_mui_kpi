@@ -123,18 +123,9 @@ const KpiDailiyWorkTable = () => {
     const fetchUserData = async () => {
       try {
         // Fetch user data from API
-        // const response = await REQUESTS.user.getUser();
-        // const propsdata = response.data[0];
-        // setData(propsdata);
-
-        // For demonstration, using mock data
-        setUserData({
-          name: "Иван Иванов",
-          branch: "Филиал 1",
-          division: "Отдел продаж",
-          department: "Маркетинг",
-          position: "Менеджер",
-        });
+        const response = await REQUESTS.user.getUser();
+        const propsdata = response.data[0];
+        setData(propsdata);
       } catch (error) {
         console.error("Error fetching user data:", error);
         showSnackbar("Ошибка при получении данных пользователя.", "error");
@@ -209,7 +200,7 @@ const KpiDailiyWorkTable = () => {
       !addTitle ||
       !addWorkType ||
       !addWorkingHistory ||
-      !addWorkDuration
+      !addWorkDuration 
     ) {
       showSnackbar("Пожалуйста, заполните все обязательные поля.", "error");
       return;
@@ -998,7 +989,7 @@ const KpiDailiyWorkTable = () => {
                         height: "auto",
                         overflowWrap: "break-word",
                         wordBreak: "break-all",
-                        fontSize: "12px",
+                        fontSize: "16px",
                       }}
                     >
                       {item.workTime}
@@ -1301,7 +1292,7 @@ const KpiDailiyWorkTable = () => {
                   label="Что делалось на этапе"
                   required
                   multiline // To increase the height
-                  minRows={3} // Reduced rows for better UX
+                  minRows={6} // Reduced rows for better UX
                   inputProps={{ maxLength: 290 }} // Set the maximum length of the input
                   InputLabelProps={{
                     sx: {
@@ -1331,8 +1322,55 @@ const KpiDailiyWorkTable = () => {
                     },
                   }}
                 />
-                {/* <=== WORKING TYPE ===> */}
-                <FormControl
+               {/* <=== WORK DURATION INPUT ===> */}
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker
+                    label="Потраченное время"
+                    value={addWorkDuration}
+                    onChange={(newValue) =>
+                      setAddWorkDuration(
+                        newValue && newValue.isValid()
+                          ? newValue
+                          : dayjs("00:00", "HH:mm")
+                      )
+                    }
+                    views={["hours", "minutes"]}
+                    format="HH:mm"
+                    ampm={false}
+                    renderInput={(params) => <TextField {...params} required />}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: Colors.blue_nbu, // Custom border color
+                        },
+                        "&:hover fieldset": {
+                          borderColor: Colors.blue_nbu, // Border color on hover
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: Colors.blue_nbu, // Border color on focus
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: Colors.blue_nbu, // Custom label text color
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: Colors.blue_nbu, // Custom label text color on focus
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              </Box>
+              {/* <=== RIGHT SIDE ====> */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "50%",
+                  gap: "10px",
+                }}
+              >
+              {/* <=== WORKING TYPE ===> */}
+              <FormControl
                   variant="outlined"
                   required
                   sx={{
@@ -1409,63 +1447,15 @@ const KpiDailiyWorkTable = () => {
                     <MenuItem value="no">нет</MenuItem>
                   </Select>
                 </FormControl>
-              </Box>
-              {/* <=== RIGHT SIDE ====> */}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "50%",
-                  gap: "10px",
-                }}
-              >
-                {/* <=== WORK DURATION INPUT ===> */}
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <TimePicker
-                    label="Потраченное время"
-                    value={addWorkDuration}
-                    onChange={(newValue) =>
-                      setAddWorkDuration(
-                        newValue && newValue.isValid()
-                          ? newValue
-                          : dayjs("00:00", "HH:mm")
-                      )
-                    }
-                    views={["hours", "minutes"]}
-                    format="HH:mm"
-                    ampm={false}
-                    renderInput={(params) => <TextField {...params} required />}
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderColor: Colors.blue_nbu, // Custom border color
-                        },
-                        "&:hover fieldset": {
-                          borderColor: Colors.blue_nbu, // Border color on hover
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: Colors.blue_nbu, // Border color on focus
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: Colors.blue_nbu, // Custom label text color
-                      },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: Colors.blue_nbu, // Custom label text color on focus
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-
                 {/* <=== WORKING COMMENT ===> */}
                 <TextField
                   value={addWorkingComment}
                   onChange={(e) => setAddWorkingComment(e.target.value)}
                   variant="outlined"
                   label="Комментарии"
-                  required
+                  // required
                   multiline // To increase the height
-                  minRows={6} // Set the minimum number of rows for the TextField
+                  minRows={3} // Set the minimum number of rows for the TextField
                   inputProps={{ maxLength: 150 }} // Set the maximum length of the input
                   InputLabelProps={{
                     sx: {
@@ -1565,7 +1555,7 @@ const KpiDailiyWorkTable = () => {
                   label="Что делалось на этапе"
                   required
                   multiline
-                  minRows={3}
+                  minRows={6}
                   inputProps={{ maxLength: 290 }}
                   InputLabelProps={{
                     sx: {
@@ -1595,7 +1585,55 @@ const KpiDailiyWorkTable = () => {
                     },
                   }}
                 />
-                {/* <=== WORKING TYPE ===> */}
+                   {/* <=== WORK DURATION INPUT ===> */}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker
+                    label="Потраченное время"
+                    value={editWorkDuration}
+                    onChange={(newValue) =>
+                      setEditWorkDuration(
+                        newValue && newValue.isValid()
+                          ? newValue
+                          : dayjs("00:00", "HH:mm")
+                      )
+                    }
+                    views={["hours", "minutes"]}
+                    format="HH:mm"
+                    ampm={false}
+                    renderInput={(params) => <TextField {...params} required />}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: Colors.blue_nbu,
+                        },
+                        "&:hover fieldset": {
+                          borderColor: Colors.blue_nbu,
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: Colors.blue_nbu,
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: Colors.blue_nbu,
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: Colors.blue_nbu,
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+            
+              </Box>
+              {/* <=== RIGHT SIDE ====> */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "50%",
+                  gap: "10px",
+                }}
+              >
+              {/* <=== WORKING TYPE ===> */}
                 <FormControl
                   variant="outlined"
                   required
@@ -1673,53 +1711,6 @@ const KpiDailiyWorkTable = () => {
                     <MenuItem value="no">нет</MenuItem>
                   </Select>
                 </FormControl>
-              </Box>
-              {/* <=== RIGHT SIDE ====> */}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "50%",
-                  gap: "10px",
-                }}
-              >
-                {/* <=== WORK DURATION INPUT ===> */}
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <TimePicker
-                    label="Потраченное время"
-                    value={editWorkDuration}
-                    onChange={(newValue) =>
-                      setEditWorkDuration(
-                        newValue && newValue.isValid()
-                          ? newValue
-                          : dayjs("00:00", "HH:mm")
-                      )
-                    }
-                    views={["hours", "minutes"]}
-                    format="HH:mm"
-                    ampm={false}
-                    renderInput={(params) => <TextField {...params} required />}
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderColor: Colors.blue_nbu,
-                        },
-                        "&:hover fieldset": {
-                          borderColor: Colors.blue_nbu,
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: Colors.blue_nbu,
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: Colors.blue_nbu,
-                      },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: Colors.blue_nbu,
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
 
                 {/* <=== WORKING COMMENT ===> */}
                 <TextField
@@ -1729,7 +1720,7 @@ const KpiDailiyWorkTable = () => {
                   label="Комментарии"
                   required
                   multiline
-                  minRows={6}
+                  minRows={3}
                   inputProps={{ maxLength: 150 }}
                   InputLabelProps={{
                     sx: {
@@ -1800,4 +1791,4 @@ const KpiDailiyWorkTable = () => {
   );
 };
 
-export default KpiDailiyWorkTable;
+export default KpiDailiyWorkTable; 
