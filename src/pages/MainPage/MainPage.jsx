@@ -14,11 +14,8 @@ import {
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
 import { REQUESTS } from "../../api/requests.js";
-import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 // MODAL FOTO //
-import ModalImage from "../../assets/photo/NewQualityNbuModalFoto.jpg";
 // IMAGE MAGNIFIER //
-import ReactImageMagnify from "react-image-magnify";
 import { useState } from "react";
 import { useReduxDispatch } from "../../hooks/useReduxHook.js";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -33,8 +30,8 @@ import VerticalBarchartTwo from "../../components/VerticalBarchartTwo/VerticalBa
 import MainPageCostBarchart from "../../components/MainPageCostBarchart/MainPageCostBarchart.jsx";
 import { useLocation } from "react-router-dom";
 import { PacmanLoader } from "react-spinners";
-// modal styles //
-
+// IMPORT MODAL COMPONENT //
+import CustomModal from "../../components/CustomModal/CustomModal.jsx";
 // IMPORT CARDS //
 
 import dayjs from "dayjs";
@@ -50,7 +47,7 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 // <==== import Test API ====> //
-import MainTestApi from "../testapi/mainScreenTextApi.jsx";
+// import MainTestApi from "../testapi/mainScreenTextApi.jsx";
 
 // LANGUAGE SECTION //
 import i18n from "i18next";
@@ -85,27 +82,13 @@ const MainPage = () => {
   const handleCloseAcceptModal = () => setAcceptModal(false);
   const handleNavigateFirstScreen = () => navigate("netprofit");
 
-  // modal function //
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
   // <----- BAR CHART DATA -----> //
 
   // <---- LOGIN CONSTANTS -----> //
   const dispatch = useReduxDispatch();
-  const [isAuth, setIsAuth] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const params = useParams();
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [chooseData, setChooseData] = useState([]);
-   const [displayData, setDisplayData] = useState([]);
   const [loading, setLoading] = useState(true); // Start with loading as true
 
   const [selectNewData, setSelectNewData] = useState(
@@ -204,7 +187,7 @@ const MainPage = () => {
           textAlign: "center",
           height: "100%", // Make sure the Box takes the full viewport height
         }}
-      >
+          >
 
         <Header
           changeLang={changeLang}
@@ -2537,55 +2520,23 @@ const MainPage = () => {
 
         <Footer />
         {/* <=== BEFORE AUTHORISATION MODAL ===>*/}
-        <Modal
+        <CustomModal
           open={openauthmodal}
           onClose={handleCloseAuthModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "auto",
-              bgcolor: "orange",
-              border: "1px solid gray",
-              boxShadow: 24,
-              borderRadius: "5px",
-            }}
-          >
-            <Alert variant="filled" severity="warning">
-              {t("maintextmodal")}
-            </Alert>
-          </Box>
-        </Modal>
+          bgcolor="orange"
+          severity="warning"
+          message={t("maintextmodal")}
+        />
+
         {/* <=== AFTER AUTHORISATION MODAL */}
-        <Modal
-          open={openacceptmodal}
-          onClose={handleCloseAcceptModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "auto",
-              bgcolor: "blue",
-              border: "1px solid gray",
-              boxShadow: 24,
-              borderRadius: "5px",
-            }}
-          >
-            <Alert variant="filled" severity="info">
-              {t("accessmodaltext")}
-            </Alert>
-          </Box>
-        </Modal>
+        <CustomModal  
+            open={openacceptmodal}
+            onClose={handleCloseAcceptModal}
+            bgcolor="blue"
+            severity="info"
+            message={t("accessmodaltext")}
+        />
+
       </Box>
     </Container>
   );
