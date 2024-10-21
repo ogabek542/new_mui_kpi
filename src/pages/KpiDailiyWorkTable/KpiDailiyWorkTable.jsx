@@ -78,7 +78,7 @@ const KpiDailiyWorkTable = () => {
   const [defaultStartTime, setDefaultStartTime] = useState(dayjs("09:00", "HH:mm"));
 
 
-
+// <=== NOITCE MODAL COLOR ===> //
   const waveAnimation = keyframes`
   0%, 100% {
     box-shadow: 0 0 0 0px rgba(255, 193, 7, 0.5), /* Increased opacity to 0.5 */
@@ -91,7 +91,6 @@ const KpiDailiyWorkTable = () => {
                 0 0 0 30px rgba(255, 193, 7, 0.3); /* Increased opacity to 0.3 */
   }
 `;
-
 
   // Snackbar State
   const [snackbar, setSnackbar] = useState({
@@ -247,6 +246,17 @@ const KpiDailiyWorkTable = () => {
     // Generate a unique ID for the new item
     const uniqueId = uuidv4();
 
+    const mapWorkType = (translatedValue) => {
+      switch (translatedValue) {
+        case t("working_type_value_one"):
+          return "onetime";
+        case t("working_type_value_two"):
+          return "regular";
+        default:
+          return "";
+      }
+    };
+
     const newItem = {
       id: uniqueId, // Assign the unique ID
       title: addTitle,
@@ -369,6 +379,10 @@ const KpiDailiyWorkTable = () => {
       mainDate: formattedDate,
       towDatas: itemsForSelectedDate,
     };
+    const itemsToSend = items.map(item => ({
+      ...item,
+      workType: mapWorkType(item.workType),
+    }));
 
     console.log("Sending data to backend: ", dataToSend);
   
@@ -388,7 +402,7 @@ const KpiDailiyWorkTable = () => {
     const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
     const recalculatedItems = recalculateTimes(savedItems);
     setItems(recalculatedItems);
-    showSnackbar("Данные успешно обновлены!", "success");
+    showSnackbar(t("success_data_refresh_text"), "success");
     prevItemsRef.current = recalculatedItems;
 
     // Recheck overlaps
@@ -396,7 +410,7 @@ const KpiDailiyWorkTable = () => {
     if (overlapping.length > 0) {
       setOverlappingIds(overlapping);
       showSnackbar(
-        "Внимание: Некоторые строки имеют пересекающиеся времена.",
+        t("time_operlaps_error_text"),
         "warning"
       );
     } else {
@@ -422,7 +436,7 @@ const KpiDailiyWorkTable = () => {
     if (overlapping.length > 0) {
       setOverlappingIds(overlapping);
       showSnackbar(
-        "Внимание: Некоторые строки имеют пересекающиеся времена.",
+        t("warning_error_text"),
         "warning"
       );
     }
@@ -570,7 +584,7 @@ const handleCloseNoticeDialog = () => {
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-          ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА
+        {t("daily_work_main_title")}
         </Typography>
         {/* Calendar select date */}
         <Box
@@ -849,7 +863,7 @@ const handleCloseNoticeDialog = () => {
             <Typography
               sx={{ fontWeight: "bold", fontSize: "14px", lineHeight: "1" }}
             >
-              Что делалось на этапе
+              {t("table_header_title")}
             </Typography>
           </Grid>
           {/* Work Time Column */}
@@ -869,7 +883,7 @@ const handleCloseNoticeDialog = () => {
             <Typography
               sx={{ fontSize: "14px", fontWeight: "bold", lineHeight: "1" }}
             >
-              Потраченное время
+            {t("table_header_workhour")}
             </Typography>
           </Grid>
           {/* Start Time Column */}
@@ -886,7 +900,7 @@ const handleCloseNoticeDialog = () => {
             }}
           >
             <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
-              Начало
+              {t("start_time")}
             </Typography>
           </Grid>
           {/* End Time Column */}
@@ -903,7 +917,7 @@ const handleCloseNoticeDialog = () => {
             }}
           >
             <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
-              Конец
+              {t("end_time")}
             </Typography>
           </Grid>
           {/* Work Type Column */}
@@ -923,7 +937,7 @@ const handleCloseNoticeDialog = () => {
             <Typography
               sx={{ fontSize: "15px", fontWeight: "bold", lineHeight: "1.1" }}
             >
-              Тип работы (регулярная / разовая)
+              {t("working_type_text")}
             </Typography>
           </Grid>
           {/* Working History Column */}
@@ -949,7 +963,7 @@ const handleCloseNoticeDialog = () => {
                 lineHeight: "1.2",
               }}
             >
-              задачи в рамки должностной инструкции?
+            {t("working_task_title")}
             </Typography>
           </Grid>
           {/* Comments Column */}
@@ -965,7 +979,7 @@ const handleCloseNoticeDialog = () => {
             <Typography
               sx={{ fontSize: "14px", fontWeight: "bold", lineHeight: "1" }}
             >
-              Комментарии
+            {t("comment_text")}
             </Typography>
           </Grid>
           {/* Actions Column (Hidden for Table Header) */}
@@ -1222,7 +1236,7 @@ const handleCloseNoticeDialog = () => {
         </Reorder.Group>
       ) : (
         <Typography sx={{ textAlign: "center", margin: "20px" }}>
-          Нет доступных строк
+          {t("find_row")}
         </Typography>
       )}
 
@@ -1262,7 +1276,7 @@ const handleCloseNoticeDialog = () => {
                 textTransform: "uppercase",
               }}
             >
-              Добавить данные
+              {t("add_new_row")}
             </Typography>
           </Button>
           {/* <=== REFRESH DATA ===> */}
@@ -1284,7 +1298,7 @@ const handleCloseNoticeDialog = () => {
                 textTransform: "uppercase",
               }}
             >
-              Обновить
+              {t("refresh_row_data")}
             </Typography>
           </Button>
         </Box>
@@ -1308,7 +1322,7 @@ const handleCloseNoticeDialog = () => {
               textTransform: "uppercase",
             }}
           >
-            Отправить
+            {t("send_rowdata")}
           </Typography>
         </Button>
       </Box>
@@ -1322,14 +1336,14 @@ const handleCloseNoticeDialog = () => {
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
           <Typography sx={{ fontSize: "20px" }}>
-            ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА ЗА {formattedDate} г.
+            {t("fotowork_section_title")} {formattedDate} {t("year")}.
           </Typography>
         </DialogTitle>
         <DialogContent>
           {/* Display Task Timing */}
           <Box sx={{ marginBottom: "10px" }}>
             <Typography variant="subtitle1" color="textSecondary">
-              Время начала задачи: {formatTime(addStartTime)} и время окончания задачи:{" "}
+              {t("start_task_time")}: {formatTime(addStartTime)} {t("end_task_time")} :{" "}
               {formatTime(addEndTime)}
             </Typography>
           </Box>
@@ -1358,7 +1372,7 @@ const handleCloseNoticeDialog = () => {
                   value={addTitle}
                   onChange={(e) => setAddTitle(e.target.value)}
                   variant="outlined"
-                  label="Что делалось на этапе"
+                  label={t("first_doingwork_inputlabel")}
                   required
                   multiline // To increase the height
                   minRows={6} // Reduced rows for better UX
@@ -1394,7 +1408,7 @@ const handleCloseNoticeDialog = () => {
                {/* <=== WORK DURATION INPUT ===> */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    label="Потраченное время"
+                    label={t("spent_timeto_work")}
                     value={addWorkDuration}
                     onChange={(newValue) =>
                       setAddWorkDuration(
@@ -1465,15 +1479,15 @@ const handleCloseNoticeDialog = () => {
                     },
                   }}
                 >
-                  <InputLabel id="add-work-type-label">Тип работы</InputLabel>
+                  <InputLabel id="add-work-type-label">{t("working_typeof_task")}</InputLabel>
                   <Select
                     labelId="add-work-type-label"
                     value={addWorkType}
                     onChange={(e) => setAddWorkType(e.target.value)}
-                    label="Тип работы"
+                    label={t("working_typeof_task")}
                   >
-                    <MenuItem value="onetime">разовая</MenuItem>
-                    <MenuItem value="regular">регулярная</MenuItem>
+                    <MenuItem value="onetime">{t("working_type_value_one")}</MenuItem>
+                    <MenuItem value="regular">{t("working_type_value_two")}</MenuItem>
                   </Select>
                 </FormControl>
                 {/* <=== WORKING HISTORY BOOLEAN YES/NO ====> */}
@@ -1504,16 +1518,16 @@ const handleCloseNoticeDialog = () => {
                   }}
                 >
                   <InputLabel id="add-working-history-label">
-                    задачи в рамки должностной инструкции
+                    {t("job_tasks_scope_desctiption")}
                   </InputLabel>
                   <Select
                     labelId="add-working-history-label"
                     value={addWorkingHistory}
                     onChange={(e) => setAddWorkingHistory(e.target.value)}
-                    label="задачи в рамки должностной инструкции?"
+                    label={t("job_tasks_scope_desctiption")}
                   >
-                    <MenuItem value="yes">да</MenuItem>
-                    <MenuItem value="no">нет</MenuItem>
+                    <MenuItem value={t("yes")}>{t("yes")}</MenuItem>
+                    <MenuItem value={t("no")}>{t("no")}</MenuItem>
                   </Select>
                 </FormControl>
                 {/* <=== WORKING COMMENT ===> */}
@@ -1521,7 +1535,7 @@ const handleCloseNoticeDialog = () => {
                   value={addWorkingComment}
                   onChange={(e) => setAddWorkingComment(e.target.value)}
                   variant="outlined"
-                  label="Комментарии"
+                  label={t("comment_text")}
                   // required
                   multiline // To increase the height
                   minRows={3} // Set the minimum number of rows for the TextField
@@ -1569,7 +1583,7 @@ const handleCloseNoticeDialog = () => {
                   textTransform: "uppercase",
                 }}
               >
-                Принять
+              {t("submit_button_text")}
               </Typography>
             </Button>
           </form>
@@ -1585,14 +1599,14 @@ const handleCloseNoticeDialog = () => {
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
           <Typography sx={{ fontSize: "20px" }}>
-            ФОТОГРАФИЯ РАБОЧЕГО ДНЯ СОТРУДНИКА ЗА {formattedDate} г.
+          {t("fotowork_section_title")} {formattedDate} {t("year")}.
           </Typography>
         </DialogTitle>
         <DialogContent>
           {/* Display Task Timing */}
           <Box sx={{ marginBottom: "10px" }}>
             <Typography variant="subtitle1" color="textSecondary">
-              Время начала задачи: {formatTime(editStartTime)} и время окончания задачи:{" "}
+            {t("start_task_time")}: {formatTime(editStartTime)} {t("end_task_time")}: {" "}
               {formatTime(editEndTime)}
             </Typography>
           </Box>
@@ -1621,7 +1635,7 @@ const handleCloseNoticeDialog = () => {
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
                   variant="outlined"
-                  label="Что делалось на этапе"
+                  label={t("first_doingwork_inputlabel")}
                   required
                   multiline
                   minRows={6}
@@ -1657,7 +1671,7 @@ const handleCloseNoticeDialog = () => {
                    {/* <=== WORK DURATION INPUT ===> */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    label="Потраченное время"
+                    label={t("spent_timeto_work")}
                     value={editWorkDuration}
                     onChange={(newValue) =>
                       setEditWorkDuration(
@@ -1729,15 +1743,15 @@ const handleCloseNoticeDialog = () => {
                     },
                   }}
                 >
-                  <InputLabel id="edit-work-type-label">Тип работы</InputLabel>
+                  <InputLabel id="edit-work-type-label">{t("working_typeof_task")}</InputLabel>
                   <Select
                     labelId="edit-work-type-label"
                     value={editWorkType}
                     onChange={(e) => setEditWorkType(e.target.value)}
-                    label="Тип работы"
+                    label={t("working_typeof_task")}
                   >
-                    <MenuItem value="onetime">разовая</MenuItem>
-                    <MenuItem value="regular">регулярная</MenuItem>
+                    <MenuItem value={t("working_type_value_one")}>{t("working_type_value_one")}</MenuItem>
+                    <MenuItem value={t("working_type_value_two")}>{t("working_type_value_two")}</MenuItem>
                   </Select>
                 </FormControl>
                 {/* <=== WORKING HISTORY BOOLEAN YES/NO ====> */}
@@ -1768,16 +1782,16 @@ const handleCloseNoticeDialog = () => {
                   }}
                 >
                   <InputLabel id="edit-working-history-label">
-                    задачи в рамки должностной инструкции
+                    {t("job_tasks_scope_desctiption")}
                   </InputLabel>
                   <Select
                     labelId="edit-working-history-label"
                     value={editWorkingHistory}
                     onChange={(e) => setEditWorkingHistory(e.target.value)}
-                    label="задачи в рамки должностной инструкции?"
+                    label={t("job_tasks_scope_desctiption")}
                   >
-                    <MenuItem value="yes">да</MenuItem>
-                    <MenuItem value="no">нет</MenuItem>
+                    <MenuItem value={t("yes")}>{t("yes")}</MenuItem>
+                    <MenuItem value={t("no")}>{t("no")}</MenuItem>
                   </Select>
                 </FormControl>
 
@@ -1786,7 +1800,7 @@ const handleCloseNoticeDialog = () => {
                   value={editWorkingComment}
                   onChange={(e) => setEditWorkingComment(e.target.value)}
                   variant="outlined"
-                  label="Комментарии"
+                  label={t("comment_text")}
                   required
                   multiline
                   minRows={3}
@@ -1834,7 +1848,7 @@ const handleCloseNoticeDialog = () => {
                   textTransform: "uppercase",
                 }}
               >
-                Принять
+                {t("submit_button_text")}
               </Typography>
             </Button>
           </form>
@@ -1858,8 +1872,6 @@ const handleCloseNoticeDialog = () => {
               boxShadow: 24,
               p: 4,
               borderRadius:"5px",
-              
-              
               }}>
                 {/* <=== Upper Box of Notice Modal ===> */}
                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",height:"80%",gap:"45px"}}>
@@ -1881,32 +1893,32 @@ const handleCloseNoticeDialog = () => {
                         height: "100%",
                         color: Colors.yellow_orange,
                       }}
-                    />
+                    /> 
                   </Box>
                     <Box>
                       <Typography sx={{fontSize:"20px", fontWeight:"normal", textTransform:"initial", lineHeight:"1.2", color:Colors.gray, marginBottom:"10px"}}>
-                        Sizning sanasidagi <Box component="span" sx={{color: Colors.nbu,fontWeight:"bold",fontSize:"20px",}}>{formattedDate}</Box> ish faoliyatingiz davomiyligi <Box component="span" sx={{color: Colors.nbu,fontWeight:"bold",fontSize:"20px",}}> {totalWorkingTime}</Box> vaqtni tashkil etdi.
+                        {t("first_sectionof_noticemodal")} <Box component="span" sx={{color: Colors.nbu,fontWeight:"bold",fontSize:"20px",}}>{formattedDate}</Box> {t("second_sectionof_noticemodal")}<Box component="span" sx={{color: Colors.nbu,fontWeight:"bold",fontSize:"20px",}}> {totalWorkingTime}</Box> 
                       </Typography>
                         <Typography sx={{fontSize:"20px",fontWeight:"normal",textTransform:"initial",lineHeight:"1.2",color:Colors.gray}}>
-                              Kiritilgan ma'lumotlar to'g'riligiga aminmisiz ???
+                            {t("notice_info_text")}
                         </Typography>
                         {/* <=== ModalButtons Section ===> */}
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:"15px"}}>
                             <Button 
                             variant="contained"
-                            sx={{bgcolor:Colors.nbu,color:Colors.white ,fontWeight:"bold"}}
+                            sx={{bgcolor:Colors.nbu,color:Colors.white ,fontWeight:"bold",textTransform:"uppercase"}}
                             onClick={handleSend}
                             >
-                              HA
+                              {t("yes")}
                             </Button>
                             <Button 
                             variant="contained" 
-                            sx={{bgcolor:Colors.blue_box,color:Colors.nbu ,fontWeight:"bold",'&:hover': {
+                            sx={{bgcolor:Colors.blue_box,color:Colors.nbu ,fontWeight:"bold", textTransform:"uppercase",'&:hover': {
                               bgcolor:Colors.red, color:Colors.white
                             }}}
                             onClick={handleCloseNoticeDialog}
                             >
-                              yo'q
+                              {t("no")}
                             </Button>
                         </Box>
                     </Box>

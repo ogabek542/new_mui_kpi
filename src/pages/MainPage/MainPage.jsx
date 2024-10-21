@@ -9,35 +9,32 @@ import {
   Typography,
   Button,
   Grid,
-  Modal,
 } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import { motion } from "framer-motion";
-import { REQUESTS } from "../../api/requests.js";
-// MODAL FOTO //
 // IMAGE MAGNIFIER //
 import { useState } from "react";
 import { useReduxDispatch } from "../../hooks/useReduxHook.js";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import Alert from "@mui/material/Alert";
 import MovingIcon from "@mui/icons-material/Moving";
+
+import { REQUESTS } from "../../api/requests.js";
 // <=== Import New Charts ====> //
 import PieChartMainChart from "../../components/PieChartMainSection/PieChartMainChart.jsx";
 import HolePieChart from "../../components/HolePieChart/HolePieChart.jsx";
 import StackedBartchart from "../../components/StackedBarchart/StackedBartchart.jsx";
-import VerticalBarchartTwo from "../../components/VerticalBarchartTwo/VerticalBarchartTwo.jsx";
 import MainPageCostBarchart from "../../components/MainPageCostBarchart/MainPageCostBarchart.jsx";
 import { useLocation } from "react-router-dom";
 import { PacmanLoader } from "react-spinners";
-// IMPORT MODAL COMPONENT //
+// IMPORT MODAL //
 import CustomModal from "../../components/CustomModal/CustomModal.jsx";
-// IMPORT CARDS //
+import BankIncomeCard from "../../components/BankIncomeCard/BankIncomeCard.jsx";
+import BankExpenceCard from "../../components/BankExpenseCard/BankExpenceCard.jsx";
 
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
-
 import "dayjs/locale/ru";
 // for holidays data //
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
@@ -45,7 +42,6 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
-
 // <==== import Test API ====> //
 // import MainTestApi from "../testapi/mainScreenTextApi.jsx";
 
@@ -66,13 +62,6 @@ const MainPage = () => {
   const [loginError, setLoginError] = React.useState("");
   const [openauthmodal, setOpenAuthModal] = React.useState(false);
   const [openacceptmodal, setAcceptModal] = React.useState(false);
-  // PASSWORD SHOW HIDE FUNCTION //
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  // BACKDROP FUNCTION //
-  const handleCloseBackdrop = () => setBackdrop(false);
 
   // AUTH  MODAL FUNCTION //
   const handleOpenAuthModal = () => setOpenAuthModal(true);
@@ -82,18 +71,20 @@ const MainPage = () => {
   const handleCloseAcceptModal = () => setAcceptModal(false);
   const handleNavigateFirstScreen = () => navigate("netprofit");
 
-  // <----- BAR CHART DATA -----> //
-
   // <---- LOGIN CONSTANTS -----> //
   const dispatch = useReduxDispatch();
+  const [isAuth, setIsAuth] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const params = useParams();
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [chooseData, setChooseData] = useState([]);
   const [loading, setLoading] = useState(true); // Start with loading as true
 
   const [selectNewData, setSelectNewData] = useState(
     // dayjs("29.07.2024", "DD.MM.YYYY")
-    // dayjs(dayjs(), "DD.MM.YYYY")
     dayjs().subtract(1, 'day')
   );
   // const [selectNewData, setSelectNewData] = useState(dayjs("2023-07-26"));
@@ -127,6 +118,7 @@ const MainPage = () => {
           params
         );
         const calendarIndicators = respond.data;
+        console.log(formattedDate);
         console.log(respond);
         console.log(calendarIndicators, "New MAIN SCREEN data");
         setChooseData(calendarIndicators);
@@ -187,16 +179,16 @@ const MainPage = () => {
           textAlign: "center",
           height: "100%", // Make sure the Box takes the full viewport height
         }}
-          >
-
+      >
         <Header
           changeLang={changeLang}
           value={selectNewData}
           onChange={handleDateChange}
         />
-        
+
         <Outlet />
-        {/* <=== TABLES BUTTON'S SECTION ===> */}
+
+          {/* <=== TABLES BUTTON'S SECTION ===> */}
 
         <Box
           sx={{
@@ -300,7 +292,7 @@ const MainPage = () => {
             <PacmanLoader
               color={Colors.blue_tableheader_light}
               loading={loading}
-              size={40}
+              size={50}
             />
           </Box>
         ) : (
@@ -740,7 +732,11 @@ const MainPage = () => {
                       <Button
                         variant="contained"
                         size={"medium"}
-                        onClick={() => navigate("netprofit")}
+                        onClick={
+                          acceptNavigate
+                            ? handleOpenAcceptModal
+                            : handleOpenAuthModal
+                        }
                       >
                         <Typography
                           sx={{
@@ -1817,11 +1813,8 @@ const MainPage = () => {
                       <Button
                         variant="contained"
                         size={"medium"}
-                        onClick={
-                          acceptNavigate
-                            ? handleOpenAcceptModal
-                            : handleOpenAuthModal
-                        }
+                    
+                        onClick={() => navigate("netprofit")}
                       >
                         <Typography
                           sx={{
@@ -1837,706 +1830,60 @@ const MainPage = () => {
                   </Box>
                 </Grid>
                 {/* fifth div*/}
-                <Grid
-                  item
-                  xs={12}
-                  sm={9}
-                  md={6}
-                  lg={4}
-                  sx={{
-                    height: { xs: "400px", md: "500px" },
-                    // width:"auto",
-                    padding: "5px",
-                    position: "relative",
-                    "&:hover .hovers-button": {
-                      opacity: 1, // Show button when hovering over the box
-                    },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "5px",
-                      padding: "10px",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "20px",
-                      bgcolor: Colors.gray_footer,
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        textAlign: "start",
-                        fontWeight: "800",
-                        fontSize: { xs: "12px", md: "20px" },
-                      }}
-                    >
-                      {t("ninthText")}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        height: "90%",
-                        width: "100%",
-                        gap: "10px",
-                        marginTop: "15px",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          height: "28%",
-                        }}
-                      >
-                        {/* top side of div */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: "10px",
-                          }}
-                        >
-                          <Typography
-                            variant="h2"
-                            sx={{ fontWeight: "bold", textAlign: "start" }}
-                          >
-                            {insertSpaces(item?.bankIncomes?.totalIncomes || 0)}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: Colors.gray,
-                              width: "auto",
-                              lineHeight: "1.2",
-                              fontStyle: "italic",
-                              fontWeight: "500",
-                              wordWrap: "break-word",
-                            }}
-                          >
-                            {t("partoneBillion")}
-                            <br />
-                            {t("parttwoBillion")}
-                          </Typography>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: "10px",
-                          }}
-                        >
-                          {/* Box containing Icon and percentage */}
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <MovingIcon
-                              sx={{
-                                color:
-                                  item?.bankIncomes?.totalIncomesPercentage <=
-                                  99
-                                    ? Colors.red
-                                    : Colors.green_dark,
-                                fontSize: "48px",
-                                padding: "0px",
-                                transform:
-                                  item?.bankIncomes?.totalIncomesPercentage <=
-                                  99
-                                    ? "rotate(180deg)"
-                                    : "rotate(0deg)",
-                                transition: "transform 0.3s ease",
-                              }}
-                            />
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "flex-start",
-                                justifyContent: "center",
-                                gap: "2px",
-                              }}
-                            >
-                              <Typography
-                                variant="h4"
-                                sx={{
-                                  color:
-                                    item?.bankIncomes?.totalIncomesPercentage <=
-                                    99
-                                      ? Colors.red
-                                      : Colors.green_dark,
-                                  fontWeight: "800",
-                                  lineHeight: "1",
-                                }}
-                              >
-                                {item?.bankIncomes?.totalIncomesPercentage || 0}{" "}
-                                <span
-                                  style={{
-                                    color:
-                                      item?.bankIncomes
-                                        ?.totalIncomesPercentage <= 99
-                                        ? Colors.red
-                                        : Colors.green_dark,
-                                    fontSize: "20px",
-                                    lineHeight: "1",
-                                  }}
-                                >
-                                  %
-                                </span>
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-around",
-                          height: "70%",
-                        }}
-                      >
-                        {/* pie chart section  */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "60%",
-                            height: "100%",
-                          }}
-                        >
-                          <VerticalBarchartTwo
-                            percentageIncome={
-                              item?.bankIncomes?.percentageIncomePercentage || 0
-                            }
-                            nopercentageIncome={
-                              item?.bankIncomes?.nopercentageIncomePercentage ||
-                              0
-                            }
-                          />
-                        </Box>
-                        {/* right side Texts */}
-                        <Box sx={{}}>
-                          {/* top side light blue */}
-                          <Box
-                            sx={{ display: "flex", flexDirection: "column" }}
-                          >
-                            <Box>
-                              <Typography
-                                sx={{
-                                  fontSize: "12px",
-                                  color: Colors.dark,
-                                  fontWeight: "bold",
-                                  textAlign: "left",
-                                  lineHeight: "1",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                {t("percentageIncomeText")}
-                              </Typography>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "space-between",
-                                  gap: "10px",
-                                }}
-                              >
-                                <Typography
-                                  sx={{
-                                    color: "rgba(54, 100, 200, 1)",
-                                    fontSize: "32px",
-                                    fontWeight: "bold",
-                                    width: "auto",
-                                    lineHeight: "1.1",
-                                    textAlign: "start",
-                                  }}
-                                >
-                                  {insertSpaces(
-                                    item?.bankIncomes?.percentageIncome || 0
-                                  )}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    color: Colors.gray,
-                                    fontSize: "12px",
-                                    width: "50px",
-                                    wordWrap: "break-word",
-                                    textAlign: "end",
-                                    lineHeight: "1",
-                                  }}
-                                >
-                                  {t("partoneBillion")}
-                                  <br />
-                                  {t("parttwoBillion")}
-                                </Typography>
-                              </Box>
-                            </Box>
-                          </Box>
-                          {/* bottom side dark_blue national  */}
-                          <Box
-                            sx={{ display: "flex", flexDirection: "column" }}
-                          >
-                            <Box>
-                              <Typography
-                                sx={{
-                                  fontSize: "12px",
-                                  color: Colors.dark,
-                                  fontWeight: "bold",
-                                  textAlign: "left",
-                                  lineHeight: "1",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                {t("noPercenteageIncomeText")}
-                              </Typography>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "space-betweeen",
-                                  gap: "10px",
-                                }}
-                              >
-                                <Typography
-                                  sx={{
-                                    color: "rgba(60, 179, 113, 1)",
-                                    fontSize: "32px",
-                                    fontWeight: "bold",
-                                    width: "auto",
-                                    lineHeight: "1.1",
-                                    textAlign: "start",
-                                  }}
-                                >
-                                  {insertSpaces(
-                                    item?.bankIncomes?.nopercentageIncome || 0
-                                  )}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    color: Colors.gray,
-                                    fontSize: "12px",
-                                    width: "50px",
-                                    wordWrap: "break-word",
-                                    textAlign: "end",
-                                    lineHeight: "1",
-                                    marginLeft: "18px",
-                                  }}
-                                >
-                                  {t("partoneBillion")}
-                                  <br />
-                                  {t("parttwoBillion")}
-                                </Typography>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Box>
-                    {/* button section */}
-                    <Box
-                      className="hovers-button"
-                      sx={{
-                        textAlign: "end",
-                        position: "absolute",
-                        bottom: "15px",
-                        right: "15px",
-                        opacity: 0, // Initially hidden
-                        transition: "opacity 300ms ease", // Smooth transition for hover
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        size={"medium"}
-                        onClick={
-                          acceptNavigate
-                            ? handleOpenAcceptModal
-                            : handleOpenAuthModal
-                        }
-                      >
-                        <Typography
-                          sx={{
-                            color: Colors.white,
-                            fontWeight: "800",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          {t("infobutton")}
-                        </Typography>
-                      </Button>
-                    </Box>
-                  </Box>
-                </Grid>
+                <BankIncomeCard 
+                    title={t("ninthText")}
+                    titleone={t("partoneBillion")}
+                    titletwo={t("parttwoBillion")}
+                    percentageTitle={t("percentageIncomeText")}
+                    nopercentageIncomeTitle={t("noPercenteageIncomeText")}
+                    totalIncomes={item?.bankIncomes?.totalIncomes || 0}
+                    totalIncomesPercentage={item?.bankIncomes?.totalIncomesPercentage || 0}
+                    percentageIncome={item?.bankIncomes?.percentageIncome || 0}
+                    nopercentageIncome={item?.bankIncomes?.nopercentageIncome || 0}
+                    percentageIncomePercentage={item?.bankIncomes?.percentageIncomePercentage || 0}
+                    nopercentageIncomePercentage={item?.bankIncomes?.nopercentageIncomePercentage || 0}
+                    onButtonClick={acceptNavigate ? handleOpenAcceptModal : handleOpenAuthModal}
+                    buttonText={t("infobutton")}
+                />
                 {/* sixth div */}
-                <Grid
-                  item
-                  xs={12}
-                  sm={9}
-                  md={6}
-                  lg={4}
-                  sx={{
-                    height: { xs: "400px", md: "500px" },
-                    // width:"auto",
-                    padding: "5px",
-                    position: "relative",
-                    "&:hover .hover-button": {
-                      opacity: 1, // Show button when hovering over the box
-                    },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "5px",
-                      padding: "10px",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "20px",
-                      bgcolor: Colors.gray_footer,
-                      position: "relative",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        textAlign: "start",
-                        fontWeight: "800",
-                        fontSize: { xs: "12px", md: "20px" },
-                      }}
-                    >
-                      {t("thirteenth")}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        height: "90%",
-                        width: "100%",
-                        gap: "10px",
-                        marginTop: "15px",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          height: "28%",
-                        }}
-                      >
-                        {/* top side of div */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: "10px",
-                          }}
-                        >
-                          <Typography
-                            variant="h2"
-                            sx={{ fontWeight: "bold", textAlign: "start" }}
-                          >
-                            {insertSpaces(
-                              item?.bankExpenses?.totalExpenses || 0
-                            )}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: Colors.gray,
-                              width: "auto",
-                              lineHeight: "1.2",
-                              fontStyle: "italic",
-                              fontWeight: "500",
-                              wordWrap: "break-word",
-                            }}
-                          >
-                            {t("partoneBillion")}
-                            <br />
-                            {t("parttwoBillion")}
-                          </Typography>
-                        </Box>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: "10px",
-                          }}
-                        >
-                          {/* Icon with text */}
-
-                          {/* Box containing Icon and percentage */}
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <MovingIcon
-                              sx={{
-                                color:
-                                  item?.bankExpenses?.totalExpensesPercentage <=
-                                  100
-                                    ? Colors.green_dark
-                                    : Colors.red,
-                                fontSize: "48px",
-                                padding: "0px",
-                                transform:
-                                  item?.bankExpenses?.totalExpensesPercentage <=
-                                  100
-                                    ? "rotate(0deg)"
-                                    : "rotate(180deg)",
-                                transition: "transform 0.3s ease",
-                              }}
-                            />
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "flex-start",
-                                justifyContent: "center",
-                                gap: "2px",
-                              }}
-                            >
-                              <Typography
-                                variant="h4"
-                                sx={{
-                                  color:
-                                    item?.bankExpenses
-                                      ?.totalExpensesPercentage <= 100
-                                      ? Colors.green_dark
-                                      : Colors.red,
-                                  fontWeight: "800",
-                                  lineHeight: "1",
-                                }}
-                              >
-                                {item?.bankExpenses?.totalExpensesPercentage}{" "}
-                                <span
-                                  style={{
-                                    color:
-                                      item?.bankExpenses
-                                        ?.totalExpensesPercentage <= 100
-                                        ? Colors.green_dark
-                                        : Colors.red,
-                                    fontSize: "20px",
-                                    lineHeight: "1",
-                                  }}
-                                >
-                                  %
-                                </span>
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-around",
-                          height: "70%",
-                        }}
-                      >
-                        {/* pie chart section  */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "60%",
-                            height: "100%",
-                          }}
-                        >
-                          <MainPageCostBarchart
-                            percentageCost={
-                              item?.bankExpenses?.percentageCostPercentage || 0
-                            }
-                            nopercentageCost={
-                              item?.bankExpenses?.nopercentageCostPercentage ||
-                              0
-                            }
-                          />
-                        </Box>
-                        {/* right side Texts */}
-                        <Box sx={{}}>
-                          {/* top side light blue */}
-                          <Box
-                            sx={{ display: "flex", flexDirection: "column" }}
-                          >
-                            <Box>
-                              <Typography
-                                sx={{
-                                  fontSize: "12px",
-                                  color: Colors.dark,
-                                  fontWeight: "bold",
-                                  textAlign: "left",
-                                  lineHeight: "1",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                {t("percentageCostText")}
-                              </Typography>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "space-between",
-                                  gap: "10px",
-                                }}
-                              >
-                                <Typography
-                                  sx={{
-                                    color: "rgba(54, 100, 200, 1)",
-                                    fontSize: "32px",
-                                    fontWeight: "bold",
-                                    width: "auto",
-                                    lineHeight: "1.1",
-                                  }}
-                                >
-                                  {insertSpaces(
-                                    item?.bankExpenses?.percentageCost || 0
-                                  )}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    color: Colors.gray,
-                                    fontSize: "12px",
-                                    width: "50px",
-                                    wordWrap: "break-word",
-                                    textAlign: "start",
-                                    lineHeight: "1",
-                                  }}
-                                >
-                                  {t("partoneBillion")}
-                                  <br />
-                                  {t("parttwoBillion")}
-                                </Typography>
-                              </Box>
-                            </Box>
-                          </Box>
-                          {/* bottom side dark_blue national  */}
-                          <Box
-                            sx={{ display: "flex", flexDirection: "column" }}
-                          >
-                            <Box>
-                              <Typography
-                                sx={{
-                                  fontSize: "12px",
-                                  color: Colors.dark,
-                                  fontWeight: "bold",
-                                  textAlign: "left",
-                                  lineHeight: "1",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                {t("nopercentageCostText")}
-                              </Typography>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "space-between",
-                                  gap: "10px",
-                                }}
-                              >
-                                <Typography
-                                  sx={{
-                                    color: "rgba(60, 179, 113, 1)",
-                                    fontSize: "32px",
-                                    fontWeight: "bold",
-                                    width: "auto",
-                                    lineHeight: "1.1",
-                                  }}
-                                >
-                                  {insertSpaces(
-                                    item?.bankExpenses?.nopercentageCost || 0
-                                  )}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    color: Colors.gray,
-                                    fontSize: "12px",
-                                    width: "50px",
-                                    wordWrap: "break-word",
-                                    textAlign: "start",
-                                    lineHeight: "1",
-                                  }}
-                                >
-                                  {t("partoneBillion")}
-                                  <br />
-                                  {t("parttwoBillion")}
-                                </Typography>
-                              </Box>
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Box>
-                    {/* button section */}
-                    <Box
-                      className="hover-button"
-                      sx={{
-                        textAlign: "end",
-                        position: "absolute",
-                        bottom: "10px",
-                        right: "10px",
-                        opacity: 0, // Initially hidden
-                        transition: "opacity 300ms ease", // Smooth transition for hover
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        size={"medium"}
-                        onClick={
-                          acceptNavigate
-                            ? handleOpenAcceptModal
-                            : handleOpenAuthModal
-                        }
-                      >
-                        <Typography
-                          sx={{
-                            color: Colors.white,
-                            fontWeight: "800",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          {t("infobutton")}
-                        </Typography>
-                      </Button>
-                    </Box>
-                  </Box>
-                </Grid>
+                <BankExpenceCard
+                    title={t("thirteenth")}
+                    titleone={t("partoneBillion")}
+                    titletwo={t("parttwoBillion")}
+                    percentageTitle={t("percentageCostText")}
+                    nopercentageExpenseTitle={t("nopercentageCostText")}
+                    totalExpenses={item?.bankExpenses?.totalExpenses || 0}
+                    totalExpensePercentage={item?.bankExpenses?.totalExpensesPercentage || 0}
+                    percentageExpense={item?.bankExpenses?.percentageCost || 0}
+                    nopercentageExpense={item?.bankExpenses?.nopercentageCost || 0}
+                    percentageCostPercentage={item?.bankExpenses?.percentageCostPercentage || 0}
+                    nopercentageCostPercentage={item?.bankExpenses?.nopercentageCostPercentage || 0}
+                    onButtonClick={acceptNavigate ? handleOpenAcceptModal : handleOpenAuthModal}
+                    buttonText={t("infobutton")}
+                />
               </Grid>
             ))
         )}
 
         <Footer />
+      
         {/* <=== BEFORE AUTHORISATION MODAL ===>*/}
-        <CustomModal
-          open={openauthmodal}
-          onClose={handleCloseAuthModal}
-          bgcolor="orange"
-          severity="warning"
-          message={t("maintextmodal")}
-        />
+          <CustomModal
+              open={openauthmodal}
+              onClose={handleCloseAuthModal}
+              bgcolor="orange"
+              severity="warning"
+              message={t("maintextmodal")}
+            />
 
         {/* <=== AFTER AUTHORISATION MODAL */}
-        <CustomModal  
+          <CustomModal
             open={openacceptmodal}
             onClose={handleCloseAcceptModal}
             bgcolor="blue"
             severity="info"
             message={t("accessmodaltext")}
-        />
-
+          />
       </Box>
     </Container>
   );

@@ -45,7 +45,7 @@ const translationUz = {
     plan:"PLAN",
     fact:"FAKT",
     execution:"IJRO",
-    filial:"filial",
+    filial:"FILIAL",
     vsp:"VSP (OPERU/BHM/BHO)",
     part:"BO'LMA",
     positionjob:"LAVOZIM",
@@ -151,11 +151,43 @@ const translationUz = {
     // kpidaily screen elements //
     date_text:"SANA",
      // worker list //
-  worker_list:"Xodimni tanlang",
-  // KPIDAILY TEXTS //
-  starttime_text:"ISH BOSHLANGAN VAQTNI TANLASH",
-  default_tartTime:"ISH BOSHLANISH VAQTI",
-
+    worker_list:"Xodimni tanlang",
+    // KPIDAILY TEXTS //
+    starttime_text:"ISH BOSHLANGAN VAQTNI TANLASH",
+    default_startTime:"ISH BOSHLANISH VAQTI",
+    find_row:"Hech qanday qator mavjud emas",
+    add_new_row:"MA'LUMOT QO'SHISH",
+    send_rowdata:"YUBORISH",
+    refresh_row_data:"YANGILASH",
+    fotowork_section_title:"XODIMNING ISH KUNI",
+    year:"y",
+    start_task_time:"Vazifani boshlash vaqti",
+    end_task_time:"va vazifani tugatish vaqti",
+    first_doingwork_inputlabel:"Qanday vazifa bajarilgan",
+    spent_timeto_work:"Sarflangan vaqt",
+    working_typeof_task:"Vazifa turi",
+    working_type_value_one:"bir marotaba",
+    working_type_value_two:"doimiy",
+    job_tasks_scope_desctiption:"Lavozim tavsifi doirasidagi vazifalar",
+    yes:"Ha",
+    no:"Yo'q",
+    comment_text:"Komment",
+    submit_button_text:"Qabul Qilish",
+    notice_info_text:"Kiritilgan ma'lumotlar to'g'riligiga aminmisiz ???",
+    first_sectionof_noticemodal:"Sizning sanasidagi",
+    second_sectionof_noticemodal:"ish faoliyatingiz davomiyligi hisoblangan vaqt",
+     // table header section //
+    table_header_title:"Bajarilgan vazifalar nomi",
+    table_header_workhour:"Sarflangan vaqt",
+    start_time:"Boshlash",
+    end_time:"Tugatish",
+    working_type_text:"Ish turi (doimiy / bir martalik)",
+    working_task_title:"Ish tavsifi doirasidagi vazifalar?",
+    // kpidailywork //
+    daily_work_main_title:"XODIMLARNING ISH KUNI",
+    warning_error_text:"Izoh: Ba'zi satrlarda bir-biriga o'xshash zamon mavjud.",
+    success_data_refresh_text:"Maʼlumotlar muvaffaqiyatli yangilandi!",
+    time_operlaps_error_text:"Izoh: Ba'zi satrlarda bir-biriga o'xshash vaqt oralig'i mavjud.",
 
 };
 

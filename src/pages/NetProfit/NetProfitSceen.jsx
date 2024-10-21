@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Box, Grid, Typography, Divider,CircularProgress  } from "@mui/material";
+import { Container, Box, Grid, Typography, Divider,  } from "@mui/material";
 import { Colors } from "../../styles/theme";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -21,7 +21,7 @@ import "dayjs/locale/ru";
 import { REQUESTS } from "../../api/requests.js";
 import MovingIcon from "@mui/icons-material/Moving";
 import { useTranslation } from "react-i18next";
-import testData from "../testapi/testDataAll.jsx";
+// import testData from "../testapi/testDataAll.jsx";
 // for holidays data //
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
@@ -312,7 +312,6 @@ const NetProfitSceen = ({ changeLang }) => {
     const isHoliday = holidays.some((holiday) => date.isSame(holiday, "day"));
     return isHoliday;
   };
-
 
   return (
     <Container

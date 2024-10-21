@@ -23,8 +23,6 @@ dayjs.extend(isSameOrBefore);
 
 const IndicatorKey = () => {
 
-
-
   const changeLang = (value) => {
     i18n.changeLanguage(value)
   }
@@ -164,8 +162,8 @@ const IndicatorKey = () => {
               >
                 <Typography sx={{fontWeight:"bold",textTransform:"uppercase"}}>{t("balans")}</Typography>
               </Button>
-          </Box>
-          {/* main title section */}
+        </Box>
+        {/* main title section */}
       <Box
         sx={{
           height: "50px",
@@ -183,7 +181,6 @@ const IndicatorKey = () => {
         </Typography>
       </Box>
       <Box  sx={{ marginY: "10px",position:"relative",width:"100%" }}>
-   
           {/* GRID HEADER SECTION */}
 
           {/* <== gird  HEADER SECTION ==> */}
@@ -1240,7 +1237,6 @@ const IndicatorKey = () => {
               </Box>
             </Grid>
           </Grid>
-        
       </Box>
       <Footer />
     </Container>

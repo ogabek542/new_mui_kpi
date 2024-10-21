@@ -156,7 +156,43 @@ const translationEn = {
   worker_list:"Select stuff",
   // KPIDAILY TEXTS //
   starttime_text:"SELECT START TIME",
-  default_tartTime:"TIME TO START WORK",
+  default_startTime:"TIME TO START WORK",
+  find_row:"No rows available",
+  add_new_row:"ADD DATA",
+  send_rowdata:"SEND",
+  refresh_row_data:"REFRESH",
+  fotowork_section_title:"PHOTOGRAPH OF AN EMPLOYEE'S WORKING DAY FOR",
+  year:"y",
+  start_task_time:"Task start time",
+  end_task_time:"and the task completion time",
+  first_doingwork_inputlabel:"What was done at this stage",
+  spent_timeto_work:"Time spent",
+  working_typeof_task:"Type of work",
+  working_type_value_one:"one-time",
+  working_type_value_two:"regular",
+  job_tasks_scope_desctiption:"Tasks within the scope of the job description",
+  yes:"Yes",
+  no:"No",
+  comment_text:"Comment",
+  submit_button_text:"Submit",
+  notice_info_text:"Are you sure the entered information is correct???",
+  first_sectionof_noticemodal:"The duration of your work activity on",
+  second_sectionof_noticemodal:"was",
+  // table header section //
+  table_header_title:"What was done at this stage",
+  table_header_workhour:"Working hours",
+  start_time:"Start",
+  end_time:"End",
+  working_type_text:"Type of work (regular/one-time)",
+  working_task_title:"Tasks within the scope of the job description?",
+  // kpidailywork //
+  daily_work_main_title:"PHOTOGRAPH OF AN EMPLOYEE'S WORKING DAY",
+  warning_error_text:"Note: Some lines have overlapping tenses.",
+  success_data_refresh_text:"Data updated successfully!",
+  time_operlaps_error_text:"Note: Some lines have overlapping tenses.",
+  
+
+
 };
 
 export default translationEn;
