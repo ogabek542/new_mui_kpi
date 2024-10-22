@@ -26,7 +26,9 @@ import HolePieChart from "../../components/HolePieChart/HolePieChart.jsx";
 import StackedBartchart from "../../components/StackedBarchart/StackedBartchart.jsx";
 import MainPageCostBarchart from "../../components/MainPageCostBarchart/MainPageCostBarchart.jsx";
 import { useLocation } from "react-router-dom";
+// <=== IMPORT LOADER ICON ====> //
 import { PacmanLoader } from "react-spinners";
+import AnimatedIcon from "../../components/AnimatedIcon/AnimatedIcon.jsx";
 // IMPORT MODAL //
 import CustomModal from "../../components/CustomModal/CustomModal.jsx";
 import BankIncomeCard from "../../components/BankIncomeCard/BankIncomeCard.jsx";
@@ -286,14 +288,18 @@ const MainPage = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              height: "35vh",
+              width: 'auto', height: 'auto' 
             }}
           >
-            <PacmanLoader
+            {/* <==== LOADER ICON ====> */}
+            {/* <PacmanLoader
               color={Colors.blue_tableheader_light}
               loading={loading}
               size={50}
-            />
+            /> */}
+
+            <AnimatedIcon sx={{ width: '200px', height: '250px' }}/>
+
           </Box>
         ) : (
           chooseData

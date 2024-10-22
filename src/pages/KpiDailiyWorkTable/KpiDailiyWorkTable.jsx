@@ -119,7 +119,7 @@ const KpiDailiyWorkTable = () => {
 
   const calculateEndTime = (start, totalMinutes) => {
     const startMoment = dayjs(start, "HH:mm");
-    const endMoment = startMoment.add(totalMinutes, "minute");
+    const endMoment = startMoment.add(totalMinutes, t("minutes"));
     return endMoment;
   };
 
@@ -150,7 +150,7 @@ const KpiDailiyWorkTable = () => {
         setData(propsdata);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        showSnackbar("Ошибка при получении данных пользователя.", "error");
+        showSnackbar(t("get_errorof_userdata"), "error");
       }
     };
     fetchUserData();
@@ -198,13 +198,13 @@ const KpiDailiyWorkTable = () => {
     localStorage.setItem("workItems", JSON.stringify(updatedItems));
     prevItemsRef.current = updatedItems;
 
-    showSnackbar("Строки успешно изменены!", "success");
+    showSnackbar(t("delete_successfully"), "success");
 
     // Check for overlaps after reordering
     const overlapping = findOverlappingItems(updatedItems);
     if (overlapping.length > 0) {
       showSnackbar(
-        "Внимание: Некоторые строки имеют пересекающиеся времена.",
+        t("time_operlaps_error_text"),
         "warning"
       );
       setOverlappingIds(overlapping);
@@ -224,13 +224,13 @@ const KpiDailiyWorkTable = () => {
       !addWorkingHistory ||
       !addWorkDuration 
     ) {
-      showSnackbar("Пожалуйста, заполните все обязательные поля.", "error");
+      showSnackbar(t("need_empty_space"), "error");
       return;
     }
 
     // Validate Time Values
     if (!addWorkDuration.isValid()) {
-      showSnackbar("Некорректные значения времени.", "error");
+      showSnackbar(t("error_time_amount"), "error");
       return;
     }
 
@@ -239,7 +239,7 @@ const KpiDailiyWorkTable = () => {
     const workTimeMinutes = workHours * 60 + workMinutes;
 
     if (workTimeMinutes <= 0) {
-      showSnackbar("Время работы должно быть больше 0 минут.", "error");
+      showSnackbar(t("check_workinghours"), "error");
       return;
     }
 
@@ -277,7 +277,7 @@ const KpiDailiyWorkTable = () => {
       const recalculatedItems = recalculateTimes(updatedItems);
 
       setItems(recalculatedItems);
-      showSnackbar("Строка успешно добавлена!", "success");
+      showSnackbar(t("add_newrow_success"), "success");
       handleCloseAddDialog();
       prevItemsRef.current = recalculatedItems;
 
@@ -285,7 +285,7 @@ const KpiDailiyWorkTable = () => {
       localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
     } catch (error) {
       console.error("Error adding item:", error);
-      showSnackbar(error.message || "Ошибка при добавлении строки.", "error");
+      showSnackbar(error.message || t("add_newrow_error"), "error");
     }
   };
 
@@ -300,13 +300,13 @@ const KpiDailiyWorkTable = () => {
       !editWorkingHistory ||
       !editWorkDuration
     ) {
-      showSnackbar("Пожалуйста, заполните все обязательные поля.", "error");
+      showSnackbar( t("need_empty_space"), "error");
       return;
     }
 
     // Validate Time Values
     if (!editWorkDuration.isValid()) {
-      showSnackbar("Некорректные значения времени.", "error");
+      showSnackbar( t("enter_time_error"), "error");
       return;
     }
 
@@ -315,7 +315,7 @@ const KpiDailiyWorkTable = () => {
     const workTimeMinutes = workHours * 60 + workMinutes;
 
     if (workTimeMinutes <= 0) {
-      showSnackbar("Время работы должно быть больше 0 минут.", "error");
+      showSnackbar( t("enter_error_working_hours"), "error");
       return;
     }
 
@@ -341,7 +341,7 @@ const KpiDailiyWorkTable = () => {
       const recalculatedItems = recalculateTimes(updatedItems);
 
       setItems(recalculatedItems);
-      showSnackbar("Строка успешно отредактирована!", "success");
+      showSnackbar(t("edit_row_success"), "success");
       handleCloseEditDialog();
       prevItemsRef.current = recalculatedItems;
 
@@ -349,7 +349,7 @@ const KpiDailiyWorkTable = () => {
       localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
     } catch (error) {
       console.error("Error editing item:", error);
-      showSnackbar(error.message || "Ошибка при редактировании строки.", "error");
+      showSnackbar(error.message || t("edit_row_error"), "error");
     }
   };
 
@@ -362,7 +362,7 @@ const KpiDailiyWorkTable = () => {
 
     setItems(recalculatedItems);
     localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
-    showSnackbar("Строка успешно удалена!", "info");
+    showSnackbar(t("delete_successfully"), "info");
     prevItemsRef.current = recalculatedItems;
   };
 
@@ -389,10 +389,10 @@ const KpiDailiyWorkTable = () => {
     try {
       // Replace with actual API call
       await REQUESTS.data.sendAllData(dataToSend);
-      showSnackbar("Данные успешно отправлены!", "success");
+      showSnackbar(t("send_data_success"), "success");
     } catch (error) {
       console.error("Error sending data:", error);
-      showSnackbar("Ошибка при отправке данных.", "error");
+      showSnackbar(t("send_data_error"), "error");
     }
    
   };

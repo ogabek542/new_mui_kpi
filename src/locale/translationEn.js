@@ -190,6 +190,21 @@ const translationEn = {
   warning_error_text:"Note: Some lines have overlapping tenses.",
   success_data_refresh_text:"Data updated successfully!",
   time_operlaps_error_text:"Note: Some lines have overlapping tenses.",
+  send_data_error:"Error sending data.",
+  send_data_success:"Data sent successfully!",
+  delete_successfully:"The line was successfully deleted!",
+  enter_error_working_hours:"The running time must be greater than 0 minutes.",
+  enter_time_error:"Incorrect time values.",
+  need_empty_space:"Please fill in all required fields.",
+  edit_row_error:"Error while editing line.",
+  edit_row_success:"Line edited successfully!",
+  add_newrow_error:"Error adding row.",
+  add_newrow_success:"The line was added successfully!",
+  check_workinghours:"The running time must be greater than 0 minutes.",
+  error_time_amount:"Incorrect time values.",
+  get_errorof_userdata:"Error retrieving user data.",
+  hour:"h",
+  minutes:"m",
   
 
 

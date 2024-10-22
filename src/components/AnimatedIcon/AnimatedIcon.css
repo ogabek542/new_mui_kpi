@@ -1,0 +1,41 @@
+.icon-container {
+    /* Optional: Center the icon or add additional styles */
+  }
+  
+  /* Define the base styles for the columns */
+  .icon-column {
+    fill: #FFFFFF; /* Start with white color */
+    animation: shine 2.5s ease-in-out infinite;
+    transform-origin: center;
+  }
+  
+  .icon-letter {
+    fill: #FFFFFF; /* White color for inner letters */
+  }
+  
+  /* Assign animation delays to stagger the animations */
+  .icon-column1 {
+    animation-delay: 0s;
+  }
+  
+  .icon-column2 {
+    animation-delay: 0.3s;
+  }
+  
+  .icon-column3 {
+    animation-delay: 0.6s;
+  }
+  
+  /* Define the shine animation */
+  @keyframes shine {
+    0%,
+    100% {
+      fill: #020D9E; /* Original color */
+      transform: scale(1);
+    }
+    50% {
+      fill: #0156B4; /* Shine color */
+      transform: scale(1.1); /* Slightly enlarge */
+    }
+  }
+  

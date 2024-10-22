@@ -187,6 +187,21 @@ const translationRu = {
         warning_error_text:"Внимание: Некоторые строки имеют пересекающиеся времена.",
         success_data_refresh_text:"Данные успешно обновлены!",
         time_operlaps_error_text:"Внимание: Некоторые строки имеют пересекающиеся времена.",
+        send_data_error:"Ошибка при отправке данных.",
+        send_data_success:"Данные успешно отправлены!",
+        delete_successfully:"Строка успешно удалена!",
+        enter_error_working_hours:"Время работы должно быть больше 0 минут.",
+        enter_time_error:"Incorrect time values.",
+        need_empty_space:"Пожалуйста, заполните все обязательные поля.",
+        edit_row_error:"Ошибка при редактировании строки.",
+        edit_row_success:"Строка успешно отредактирована!",
+        add_newrow_error:"Ошибка при добавлении строки.",
+        add_newrow_success:"Строка успешно добавлена!",
+        check_workinghours:"Время работы должно быть больше 0 минут",
+        error_time_amount:"Некорректные значения времени.",
+        get_errorof_userdata:"Ошибка при получении данных пользователя.",
+        hour:"ч",
+        minutes:"м",
 
 }
 export default translationRu 

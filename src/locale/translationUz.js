@@ -188,6 +188,23 @@ const translationUz = {
     warning_error_text:"Izoh: Ba'zi satrlarda bir-biriga o'xshash zamon mavjud.",
     success_data_refresh_text:"Maʼlumotlar muvaffaqiyatli yangilandi!",
     time_operlaps_error_text:"Izoh: Ba'zi satrlarda bir-biriga o'xshash vaqt oralig'i mavjud.",
+    send_data_error:"Maʼlumotlarni yuborishda xatolik yuz berdi.",
+    send_data_success:"Maʼlumotlar muvaffaqiyatli yuborildi!",
+    delete_successfully:"Qator muvaffaqiyatli o'chirildi!",
+    enter_error_working_hours:"Ishlash vaqti 0 daqiqadan ko'proq bo'lishi kerak.",
+    enter_time_error:"Vaqt qiymatlari noto'g'ri.",
+    need_empty_space:"Barcha kerakli maydonlarni toʻldiring.",
+    edit_row_error:"Satrni tahrirlashda xatolik yuz berdi.",
+    edit_row_success:"Chiziq muvaffaqiyatli tahrirlandi!",
+    add_newrow_error:"Qator qo‘shishda xatolik yuz berdi.",
+    add_newrow_success:"Qator muvaffaqiyatli qo'shildi!",
+    check_workinghours:"Ishlash vaqti 0 daqiqadan ortiq bo'lishi kerak",
+    error_time_amount:"Vaqt qiymatlari noto'g'ri.",
+    get_errorof_userdata:"Foydalanuvchi maʼlumotlarini olishda xatolik yuz berdi.",
+    hour:"s",
+    minutes:"d",
+
+
 
 };
 
