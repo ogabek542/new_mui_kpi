@@ -156,6 +156,8 @@ const KpiDailiyWorkTable = () => {
     fetchUserData();
   }, []);
 
+  const tableNumber = userData.table_number ;
+
   // Check for Time Overlaps
   const findOverlappingItems = (itemsList) => {
     const overlappingIdsSet = new Set();
@@ -377,6 +379,7 @@ const KpiDailiyWorkTable = () => {
 
     const dataToSend = {
       mainDate: formattedDate,
+      tableNumber: tableNumber, // Include tableNumber here
       towDatas: itemsForSelectedDate,
     };
     const itemsToSend = items.map(item => ({
@@ -394,7 +397,6 @@ const KpiDailiyWorkTable = () => {
       console.error("Error sending data:", error);
       showSnackbar(t("send_data_error"), "error");
     }
-   
   };
 
   // Handle Refresh

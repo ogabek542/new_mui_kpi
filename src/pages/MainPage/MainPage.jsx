@@ -298,7 +298,7 @@ const MainPage = () => {
               size={50}
             /> */}
 
-            <AnimatedIcon sx={{ width: '200px', height: '250px' }}/>
+            <AnimatedIcon sx={{ width: '300px', height: '350px' }}/>
 
           </Box>
         ) : (
