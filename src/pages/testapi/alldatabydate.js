@@ -1,332 +1,41 @@
 const newtextData = [
-    {
-      date: "01.08.2024",
-      profitable_indicators: {
-        roa: "21%",
-        roe: "23%",
-        cir: "28%",
-        cor: "35%",
-        npl: "15%",
-        nps: "45%",
-        mau: "93%",
-        nim: "78%",
+
+{   mainDate:"23.10.2024", //type:text, tanlangan sana  //
+    totalWorkingHour: "4h 23m",//type:text to'liq sarflangan vaqt ya'ani hamma rpw lardagi time lar yi'gindisi //
+    tableNumber:"2",//type:text, foydalanuvhcining tabel raqami //
+    rowDatas: [
+      {
+        id: "b120b103-99a0-4bbf-bb27-96b36a111b70",//type:text, shaxsiy id xar bir row uchun //
+        title: "111",//type:text, kiritilgan sarlavha  rowni 1 chi sstuni//
+        workHours: 0,//type:number, foydalanuchi kiritgan ishlagan vaqt faqat shu qator uchun  //
+        workMinutes: 38, //type:number, foydalanuvhi sarflagan daqiqa faqat shu row uchun  //
+        workTime: "0h 38m", // type:text, to'liq ishlagan vaqt hisobi faqat shu qator uchun  //
+        workType: "regular",//type:text, vazifa turi doimiy/birmartali yuborilgan til asosida  //
+        workingHistory: "Да",//type:text, vazifa holati yani vazifaga doir bo'lsa ha agar oish vazifasidan tashqari bo'lsa yo'q javobi kiritiladi // 
+        workingComment: "11",//type:text, qoldirilgan komment , komment kiritilishi ham mumkin kiritilmasligi ham mumkin , bu xoxishga bog'liq  //
+        date: "23.10.2024", //type:text, tanlangan sana  //
+        startTime: "09:00", //type:text, vazifa boshlangan vaqt  //
+        endTime: "09:38"//type:text, vazifa tugatilgan vaqt //
       },
-      bank_assets: [
-        {
-          plan: "4000",
-          fact: "2000",
-        },
-        {
-          plan: "3000",
-          fact: "1000",
-        },
-        {
-          plan: "5000",
-          fact: "2500",
-        },
-      ],
-      bank_liabilities: [
-        {
-          plan: "8000",
-          fact: "7000",
-        },
-        {
-          plan: "9000",
-          fact: "1700",
-        },
-        {
-          plan: "4000",
-          fact: "5500",
-        },
-      ],
-      loan_portfolio: [
-        {
-          percentage: "90",
-          plan: "8000",
-          fact: "7000",
-        },
-        {
-          percentage: "125",
-          plan: "9000",
-          fact: "4700",
-        },
-        {
-          percentage: "140",
-          plan: "4000",
-          fact: "3500",
-        },
-      ],
-      soft_income: [
-        {
-          plan: "8000",
-          fact: "7000",
-        },
-        {
-          plan: "6000",
-          fact: "4700",
-        },
-        {
-          plan: "11000",
-          fact: "7500",
-        },
-      ],
-      digital_indicators: {
-        roa: "41%",
-        roe: "83%",
-        cir: "38%",
-        cor: "65%",
-        npl: "35%",
-        nps: "95%",
-        mau: "33%",
-        nim: "58%",
+      //keyingi qator misol tariqasida berilgan // 
+      {
+        id: "4302da22-3dc9-4ead-8aad-7f32ae569ef5",//type:text, shaxsiy id xar bir row uchun //
+        title: "2222",//type:text, kiritilgan sarlavha  rowni 1 chi sstuni//
+        workHours: 3,//type:number, foydalanuchi kiritgan ishlagan vaqt faqat shu qator uchun  //
+        workMinutes: 45,//type:number, foydalanuvhi sarflagan daqiqa faqat shu row uchun  //
+        workTime: "3h 45m", // type:text, to'liq ishlagan vaqt hisobi faqat shu qator uchun  //
+        workType: "regular",//type:text, vazifa turi doimiy/birmartali yuborilgan til asosida  //
+        workingHistory: "Нет",//type:text, vazifa holati yani vazifaga doir bo'lsa ha agar oish vazifasidan tashqari bo'lsa yo'q javobi kiritiladi // 
+        workingComment: "2222",//type:text, qoldirilgan komment , komment kiritilishi ham mumkin kiritilmasligi ham mumkin , bu xoxishga bog'liq  //
+        date: "23.10.2024",//type:text, tanlangan sana  //
+        startTime: "09:38",//type:text, vazifa boshlangan vaqt  //
+        endTime: "13:23",//type:text, vazifa tugatilgan vaqt //
       },
-    },
-    {
-      date: "02.08.2024",
-      profitable_indicators: {
-        roa: "17%",
-        roe: "73%",
-        cir: "58%",
-        cor: "65%",
-        npl: "85%",
-        nps: "25%",
-        mau: "33%",
-        nim: "18%",
-      },
-      bank_assets: [
-        {
-          plan: "9000",
-          fact: "4000",
-        },
-        {
-          plan: "7000",
-          fact: "6000",
-        },
-        {
-          plan: "8000",
-          fact: "6500",
-        },
-      ],
-      bank_liabilities: [
-        {
-          plan: "5000",
-          fact: "3000",
-        },
-        {
-          plan: "3000",
-          fact: "1700",
-        },
-        {
-          plan: "8000",
-          fact: "3500",
-        },
-      ],
-      loan_portfolio: [
-        {
-          percentage: "110",
-          plan: "6000",
-          fact: "2000",
-        },
-        {
-          percentage: "100",
-          plan: "9000",
-          fact: "6500",
-        },
-        {
-          percentage: "15",
-          plan: "8000",
-          fact: "7500",
-        },
-      ],
-      soft_income: [
-        {
-          plan: "6000",
-          fact: "5000",
-        },
-        {
-          plan: "5000",
-          fact: "4700",
-        },
-        {
-          plan: "5000",
-          fact: "4500",
-        },
-      ],
-      digital_indicators: {
-        roa: "51%",
-        roe: "43%",
-        cir: "98%",
-        cor: "25%",
-        npl: "95%",
-        nps: "75%",
-        mau: "83%",
-        nim: "28%",
-      },
-    },
-    {
-      date: "03.08.2024",
-      profitable_indicators: {
-        roa: "21%",
-        roe: "23%",
-        cir: "28%",
-        cor: "35%",
-        npl: "15%",
-        nps: "45%",
-        mau: "93%",
-        nim: "78%",
-      },
-      bank_assets: [
-        {
-          plan: "4000",
-          fact: "2000",
-        },
-        {
-          plan: "3000",
-          fact: "1000",
-        },
-        {
-          plan: "5000",
-          fact: "2500",
-        },
-      ],
-      bank_liabilities: [
-        {
-          plan: "8000",
-          fact: "7000",
-        },
-        {
-          plan: "9000",
-          fact: "1700",
-        },
-        {
-          plan: "4000",
-          fact: "5500",
-        },
-      ],
-      loan_portfolio: [
-        {
-          percentage: "90",
-          plan: "8000",
-          fact: "7000",
-        },
-        {
-          percentage: "125",
-          plan: "9000",
-          fact: "4700",
-        },
-        {
-          percentage: "140",
-          plan: "4000",
-          fact: "3500",
-        },
-      ],
-      soft_income: [
-        {
-          plan: "8000",
-          fact: "7000",
-        },
-        {
-          plan: "6000",
-          fact: "4700",
-        },
-        {
-          plan: "11000",
-          fact: "7500",
-        },
-      ],
-      digital_indicators: {
-        roa: "41%",
-        roe: "83%",
-        cir: "38%",
-        cor: "65%",
-        npl: "35%",
-        nps: "95%",
-        mau: "33%",
-        nim: "58%",
-      },
-    },
-    {
-      date: "04.08.2024",
-      profitable_indicators: {
-        roa: "17%",
-        roe: "73%",
-        cir: "58%",
-        cor: "65%",
-        npl: "85%",
-        nps: "25%",
-        mau: "33%",
-        nim: "18%",
-      },
-      bank_assets: [
-        {
-          plan: "9000",
-          fact: "4000",
-        },
-        {
-          plan: "7000",
-          fact: "6000",
-        },
-        {
-          plan: "8000",
-          fact: "6500",
-        },
-      ],
-      bank_liabilities: [
-        {
-          plan: "5000",
-          fact: "3000",
-        },
-        {
-          plan: "3000",
-          fact: "1700",
-        },
-        {
-          plan: "8000",
-          fact: "3500",
-        },
-      ],
-      loan_portfolio: [
-        {
-          percentage: "110",
-          plan: "6000",
-          fact: "2000",
-        },
-        {
-          percentage: "100",
-          plan: "9000",
-          fact: "6500",
-        },
-        {
-          percentage: "15",
-          plan: "8000",
-          fact: "7500",
-        },
-      ],
-      soft_income: [
-        {
-          plan: "6000",
-          fact: "5000",
-        },
-        {
-          plan: "5000",
-          fact: "4700",
-        },
-        {
-          plan: "5000",
-          fact: "4500",
-        },
-      ],
-      digital_indicators: {
-        roa: "51%",
-        roe: "43%",
-        cir: "98%",
-        cor: "25%",
-        npl: "95%",
-        nps: "75%",
-        mau: "83%",
-        nim: "28%",
-      },
-    },
+    ]
+  }
+
+    
   ];
-  // add 0 nuber before day date exp:date: "08.07.2024", beacuse it can make bug
+
+
   export default newtextData;

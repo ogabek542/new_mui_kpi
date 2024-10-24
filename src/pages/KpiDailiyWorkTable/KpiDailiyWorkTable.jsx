@@ -76,6 +76,20 @@ const KpiDailiyWorkTable = () => {
   const [selectDate, setSelectDate] = useState(dayjs());
   const formattedDate = dayjs(selectDate).format("DD.MM.YYYY");
   const [defaultStartTime, setDefaultStartTime] = useState(dayjs("09:00", "HH:mm"));
+  const tableNumber = userData.table_number ;
+  
+
+    // Define mapWorkType at the top level
+    const mapWorkType = (translatedValue) => {
+      switch (translatedValue) {
+        case t("working_type_value_one"):
+          return "onetime";
+        case t("working_type_value_two"):
+          return "regular";
+        default:
+          return "";
+      }
+    };
 
 
 // <=== NOITCE MODAL COLOR ===> //
@@ -144,19 +158,20 @@ const KpiDailiyWorkTable = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Fetch user data from API
-        const response = await REQUESTS.user.getUser();
-        const propsdata = response.data[0];
-        setData(propsdata);
+          const response = await REQUESTS.user.getUser();
+          const propsdata = response.data[0];
+          setUserData(propsdata);
+
+
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        showSnackbar(t("get_errorof_userdata"), "error");
+          console.error("Error fetching user data:", error);
       }
-    };
+  };
+    
     fetchUserData();
   }, []);
 
-  const tableNumber = userData.table_number ;
+ 
 
   // Check for Time Overlaps
   const findOverlappingItems = (itemsList) => {
@@ -369,35 +384,119 @@ const KpiDailiyWorkTable = () => {
   };
 
   // Handle Send
-  const handleSend = async () => {
+  // const handleSend = async () => {
 
-    setOpenNoticeModal(false)
+  //   setOpenNoticeModal(false)
     
-    const itemsForSelectedDate = items.filter(
-      (item) => item.date === formattedDate
-    );
+  //   const itemsForSelectedDate = items.filter(
+  //     (item) => item.date === formattedDate
+  //   );
 
-    const dataToSend = {
-      mainDate: formattedDate,
-      tableNumber: tableNumber, // Include tableNumber here
-      towDatas: itemsForSelectedDate,
-    };
-    const itemsToSend = items.map(item => ({
-      ...item,
-      workType: mapWorkType(item.workType),
-    }));
+  //   const dataToSend = {
+  //     tableNumber: tableNumber, 
+  //     mainDate: formattedDate,
+  //     rowDatas: itemsForSelectedDate,
+  //   };
+  //   const itemsToSend = items.map(item => ({
+  //     ...item,
+  //     workType: mapWorkType(item.workType),
+  //   }));
 
-    console.log("Sending data to backend: ", dataToSend);
+  //   console.log("Sending data to backend: ", dataToSend);
   
-    try {
-      // Replace with actual API call
-      await REQUESTS.data.sendAllData(dataToSend);
-      showSnackbar(t("send_data_success"), "success");
-    } catch (error) {
-      console.error("Error sending data:", error);
+  //   try {
+  //     // Replace with actual API call
+  //     await REQUESTS.data.sendAllData(dataToSend);
+  //     showSnackbar(t("send_data_success"), "success");
+  //   } catch (error) {
+  //     console.error("Error sending data:", error);
+  //     showSnackbar(t("send_data_error"), "error");
+  //   }
+  // };
+
+  // Handle Send
+// const handleSend = async () => {
+
+//   setOpenNoticeModal(false);
+
+//   const itemsForSelectedDate = items.filter(
+//     (item) => item.date === formattedDate
+//   );
+
+//   const dataToSend = {
+//     tableNumber: tableNumber, 
+//     mainDate: formattedDate,
+//     totalWorkingHour: totalWorkingTime,
+//     rowDatas: itemsForSelectedDate,
+//   };
+
+//   // Optional: Stringify the object to ensure logging or debugging in a specific order
+//   // console.log("Sending data to backend: ", JSON.stringify({
+//   //   tableNumber: tableNumber, 
+//   //   mainDate: formattedDate,
+//   //   totalWorkingHour: totalWorkingTime,
+//   //   rowDatas: itemsForSelectedDate,
+//   // }, null, 2)); 
+
+
+//   try {
+//     // Replace with actual API call
+//     await REQUESTS.data.sendAllData(dataToSend);
+//     showSnackbar(t("send_data_success"), "success");
+//   } catch (error) {
+//     console.error("Error sending data:", error);
+//     showSnackbar(t("send_data_error"), "error");
+//   }
+//   console.log(dataToSend)
+// };
+
+
+// Handle Send
+const handleSend = async () => {
+  setOpenNoticeModal(false);
+
+  const itemsForSelectedDate = items.filter(
+    (item) => item.date === formattedDate
+  );
+
+  // Since workType and workingHistory are correctly formatted, no need to map them
+  const mappedItems = itemsForSelectedDate.map((item) => ({
+    ...item,
+    startTime: item.startTime,
+    endTime: item.endTime,
+    date: item.date,
+  
+  }));
+
+  const dataToSend = {
+    totalWorkingHour: totalWorkingTime,
+    rowDatas: mappedItems,
+    tableNumber: tableNumber, 
+    mainDate: formattedDate,
+  };
+
+  console.log("Sending data to backend: ", dataToSend);
+
+  try {
+    if (!tableNumber || !formattedDate) {
+      throw new Error("Table number or formatted date is missing.");
+    }
+
+    await REQUESTS.data.sendAllData(tableNumber, formattedDate, dataToSend);
+
+    showSnackbar(t("send_data_success"), "success");
+  } catch (error) {
+    console.error("Error sending data:", error);
+
+    // If the server provides error details, display them
+    if (error.response && error.response.data) {
+      showSnackbar(error.response.data.error || t("send_data_error"), "error");
+    } else {
       showSnackbar(t("send_data_error"), "error");
     }
-  };
+  }
+};
+
 
   // Handle Refresh
   const handleRefresh = () => {

@@ -112,14 +112,23 @@ export const REQUESTS = {
   realtimelive: {
     getRealTimeLive: () => axiosInstance.get("/api/daily-visitors"),
   },
-  data: {
-    getData: (date) => axiosInstance.get('/my-api-endpoint/', { params: { date } }), // Adjust endpoint
-    addData: (newData) => axiosInstance.post('/my-api-endpoint/', newData),
-    editData: (id, updatedData) => axiosInstance.put(`/api/my-api-endpoint/${id}/`, updatedData),
-    deleteData: (id) => axiosInstance.delete(`/my-api-endpoint/${id}/`),
-    sendAllData: (data) => axiosInstance.post('/my-api-endpoint/', data),
-  },
   
+  // data: {
+  //   getData: (date) => axiosInstance.get('/api/work-log/', { params: { date } }), // Adjust endpoint
+  //   addData: (newData) => axiosInstance.post('/api/work-log/', newData),
+  //   editData: (id, updatedData) => axiosInstance.put(`/api/work-log/${id}/`, updatedData),
+  //   deleteData: (id) => axiosInstance.delete(`/api/work-log/${id}/`),
+  //   sendAllData: (data) => axiosInstance.post('/api/work-log/', data),
+  // },
+
+  data: { 
+    getData: (date) => axiosInstance.get('/api/work-log/', { params: { date } }), // Adjust endpoint
+    addData: (newData) => axiosInstance.post('/api/work-log/', newData),
+    editData: (id, updatedData) => axiosInstance.put(`/api/work-log/${id}/`, updatedData),
+    deleteData: (id) => axiosInstance.delete(`/api/work-log/${id}/`),
+    // Updated sendAllData to accept tableNumber and date
+    sendAllData: (tableNumber, date, data) => axiosInstance.post(`/api/work-log/${tableNumber}/${date}/`, data),
+  },
 };
 // console.log(getToken(), "get token");
 // console.log(getRefreshToken(),'ok refresh')
