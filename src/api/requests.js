@@ -112,7 +112,7 @@ export const REQUESTS = {
   realtimelive: {
     getRealTimeLive: () => axiosInstance.get("/api/daily-visitors"),
   },
-  
+
   // data: {
   //   getData: (date) => axiosInstance.get('/api/work-log/', { params: { date } }), // Adjust endpoint
   //   addData: (newData) => axiosInstance.post('/api/work-log/', newData),
@@ -122,7 +122,7 @@ export const REQUESTS = {
   // },
 
   data: { 
-    getData: (date) => axiosInstance.get('/api/work-log/', { params: { date } }), // Adjust endpoint
+    getData: (tableNumber, date) => axiosInstance.get(`/api/work-log/${tableNumber}/${date}/`),
     addData: (newData) => axiosInstance.post('/api/work-log/', newData),
     editData: (id, updatedData) => axiosInstance.put(`/api/work-log/${id}/`, updatedData),
     deleteData: (id) => axiosInstance.delete(`/api/work-log/${id}/`),

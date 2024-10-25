@@ -75,8 +75,12 @@ const KpiDailiyWorkTable = () => {
   const [userData, setUserData] = useState({});
   const [selectDate, setSelectDate] = useState(dayjs());
   const formattedDate = dayjs(selectDate).format("DD.MM.YYYY");
+  const [formattedDateForGet, setFormattedDateForGet] = useState(dayjs(selectDate).format("YYYY-MM-DD"));
+
   const [defaultStartTime, setDefaultStartTime] = useState(dayjs("09:00", "HH:mm"));
   const tableNumber = userData.table_number ;
+  const [combinedNew,setCombinedNew] = useState([]);
+  
   
 
     // Define mapWorkType at the top level
@@ -383,6 +387,107 @@ const KpiDailiyWorkTable = () => {
     prevItemsRef.current = recalculatedItems;
   };
 
+ // Helper function to merge items
+// function mergeItems(existingItems, fetchedItems) {
+//   const mergedItemsMap = {};
+
+//   // Add fetched items to the map
+//   fetchedItems.forEach(item => {
+//     mergedItemsMap[item.id] = item;
+//   });
+
+//   // Add existing items, overwriting fetched items if IDs are the same
+//   existingItems.forEach(item => {
+//     mergedItemsMap[item.id] = item;
+//   });
+
+//   return Object.values(mergedItemsMap);
+// }
+
+function mergeItems(existingItems, fetchedItems) {
+  const mergedItemsMap = new Map();
+
+  // Add fetched items, ensuring unique IDs by generating UUIDs where needed
+  fetchedItems.forEach((item) => {
+    const uniqueId = item.id || uuidv4(); // Generate UUID if `id` is missing
+    mergedItemsMap.set(uniqueId, { ...item, id: uniqueId });
+  });
+
+  // Add existing items, which can overwrite fetched items if IDs collide
+  existingItems.forEach((item) => {
+    const uniqueId = item.id || uuidv4();
+    mergedItemsMap.set(uniqueId, { ...item, id: uniqueId });
+  });
+
+  return Array.from(mergedItemsMap.values());
+}
+
+// const handleRefresh = async () => {
+//   setItems([]); // Clear the table body
+//   try {
+//     const formattedDate = dayjs(selectDate).format('DD.MM.YYYY');
+
+//     if (!tableNumber) {
+//       throw new Error('Table number is missing.');
+//     }
+
+//     // Fetch data from the backend
+//     const response = await REQUESTS.data.getData(tableNumber, formattedDate);
+//     const fetchedData = response.data.row_datas || [];
+//     setCombinedNew(fetchedData)
+
+//     console.log(fetchedData)
+//     // const uniqueId = `backend-${item.id}`;
+//     // Map the fetched data
+//     const mappedFetchedData = fetchedData.map((item) => ({
+//       id: item.id ? `backend-${item.id}` : uuidv4(),
+//       title: item.title || '',
+//       workHours: item.work_hours || 0,
+//       workMinutes: item.work_minutes || 0,
+//       workTime: item.work_time || '',
+//       workType: item.work_type || '',
+//       workingHistory: item.working_history || '',
+//       workingComment: item.working_comment || '',
+//       date: dayjs(item.date).format('DD.MM.YYYY'),
+//       startTime: item.start_time || '',
+//       endTime: item.end_time || '',
+//     }));
+
+//     // Separate existing items by date
+//     const itemsForOtherDates = items.filter(item => item.date !== formattedDate);
+
+//     // Merge existing items with fetched items for the selected date
+//     const mergedItemsForDate = mergeItems(itemsForOtherDates, mappedFetchedData);
+
+//     // Combine items for other dates with merged items for the selected date
+//     const updatedItems = [...itemsForOtherDates, ...mergedItemsForDate];
+
+//     // Recalculate times
+//     const recalculatedItems = recalculateTimes(updatedItems);
+
+//     setItems(recalculatedItems);
+//     prevItemsRef.current = recalculatedItems;
+
+//     // Update total working time from backend response
+//     setTotalWorkingTime(response.data.total_working_hours || '0h 0m');
+
+//     showSnackbar(t('success_data_refresh_text'), 'success');
+
+//     // Check for overlaps
+//     const overlapping = findOverlappingItems(recalculatedItems);
+//     if (overlapping.length > 0) {
+//       setOverlappingIds(overlapping);
+//       showSnackbar(t('time_overlaps_error_text'), 'warning');
+//     } else {
+//       setOverlappingIds([]);
+//     }
+//   } catch (error) {
+//     console.error('Error fetching data:', error);
+//     showSnackbar(t('error_fetching_data'), 'error');
+//   }
+// };
+
+
   // Handle Send
   // const handleSend = async () => {
 
@@ -452,80 +557,292 @@ const KpiDailiyWorkTable = () => {
 
 
 // Handle Send
+
+
+
+
+// const handleSend = async () => {
+//   setOpenNoticeModal(false);
+
+//   const formattedDate = dayjs(selectDate).format('DD.MM.YYYY');
+
+//   // Filter items for the selected date
+//   const itemsForSelectedDate = items.filter(item => item.date === formattedDate);
+
+//   const dataToSend = {
+//     totalWorkingHour: totalWorkingTime,
+//     rowDatas: itemsForSelectedDate,
+//     tableNumber: tableNumber,
+//     mainDate: formattedDate,
+//   };
+
+//   console.log('Sending data to backend:', dataToSend);
+
+//   try {
+//     if (!tableNumber || !formattedDate) {
+//       throw new Error('Table number or formatted date is missing.');
+//     }
+
+//     await REQUESTS.data.sendAllData(tableNumber, formattedDate, dataToSend);
+
+//     showSnackbar(t('send_data_success'), 'success');
+//   } catch (error) {
+//     console.error('Error sending data:', error);
+
+//     if (error.response && error.response.data) {
+//       showSnackbar(error.response.data.error || t('send_data_error'), 'error');
+//     } else {
+//       showSnackbar(t('send_data_error'), 'error');
+//     }
+//   }
+// };
+
+
 const handleSend = async () => {
   setOpenNoticeModal(false);
 
-  const itemsForSelectedDate = items.filter(
-    (item) => item.date === formattedDate
-  );
+  const formattedDateDisplay = dayjs(selectDate).format('DD.MM.YYYY');
+  const formattedDateBackend = dayjs(selectDate).format('DD.MM.YYYY');
 
-  // Since workType and workingHistory are correctly formatted, no need to map them
-  const mappedItems = itemsForSelectedDate.map((item) => ({
-    ...item,
-    startTime: item.startTime,
-    endTime: item.endTime,
-    date: item.date,
-  
-  }));
+  // Retrieve the latest items from state
+  const currentItems = [...items];
 
+  // Retrieve items from localStorage (if necessary)
+  const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
+
+  // Filter items for the selected date from both state and localStorage
+  const itemsForSelectedDateState = currentItems.filter(item => item.date === formattedDate);
+  const itemsForSelectedDateLocal = savedItems.filter(item => dayjs(item.date, 'DD.MM.YYYY').isSame(selectDate, 'day'));
+
+  // Combine both arrays without duplicates
+  const combinedItemsMap = new Map();
+
+  itemsForSelectedDateState.forEach(item => {
+    combinedItemsMap.set(item.id, item);
+  });
+
+  itemsForSelectedDateLocal.forEach(item => {
+    combinedItemsMap.set(item.id, item);
+  });
+
+  const combinedItemsForDate = Array.from(combinedItemsMap.values());
+
+  // Prepare the data object to send
   const dataToSend = {
     totalWorkingHour: totalWorkingTime,
-    rowDatas: mappedItems,
-    tableNumber: tableNumber, 
+    rowDatas: combinedItemsForDate,
+    tableNumber: tableNumber,
     mainDate: formattedDate,
   };
 
-  console.log("Sending data to backend: ", dataToSend);
+  console.log('Sending data to backend:', dataToSend);
 
   try {
+    // Validate essential data
     if (!tableNumber || !formattedDate) {
-      throw new Error("Table number or formatted date is missing.");
+      throw new Error('Table number or formatted date is missing.');
     }
 
+    // Send data to backend
     await REQUESTS.data.sendAllData(tableNumber, formattedDate, dataToSend);
 
-    showSnackbar(t("send_data_success"), "success");
+    // Provide feedback and reset state
+    showSnackbar(t('send_data_success'), 'success');
+    // setHasUnsavedChanges(false);
   } catch (error) {
-    console.error("Error sending data:", error);
+    console.error('Error sending data:', error);
 
-    // If the server provides error details, display them
     if (error.response && error.response.data) {
-      showSnackbar(error.response.data.error || t("send_data_error"), "error");
+      showSnackbar(error.response.data.error || t('send_data_error'), 'error');
     } else {
-      showSnackbar(t("send_data_error"), "error");
+      showSnackbar(t('send_data_error'), 'error');
     }
   }
 };
 
+  // Handle Refresh
+  // const handleRefresh = () => {
+  //   const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
+  //   const recalculatedItems = recalculateTimes(savedItems);
+  //   setItems(recalculatedItems);
+  //   showSnackbar(t("success_data_refresh_text"), "success");
+  //   prevItemsRef.current = recalculatedItems;
+
+  //   // Recheck overlaps
+  //   const overlapping = findOverlappingItems(recalculatedItems);
+  //   if (overlapping.length > 0) {
+  //     setOverlappingIds(overlapping);
+  //     showSnackbar(
+  //       t("time_operlaps_error_text"),
+  //       "warning"
+  //     );
+  //   } else {
+  //     setOverlappingIds([]);
+  //   }
+  // };
 
   // Handle Refresh
-  const handleRefresh = () => {
-    const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
-    const recalculatedItems = recalculateTimes(savedItems);
-    setItems(recalculatedItems);
-    showSnackbar(t("success_data_refresh_text"), "success");
-    prevItemsRef.current = recalculatedItems;
+  const handleRefresh = async () => {
 
-    // Recheck overlaps
-    const overlapping = findOverlappingItems(recalculatedItems);
-    if (overlapping.length > 0) {
-      setOverlappingIds(overlapping);
-      showSnackbar(
-        t("time_operlaps_error_text"),
-        "warning"
-      );
-    } else {
-      setOverlappingIds([]);
+    setItems([]); // Clear the table body
+
+
+    try {
+      const formattedDateForGet = dayjs(selectDate).format('DD.MM.YYYY');
+  
+      if (!tableNumber) {
+        throw new Error('Table number is missing.');
+      }
+  
+      // Fetch data from the backend
+      const response = await REQUESTS.data.getData(tableNumber, formattedDateForGet);
+  
+      // Log the response for debugging
+      console.log('Response data:', response.data);
+  
+      // Extract the data from response.data.row_datas
+      const fetchedData = response.data.row_datas || [];
+  
+      // Proceed only if fetchedData is an array
+      if (!Array.isArray(fetchedData)) {
+        console.error('Fetched data is not an array:', fetchedData);
+        return;
+      }
+  
+      // Map the fetched data to match your frontend data structure
+      const mappedData = fetchedData.map((item) => ({
+        id: item.id || uuidv4(),
+        title: item.title || '',
+        workHours: item.work_hours || 0,
+        workMinutes: item.work_minutes || 0,
+        workTime: item.work_time || '',
+        workType: item.work_type || '',
+        workingHistory: item.working_history || '',
+        workingComment: item.working_comment || '',
+        date: dayjs(item.date).format('DD.MM.YYYY'),
+        startTime: item.start_time || '',
+        endTime: item.end_time || '',
+      }));
+  
+      // Recalculate times if necessary
+      const recalculatedItems = recalculateTimes(mappedData);
+  
+      setItems(recalculatedItems);
+      prevItemsRef.current = recalculatedItems;
+  
+      // Update total working time from backend response
+      setTotalWorkingTime(response.data.total_working_hours || '0h 0m');
+  
+      showSnackbar(t('success_data_refresh_text'), 'success');
+  
+      // Check for overlaps
+      const overlapping = findOverlappingItems(recalculatedItems);
+      if (overlapping.length > 0) {
+        setOverlappingIds(overlapping);
+        showSnackbar(t('time_overlaps_error_text'), 'warning');
+      } else {
+        setOverlappingIds([]);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      showSnackbar(t('error_fetching_data'), 'error');
     }
   };
+  
 
   // Handle Date Change
-  const onChangeDate = (newDate) => {
-    setSelectDate(newDate);
-    handleRefresh();
-  };
+ const onChangeDate = (newDate) => {
+
+  setSelectDate(newDate);
+
+};
+
+useEffect(()=> {
+  handleRefresh();
+},[selectDate])
+
+
+
+// Helper function to merge items
+function mergeItems(existingItems, fetchedItems) {
+  const mergedItemsMap = {};
+
+  // Add fetched items to the map
+  fetchedItems.forEach(item => {
+    mergedItemsMap[item.id] = item;
+  });
+
+  // Add existing items, overwriting fetched items if IDs are the same
+  existingItems.forEach(item => {
+    mergedItemsMap[item.id] = item;
+  });
+
+  return Object.values(mergedItemsMap);
+}
+
 
   // Load Items from Local Storage on Mount
+  
+  // const handleRefresh = async () => {
+  //   try {
+  //     const formattedDateForGet = dayjs(selectDate).format('YYYY-MM-DD');
+  
+  //     if (!tableNumber) {
+  //       throw new Error('Table number is missing.');
+  //     }
+  
+  //     // Fetch data from the backend
+  //     const response = await REQUESTS.data.getData(tableNumber, formattedDateForGet);
+  //     const fetchedData = response.data.row_datas || [];
+  //     console.log(fetchedData)
+  
+  //     // Map the fetched data
+  //     const mappedFetchedData = fetchedData.map((item) => ({
+  //       id: item.id || uuidv4(),
+  //       title: item.title || '',
+  //       workHours: item.work_hours || 0,
+  //       workMinutes: item.work_minutes || 0,
+  //       workTime: item.work_time || '',
+  //       workType: item.work_type || '',
+  //       workingHistory: item.working_history || '',
+  //       workingComment: item.working_comment || '',
+  //       date: dayjs(item.date).format('YYYY-MM-DD'),
+  //       startTime: item.start_time || '',
+  //       endTime: item.end_time || '',
+  //     }));
+  
+  //     // Merge fetched data with existing items
+  //     const existingItems = items.filter(
+  //       (item) => !mappedFetchedData.some((fetchedItem) => fetchedItem.id === item.id)
+  //     );
+  
+  //     const updatedItems = [...existingItems, ...mappedFetchedData];
+  
+  //     // Recalculate times
+  //     const recalculatedItems = recalculateTimes(updatedItems);
+  
+  //     setItems(recalculatedItems);
+  //     prevItemsRef.current = recalculatedItems;
+  
+  //     // Update total working time
+  //     setTotalWorkingTime(response.data.total_working_hours || '0h 0m');
+  
+  //     showSnackbar(t('success_data_refresh_text'), 'success');
+  
+  //     // Check for overlaps
+  //     const overlapping = findOverlappingItems(recalculatedItems);
+  //     if (overlapping.length > 0) {
+  //       setOverlappingIds(overlapping);
+  //       showSnackbar(t('time_overlaps_error_text'), 'warning');
+  //     } else {
+  //       setOverlappingIds([]);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //     showSnackbar(t('error_fetching_data'), 'error');
+  //   }
+  // };
+  
   useEffect(() => {
     const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
     const recalculatedItems = recalculateTimes(savedItems);
@@ -673,12 +990,44 @@ const handleCloseNoticeDialog = () => {
       setTotalWorkingTime(calculatedTime);
     }, [items, defaultStartTime]);
 
+    // useEffect(() => {
+    //   const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
+    //   const recalculatedItems = recalculateTimes(savedItems);
+    //   setItems(recalculatedItems);
+    //   prevItemsRef.current = recalculatedItems;
+    
+    //   // Check for overlaps on initial load
+    //   const overlapping = findOverlappingItems(recalculatedItems);
+    //   if (overlapping.length > 0) {
+    //     setOverlappingIds(overlapping);
+    //     showSnackbar(
+    //       t("warning_error_text"),
+    //       "warning"
+    //     );
+    //   }
+    // }, []);
+
+      // Effect to synchronize localStorage whenever items change
+  useEffect(() => {
+    localStorage.setItem("workItems", JSON.stringify(items));
+  }, [items]);
+
+  useEffect(() => {
+    const uniqueItems = items.map((item) => ({
+      ...item,
+      id: item.id || uuidv4(), // Generate a UUID if `id` is missing
+    }));
+    setItems(uniqueItems);
+  }, [items]);
+    
+
   return (
     <Box sx={{ width: "100%", height: "auto", padding: "5px" }}>
       {/* <==== HEADER SECTION =====> */}
       <Box
         sx={{
           display: "flex",
+
           alignItems: "center",
           justifyContent: "space-between",
           width: "100%",
@@ -1096,250 +1445,100 @@ const handleCloseNoticeDialog = () => {
         </Grid>
       </Box>
       {/* <==== TABLE BODY SECTION ====> */}
-      {items && items.length > 0 ? (
-        <Reorder.Group
-          axis="y"
-          onReorder={handleReorder}
-          values={items}
-          as="div"
-        >
-          {items.map((item, index) => (
-            <Reorder.Item key={item.id} value={item} as="div">
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  borderRadius: "5px",
-                  boxShadow:
-                    "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
-                  marginBottom: "5px",
-                  paddingY: "5px",
-                  paddingX: "4px",
-                  backgroundColor: overlappingIds.includes(item.id)
-                    ? "#ffcccc"
-                    : "white", // Highlight if overlapping
-                }}
+            
+            {items && items.length > 0 ? (
+              <Reorder.Group
+                axis="y"
+                onReorder={handleReorder}
+                values={items}
+                as="div"
               >
-                <Grid container>
-                  {/* <==== INDEX ====> */}
-                  <Grid
-                    item
-                    xs={0.3}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography>{index + 1}</Typography>
-                  </Grid>
-                  {/* <==== WORK TITLE ====> */}
-                  <Grid
-                    item
-                    xs={3.3}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "start",
-                      textAlign: "start",
-                    }}
-                  >
-                    <Typography
+                {items.map((item, index) => (
+                  <Reorder.Item key={item.id} value={item} as="div">
+                    <Box
                       sx={{
-                        height: "auto",
-                        overflowWrap: "break-word",
-                        wordBreak: "break-all",
-                        lineHeight: "1.1",
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                        borderRadius: "5px",
+                        boxShadow:
+                          "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
+                        marginBottom: "5px",
+                        paddingY: "5px",
                         paddingX: "4px",
+                        backgroundColor: overlappingIds.includes(item.id)
+                          ? "#ffcccc"
+                          : "white",
                       }}
                     >
-                      {item.title}
-                    </Typography>
-                  </Grid>
-                  {/* <==== WORKING TIME =====> */}
-                  <Grid
-                    item
-                    xs={1}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        height: "auto",
-                        overflowWrap: "break-word",
-                        wordBreak: "break-all",
-                        fontSize: "16px",
-                      }}
-                    >
-                      {item.workTime}
-                    </Typography>
-                  </Grid>
-                  {/* <==== START TIME ====> */}
-                  <Grid
-                    item
-                    xs={1}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        height: "auto",
-                        overflowWrap: "break-word",
-                        wordBreak: "break-all",
-                      }}
-                    >
-                      {item.startTime}
-                    </Typography>
-                  </Grid>
-                  {/* <==== END TIME ====> */}
-                  <Grid
-                    item
-                    xs={1}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        height: "auto",
-                        overflowWrap: "break-word",
-                        wordBreak: "break-all",
-                      }}
-                    >
-                      {item.endTime}
-                    </Typography>
-                  </Grid>
-                  {/* <==== WORK TYPE ====> */}
-                  <Grid
-                    item
-                    xs={1.5}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        height: "auto",
-                        overflowWrap: "break-word",
-                        wordBreak: "break-all",
-                      }}
-                    >
-                      {item.workType === "regular"
-                        ? "регулярная"
-                        : "разовая"}
-                    </Typography>
-                  </Grid>
-                  {/* <==== WORK HISTORY ====> */}
-                  <Grid
-                    item
-                    xs={1.2}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        height: "auto",
-                        overflowWrap: "break-word",
-                        wordBreak: "break-all",
-                      }}
-                    >
-                      {item.workingHistory === "yes" ? "да" : "нет"}
-                    </Typography>
-                  </Grid>
-                  {/* <==== WORK COMMENT ====> */}
-                  <Grid
-                    item
-                    xs={2}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        height: "auto",
-                        overflowWrap: "break-word",
-                        wordBreak: "break-all",
-                        lineHeight: "1.1",
-                        paddingX: "4px",
-                      }}
-                    >
-                      {item.workingComment}
-                    </Typography>
-                  </Grid>
-                  {/* <==== ACTIONS ====> */}
-                  <Grid
-                    item
-                    xs={0.6}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {/* Edit Button */}
-                    <Button
-                      variant="text"
-                      sx={{
-                        minWidth: "auto",
-                        padding: "0px",
-                        margin: "0px",
-                      }}
-                      onClick={() => handleOpenEditDialog(item)}
-                    >
-                      <ModeEditOutlineIcon
-                        sx={{
-                          color: Colors.nbu,
-                          width: "22px",
-                          height: "22px",
-                        }}
-                      />
-                    </Button>
-                    {/* Delete Button */}
-                    <Button
-                      variant="text"
-                      sx={{
-                        minWidth: "auto",
-                        padding: "0px",
-                        margin: "0px",
-                        marginLeft: "5px",
-                      }}
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      <DeleteForeverIcon
-                        sx={{
-                          color: "red",
-                          width: "22px",
-                          height: "22px",
-                        }}
-                      />
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Reorder.Item>
-          ))}
-        </Reorder.Group>
-      ) : (
-        <Typography sx={{ textAlign: "center", margin: "20px" }}>
-          {t("find_row")}
-        </Typography>
-      )}
+                      <Grid container>
+                        {/* Index */}
+                        <Grid item xs={0.3} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Typography>{index + 1}</Typography>
+                        </Grid>
+                        {/* Work Title */}
+                        <Grid item xs={3.3} sx={{ display: "flex", alignItems: "center", justifyContent: "start", textAlign: "start" }}>
+                          <Typography sx={{ height: "auto", overflowWrap: "break-word", wordBreak: "break-all", lineHeight: "1.1", paddingX: "4px" }}>
+                            {item.title || ""}
+                          </Typography>
+                        </Grid>
+                        {/* Working Time */}
+                        <Grid item xs={1} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Typography sx={{ height: "auto", overflowWrap: "break-word", wordBreak: "break-all", fontSize: "16px" }}>
+                            {item.workTime || ""}
+                          </Typography>
+                        </Grid>
+                        {/* Start Time */}
+                        <Grid item xs={1} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Typography sx={{ height: "auto", overflowWrap: "break-word", wordBreak: "break-all" }}>
+                            {item.startTime || ""}
+                          </Typography>
+                        </Grid>
+                        {/* End Time */}
+                        <Grid item xs={1} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Typography sx={{ height: "auto", overflowWrap: "break-word", wordBreak: "break-all" }}>
+                            {item.endTime || ""}
+                          </Typography>
+                        </Grid>
+                        {/* Work Type */}
+                        <Grid item xs={1.5} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Typography sx={{ height: "auto", overflowWrap: "break-word", wordBreak: "break-all" }}>
+                            {item.workType === "regular" ? t("working_type_value_two") : t("working_type_value_one")}
+                          </Typography>
+                        </Grid>
+                        {/* Working History */}
+                        <Grid item xs={1.2} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Typography sx={{ height: "auto", overflowWrap: "break-word", wordBreak: "break-all" }}>
+                            {item.workingHistory}
+                          </Typography>
+                        </Grid>
+                        {/* Working Comment */}
+                        <Grid item xs={2} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Typography sx={{ height: "auto", overflowWrap: "break-word", wordBreak: "break-all", lineHeight: "1.1", paddingX: "4px" }}>
+                            {item.workingComment || ""}
+                          </Typography>
+                        </Grid>
+                        {/* Actions */}
+                        <Grid item xs={0.6} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          {/* Edit Button */}
+                          <Button variant="text" sx={{ minWidth: "auto", padding: "0px", margin: "0px" }} onClick={() => handleOpenEditDialog(item)}>
+                            <ModeEditOutlineIcon sx={{ color: Colors.nbu, width: "22px", height: "22px" }} />
+                          </Button>
+                          {/* Delete Button */}
+                          <Button variant="text" sx={{ minWidth: "auto", padding: "0px", margin: "0px", marginLeft: "5px" }} onClick={() => handleDelete(item.id)}>
+                            <DeleteForeverIcon sx={{ color: "red", width: "22px", height: "22px" }} />
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Reorder.Item>
+                ))}
+              </Reorder.Group>
+                ) : (
+                  <Typography sx={{ textAlign: "center", margin: "20px" }}>
+                    {t("find_row")}
+                  </Typography>
+                )}
 
       {/* <=== CREATE AND SEND BUTTON ====> */}
       <Box
