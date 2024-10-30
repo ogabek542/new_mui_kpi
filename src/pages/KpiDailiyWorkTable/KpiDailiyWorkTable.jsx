@@ -1474,6 +1474,7 @@ const handleCloseNoticeDialog = () => {
               width: "50%",
               fontWeight: "bold",
               textTransform: "uppercase",
+              paddingLeft:"10px",
             }}
           >
             {t("full_name_user")}
@@ -1501,7 +1502,7 @@ const handleCloseNoticeDialog = () => {
             height: "40px",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold" }}>
+          <Typography sx={{ width: "50%", fontWeight: "bold" , paddingLeft:"10px",}}>
             {t("filial")}
           </Typography>
           <Typography
@@ -1528,6 +1529,7 @@ const handleCloseNoticeDialog = () => {
               width: "50%",
               fontWeight: "bold",
               textTransform: "uppercase",
+              paddingLeft:"10px",
             }}
           >
             {t("group_of_worker")}
@@ -1556,6 +1558,7 @@ const handleCloseNoticeDialog = () => {
               width: "50%",
               fontWeight: "bold",
               textTransform: "uppercase",
+              paddingLeft:"10px",
             }}
           >
             {t("sector_of_worker")}
@@ -1579,7 +1582,7 @@ const handleCloseNoticeDialog = () => {
             borderBottom: "2px solid #AAAAAE",
           }}
         >
-          <Typography sx={{ width: "50%", fontWeight: "bold" }}>
+          <Typography sx={{ width: "50%", fontWeight: "bold", paddingLeft:"10px", }}>
             {t("positionjob")}
           </Typography>
           <Typography
@@ -1604,13 +1607,14 @@ const handleCloseNoticeDialog = () => {
               width: "50%",
               fontWeight: "bold",
               textTransform: "uppercase",
+              paddingLeft:"10px",
             }}
           >
             {t("default_startTime")}
           </Typography>
           {/* <=== START TIME DISPLAY ====> */}
           <Typography
-            sx={{ width: "50%", fontWeight: "normal", textAlign: "start" }}
+            sx={{ width: "50%", fontWeight: "normal", textAlign: "start", }}
           >
             {formatTime(defaultStartTime)}
           </Typography>
@@ -1941,7 +1945,7 @@ const handleCloseNoticeDialog = () => {
             </Typography>
           </Button>
           {/* <=== REFRESH DATA ===> */}
-          <Button
+          {/* <Button
             variant="contained"
             onClick={handleRefresh}
             sx={{ background: Colors.nbu }}
@@ -1961,7 +1965,7 @@ const handleCloseNoticeDialog = () => {
             >
               {t("refresh_row_data")}
             </Typography>
-          </Button>
+          </Button> */}
         </Box>
         {/* <=== SEND BUTTON ===> */}
         <Button
@@ -2462,7 +2466,6 @@ const handleCloseNoticeDialog = () => {
                   onChange={(e) => setEditWorkingComment(e.target.value)}
                   variant="outlined"
                   label={t("comment_text")}
-                  required
                   multiline
                   minRows={3}
                   inputProps={{ maxLength: 150 }}

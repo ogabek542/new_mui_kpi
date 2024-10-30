@@ -98,7 +98,7 @@ const LightHeader = ({changeLang}) => {
         gap:"20px"
       }}
     >
-      <Button  variant="contained"sx={{color:Colors.white,bgcolor:Colors.nbu,position:"absolute",bottom:"10px",right:"10px"}}
+      <Button  variant="contained"sx={{color:Colors.white,bgcolor:Colors.nbu,position:"absolute",bottom:"10px",right:"10px",fontWeight:"bold"}}
       
         onClick={closeUniverse}
 
