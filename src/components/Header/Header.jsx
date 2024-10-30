@@ -13,38 +13,49 @@ import NBUlogo from "../../assets/svg/newForSVG.svg";
 import { motion } from "framer-motion";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-dayjs.extend(customParseFormat);
+import updateLocale from "dayjs/plugin/updateLocale"; // Import updateLocale
 import "dayjs/locale/ru";
 import { useEffect } from "react";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { useTranslation } from "react-i18next";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Link } from "react-router-dom";
+import { isWeekend, parse } from "date-fns"; // Importing necessary functions from date-fns
 
+// Import translations
 import translationEn from "../../locale/translationEn.js";
 import translationUz from "../../locale/translationUz.js";
 import translationRu from "../../locale/translationRu.js";
 
+// Initialize i18n
 i18n.use(initReactI18next).init({
   resources: {
     en: { translation: translationEn },
     uz: { translation: translationUz },
     ru: { translation: translationRu },
   },
-  lng: localStorage.getItem("language") || "ru", // Set initial language based on localStorage or default to 'uz'
+  lng: localStorage.getItem("language") || "ru",
   fallbackLng: "ru",
 });
 
+// Update dayjs locale to set Monday as the first day of the week
+dayjs.extend(customParseFormat);
+dayjs.extend(updateLocale);
+
+dayjs.updateLocale("ru", {
+  week: {
+    dow: 1, // Monday is the first day of the week
+  },
+});
+
+
+
 const Header = ({ value, onChange }) => {
   const { t, i18n } = useTranslation();
-  const [age, setAge] = React.useState(
-    localStorage.getItem("language") || "ru"
-  ); // Initialize with persisted language or default
+  const [age, setAge] = React.useState(localStorage.getItem("language") || "ru");
 
   useEffect(() => {
     setAge(i18n.language);
@@ -56,6 +67,68 @@ const Header = ({ value, onChange }) => {
     i18n.changeLanguage(newLanguage); // Change language using i18n
     localStorage.setItem("language", newLanguage); // Persist language in localStorage
   };
+
+  // Define holidays (formatted correctly for date-fns parsing)
+  const holidays = [
+    "01.01.2024", // New Year's Day
+    "02.01.2024", // New Year's Day
+    "08.03.2024", // Women's Day
+  "11.03.2024", // Ramazan Day
+    "21.03.2024", // Navruz Happy Day
+    "22.03.2024", // Navruz Happy Day
+  "23.03.2024", // Navruz Happy Day
+    "10.04.2024", // Eid Al Fitr Day
+  "11.04.2024", // Eid Al Fitr Day
+    "12.04.2024", // Eid Al Fitr Day
+    "09.05.2024", // Remember Day
+    "16.06.2024", // Eid Al Adha Day
+    "17.06.2024", // Eid Al Adha Day
+    "18.06.2024", // Eid Al Adha Day
+    "31.08.2024", // Independence Day
+    "01.09.2024", // Independence Day
+    "02.09.2024", // Independence Day
+    "03.09.2024", // Independence Day
+    "12.08.2024", // Constitution Day
+    "01.10.2024", // Constitution Day
+    "09.12.2024", // Happy New Year Day
+    "30.12.2024", // Happy New Year Day
+    "31.12.2024", // Happy New Year Day
+    // Add more holidays as needed
+  ].map((date) => parse(date, "dd.MM.yyyy", new Date()));
+
+
+   // Define exception working days that fall on weekends
+   const exceptionWorkingDays = [
+    "06.01.2024", // Specific weekend day which is a working day
+    "29.06.2024",
+    "14.12.2024",
+    // Add more exception working days here if needed
+  ].map((date) => parse(date, "dd.MM.yyyy", new Date()));
+
+  // Function to disable weekends and holidays
+  const shouldDisableDate = (date) => {
+    // If it's a weekend but is listed as an exception working day, allow it
+    const isExceptionWorkingDay = exceptionWorkingDays.some(
+      (exceptionDay) => exceptionDay.getTime() === date.toDate().getTime()
+    );
+
+    if (isExceptionWorkingDay) {
+      return false; // Don't disable if it's an exception working day
+    }
+
+    // Disable weekends
+    if (isWeekend(date.toDate())) {
+      return true;
+    }
+
+    // Disable holidays
+    const isHoliday = holidays.some(
+      (holiday) => holiday.getTime() === date.toDate().getTime()
+    );
+
+    return isHoliday;
+  };
+
 
   return (
     <Box
@@ -118,7 +191,7 @@ const Header = ({ value, onChange }) => {
             textAlign: "left",
             fontWeight: "900",
             lineHeight: "1.3",
-            textTransform:"uppercase",
+            textTransform: "uppercase",
           }}
           color={Colors.dark}
         >
@@ -223,13 +296,10 @@ const Header = ({ value, onChange }) => {
               value={value}
               onChange={onChange}
               maxDate={dayjs()}
-              // components={{
-              //   OpenPickerIcon:CalendarMonthIcon
-              // }}
-              format="DD.MM.YYYY" // For newer versions
-              // inputFormat="DD.MM.YYYY" // Uncomment if using older version
+              format="DD.MM.YYYY"
+              calendarStartDay={1}
               renderInput={(params) => <TextField {...params} />}
-              // renderInput={(props) => <TextField {...props}/>}
+              shouldDisableDate={shouldDisableDate}
               sx={{
                 ".MuiOutlinedInput-root": {
                   "& fieldset": {
@@ -252,10 +322,10 @@ const Header = ({ value, onChange }) => {
                     fontSize: { xs: "12px", sm: "16px" },
                   },
                 },
-                height:"45px",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center",
+                height: "45px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             />
           </LocalizationProvider>

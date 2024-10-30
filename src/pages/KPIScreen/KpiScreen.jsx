@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState, } from 'react';
 import {
   Container,
   Box,
@@ -25,20 +25,65 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import { useTranslation } from "react-i18next";
 import { Outlet, useNavigate } from "react-router-dom";
+import { REQUESTS } from '../../api/requests';
 
 const KpiScreen = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [data, setData] = useState([]); // imported api user data
+  const [officetrue,setOfficetrue] = useState(true); // false default conditon //
 
   const [loader, setLoader] = React.useState(false);
   const pdfRef = useRef(null);
 
+  
+    // <=== GET USER TATA FOR TEST ====> //
+  //   useEffect(() => {
+  //     const fetchUserData = async () => {
+  //         try {
+  //             const response = await REQUESTS.user.getUser();
+  //             const propsdata = response.data[0];
+  //             setData(propsdata);
+  
+  
+  //         } catch (error) {
+  //             console.error("Error fetching user data:", error);
+  //         }
+  //     };
+  
+  //     fetchUserData();
+  //     filterOfficeWorker(); // Call filter function after setting data
+  // }, []);
+  
+
+
+  // Function to filter office workers
+  // const filterOfficeWorker = () => { 
+  //   if (data.branch?.toLowerCase() === "Головной офис".toLowerCase()) {
+  //     setOfficetrue(true);
+  //   } else {
+  //     setOfficetrue(false); // Explicitly set to false if not the desired branch
+  //   }
+  // };
+    // Call filterOfficeWorker whenever `data` changes and `data.branch` is available
+    // useEffect(() => {
+    //   if (data.branch) {
+    //     filterOfficeWorker();
+    //   }
+    // }, [data]);
+  
+    // Debugging logs
+    // console.log(data.branch, "filial test");
+    // console.log(officetrue, "test office user");
+  
   const revertStyles = () => {
     const style = document.getElementById("pdfStyles");
     if (style) {
       style.remove();
     }
   };
+
+  
 
   const userListData = [
     { title: "no name1", id: 1 },
@@ -95,6 +140,8 @@ const KpiScreen = () => {
         revertStyles();
       });
   };
+ 
+
 
   return (
     <Container
@@ -173,7 +220,8 @@ const KpiScreen = () => {
               />
 
               {/* <==== USER SEND EXCEL FILE BUTTON ====> */}
-              <Button
+
+              {officetrue ? (   <Button
                 onClick={() => navigate("kpidailiyworktable")}
                 variant="outlined"
                 sx={{
@@ -190,7 +238,8 @@ const KpiScreen = () => {
                 }}
               >
                 {t("send_excel")}
-              </Button>
+              </Button>) : ("")}
+           
 
               {/* <== PRESS DPF FILE BUTTON ===> */}
               <Box sx={{ position: "absolute", bottom: 0, left: 0 ,width:"100%",padding:"16px"}}>

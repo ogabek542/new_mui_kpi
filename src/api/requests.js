@@ -2,7 +2,7 @@ import axios from "axios";
 
 // const API_URL = 'http://10.8.88.91:8000/';
 const API_URL = "http://10.8.99.171:8000/";
-// const API_URL = 'http://10.8.18.31:8000/';
+// const API_URL = 'http://10.8.18.31:8080/';
 const TOKEN_KEY = "token";
 // const REFRESH_TOKEN_KEY = 'refresh_token';
 
@@ -21,7 +21,7 @@ export const axiosInstance = axios.create({
 
 // export const API_BASE_URL = 'http://10.8.88.91:8000/api/';
 export const API_BASE_URL = "http://10.8.99.171:8000/api/";
-// export const API_BASE_URL = 'http://10.8.18.31:8000/api/';
+// export const API_BASE_URL = 'http://10.8.18.31:8080/api/';
 
 // axiosInstance.interceptors.request.use(
 //     (config) => {

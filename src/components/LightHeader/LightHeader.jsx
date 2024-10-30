@@ -1,4 +1,4 @@
-import { Box, Typography,} from "@mui/material";
+import { Box, Button, Typography,} from "@mui/material";
 // icons //
 // import LOGO image //
 import backgroundImage from "../../assets/photo/newHomePageTopImage.jpg";
@@ -9,11 +9,13 @@ import NBUlogo from "../../assets/svg/newForSVG.svg";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
+import { useCloseHook } from "../../hooks/useCloseHook";
 
 
 const LightHeader = ({changeLang}) => {
 
-  const {t} = useTranslation()
+  const {t} = useTranslation();
+  const closeUniverse = useCloseHook();
    
   return (
     <Box
@@ -29,6 +31,7 @@ const LightHeader = ({changeLang}) => {
       backgroundPosition: "center",
       boxShadow:
         "0px 4px 12px rgba(0, 0, 0, 0.1) inset , -10px -10px 10px white",
+      position:"relative"
     }}
   >
     {/* left side box */}
@@ -95,7 +98,11 @@ const LightHeader = ({changeLang}) => {
         gap:"20px"
       }}
     >
-    
+      <Button  variant="contained"sx={{color:Colors.white,bgcolor:Colors.nbu,position:"absolute",bottom:"10px",right:"10px"}}
+      
+        onClick={closeUniverse}
+
+      >{t('close')}</Button>
     </Box >
   </Box>
   )

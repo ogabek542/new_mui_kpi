@@ -297,45 +297,45 @@ const newDefaultImage = DefaultImage;
                         {/* USER NAME */}
                         <Typography sx={{textTransform:"uppercase",color:"#000",fontWeight:"800"}}>{data.name || "no exist name"}</Typography>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px",marginTop:"5px"}}>
-                            {/* LEFT SIDE USRT DATA TEXT */}
+                            {/* LEFT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("filial")}</Typography>
-                            {/* RIGHT SIDE USRT DATA TEXT */}
+                            {/* RIGHT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.branch || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
-                            {/* LEFT SIDE USRT DATA TEXT */}
+                            {/* LEFT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("vsp")}</Typography>
-                            {/* RIGHT SIDE USRT DATA TEXT */}
+                            {/* RIGHT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.division || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
-                            {/* LEFT SIDE USRT DATA TEXT */}
+                            {/* LEFT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("part")}</Typography>
-                            {/* RIGHT SIDE USRT DATA TEXT */}
+                            {/* RIGHT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.department || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
-                            {/* LEFT SIDE USRT DATA TEXT */}
+                            {/* LEFT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("positionjob")}</Typography>
-                            {/* RIGHT SIDE USRT DATA TEXT */}
+                            {/* RIGHT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.position || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
-                            {/* LEFT SIDE USRT DATA TEXT */}
+                            {/* LEFT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("functional")}</Typography>
-                            {/* RIGHT SIDE USRT DATA TEXT */}
+                            {/* RIGHT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.premium || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
-                            {/* LEFT SIDE USRT DATA TEXT */}
+                            {/* LEFT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("tablenumber")}</Typography>
-                            {/* RIGHT SIDE USRT DATA TEXT */}
+                            {/* RIGHT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}>{data.table_number || "нет информации"}</Typography>
                         </Box>
                         <Box sx={{display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid gray",lineHeight:"0px"}}>
-                            {/* LEFT SIDE USRT DATA TEXT */}
+                            {/* LEFT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",textTransform:"uppercase"}}>{t("salary")}</Typography>
-                            {/* RIGHT SIDE USRT DATA TEXT */}
+                            {/* RIGHT SIDE USER DATA TEXT */}
                             <Typography sx={{fontSize:"12px",fontWeight:"bold"}}> {insertSpaces(data.fixed)|| "нет информации"}</Typography>
                         </Box>
                     </Box>

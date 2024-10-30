@@ -38,6 +38,7 @@ import {REQUESTS} from "../../api/requests";
 // import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import PriorityHighTwoToneIcon from '@mui/icons-material/PriorityHighTwoTone';
 import { keyframes } from '@emotion/react';
+import { isWeekend, parse } from "date-fns"; // Importing necessary functions from date-fns
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -75,13 +76,25 @@ const KpiDailiyWorkTable = () => {
   const [userData, setUserData] = useState({});
   const [selectDate, setSelectDate] = useState(dayjs());
   const formattedDate = dayjs(selectDate).format("DD.MM.YYYY");
-  const [formattedDateForGet, setFormattedDateForGet] = useState(dayjs(selectDate).format("YYYY-MM-DD"));
+  const [tableNumber, setTableNumber] = useState(null);
 
   const [defaultStartTime, setDefaultStartTime] = useState(dayjs("09:00", "HH:mm"));
-  const tableNumber = userData.table_number ;
+  
   const [combinedNew,setCombinedNew] = useState([]);
   
   
+ // Helper Function to Determine if Editing is Allowed
+const canPerformCRUD = (date) => {
+  const targetDate = dayjs(date).startOf('day');
+  const today = dayjs().startOf('day');
+  const yesterday = today.subtract(1, 'day');
+
+  // If today is Monday, allow editing for Friday (considering weekends)
+  const lastWorkingDay = today.day() === 1 ? today.subtract(3, 'day') : yesterday;
+
+  // Allow editing if the target date is today or the last working day
+  return targetDate.isSame(today) || targetDate.isSame(lastWorkingDay);
+};
 
     // Define mapWorkType at the top level
     const mapWorkType = (translatedValue) => {
@@ -165,7 +178,7 @@ const KpiDailiyWorkTable = () => {
           const response = await REQUESTS.user.getUser();
           const propsdata = response.data[0];
           setUserData(propsdata);
-
+          setTableNumber(propsdata?.table_number || null); // Update tableNumber after receiving userData
 
       } catch (error) {
           console.error("Error fetching user data:", error);
@@ -175,7 +188,6 @@ const KpiDailiyWorkTable = () => {
     fetchUserData();
   }, []);
 
- 
 
   // Check for Time Overlaps
   const findOverlappingItems = (itemsList) => {
@@ -235,157 +247,340 @@ const KpiDailiyWorkTable = () => {
   };
 
   // Handle Add Submit
-  const handleAddSubmit = async (e) => {
-    e.preventDefault();
+  // const handleAddSubmit = async (e) => {
+  //   e.preventDefault();
 
-    // Validate Required Fields
-    if (
-      !addTitle ||
-      !addWorkType ||
-      !addWorkingHistory ||
-      !addWorkDuration 
-    ) {
-      showSnackbar(t("need_empty_space"), "error");
-      return;
-    }
+  //   // Validate Required Fields
+  //   if (
+  //     !addTitle ||
+  //     !addWorkType ||
+  //     !addWorkingHistory ||
+  //     !addWorkDuration 
+  //   ) {
+  //     showSnackbar(t("need_empty_space"), "error");
+  //     return;
+  //   }
 
-    // Validate Time Values
-    if (!addWorkDuration.isValid()) {
-      showSnackbar(t("error_time_amount"), "error");
-      return;
-    }
+  //   // Validate Time Values
+  //   if (!addWorkDuration.isValid()) {
+  //     showSnackbar(t("error_time_amount"), "error");
+  //     return;
+  //   }
 
-    const workHours = addWorkDuration.hour();
-    const workMinutes = addWorkDuration.minute();
-    const workTimeMinutes = workHours * 60 + workMinutes;
+  //   const workHours = addWorkDuration.hour();
+  //   const workMinutes = addWorkDuration.minute();
+  //   const workTimeMinutes = workHours * 60 + workMinutes;
 
-    if (workTimeMinutes <= 0) {
-      showSnackbar(t("check_workinghours"), "error");
-      return;
-    }
+  //   if (workTimeMinutes <= 0) {
+  //     showSnackbar(t("check_workinghours"), "error");
+  //     return;
+  //   }
 
-    // Generate a unique ID for the new item
-    const uniqueId = uuidv4();
+  //   // Generate a unique ID for the new item
+  //   const uniqueId = uuidv4();
 
-    const mapWorkType = (translatedValue) => {
-      switch (translatedValue) {
-        case t("working_type_value_one"):
-          return "onetime";
-        case t("working_type_value_two"):
-          return "regular";
-        default:
-          return "";
-      }
-    };
+  //   const mapWorkType = (translatedValue) => {
+  //     switch (translatedValue) {
+  //       case t("working_type_value_one"):
+  //         return "onetime";
+  //       case t("working_type_value_two"):
+  //         return "regular";
+  //       default:
+  //         return "";
+  //     }
+  //   };
 
-    const newItem = {
-      id: uniqueId, // Assign the unique ID
-      title: addTitle,
-      workHours: workHours,
-      workMinutes: workMinutes,
-      workTime: calculateWorkingTime(workTimeMinutes),
-      workType: addWorkType,
-      workingHistory: addWorkingHistory,
-      workingComment: addWorkingComment,
-      date: formattedDate,
-    };
+  //   const newItem = {
+  //     id: uniqueId, // Assign the unique ID
+  //     title: addTitle,
+  //     workHours: workHours,
+  //     workMinutes: workMinutes,
+  //     workTime: calculateWorkingTime(workTimeMinutes),
+  //     workType: addWorkType,
+  //     workingHistory: addWorkingHistory,
+  //     workingComment: addWorkingComment,
+  //     date: formattedDate,
+  //   };
 
-    try {
-      // Add the new item locally
-      const updatedItems = [...items, newItem];
+  //   try {
+  //     // Add the new item locally
+  //     const updatedItems = [...items, newItem];
 
-      // Recalculate times
-      const recalculatedItems = recalculateTimes(updatedItems);
+  //     // Recalculate times
+  //     const recalculatedItems = recalculateTimes(updatedItems);
 
-      setItems(recalculatedItems);
-      showSnackbar(t("add_newrow_success"), "success");
-      handleCloseAddDialog();
-      prevItemsRef.current = recalculatedItems;
+  //     setItems(recalculatedItems);
+  //     showSnackbar(t("add_newrow_success"), "success");
+  //     handleCloseAddDialog();
+  //     prevItemsRef.current = recalculatedItems;
 
-      // Save to local storage
-      localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
-    } catch (error) {
-      console.error("Error adding item:", error);
-      showSnackbar(error.message || t("add_newrow_error"), "error");
-    }
-  };
+  //     // Save to local storage
+  //     localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+  //   } catch (error) {
+  //     console.error("Error adding item:", error);
+  //     showSnackbar(error.message || t("add_newrow_error"), "error");
+  //   }
+  // };
+  // Handle Add Submit
+const handleAddSubmit = async (e) => {
+  e.preventDefault();
 
-  // Handle Edit Submit
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();
+  if (!canPerformCRUD(selectDate)) {
+    showSnackbar(t("add_not_allowed"), "error");
+    return;
+  }
 
-    // Validate Required Fields
-    if (
-      !editTitle ||
-      !editWorkType ||
-      !editWorkingHistory ||
-      !editWorkDuration
-    ) {
-      showSnackbar( t("need_empty_space"), "error");
-      return;
-    }
+  // Validate Required Fields
+  if (!addTitle || !addWorkType || !addWorkingHistory || !addWorkDuration) {
+    showSnackbar(t("need_empty_space"), "error");
+    return;
+  }
 
-    // Validate Time Values
-    if (!editWorkDuration.isValid()) {
-      showSnackbar( t("enter_time_error"), "error");
-      return;
-    }
+  // Validate Time Values
+  if (!addWorkDuration.isValid()) {
+    showSnackbar(t("error_time_amount"), "error");
+    return;
+  }
 
-    const workHours = editWorkDuration.hour();
-    const workMinutes = editWorkDuration.minute();
-    const workTimeMinutes = workHours * 60 + workMinutes;
+  const workHours = addWorkDuration.hour();
+  const workMinutes = addWorkDuration.minute();
+  const workTimeMinutes = workHours * 60 + workMinutes;
 
-    if (workTimeMinutes <= 0) {
-      showSnackbar( t("enter_error_working_hours"), "error");
-      return;
-    }
+  if (workTimeMinutes <= 0) {
+    showSnackbar(t("check_workinghours"), "error");
+    return;
+  }
 
-    const editedItem = {
-      id: editItemId,
-      title: editTitle,
-      workHours: workHours,
-      workMinutes: workMinutes,
-      workTime: calculateWorkingTime(workTimeMinutes),
-      workType: editWorkType,
-      workingHistory: editWorkingHistory,
-      workingComment: editWorkingComment,
-      date: formattedDate,
-    };
+  // Generate a unique ID for the new item
+  const uniqueId = uuidv4();
 
-    try {
-      // Update the item locally
-      const editedItemIndex = items.findIndex((item) => item.id === editItemId);
-      let updatedItems = [...items];
-      updatedItems[editedItemIndex] = editedItem;
-
-      // Recalculate times
-      const recalculatedItems = recalculateTimes(updatedItems);
-
-      setItems(recalculatedItems);
-      showSnackbar(t("edit_row_success"), "success");
-      handleCloseEditDialog();
-      prevItemsRef.current = recalculatedItems;
-
-      // Save to local storage
-      localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
-    } catch (error) {
-      console.error("Error editing item:", error);
-      showSnackbar(error.message || t("edit_row_error"), "error");
+  const mapWorkType = (translatedValue) => {
+    switch (translatedValue) {
+      case t("working_type_value_one"):
+        return "onetime";
+      case t("working_type_value_two"):
+        return "regular";
+      default:
+        return "";
     }
   };
 
-  // Handle Delete
-  const handleDelete = (id) => {
-    const updatedItems = items.filter((item) => item.id !== id);
+  const newItem = {
+    id: uniqueId, // Assign the unique ID
+    title: addTitle,
+    workHours: workHours,
+    workMinutes: workMinutes,
+    workTime: calculateWorkingTime(workTimeMinutes),
+    workType: addWorkType,
+    workingHistory: addWorkingHistory,
+    workingComment: addWorkingComment,
+    date: formattedDate,
+  };
+
+  try {
+    // Add the new item locally
+    const updatedItems = [...items, newItem];
 
     // Recalculate times
     const recalculatedItems = recalculateTimes(updatedItems);
 
     setItems(recalculatedItems);
-    localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
-    showSnackbar(t("delete_successfully"), "info");
+    showSnackbar(t("add_newrow_success"), "success");
+    handleCloseAddDialog();
     prevItemsRef.current = recalculatedItems;
+
+    // Save to local storage
+    localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+  } catch (error) {
+    console.error("Error adding item:", error);
+    showSnackbar(error.message || t("add_newrow_error"), "error");
+  }
+};
+
+
+  // Handle Edit Submit
+  // const handleEditSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //  const editItem = items.find((item) => item.id === editItemId);
+  // if (!editItem) {
+  //   showSnackbar(t("edit_item_not_found"), "error");
+  //   return;
+  // }
+  //   // Validate Required Fields
+  //   if (
+  //     !editTitle ||
+  //     !editWorkType ||
+  //     !editWorkingHistory ||
+  //     !editWorkDuration
+  //   ) {
+  //     showSnackbar( t("need_empty_space"), "error");
+  //     return;
+  //   }
+
+  //   // Validate Time Values
+  //   if (!editWorkDuration.isValid()) {
+  //     showSnackbar( t("enter_time_error"), "error");
+  //     return;
+  //   }
+
+  //   const workHours = editWorkDuration.hour();
+  //   const workMinutes = editWorkDuration.minute();
+  //   const workTimeMinutes = workHours * 60 + workMinutes;
+
+  //   if (workTimeMinutes <= 0) {
+  //     showSnackbar( t("enter_error_working_hours"), "error");
+  //     return;
+  //   }
+
+  //   const editedItem = {
+  //     id: editItemId,
+  //     title: editTitle,
+  //     workHours: workHours,
+  //     workMinutes: workMinutes,
+  //     workTime: calculateWorkingTime(workTimeMinutes),
+  //     workType: editWorkType,
+  //     workingHistory: editWorkingHistory,
+  //     workingComment: editWorkingComment,
+  //     date: formattedDate,
+  //   };
+
+  //   try {
+  //     // Update the item locally
+  //     const editedItemIndex = items.findIndex((item) => item.id === editItemId);
+  //     let updatedItems = [...items];
+  //     updatedItems[editedItemIndex] = editedItem;
+
+  //     // Recalculate times
+  //     const recalculatedItems = recalculateTimes(updatedItems);
+
+  //     setItems(recalculatedItems);
+  //     showSnackbar(t("edit_row_success"), "success");
+  //     handleCloseEditDialog();
+  //     prevItemsRef.current = recalculatedItems;
+
+  //     // Save to local storage
+  //     localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+  //   } catch (error) {
+  //     console.error("Error editing item:", error);
+  //     showSnackbar(error.message || t("edit_row_error"), "error");
+  //   }
+  // };
+
+
+  // Handle Edit Submit
+const handleEditSubmit = async (e) => {
+  e.preventDefault();
+
+  // Retrieve the edit date from the item being edited
+  const editItem = items.find((item) => item.id === editItemId);
+  if (!editItem) {
+    showSnackbar(t("edit_item_not_found"), "error");
+    return;
+  }
+
+  const editDate = dayjs(editItem.date, "DD.MM.YYYY");
+
+  // Check if editing is allowed for this date
+  if (!canPerformCRUD(editDate)) {
+    showSnackbar(t("edit_not_allowed"), "error");
+    return;
+  }
+
+  // Validate Required Fields
+  if (!editTitle || !editWorkType || !editWorkingHistory || !editWorkDuration) {
+    showSnackbar(t("need_empty_space"), "error");
+    return;
+  }
+
+  // Validate Time Values
+  if (!editWorkDuration.isValid()) {
+    showSnackbar(t("enter_time_error"), "error");
+    return;
+  }
+
+  const workHours = editWorkDuration.hour();
+  const workMinutes = editWorkDuration.minute();
+  const workTimeMinutes = workHours * 60 + workMinutes;
+
+  if (workTimeMinutes <= 0) {
+    showSnackbar(t("enter_error_working_hours"), "error");
+    return;
+  }
+
+  // Create the edited item object
+  const editedItem = {
+    ...editItem,
+    title: editTitle,
+    workHours: workHours,
+    workMinutes: workMinutes,
+    workTime: calculateWorkingTime(workTimeMinutes),
+    workType: editWorkType,
+    workingHistory: editWorkingHistory,
+    workingComment: editWorkingComment,
   };
+
+  try {
+    // Update the item locally
+    const editedItemIndex = items.findIndex((item) => item.id === editItemId);
+    let updatedItems = [...items];
+    updatedItems[editedItemIndex] = editedItem;
+
+    // Recalculate times
+    const recalculatedItems = recalculateTimes(updatedItems);
+
+    setItems(recalculatedItems);
+    showSnackbar(t("edit_row_success"), "success");
+    handleCloseEditDialog();
+    prevItemsRef.current = recalculatedItems;
+
+    // Save to local storage
+    localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+  } catch (error) {
+    console.error("Error editing item:", error);
+    showSnackbar(error.message || t("edit_row_error"), "error");
+  }
+};
+
+  // Handle Delete
+  // const handleDelete = (id) => {
+  //   const updatedItems = items.filter((item) => item.id !== id);
+
+  //   // Recalculate times
+  //   const recalculatedItems = recalculateTimes(updatedItems);
+
+  //   setItems(recalculatedItems);
+  //   localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+  //   showSnackbar(t("delete_successfully"), "info");
+  //   prevItemsRef.current = recalculatedItems;
+  // };
+
+  // Handle Delete
+const handleDelete = (id) => {
+  const deleteItem = items.find((item) => item.id === id);
+  if (!deleteItem) {
+    showSnackbar(t("item_not_found"), "error");
+    return;
+  }
+
+  const deleteDate = dayjs(deleteItem.date, "DD.MM.YYYY");
+
+  if (!canPerformCRUD(deleteDate)) {
+    showSnackbar(t("delete_not_allowed"), "error");
+    return;
+  }
+
+  const updatedItems = items.filter((item) => item.id !== id);
+
+  // Recalculate times
+  const recalculatedItems = recalculateTimes(updatedItems);
+
+  setItems(recalculatedItems);
+  localStorage.setItem("workItems", JSON.stringify(recalculatedItems));
+  showSnackbar(t("delete_successfully"), "info");
+  prevItemsRef.current = recalculatedItems;
+};
+
 
  // Helper function to merge items
 // function mergeItems(existingItems, fetchedItems) {
@@ -598,67 +793,67 @@ function mergeItems(existingItems, fetchedItems) {
 // };
 
 
-const handleSend = async () => {
-  setOpenNoticeModal(false);
+// const handleSend = async () => {
+//   setOpenNoticeModal(false);
 
-  const formattedDateDisplay = dayjs(selectDate).format('DD.MM.YYYY');
-  const formattedDateBackend = dayjs(selectDate).format('DD.MM.YYYY');
+//   const formattedDateDisplay = dayjs(selectDate).format('DD.MM.YYYY');
+//   const formattedDateBackend = dayjs(selectDate).format('DD.MM.YYYY');
 
-  // Retrieve the latest items from state
-  const currentItems = [...items];
+//   // Retrieve the latest items from state
+//   const currentItems = [...items];
 
-  // Retrieve items from localStorage (if necessary)
-  const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
+//   // Retrieve items from localStorage (if necessary)
+//   const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
 
-  // Filter items for the selected date from both state and localStorage
-  const itemsForSelectedDateState = currentItems.filter(item => item.date === formattedDate);
-  const itemsForSelectedDateLocal = savedItems.filter(item => dayjs(item.date, 'DD.MM.YYYY').isSame(selectDate, 'day'));
+//   // Filter items for the selected date from both state and localStorage
+//   const itemsForSelectedDateState = currentItems.filter(item => item.date === formattedDate);
+//   const itemsForSelectedDateLocal = savedItems.filter(item => dayjs(item.date, 'DD.MM.YYYY').isSame(selectDate, 'day'));
 
-  // Combine both arrays without duplicates
-  const combinedItemsMap = new Map();
+//   // Combine both arrays without duplicates
+//   const combinedItemsMap = new Map();
 
-  itemsForSelectedDateState.forEach(item => {
-    combinedItemsMap.set(item.id, item);
-  });
+//   itemsForSelectedDateState.forEach(item => {
+//     combinedItemsMap.set(item.id, item);
+//   });
 
-  itemsForSelectedDateLocal.forEach(item => {
-    combinedItemsMap.set(item.id, item);
-  });
+//   itemsForSelectedDateLocal.forEach(item => {
+//     combinedItemsMap.set(item.id, item);
+//   });
 
-  const combinedItemsForDate = Array.from(combinedItemsMap.values());
+//   const combinedItemsForDate = Array.from(combinedItemsMap.values());
 
-  // Prepare the data object to send
-  const dataToSend = {
-    totalWorkingHour: totalWorkingTime,
-    rowDatas: combinedItemsForDate,
-    tableNumber: tableNumber,
-    mainDate: formattedDate,
-  };
+//   // Prepare the data object to send
+//   const dataToSend = {
+//     totalWorkingHour: totalWorkingTime,
+//     rowDatas: combinedItemsForDate,
+//     tableNumber: tableNumber,
+//     mainDate: formattedDate,
+//   };
 
-  console.log('Sending data to backend:', dataToSend);
+//   console.log('Sending data to backend:', dataToSend);
 
-  try {
-    // Validate essential data
-    if (!tableNumber || !formattedDate) {
-      throw new Error('Table number or formatted date is missing.');
-    }
+//   try {
+//     // Validate essential data
+//     if (!tableNumber || !formattedDate) {
+//       throw new Error('Table number or formatted date is missing.');
+//     }
 
-    // Send data to backend
-    await REQUESTS.data.sendAllData(tableNumber, formattedDate, dataToSend);
+//     // Send data to backend
+//     await REQUESTS.data.sendAllData(tableNumber, formattedDate, dataToSend);
 
-    // Provide feedback and reset state
-    showSnackbar(t('send_data_success'), 'success');
-    // setHasUnsavedChanges(false);
-  } catch (error) {
-    console.error('Error sending data:', error);
+//     // Provide feedback and reset state
+//     showSnackbar(t('send_data_success'), 'success');
+//     // setHasUnsavedChanges(false);
+//   } catch (error) {
+//     console.error('Error sending data:', error);
 
-    if (error.response && error.response.data) {
-      showSnackbar(error.response.data.error || t('send_data_error'), 'error');
-    } else {
-      showSnackbar(t('send_data_error'), 'error');
-    }
-  }
-};
+//     if (error.response && error.response.data) {
+//       showSnackbar(error.response.data.error || t('send_data_error'), 'error');
+//     } else {
+//       showSnackbar(t('send_data_error'), 'error');
+//     }
+//   }
+// };
 
   // Handle Refresh
   // const handleRefresh = () => {
@@ -682,13 +877,96 @@ const handleSend = async () => {
   // };
 
   // Handle Refresh
+  
+  const handleSend = async () => {
+    setOpenNoticeModal(false);
+  
+    // Ensure the selected date is valid for sending data
+    if (!canPerformCRUD(selectDate)) {
+      showSnackbar(t("send_not_allowed"), "error");
+      return;
+    }
+  
+    const formattedDateDisplay = dayjs(selectDate).format("DD.MM.YYYY");
+    const formattedDateBackend = dayjs(selectDate).format("DD.MM.YYYY");
+  
+    // Retrieve the latest items from state
+    const currentItems = [...items];
+  
+    // Retrieve items from localStorage (if necessary)
+    const savedItems = JSON.parse(localStorage.getItem("workItems")) || [];
+  
+    // Filter items for the selected date from both state and localStorage
+    const itemsForSelectedDateState = currentItems.filter((item) =>
+      dayjs(item.date, "DD.MM.YYYY").isSame(selectDate, "day")
+    );
+    const itemsForSelectedDateLocal = savedItems.filter((item) =>
+      dayjs(item.date, "DD.MM.YYYY").isSame(selectDate, "day")
+    );
+  
+    // Combine both arrays without duplicates
+    const combinedItemsMap = new Map();
+  
+    itemsForSelectedDateState.forEach((item) => {
+      combinedItemsMap.set(item.id, item);
+    });
+  
+    itemsForSelectedDateLocal.forEach((item) => {
+      combinedItemsMap.set(item.id, item);
+    });
+  
+    const combinedItemsForDate = Array.from(combinedItemsMap.values());
+  
+    // Prepare the data object to send
+    const dataToSend = {
+      totalWorkingHour: totalWorkingTime,
+      rowDatas: combinedItemsForDate,
+      tableNumber: tableNumber,
+      mainDate: formattedDateDisplay,
+    };
+  
+    console.log("Sending data to backend:", dataToSend);
+  
+    try {
+      // Validate essential data
+      if (!tableNumber || !formattedDateDisplay) {
+        throw new Error("Table number or formatted date is missing.");
+      }
+  
+      // Send data to backend
+      await REQUESTS.data.sendAllData(tableNumber, formattedDateBackend, dataToSend);
+  
+      // Provide feedback and reset state
+      showSnackbar(t("send_data_success"), "success");
+    } catch (error) {
+      console.error("Error sending data:", error);
+  
+      if (error.response && error.response.data) {
+        showSnackbar(error.response.data.error || t("send_data_error"), "error");
+      } else {
+        showSnackbar(t("send_data_error"), "error");
+      }
+    }
+  };
+  
+  
+  
+  
+  
   const handleRefresh = async () => {
+
+    if (!tableNumber) {
+      console.warn("Table number is missing or not yet loaded.");
+      return; // Prevent executing the rest of the function if tableNumber is not available
+    }
 
     setItems([]); // Clear the table body
 
 
     try {
       const formattedDateForGet = dayjs(selectDate).format('DD.MM.YYYY');
+
+      console.log(formattedDateForGet)
   
       if (!tableNumber) {
         throw new Error('Table number is missing.');
@@ -709,23 +987,24 @@ const handleSend = async () => {
         return;
       }
   
-      // Map the fetched data to match your frontend data structure
-      const mappedData = fetchedData.map((item) => ({
-        id: item.id || uuidv4(),
-        title: item.title || '',
-        workHours: item.work_hours || 0,
-        workMinutes: item.work_minutes || 0,
-        workTime: item.work_time || '',
-        workType: item.work_type || '',
-        workingHistory: item.working_history || '',
-        workingComment: item.working_comment || '',
-        date: dayjs(item.date).format('DD.MM.YYYY'),
-        startTime: item.start_time || '',
-        endTime: item.end_time || '',
-      }));
+      console.log(fetchedData)
+    // Map the fetched data
+    const mappedFetchedData = fetchedData.map((item) => ({
+      id: item.id ? `backend-${item.id}` : uuidv4(),
+      title: item.title || '',
+      workHours: item.work_hours || 0,
+      workMinutes: item.work_minutes || 0,
+      workTime: item.work_time || '',
+      workType: item.work_type || '',
+      workingHistory: item.working_history || '',
+      workingComment: item.working_comment || '',
+      date: dayjs(item.date).format('DD.MM.YYYY'),
+      startTime: item.start_time || '',
+      endTime: item.end_time || '',
+    }));
   
       // Recalculate times if necessary
-      const recalculatedItems = recalculateTimes(mappedData);
+      const recalculatedItems = recalculateTimes(mappedFetchedData);
   
       setItems(recalculatedItems);
       prevItemsRef.current = recalculatedItems;
@@ -751,15 +1030,33 @@ const handleSend = async () => {
   
 
   // Handle Date Change
- const onChangeDate = (newDate) => {
+//  const onChangeDate = (newDate) => {
 
-  setSelectDate(newDate);
+//   setSelectDate(newDate);
+//   handleRefresh();
+// };
 
+// useEffect(()=> {
+//   handleRefresh();
+// },[selectDate])
+
+useEffect(() => {
+  setSelectDate(dayjs()); // Set today's date when the screen opens
+}, []);
+
+// Handle Date Change
+const onChangeDate = (newDate) => {
+  setSelectDate(newDate); // Simply set the new date
 };
 
-useEffect(()=> {
-  handleRefresh();
-},[selectDate])
+// Use effect to handle refresh automatically when selectDate changes
+useEffect(() => {
+  if (selectDate) {
+    handleRefresh(); // This will be called whenever selectDate is updated
+  }
+}, [selectDate]);
+
+
 
 
 
@@ -1019,6 +1316,69 @@ const handleCloseNoticeDialog = () => {
     }));
     setItems(uniqueItems);
   }, [items]);
+
+
+    // Define holidays (formatted correctly for date-fns parsing)
+    const holidays = [
+      "01.01.2024", // New Year's Day
+      "02.01.2024", // New Year's Day
+      "08.03.2024", // Women's Day
+    "11.03.2024", // Ramazan Day
+      "21.03.2024", // Navruz Happy Day
+      "22.03.2024", // Navruz Happy Day
+    "23.03.2024", // Navruz Happy Day
+      "10.04.2024", // Eid Al Fitr Day
+    "11.04.2024", // Eid Al Fitr Day
+      "12.04.2024", // Eid Al Fitr Day
+      "09.05.2024", // Remember Day
+      "16.06.2024", // Eid Al Adha Day
+      "17.06.2024", // Eid Al Adha Day
+      "18.06.2024", // Eid Al Adha Day
+      "31.08.2024", // Independence Day
+      "01.09.2024", // Independence Day
+      "02.09.2024", // Independence Day
+      "03.09.2024", // Independence Day
+      "12.08.2024", // Constitution Day
+      "01.10.2024", // Constitution Day
+      "09.12.2024", // Happy New Year Day
+      "30.12.2024", // Happy New Year Day
+      "31.12.2024", // Happy New Year Day
+      // Add more holidays as needed
+    ].map((date) => parse(date, "dd.MM.yyyy", new Date()));
+  
+  
+     // Define exception working days that fall on weekends
+     const exceptionWorkingDays = [
+      "06.01.2024", // Specific weekend day which is a working day
+      "29.06.2024",
+      "14.12.2024",
+
+      // Add more exception working days here if needed
+    ].map((date) => parse(date, "dd.MM.yyyy", new Date()));
+  
+    // Function to disable weekends and holidays
+    const shouldDisableDate = (date) => {
+      // If it's a weekend but is listed as an exception working day, allow it
+      const isExceptionWorkingDay = exceptionWorkingDays.some(
+        (exceptionDay) => exceptionDay.getTime() === date.toDate().getTime()
+      );
+  
+      if (isExceptionWorkingDay) {
+        return false; // Don't disable if it's an exception working day
+      }
+  
+      // Disable weekends
+      if (isWeekend(date.toDate())) {
+        return true;
+      }
+  
+      // Disable holidays
+      const isHoliday = holidays.some(
+        (holiday) => holiday.getTime() === date.toDate().getTime()
+      );
+  
+      return isHoliday;
+    };
     
 
   return (
@@ -1052,6 +1412,7 @@ const handleCloseNoticeDialog = () => {
               onChange={onChangeDate}
               format="DD.MM.YYYY"
               maxDate={dayjs()}
+              shouldDisableDate={shouldDisableDate}
               renderInput={(params) => <TextField {...params} />}
               sx={{
                 ".MuiOutlinedInput-root": {
