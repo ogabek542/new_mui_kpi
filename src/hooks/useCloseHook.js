@@ -1,4 +1,3 @@
-// src/hooks/useCloseApp.js
 
 import { useNavigate } from 'react-router-dom';
 
@@ -15,3 +14,4 @@ export const useCloseHook = () => {
 
   return useCloseHook;
 };
+

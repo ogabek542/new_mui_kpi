@@ -313,6 +313,38 @@ const NetProfitSceen = ({ changeLang }) => {
     return isHoliday;
   };
 
+  useEffect(() => {
+    const fetchGraphicData = async () => {
+      try {
+        setLoading(true);
+        const formattedDate = selectNewData.format("DD.MM.YYYY");
+        const params = {
+          date: formattedDate,
+          option: selectedSecondOptions?.title || "",
+        };
+        const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne(params);
+        const graphicIndicators = response.data;
+        // console.log(response, "Fetched data All Income");
+        setChooseData(graphicIndicators);
+      } catch (error) {
+        console.error("Error fetching graphic indicator data:", error);
+        if (error.response && error.response.status === 404) {
+          console.error(
+            "Endpoint not found. Please check the URL or backend configuration."
+          );
+        } else {
+          console.error("An error occurred:", error.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (selectNewData && selectedSecondOptions) {
+      fetchGraphicData();
+    }
+  }, [selectNewData, selectedSecondOptions]);
+
   return (
     <Container
       maxWidth={false}

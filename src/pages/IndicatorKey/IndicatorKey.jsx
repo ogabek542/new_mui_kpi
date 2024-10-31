@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Container, Box, Typography, Button, Grid } from "@mui/material";
 import { useEffect } from "react";
-import { Colors } from "../../styles/theme";
 import Footer from "../../components/Footer/Footer";
 import LightHeader from '../../components/LightHeader/LightHeader';
 import { useNavigate } from "react-router-dom";
@@ -18,6 +17,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
+import { isWeekend, parse } from "date-fns"; // Importing necessary functions from date-fns
+import { Colors } from '../../styles/theme';
 
 // change language function //
 const changeLang = (value) => {
@@ -206,42 +207,66 @@ const IndicatorKey = () => {
     16: [{ title: "Миробод бўлими" }],
   };
 
-   // Example holidays (add your holidays here)
+   // Define holidays (formatted correctly for date-fns parsing)
    const holidays = [
-    dayjs("01.01.2024"), // New Year's Day
-    dayjs("02.01.2024"), // New Year's Day
-    dayjs("08.03.2024"), // Women's Day
-    dayjs("11.03.2024"), // Ramazan Day
-    dayjs("21.03.2024"), // Navruz Happy Day
-    dayjs("22.03.2024"), // Navruz Happy Day
-    dayjs("23.03.2024"), // Navruz Happy Day
-    dayjs("10.04.2024"), // Eid Al Fitr Day
-    dayjs("11.04.2024"), // Eid Al Fitr Day
-    dayjs("12.04.2024"), // Eid Al Fitr Day
-    dayjs("09.05.2024"), // Remember Day
-    dayjs("16.06.2024"), // Eid Al Adha Day
-    dayjs("17.06.2024"), // Eid Al Adha Day
-    dayjs("18.06.2024"), // Eid Al Adha Day
-    dayjs("31.08.2024"), // Independence Day
-    dayjs("01.09.2024"), // Independence Day
-    dayjs("02.09.2024"), // Independence Day
-    dayjs("03.09.2024"), // Independence Day
-    dayjs("12.08.2024"), // Constitution Day
-    dayjs("01.10.2024"), // Constitution Day
-    dayjs("09.12.2024"), // Happy New Year Day
-    dayjs("30.12.2024"), // Happy New Year Day
-    dayjs("31.12.2024"), // Happy New Year Day
+    "01.01.2024", // New Year's Day
+    "02.01.2024", // New Year's Day
+    "08.03.2024", // Women's Day
+  "11.03.2024", // Ramazan Day
+    "21.03.2024", // Navruz Happy Day
+    "22.03.2024", // Navruz Happy Day
+  "23.03.2024", // Navruz Happy Day
+    "10.04.2024", // Eid Al Fitr Day
+  "11.04.2024", // Eid Al Fitr Day
+    "12.04.2024", // Eid Al Fitr Day
+    "09.05.2024", // Remember Day
+    "16.06.2024", // Eid Al Adha Day
+    "17.06.2024", // Eid Al Adha Day
+    "18.06.2024", // Eid Al Adha Day
+    "31.08.2024", // Independence Day
+    "01.09.2024", // Independence Day
+    "02.09.2024", // Independence Day
+    "03.09.2024", // Independence Day
+    "12.08.2024", // Constitution Day
+    "01.10.2024", // Constitution Day
+    "09.12.2024", // Happy New Year Day
+    "30.12.2024", // Happy New Year Day
+    "31.12.2024", // Happy New Year Day
     // Add more holidays as needed
-  ];
+  ].map((date) => parse(date, "dd.MM.yyyy", new Date()));
 
 
+   // Define exception working days that fall on weekends
+   const exceptionWorkingDays = [
+    "06.01.2024", // Specific weekend day which is a working day
+    "29.06.2024",
+    "14.12.2024",
+    // Add more exception working days here if needed
+  ].map((date) => parse(date, "dd.MM.yyyy", new Date()));
 
-    // Function to disable weekends and holidays
-    const shouldDisableDate = (date) => {
-      // Disable holidays
-      const isHoliday = holidays.some((holiday) => date.isSame(holiday, "day"));
-      return isHoliday;
-    };
+  // Function to disable weekends and holidays
+  const shouldDisableDate = (date) => {
+    // If it's a weekend but is listed as an exception working day, allow it
+    const isExceptionWorkingDay = exceptionWorkingDays.some(
+      (exceptionDay) => exceptionDay.getTime() === date.toDate().getTime()
+    );
+
+    if (isExceptionWorkingDay) {
+      return false; // Don't disable if it's an exception working day
+    }
+
+    // Disable weekends
+    if (isWeekend(date.toDate())) {
+      return true;
+    }
+
+    // Disable holidays
+    const isHoliday = holidays.some(
+      (holiday) => holiday.getTime() === date.toDate().getTime()
+    );
+
+    return isHoliday;
+  };
 
 
   const changeLang = (value) => {
@@ -249,10 +274,10 @@ const IndicatorKey = () => {
   }
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const [newdata, setNewData] = useState(dayjs());
+  // const [newdata, setNewData] = useState(dayjs());
     // const [selectNewData, setSelectNewData] = useState(dayjs());
     const [loading, setLoading] = useState(true); // State to track loading
-    const [selectNewData, setSelectNewData] = useState(dayjs("29.07.2024", "DD.MM.YYYY"));
+    const [selectNewData, setSelectNewData] = useState(dayjs());
     const [dateText, setDateText] = useState(dayjs().format("DD.MM.YYYY"));
     const [chooseData, setChooseData] = useState([]);
     const [selectedFirstOption, setSelectedFirstOption] = useState({
@@ -266,26 +291,13 @@ const IndicatorKey = () => {
     const formattedDate = dayjs(selectNewData).format("DD.MM.YYYY");
 
   const handleDateChange = (newValue) => {
-    setNewData(newValue); // Update the selected date
+    setSelectNewData(newValue); // Update the selected date
     console.log(newValue);
   };
 
-  const handleNavigateKeyIndicators = () => { 
-    // navigate("/keyindicatorscreen");
-    navigate("/keyindicatorscreen");
-  };
-  const handleNavigateBalanceScreen = () => { 
-    navigate("/balancescreen");
-  };
 
   // Use useEffect to call handleDateChange whenever selectNewData changes
-  useEffect(() => {
-    // handleDateChange(newdata);
-    // GET zapros qilinadi
-    // url?date=`${newdata}`
-    // response
-    // [ {date1: ,data1: [] date2:, } ]
-  }, [newdata]);
+
 
   // useEffect(() => {
   //   const fetchGraphicData = async () => {
@@ -323,6 +335,50 @@ const IndicatorKey = () => {
   //   fetchGraphicData();
   // }, [selectedDate]); // Depend on selectedDate
 
+
+  useEffect(() => {
+    if (selectedFirstOption && selectedFirstOption.id) {
+      setSecondOptions(setSelectedSecondMap[selectedFirstOption.id] || []);
+      setSelectedSecondOptions(null); // Reset the second option
+    } else {
+      setSecondOptions([]);
+    }
+  }, [selectedFirstOption]);
+
+
+  // <==== GET DATA FROM BACKEND SECTION ====> //
+  useEffect(() => {
+    const fetchGraphicData = async () => {
+      try {
+        setLoading(true);
+        const formattedDate = selectNewData.format("DD.MM.YYYY");
+        const params = {
+          date: formattedDate,
+          option: selectedSecondOptions?.title || "",
+        };
+        const response = await REQUESTS.analysisScreenOne.getAnalysisScreenOne(params);
+        const graphicIndicators = response.data;
+        console.log(response, "Fetched data All Income");
+        setChooseData(graphicIndicators);
+      } catch (error) {
+        console.error("Error fetching graphic indicator data:", error);
+        if (error.response && error.response.status === 404) {
+          console.error(
+            "Endpoint not found. Please check the URL or backend configuration."
+          );
+        } else {
+          console.error("An error occurred:", error.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (selectNewData && selectedSecondOptions) {
+      fetchGraphicData();
+    }
+  }, [selectNewData, selectedSecondOptions]);
+
   const insertSpaces = (text) => {
     if (!text) return ""; // Handle empty or undefined text
   
@@ -331,7 +387,11 @@ const IndicatorKey = () => {
   
     // Add spaces every 3 digits
     return str.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+
   };
+
+  
 
   return (
     <Container
@@ -350,7 +410,7 @@ const IndicatorKey = () => {
       <LightHeader
       />
      {/* main title section */}
-     <Box
+    <Box
         sx={{
           height: "50px",
           borderRadius: "5px",
@@ -359,17 +419,17 @@ const IndicatorKey = () => {
           display: "flex",
           alignItems: "center",
           paddingY: "5px",
-          paddingX: "10px",
+          paddingX: "5px",
         }}
       >
-        <Box sx={{borderRadius:"8px",bgcolor:Colors.white,width:"100%",height:"auto",paddingY:"10px"}}>
-          <Typography sx={{fontWeight:"bold",textTransform:"uppercase",paddingLeft:"6px"}}>
-          Основные показатели деятельности Национального банка Внешнеэкономической деятельности Республики Узбекистан по состоянию на 17.09.2024 года											
+        <Box sx={{borderRadius:"8px",bgcolor:Colors.white,width:"100%",height:"auto",paddingY:"10px",   boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",}}>
+          <Typography sx={{fontWeight:"bold",textTransform:"uppercase",paddingLeft:"6px",fontWeight:"bold"}}>
+          Основные показатели деятельности Национального банка Внешнеэкономической деятельности Республики Узбекистан по состоянию на <span style={{color:Colors.nbu,fontWeight:"bold"}}>{selectNewData.format("DD.MM.YYYY")}</span>  года											
           </Typography>
 
         </Box>
       </Box>
-        {/* Header items div */}
+        {/* <===== FILTER SECTION ======> */}
         <Grid container sx={{ width: "100%", height: "auto" }}>
               <Grid item xs={12} sm={12} md={5} lg={5} sx={{ padding: "5px" }}>
                 <Box
@@ -469,6 +529,9 @@ const IndicatorKey = () => {
                     <DatePicker
                       value={selectNewData}
                       onChange={handleDateChange}
+                      maxDate={dayjs()}
+                      format="DD.MM.YYYY"
+                      calendarStartDay={1}
                       shouldDisableDate={shouldDisableDate}
                           sx={{
                             ".MuiOutlinedInput-root": {
@@ -493,9 +556,8 @@ const IndicatorKey = () => {
                   </LocalizationProvider>
                 </Box>
               </Grid>
-            </Grid>
+        </Grid> 
 
-   
       <Box  sx={{ marginY: "10px",position:"relative",width:"100%" }}>
           {/* GRID HEADER SECTION */}
 
@@ -547,7 +609,7 @@ const IndicatorKey = () => {
                 fontWeight: "bold",
               }}
             >
-               <Typography
+              <Typography
                 component="span"
                 sx={{
                   fontStyle: "uppercase",
@@ -910,7 +972,6 @@ const IndicatorKey = () => {
               </Box>
             </Grid>
           </Grid>
-
 
           {/* 1 1-reow */}
           <Grid

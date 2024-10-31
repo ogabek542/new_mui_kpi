@@ -32,7 +32,7 @@ function App() {
         </Route>
         <Route path="netprofit" element={<NetProfitSceen />} />
         {/* <Route path="testscreen" element={<TestScreen />} /> */}
-        <Route path="/dynamicincome" element={<DynamicIncomeScreen />} />
+        <Route path="dynamicincome" element={<DynamicIncomeScreen />} />
       </Routes>
     </BrowserRouter>
   );
