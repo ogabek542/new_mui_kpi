@@ -11,7 +11,8 @@ import BalanceTable from './pages/BalanceTable/BalanceTable';
 import IndicatorKey from './pages/IndicatorKey/IndicatorKey';
 import KpiDailiyWorkTable from './pages/KpiDailiyWorkTable/KpiDailiyWorkTable';
 import MuiKpi from './pages/MUIkpiScreen/MuiKpi';
-import DynamicIncomeScreen from "./pages/DynamicIncomeScreen/DynamicIncomeScreen"
+import DynamicIncomeScreen from "./pages/DynamicIncomeScreen/DynamicIncomeScreen";
+import AnalizeYearDashboard from './pages/AnalizeYearDashboard/AnalizeYearDashboard';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="netprofit" element={<NetProfitSceen />} />
         {/* <Route path="testscreen" element={<TestScreen />} /> */}
         <Route path="dynamicincome" element={<DynamicIncomeScreen />} />
+        <Route path="analizeyeardashboard" element={<AnalizeYearDashboard />} />
       </Routes>
     </BrowserRouter>
   );

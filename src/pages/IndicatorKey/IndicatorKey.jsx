@@ -294,10 +294,7 @@ const IndicatorKey = () => {
     setSelectNewData(newValue); // Update the selected date
     console.log(newValue);
   };
-
-
-  // Use useEffect to call handleDateChange whenever selectNewData changes
-
+  
 
   // useEffect(() => {
   //   const fetchGraphicData = async () => {
@@ -391,7 +388,6 @@ const IndicatorKey = () => {
 
   };
 
-  
 
   return (
     <Container
@@ -423,7 +419,7 @@ const IndicatorKey = () => {
         }}
       >
         <Box sx={{borderRadius:"8px",bgcolor:Colors.white,width:"100%",height:"auto",paddingY:"10px",   boxShadow: "1px 2px 10px 2px rgba(34, 60, 80, 0.2)",}}>
-          <Typography sx={{fontWeight:"bold",textTransform:"uppercase",paddingLeft:"6px",fontWeight:"bold"}}>
+          <Typography sx={{fontWeight:"bold",textTransform:"uppercase",paddingLeft:"6px",}}>
           Основные показатели деятельности Национального банка Внешнеэкономической деятельности Республики Узбекистан по состоянию на <span style={{color:Colors.nbu,fontWeight:"bold"}}>{selectNewData.format("DD.MM.YYYY")}</span>  года											
           </Typography>
 

@@ -98,14 +98,16 @@ const LightHeader = ({changeLang}) => {
         gap:"20px"
       }}
     >
-      <Button  variant="contained"sx={{color:Colors.white,bgcolor:Colors.nbu,position:"absolute",bottom:"10px",right:"10px",fontWeight:"bold"}}
+      <Button  variant="contained"sx={{color:Colors.white,bgcolor:Colors.nbu,position:"absolute",bottom:"10px",right:"10px",fontWeight:"bold", "&:hover": {
+              bgcolor: Colors.nbu, // Set hover background color to be the same as default
+              }}}
       
         onClick={closeUniverse}
 
       >{t('close')}</Button>
     </Box >
-  </Box>
+  </Box> 
   )
 }
 
-export default LightHeader
+export default LightHeader;
