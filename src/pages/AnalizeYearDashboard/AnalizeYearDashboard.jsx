@@ -226,13 +226,183 @@ const monthsList = [
   { name: "December", id: 12 },
 ];
 
+// 
+const numbersList = ["561", "562", "563", "564", "565", "566", "567"];
+
+// Mock table data
+const tableData = [
+  {
+    id: "1",
+    name: "Main Row 1",
+    months: {
+      January: { plan: 100, fact: 90 },
+      February: { plan: 150, fact: 140 },
+      March: { plan: 130, fact: 125 },
+      April: { plan: 120, fact: 115 },
+      May: { plan: 140, fact: 135 },
+      June: { plan: 160, fact: 155 },
+      July: { plan: 170, fact: 165 },
+      August: { plan: 180, fact: 175 },
+      September: { plan: 150, fact: 145 },
+      October: { plan: 130, fact: 125 },
+      November: { plan: 140, fact: 138 },
+      December: { plan: 160, fact: 155 },
+    },
+    sum: 1730,
+    subRows: [
+      {
+        id: "1.1",
+        name: "Sub Row 1.1",
+        months: {
+          January: { plan: 50, fact: 48 },
+          February: { plan: 60, fact: 58 },
+          March: { plan: 70, fact: 68 },
+          April: { plan: 65, fact: 63 },
+          May: { plan: 55, fact: 52 },
+          June: { plan: 75, fact: 72 },
+          July: { plan: 80, fact: 78 },
+          August: { plan: 90, fact: 85 },
+          September: { plan: 70, fact: 68 },
+          October: { plan: 65, fact: 62 },
+          November: { plan: 60, fact: 58 },
+          December: { plan: 80, fact: 78 },
+        },
+        sum: 820,
+        subRows: [
+          {
+            id:" 1.1.1",
+            name: "Sub Sub Row 1.1.1",
+            months: {
+              January: { plan: 20, fact: 19 },
+              February: { plan: 25, fact: 24 },
+              March: { plan: 30, fact: 29 },
+              April: { plan: 28, fact: 27 },
+              May: { plan: 22, fact: 21 },
+              June: { plan: 35, fact: 34 },
+              July: { plan: 40, fact: 39 },
+              August: { plan: 45, fact: 44 },
+              September: { plan: 30, fact: 29 },
+              October: { plan: 28, fact: 27 },
+              November: { plan: 25, fact: 24 },
+              December: { plan: 35, fact: 34 },
+            },
+            sum: 363,
+            subRows: [
+              {
+                id:" 1.1.1.1",
+                name: "Sub Sub Sub Row 1.1.1",
+                months: {
+                  January: { plan: 20, fact: 19 },
+                  February: { plan: 25, fact: 24 },
+                  March: { plan: 30, fact: 29 },
+                  April: { plan: 28, fact: 27 },
+                  May: { plan: 22, fact: 21 },
+                  June: { plan: 35, fact: 34 },
+                  July: { plan: 40, fact: 39 },
+                  August: { plan: 45, fact: 44 },
+                  September: { plan: 30, fact: 29 },
+                  October: { plan: 28, fact: 27 },
+                  November: { plan: 25, fact: 24 },
+                  December: { plan: 35, fact: 34 },
+                },
+                sum: 363,
+                subRows: [
+                  
+                ],
+              },
+
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  // Add more rows as needed
+];
 
 const AnalizeYearDashboard = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const [openRows, setOpenRows] = useState({});
   const [selectedFirstYear, setSelectedFirstYear] = useState(2023); // Default first year
   const [selectedSecondtYear, setSelectedSecondYear] = useState(null); // Default first year
-  const [selectedMonths, setSelectedMonths] = useState([]); 
+  const [selectedMonths, setSelectedMonths] = useState([]);  // select mont name 
+  const [selectedNumbers, setSelectedNumbers] = useState([]); // select account book number 
+  const [firsttableData, setFirstTableData] = useState(tableData);
+
+  const monthArray = monthsList.map((month) => month.name);
+
+
+  // Modified DataRow component using Box instead of TableRow and TableCell
+  function DataRow({ row, depth = 0 }) {
+    const [open, setOpen] = useState(false);
+    const hasSubRows = row.subRows && row.subRows.length > 0;
+
+    return (
+      <React.Fragment>
+        {/* Main Row */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: depth % 2 === 0 ? "#f9f9f9" : "#ffffff",
+            paddingLeft: `${depth * 20}px`, // Indent sub-rows
+            borderBottom: "1px solid #e0e0e0",
+          }}
+        >
+          {/* Arrow Icon */}
+          <Box sx={{ width: "40px" }}>
+            {hasSubRows && (
+              <IconButton size="small" onClick={() => setOpen(!open)}>
+                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            )}
+          </Box>
+
+          {/* Name Cell */}
+          <Box sx={{ width: "300px", flexShrink: 0 }}>
+            <Typography variant="body1">{row.name}</Typography>
+          </Box>
+
+          {/* Months Data Cells */}
+          {monthArray.map((month) => (
+            <React.Fragment key={month}>
+              <Box sx={{ width: "80px", textAlign: "center" }}>
+                {row.months[month]?.plan || 0}
+              </Box>
+              <Box sx={{ width: "80px", textAlign: "center" }}>
+                {row.months[month]?.fact || 0}
+              </Box>
+            </React.Fragment>
+          ))}
+
+          {/* Sum Cells */}
+          <Box sx={{ width: "80px", textAlign: "center" }}>
+            {row.sum}
+          </Box>
+        </Box>
+
+        {/* Collapsible Sub-Rows */}
+        {hasSubRows && open && (
+          <Box>
+            {row.subRows.map((subRow) => (
+              <DataRow key={subRow.id} row={subRow} depth={depth } />
+            ))}
+          </Box>
+        )}
+      </React.Fragment>
+    );
+  }
+
+  DataRow.propTypes = {
+    row: PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+      name: PropTypes.string.isRequired,
+      months: PropTypes.object.isRequired,
+      sum: PropTypes.number.isRequired,
+      subRows: PropTypes.array,
+    }).isRequired,
+    depth: PropTypes.number,
+  };
 
   // select first year code // 
   const handleFirstYearChange = (event) => {
@@ -240,9 +410,9 @@ const AnalizeYearDashboard = () => {
   };
 
   // select second year code //
-  const handleSecondYearChange = (event) => {
-    setSelectedSecondYear(event.target.value)
-  }
+  // const handleSecondYearChange = (event) => {
+  //   setSelectedSecondYear(event.target.value)
+  // }
 
   // select month code //
   const handleMonthToggle = (month) => {
@@ -253,6 +423,15 @@ const AnalizeYearDashboard = () => {
     );
   };
 
+  // select account number //
+  const handleNumberToggle = (number) => {
+    setSelectedNumbers((prev) =>
+      prev.includes(number)
+        ? prev.filter((item) => item !== number)
+        : [...prev, number]
+    );
+  };
+
   const toggleRowOpen = (id) => {
     setOpenRows((prev) => ({
       ...prev,
@@ -260,59 +439,76 @@ const AnalizeYearDashboard = () => {
     }));
   };
 
-  function Row({ filial }) {
-    const isOpen = openRows[filial.id] || false;
+  function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
     const subRegions = setSelectedSecondMap[filial.id] || [];
-
+  
     const handleCheckboxChange = (title) => {
       setCheckedItems((prev) =>
         prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]
       );
     };
-
+  
     return (
       <>
         <TableRow>
-          <TableCell sx={{ padding: 0 }}>
+          {/* Checkbox cell */}
+          <TableCell sx={{ padding: '2px' }}>
             <Checkbox
-              onChange={() => handleCheckboxChange(filial.title)}
+              onChange={(e) => {
+                e.stopPropagation(); // Prevent the click event from triggering the handleToggle
+                handleCheckboxChange(filial.title);
+              }}
               checked={checkedItems.includes(filial.title)}
+              size="small"
             />
           </TableCell>
-          <TableCell sx={{ padding: 0 }}>
-            <IconButton size="small" onClick={() => toggleRowOpen(filial.id)}>
-              {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell sx={{ padding: 0 }}>{filial.title}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
-            <Collapse in={isOpen} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 0, padding: 0 }}>
-                <Table size="small" aria-label="subregions" sx={{ margin: 0 }}>
-                  <TableBody>
-                    {subRegions.map((subRegion, index) => (
-                      <TableRow key={index}>
-                        <TableCell sx={{ padding: 0 }}>
-                          <Checkbox
-                            onChange={() => handleCheckboxChange(subRegion.title)}
-                            checked={checkedItems.includes(subRegion.title)}
-                          />
-                        </TableCell>
-                        <TableCell sx={{ padding: 0 }}>{subRegion.title}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
+          {/* Clickable name cell to toggle open/close */}
+          <TableCell
+            sx={{ padding: '2px', cursor: 'pointer', fontWeight: 'bold', color: Colors.black }}
+            onClick={() => onToggle(filial.id)} // Pass filial.id to handleToggle
+          >
+            {filial.title}
           </TableCell>
         </TableRow>
+        {/* Sub-region rows stay open as long as isOpen is true */}
+        {isOpen && (
+          <TableRow>
+            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
+              <Collapse in={isOpen} timeout="auto" unmountOnExit>
+                <Box sx={{ margin: 0, padding: 0 }}>
+                  <Table size="small" aria-label="subregions" sx={{ margin: 0 }}>
+                    <TableBody>
+                      {subRegions.map((subRegion, index) => (
+                        <TableRow key={index}>
+                          <TableCell sx={{ padding: '2px', pl: 2 }}>
+                            <Checkbox
+                              onChange={(e) => {
+                                e.stopPropagation(); // Prevent the click event from triggering handleToggle
+                                handleCheckboxChange(subRegion.title);
+                              }}
+                              checked={checkedItems.includes(subRegion.title)}
+                              size="small"
+                            />
+                          </TableCell>
+                        
+                          <TableCell
+                            sx={{ padding: '2px', pl: 2, cursor: 'pointer' }}
+                            onClick={() => handleCheckboxChange(subRegion.title)}
+                          >
+                            {subRegion.title}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Box>
+              </Collapse>
+            </TableCell>
+          </TableRow>
+        )}
       </>
     );
   }
-
   const sendCheckedItemsToBackend = () => {
     console.log("Checked items to send:", checkedItems);
     // Send the `checkedItems` to the backend here using fetch or axios
@@ -323,6 +519,10 @@ const AnalizeYearDashboard = () => {
       title: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired,
     }).isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onToggle: PropTypes.func.isRequired,
+    checkedItems: PropTypes.array.isRequired,
+    setCheckedItems: PropTypes.func.isRequired,
   };
 
   return (
@@ -351,8 +551,8 @@ const AnalizeYearDashboard = () => {
         {/* <=== LEFT SIDE FILTER SECTION ====> */}
         <Grid
           item
-          xs={3.95}
-          sm={3.95}
+          xs={3.1}
+          sm={3.1}
           sx={{
             height: "1000px",
             bgcolor: Colors.white,
@@ -384,14 +584,14 @@ const AnalizeYearDashboard = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              gap: "3px",
+              gap: "5px",
               height: "95%",
             }}
           >
-            {/* <==== LEFT SIDE FILTER ====> */}
+            {/* <==== LEFT SIDE FILIALS FILTER ====> */}
             <Box
               sx={{
-                width: "50%",
+                width: "65%",
                 display: "block",
                 height: "100%",
                 color: Colors.white,
@@ -406,7 +606,14 @@ const AnalizeYearDashboard = () => {
                 </TableHead>
                 <TableBody>
                   {top128Filials.map((filial) => (
-                    <Row key={filial.id} filial={filial} />
+                    <Row
+                    key={filial.id}
+                    filial={filial}
+                    isOpen={openRows[filial.id] || false}
+                    onToggle={toggleRowOpen}
+                    checkedItems={checkedItems}
+                    setCheckedItems={setCheckedItems}
+                  />
                   ))}
                 </TableBody>
               </Table>
@@ -416,55 +623,102 @@ const AnalizeYearDashboard = () => {
             {/* <==== RIGHT SIDE YEAR FILTER ====> */}
             <Box
               sx={{
-                width: "50%",
+                width: "35%",
                 display: "block",
                 height: "100%",
                 color: Colors.white,
               }}
             >
             {/* <==== FIRST YEAR SELECTOR ====> */}
-              <FormControl fullWidth sx={{ marginBottom: 1,marginTop:1 }}>
-                <InputLabel>Year</InputLabel>
-                <Select value={selectedFirstYear} onChange={handleFirstYearChange} label="Year">
-                  <MenuItem value={2018}>2018</MenuItem>
-                  <MenuItem value={2019}>2019</MenuItem>
-                  <MenuItem value={2020}>2020</MenuItem>
-                  <MenuItem value={2021}>2021</MenuItem>
-                  <MenuItem value={2022}>2022</MenuItem>
-                  <MenuItem value={2023}>2023</MenuItem>
-                  <MenuItem value={2024}>2024</MenuItem>
-                  <MenuItem value={2025}>2025</MenuItem>
-                </Select>
-              </FormControl>
-               {/* <==== SECOND YEAR SELECTOR ====> */}
-              <FormControl fullWidth sx={{ marginBottom: 2 }}>
-                <InputLabel>Year</InputLabel>
-                <Select value={selectedSecondtYear} onChange={handleSecondYearChange} label="Year">
-                  <MenuItem value={2018}>2018</MenuItem>
-                  <MenuItem value={2019}>2019</MenuItem>
-                  <MenuItem value={2020}>2020</MenuItem>
-                  <MenuItem value={2021}>2021</MenuItem>
-                  <MenuItem value={2022}>2022</MenuItem>
-                  <MenuItem value={2023}>2023</MenuItem>
-                  <MenuItem value={2024}>2024</MenuItem>
-                  <MenuItem value={2025}>2025</MenuItem>
-                </Select>
-              </FormControl>
+            <FormControl fullWidth sx={{ marginBottom: 0.5, marginTop: 0.5, minWidth: "100px" }}>
+            <InputLabel sx={{ fontSize: "14px", top: '4px' }}>Year</InputLabel>
+            <Select
+              value={selectedFirstYear}
+              onChange={handleFirstYearChange}
+              label="Year"
+              size="small"
+              sx={{ padding: "2px 0", minHeight: "32px", fontSize: "16px", lineHeight: "1.2",fontWeight:"bold" }}
+            >
+              <MenuItem value={2018} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2018</MenuItem>
+              <MenuItem value={2019} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2019</MenuItem>
+              <MenuItem value={2020} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2020</MenuItem>
+              <MenuItem value={2021} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2021</MenuItem>
+              <MenuItem value={2022} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2022</MenuItem>
+              <MenuItem value={2023} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2023</MenuItem>
+              <MenuItem value={2024} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2024</MenuItem>
+              <MenuItem value={2025} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2025</MenuItem>
+            </Select>
+            </FormControl>
+                {/* <==== SECOND YEAR SELECTOR ====> */}
+            {/* <FormControl fullWidth sx={{ marginBottom: 0.5, minWidth: "100px",marginTop:"5px" }}>
+              <InputLabel sx={{ fontSize: "14px",  }}>Year</InputLabel>
+              <Select
+                value={selectedSecondtYear}
+                onChange={handleSecondYearChange}
+                label="Year"
+                size="small"
+                sx={{ padding: "2px 0", minHeight: "32px", fontSize: "16px", lineHeight: "1.2",fontWeight:"bold" }}
+              >
+                <MenuItem value={2018} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold" }}>2018</MenuItem>
+                <MenuItem value={2019} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2019</MenuItem>
+                <MenuItem value={2020} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2020</MenuItem>
+                <MenuItem value={2021} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2021</MenuItem>
+                <MenuItem value={2022} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2022</MenuItem>
+                <MenuItem value={2023} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2023</MenuItem>
+                <MenuItem value={2024} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2024</MenuItem>
+                <MenuItem value={2025} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2025</MenuItem>
+              </Select>
+            </FormControl> */}
               {/* <===== MONTH PICKER =====> */}
-              <List sx={{ padding: 0 }}>
+              <List sx={{ padding: 0 ,borderTop:"1px solid #AAAAAE ",}}>
                   {monthsList.map((month) => (
-                    <ListItem 
-                      key={month.id} 
-                      button 
-                      onClick={() => handleMonthToggle(month.name)} 
-                      sx={{ padding: '2px 0', margin: 0, minHeight: '30px' }}
+                    <ListItem
+                      key={month.id}
+                      onClick={() => handleMonthToggle(month.name)}
+                      sx={{
+                        padding: '5px',
+                        margin: 0,
+                        minHeight: '30px',
+                        borderRadius:"5px",
+                        marginBottom:"2px",
+                        backgroundColor: selectedMonths.includes(month.name) ?  '#083473'  :  '#FFFFFF',
+                        color: selectedMonths.includes(month.name) ? 'white'  : 'black',
+                        '&:hover': {
+                          backgroundColor:Colors.blue_icon, // Light blue hover effect
+                          color:Colors.white ,
+                          fontWeight:"bold",
+                        },
+                      }}
                     >
-                      <ListItemIcon sx={{ minWidth: '30px' }}>
-                        <Checkbox checked={selectedMonths.includes(month.name)} />
-                      </ListItemIcon>
-                      <ListItemText sx={{ color: "black", margin: 0 }} primary={month.name} />
+                      <ListItemText sx={{ margin: 0,}} primary={month.name} />
                     </ListItem>
                   ))}
+                </List>
+              {/* <==== ACCOUNT NUMBER ====> */}
+              <List sx={{ padding: 0,marginTop:2,borderTop:"1px solid #AAAAAE ", }}>
+                {numbersList.map((number) => (
+                  <ListItem
+                    key={number}
+                    onClick={() => handleNumberToggle(number)}
+                    sx={{
+                      padding: "5px",
+                      minHeight: "30px",
+                      borderRadius:"5px",
+                      marginBottom:"1px",
+                      backgroundColor: selectedNumbers.includes(number)
+                        ? "#083473"
+                        : "transparent",
+                      color: selectedNumbers.includes(number) ? "white" : "black",
+                      "&:hover": {
+                        backgroundColor:Colors.blue_icon, // Light blue hover effect
+                          color:Colors.white ,
+                          fontWeight:"bold",
+                      },
+                    }}
+                  >
+                    <ListItemText sx={{ margin: 0 }} primary={number} />
+                  </ListItem>
+                ))}
               </List>
 
             </Box>
@@ -473,8 +727,8 @@ const AnalizeYearDashboard = () => {
         {/* <=== RIGHT SIDE TABLE SECTION ====> */}
         <Grid
           item
-          xs={8}
-          sm={8}
+          xs={8.85}
+          sm={8.85}
           sx={{
             height: "1000px",
             bgcolor: Colors.white,
@@ -482,7 +736,81 @@ const AnalizeYearDashboard = () => {
             padding: "5px",
           }}
         >
-     
+            <Box sx={{ overflowX: 'auto', width: '100%' }}>
+              <Box sx={{ minWidth: "2000px" }}>
+                {/* Table Header */}
+            {/* Table Wrapper with minWidth to enable horizontal scrolling */}
+            <Box sx={{ minWidth: "2340px" }}>
+              {/* First Header Row */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  backgroundColor: Colors.lightGray,
+                  padding: "10px 0",
+                  borderBottom: "1px solid #e0e0e0",
+                }}
+              >
+                {/* Empty cell for arrow icons */}
+                <Box sx={{ width: "40px" }} />
+                {/* Name column */}
+                <Box sx={{ width: "300px", flexShrink: 0 }}>
+                  <Typography variant="h6">Сумма по полю Сумма</Typography>
+                </Box>
+                {/* Month columns with month name spanning two columns */}
+                {monthArray.map((month) => (
+                  <Box
+                    key={month}
+                    sx={{
+                      width: "160px", // Span over Plan and Fact columns
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="subtitle2">{month}</Typography>
+                  </Box>
+                ))}
+                {/* Sum column */}
+                <Box sx={{ width: "80px", textAlign: "center" }}>
+                  <Typography variant="subtitle2">Total</Typography>
+                </Box>
+              </Box>
+              {/* Second Header Row */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  backgroundColor: Colors.lightGray,
+                  padding: "10px 0",
+                  borderBottom: "2px solid #e0e0e0",
+                }}
+              >
+                {/* Empty cell for arrow icons */}
+                <Box sx={{ width: "40px" }} />
+                {/* Empty name column */}
+                <Box sx={{ width: "300px", flexShrink: 0 }} />
+                {/* Plan and Fact labels */}
+                {monthArray.map((month) => (
+                  <React.Fragment key={month}>
+                    <Box sx={{ width: "80px", textAlign: "center" }}>
+                      <Typography variant="subtitle2">Plan</Typography>
+                    </Box>
+                    <Box sx={{ width: "80px", textAlign: "center" }}>
+                      <Typography variant="subtitle2">Fact</Typography>
+                    </Box>
+                  </React.Fragment>
+                ))}
+                {/* Empty sum column */}
+                <Box sx={{ width: "80px", textAlign: "center" }} />
+              </Box>
+              {/* Table Body */}
+              <Box>
+                {firsttableData.map((row) => (
+                  <DataRow key={row.id} row={row} />
+                ))}
+              </Box>
+            </Box>
+              </Box>
+            </Box>
         </Grid>
       </Grid>
     </Container>
