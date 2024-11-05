@@ -226,7 +226,7 @@ const monthsList = [
   { name: "December", id: 12 },
 ];
 
-// 
+//
 const numbersList = ["561", "562", "563", "564", "565", "566", "567"];
 
 // Mock table data
@@ -270,7 +270,7 @@ const tableData = [
         sum: 820,
         subRows: [
           {
-            id:" 1.1.1",
+            id: " 1.1.1",
             name: "Sub Sub Row 1.1.1",
             months: {
               January: { plan: 20, fact: 19 },
@@ -289,7 +289,7 @@ const tableData = [
             sum: 363,
             subRows: [
               {
-                id:" 1.1.1.1",
+                id: " 1.1.1.1",
                 name: "Sub Sub Sub Row 1.1.1",
                 months: {
                   January: { plan: 20, fact: 19 },
@@ -306,11 +306,8 @@ const tableData = [
                   December: { plan: 35, fact: 34 },
                 },
                 sum: 363,
-                subRows: [
-                  
-                ],
+                subRows: [],
               },
-
             ],
           },
         ],
@@ -319,18 +316,41 @@ const tableData = [
   },
   // Add more rows as needed
 ];
+// Define the list of years
+const yearsList = [
+  { id: 1, label: 2018 },
+  { id: 2, label: 2019 },
+  { id: 3, label: 2020 },
+  { id: 4, label: 2021 },
+  { id: 5, label: 2022 },
+  { id: 6, label: 2023 },
+  { id: 7, label: 2024 },
+  { id: 8, label: 2025 },
+];
+
 
 const AnalizeYearDashboard = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const [openRows, setOpenRows] = useState({});
   const [selectedFirstYear, setSelectedFirstYear] = useState(2023); // Default first year
   const [selectedSecondtYear, setSelectedSecondYear] = useState(null); // Default first year
-  const [selectedMonths, setSelectedMonths] = useState([]);  // select mont name 
-  const [selectedNumbers, setSelectedNumbers] = useState([]); // select account book number 
+  const [selectedMonths, setSelectedMonths] = useState([]); // select mont name
+  const [selectedNumbers, setSelectedNumbers] = useState([]); // select account book number
   const [firsttableData, setFirstTableData] = useState(tableData);
+  const [selectedYears, setSelectedYears] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false); // New state variable
+  const [yearBollean, setYearBollean] = useState(false);
 
   const monthArray = monthsList.map((month) => month.name);
 
+  const getDataForYear = (year) => {
+    // Simulate data fetching logic here
+    // For now, return the same mock data
+    return tableData.map((item) => ({
+      ...item,
+      name: `${item.name} (${year})`, // Append year to distinguish data
+    }));
+  };
 
   // Modified DataRow component using Box instead of TableRow and TableCell
   function DataRow({ row, depth = 0 }) {
@@ -345,7 +365,7 @@ const AnalizeYearDashboard = () => {
             display: "flex",
             alignItems: "center",
             backgroundColor: depth % 2 === 0 ? "#f9f9f9" : "#ffffff",
-            paddingLeft: `${depth * 20}px`, // Indent sub-rows
+            paddingLeft: `${depth * 3}px`, // Indent sub-rows
             borderBottom: "1px solid #e0e0e0",
           }}
         >
@@ -359,7 +379,7 @@ const AnalizeYearDashboard = () => {
           </Box>
 
           {/* Name Cell */}
-          <Box sx={{ width: "300px", flexShrink: 0 }}>
+          <Box sx={{ width: "350px", flexShrink: 0 }}>
             <Typography variant="body1">{row.name}</Typography>
           </Box>
 
@@ -376,16 +396,14 @@ const AnalizeYearDashboard = () => {
           ))}
 
           {/* Sum Cells */}
-          <Box sx={{ width: "80px", textAlign: "center" }}>
-            {row.sum}
-          </Box>
+          <Box sx={{ width: "80px", textAlign: "center" }}>{row.sum}</Box>
         </Box>
 
         {/* Collapsible Sub-Rows */}
         {hasSubRows && open && (
           <Box>
             {row.subRows.map((subRow) => (
-              <DataRow key={subRow.id} row={subRow} depth={depth } />
+              <DataRow key={subRow.id} row={subRow} depth={depth + 1} />
             ))}
           </Box>
         )}
@@ -404,23 +422,64 @@ const AnalizeYearDashboard = () => {
     depth: PropTypes.number,
   };
 
-  // select first year code // 
+  // select first year code //
   const handleFirstYearChange = (event) => {
     setSelectedFirstYear(event.target.value);
   };
 
-  // select second year code //
-  // const handleSecondYearChange = (event) => {
-  //   setSelectedSecondYear(event.target.value)
-  // }
-
   // select month code //
   const handleMonthToggle = (month) => {
     setSelectedMonths((prev) =>
-      prev.includes(month)
-        ? prev.filter((m) => m !== month)
-        : [...prev, month]
+      prev.includes(month) ? prev.filter((m) => m !== month) : [...prev, month]
     );
+  };
+
+  // Render function for the tables
+  const renderTable = () => {
+    if (dataFetched) {
+      if (selectedYears.length === 1 || selectedYears.length === 2) {
+        return (
+          <Box sx={{ minWidth: "2340px" }}>
+            {/* Header Rows */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: Colors.lightGray,
+                padding: "10px 0",
+                borderBottom: "1px solid #e0e0e0",
+              }}
+            >
+              <Box sx={{ width: "40px" }} />
+              <Box sx={{ width: "350px", flexShrink: 0 }}>
+                <Typography variant="h6">Сумма по полю Сумма</Typography>
+              </Box>
+              {monthArray.map((month) => (
+                <Box
+                  key={month}
+                  sx={{
+                    width: "160px",
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography variant="subtitle2">{month}</Typography>
+                </Box>
+              ))}
+              <Box sx={{ width: "80px", textAlign: "center" }}>
+                <Typography variant="subtitle2">Total</Typography>
+              </Box>
+            </Box>
+
+            <Box>
+              {firstTableData.map((row) => (
+                <DataRow key={row.id} row={row} />
+              ))}
+            </Box>
+          </Box>
+        );
+      }
+    }
+    return null;
   };
 
   // select account number //
@@ -432,6 +491,131 @@ const AnalizeYearDashboard = () => {
     );
   };
 
+ // select years section
+const YearPicker = ({ yearsList }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedYears, setSelectedYears] = useState([]);
+
+  const handleToggleYearSelection = (yearId) => {
+    setSelectedYears((prev) => {
+      if (prev.includes(yearId)) {
+        return prev.filter((id) => id !== yearId); // Deselect if already selected
+      }
+      if (prev.length < 2) {
+        return [...prev, yearId]; // Allow only up to two years
+      }
+      return prev; // Do nothing if already two years selected
+    });
+  };
+
+  return (
+    <Box
+      sx={{
+        marginTop: 2,
+        borderRadius: "5px",
+        backgroundColor: Colors.white,
+      }}
+    >
+      {/* Clickable label to toggle list visibility */}
+      <Typography
+        sx={{
+          fontWeight: "600",
+          cursor: "pointer",
+          color: "black",
+          fontSize: "16px",
+          display: "flex",
+          alignItems: "center",
+        }}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {selectedYears.length > 0
+          ? selectedYears
+              .map((id) => yearsList.find((year) => year.id === id)?.label)
+              .join(" - ")
+          : "Select Year"}
+        {isOpen ? (
+          <KeyboardArrowUpIcon sx={{ marginLeft: "6px" }} />
+        ) : (
+          <KeyboardArrowDownIcon sx={{ marginLeft: "6px" }} />
+        )}
+      </Typography>
+
+      {/* List of years with checkboxes */}
+      {isOpen && (
+        <List sx={{ padding: 0 }}>
+          {yearsList.map((year) => (
+            <ListItem
+              key={year.id}
+              sx={{
+                padding: "5px",
+                marginBottom: "2px",
+                borderRadius: "5px",
+                backgroundColor: selectedYears.includes(year.id)
+                  ? "#083473"
+                  : "transparent",
+                color: selectedYears.includes(year.id) ? "white" : "black",
+                "&:hover": {
+                  backgroundColor: Colors.blue_light_ultra,
+                  color: "black",
+                  fontWeight: "bold",
+                },
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+              }}
+              onClick={() => handleToggleYearSelection(year.id)}
+            >
+              {/* Checkbox next to each year */}
+              <Checkbox
+                checked={selectedYears.includes(year.id)}
+                tabIndex={-1}
+                disableRipple
+                size="small"
+                sx={{ marginRight: "8px" }}
+              />
+              <ListItemText
+                primary={year.label}
+                sx={{
+                  fontSize: "14px",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              />
+            </ListItem>
+          ))}
+        </List>
+      )}
+    </Box>
+  );
+};
+
+  const handleToggleYearSelection = (year) => {
+    setSelectedYears((prev) => {
+      if (prev.includes(year)) {
+        return prev.filter((y) => y !== year); // Deselect if already selected
+      }
+      if (prev.length < 2) {
+        return [...prev, year]; // Allow only up to two years
+      }
+      return prev; // Do nothing if already two years selected
+    });
+  };
+  // check yeras //
+  const findYears = () => {
+    if (selectedYears.length === 2) {
+      setYearBollean(true);
+    } else {
+      setYearBollean(false);
+    }
+  };
+
+  console.log(yearBollean, "check year");
+
+  useEffect(() => {
+    handleToggleYearSelection();
+    findYears();
+  }, []);
+
   const toggleRowOpen = (id) => {
     setOpenRows((prev) => ({
       ...prev,
@@ -441,18 +625,20 @@ const AnalizeYearDashboard = () => {
 
   function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
     const subRegions = setSelectedSecondMap[filial.id] || [];
-  
+
     const handleCheckboxChange = (title) => {
       setCheckedItems((prev) =>
-        prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]
+        prev.includes(title)
+          ? prev.filter((item) => item !== title)
+          : [...prev, title]
       );
     };
-  
+
     return (
       <>
         <TableRow>
           {/* Checkbox cell */}
-          <TableCell sx={{ padding: '2px' }}>
+          <TableCell sx={{ padding: "2px" }}>
             <Checkbox
               onChange={(e) => {
                 e.stopPropagation(); // Prevent the click event from triggering the handleToggle
@@ -464,7 +650,12 @@ const AnalizeYearDashboard = () => {
           </TableCell>
           {/* Clickable name cell to toggle open/close */}
           <TableCell
-            sx={{ padding: '2px', cursor: 'pointer', fontWeight: 'bold', color: Colors.black }}
+            sx={{
+              padding: "2px",
+              cursor: "pointer",
+              fontWeight: "bold",
+              color: Colors.black,
+            }}
             onClick={() => onToggle(filial.id)} // Pass filial.id to handleToggle
           >
             {filial.title}
@@ -476,11 +667,15 @@ const AnalizeYearDashboard = () => {
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
               <Collapse in={isOpen} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 0, padding: 0 }}>
-                  <Table size="small" aria-label="subregions" sx={{ margin: 0 }}>
+                  <Table
+                    size="small"
+                    aria-label="subregions"
+                    sx={{ margin: 0 }}
+                  >
                     <TableBody>
                       {subRegions.map((subRegion, index) => (
                         <TableRow key={index}>
-                          <TableCell sx={{ padding: '2px', pl: 2 }}>
+                          <TableCell sx={{ padding: "2px", pl: 2 }}>
                             <Checkbox
                               onChange={(e) => {
                                 e.stopPropagation(); // Prevent the click event from triggering handleToggle
@@ -490,10 +685,12 @@ const AnalizeYearDashboard = () => {
                               size="small"
                             />
                           </TableCell>
-                        
+
                           <TableCell
-                            sx={{ padding: '2px', pl: 2, cursor: 'pointer' }}
-                            onClick={() => handleCheckboxChange(subRegion.title)}
+                            sx={{ padding: "2px", pl: 2, cursor: "pointer" }}
+                            onClick={() =>
+                              handleCheckboxChange(subRegion.title)
+                            }
                           >
                             {subRegion.title}
                           </TableCell>
@@ -509,9 +706,33 @@ const AnalizeYearDashboard = () => {
       </>
     );
   }
+  // Updated sendCheckedItemsToBackend function
   const sendCheckedItemsToBackend = () => {
     console.log("Checked items to send:", checkedItems);
-    // Send the `checkedItems` to the backend here using fetch or axios
+    console.log("Selected years:", selectedYears);
+
+    // Simulate data fetching based on selectedYears
+    // Replace this with your actual API call
+    setTimeout(() => {
+      // After fetching data, update the state
+      if (selectedYears.length >= 1) {
+        // Fetch data for the first selected year
+        const dataForFirstYear = getDataForYear(selectedYears[0]);
+        setFirstTableData(dataForFirstYear);
+      } else {
+        setFirstTableData([]);
+      }
+
+      if (selectedYears.length === 2) {
+        // Fetch data for the second selected year
+        const dataForSecondYear = getDataForYear(selectedYears[1]);
+        setSecondTableData(dataForSecondYear);
+      } else {
+        setSecondTableData([]);
+      }
+
+      setDataFetched(true);
+    }, 1000);
   };
 
   Row.propTypes = {
@@ -591,111 +812,89 @@ const AnalizeYearDashboard = () => {
             {/* <==== LEFT SIDE FILIALS FILTER ====> */}
             <Box
               sx={{
-                width: "65%",
+                width: "60%",
                 display: "block",
                 height: "100%",
                 color: Colors.white,
               }}
             >
-            <TableContainer component={Paper} sx={{ padding: 0 }}>
-              <Table aria-label="collapsible table" sx={{ margin: 0 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell sx={{ padding:0 }}>XUDUD</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {top128Filials.map((filial) => (
-                    <Row
-                    key={filial.id}
-                    filial={filial}
-                    isOpen={openRows[filial.id] || false}
-                    onToggle={toggleRowOpen}
-                    checkedItems={checkedItems}
-                    setCheckedItems={setCheckedItems}
-                  />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+              <TableContainer component={Paper} sx={{ padding: 0 }}>
+                <Table aria-label="collapsible table" sx={{ margin: 0 }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ padding: 0 }}>XUDUD</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {top128Filials.map((filial) => (
+                      <Row
+                        key={filial.id}
+                        filial={filial}
+                        isOpen={openRows[filial.id] || false}
+                        onToggle={toggleRowOpen}
+                        checkedItems={checkedItems}
+                        setCheckedItems={setCheckedItems}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Box>
 
-            {/* <==== RIGHT SIDE YEAR FILTER ====> */}
+            {/* <==== RIGHT SIDE YEAR,MONT,ACCOUNT FILTER ====> */}
             <Box
               sx={{
-                width: "35%",
+                width: "40%",
                 display: "block",
                 height: "100%",
                 color: Colors.white,
               }}
             >
-            {/* <==== FIRST YEAR SELECTOR ====> */}
-            <FormControl fullWidth sx={{ marginBottom: 0.5, marginTop: 0.5, minWidth: "100px" }}>
-            <InputLabel sx={{ fontSize: "14px", top: '4px' }}>Year</InputLabel>
-            <Select
-              value={selectedFirstYear}
-              onChange={handleFirstYearChange}
-              label="Year"
-              size="small"
-              sx={{ padding: "2px 0", minHeight: "32px", fontSize: "16px", lineHeight: "1.2",fontWeight:"bold" }}
-            >
-              <MenuItem value={2018} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2018</MenuItem>
-              <MenuItem value={2019} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2019</MenuItem>
-              <MenuItem value={2020} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2020</MenuItem>
-              <MenuItem value={2021} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2021</MenuItem>
-              <MenuItem value={2022} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2022</MenuItem>
-              <MenuItem value={2023} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2023</MenuItem>
-              <MenuItem value={2024} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2024</MenuItem>
-              <MenuItem value={2025} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2025</MenuItem>
-            </Select>
-            </FormControl>
-                {/* <==== SECOND YEAR SELECTOR ====> */}
-            {/* <FormControl fullWidth sx={{ marginBottom: 0.5, minWidth: "100px",marginTop:"5px" }}>
-              <InputLabel sx={{ fontSize: "14px",  }}>Year</InputLabel>
-              <Select
-                value={selectedSecondtYear}
-                onChange={handleSecondYearChange}
-                label="Year"
-                size="small"
-                sx={{ padding: "2px 0", minHeight: "32px", fontSize: "16px", lineHeight: "1.2",fontWeight:"bold" }}
-              >
-                <MenuItem value={2018} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold" }}>2018</MenuItem>
-                <MenuItem value={2019} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2019</MenuItem>
-                <MenuItem value={2020} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2020</MenuItem>
-                <MenuItem value={2021} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2021</MenuItem>
-                <MenuItem value={2022} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2022</MenuItem>
-                <MenuItem value={2023} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2023</MenuItem>
-                <MenuItem value={2024} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2024</MenuItem>
-                <MenuItem value={2025} sx={{ padding: "2px 8px", fontSize: "14px", minHeight: "24px",fontWeight:"bold"  }}>2025</MenuItem>
-              </Select>
-            </FormControl> */}
+              {/* <==== FIRST YEAR SELECTOR ====> */}
+              <Box sx={{ padding: "10px" }}>
+                <YearPicker
+                  yearsList={yearsList}
+                  selectedFirstYear={selectedFirstYear}
+                  setSelectedFirstYear={setSelectedFirstYear}
+                />
+              </Box>
               {/* <===== MONTH PICKER =====> */}
-              <List sx={{ padding: 0 ,borderTop:"1px solid #AAAAAE ",}}>
-                  {monthsList.map((month) => (
-                    <ListItem
-                      key={month.id}
-                      onClick={() => handleMonthToggle(month.name)}
-                      sx={{
-                        padding: '5px',
-                        margin: 0,
-                        minHeight: '30px',
-                        borderRadius:"5px",
-                        marginBottom:"2px",
-                        backgroundColor: selectedMonths.includes(month.name) ?  '#083473'  :  '#FFFFFF',
-                        color: selectedMonths.includes(month.name) ? 'white'  : 'black',
-                        '&:hover': {
-                          backgroundColor:Colors.blue_icon, // Light blue hover effect
-                          color:Colors.white ,
-                          fontWeight:"bold",
-                        },
-                      }}
-                    >
-                      <ListItemText sx={{ margin: 0,}} primary={month.name} />
-                    </ListItem>
-                  ))}
-                </List>
+              <List sx={{ padding: 0, borderTop: "1px solid #AAAAAE " }}>
+                {monthsList.map((month) => (
+                  <ListItem
+                    key={month.id}
+                    onClick={() => handleMonthToggle(month.name)}
+                    sx={{
+                      padding: "5px",
+                      margin: 0,
+                      minHeight: "30px",
+                      borderRadius: "5px",
+                      marginBottom: "2px",
+                      backgroundColor: selectedMonths.includes(month.name)
+                        ? "#083473"
+                        : "#FFFFFF",
+                      color: selectedMonths.includes(month.name)
+                        ? "white"
+                        : "black",
+                      "&:hover": {
+                        backgroundColor: Colors.blue_icon, // Light blue hover effect
+                        color: Colors.white,
+                        fontWeight: "bold",
+                      },
+                    }}
+                  >
+                    <ListItemText sx={{ margin: 0 }} primary={month.name} />
+                  </ListItem>
+                ))}
+              </List>
               {/* <==== ACCOUNT NUMBER ====> */}
-              <List sx={{ padding: 0,marginTop:2,borderTop:"1px solid #AAAAAE ", }}>
+              <List
+                sx={{
+                  padding: 0,
+                  marginTop: 2,
+                  borderTop: "1px solid #AAAAAE ",
+                }}
+              >
                 {numbersList.map((number) => (
                   <ListItem
                     key={number}
@@ -703,16 +902,18 @@ const AnalizeYearDashboard = () => {
                     sx={{
                       padding: "5px",
                       minHeight: "30px",
-                      borderRadius:"5px",
-                      marginBottom:"1px",
+                      borderRadius: "5px",
+                      marginBottom: "1px",
                       backgroundColor: selectedNumbers.includes(number)
                         ? "#083473"
                         : "transparent",
-                      color: selectedNumbers.includes(number) ? "white" : "black",
+                      color: selectedNumbers.includes(number)
+                        ? "white"
+                        : "black",
                       "&:hover": {
-                        backgroundColor:Colors.blue_icon, // Light blue hover effect
-                          color:Colors.white ,
-                          fontWeight:"bold",
+                        backgroundColor: Colors.blue_icon, // Light blue hover effect
+                        color: Colors.white,
+                        fontWeight: "bold",
                       },
                     }}
                   >
@@ -720,7 +921,6 @@ const AnalizeYearDashboard = () => {
                   </ListItem>
                 ))}
               </List>
-
             </Box>
           </Box>
         </Grid>
@@ -734,83 +934,201 @@ const AnalizeYearDashboard = () => {
             bgcolor: Colors.white,
             borderRadius: "5px",
             padding: "5px",
+            overflowX: "auto", // Enable horizontal scrolling
           }}
         >
-            <Box sx={{ overflowX: 'auto', width: '100%' }}>
-              <Box sx={{ minWidth: "2000px" }}>
-                {/* Table Header */}
-            {/* Table Wrapper with minWidth to enable horizontal scrolling */}
-            <Box sx={{ minWidth: "2340px" }}>
-              {/* First Header Row */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  backgroundColor: Colors.lightGray,
-                  padding: "10px 0",
-                  borderBottom: "1px solid #e0e0e0",
-                }}
-              >
-                {/* Empty cell for arrow icons */}
-                <Box sx={{ width: "40px" }} />
-                {/* Name column */}
-                <Box sx={{ width: "300px", flexShrink: 0 }}>
-                  <Typography variant="h6">Сумма по полю Сумма</Typography>
-                </Box>
-                {/* Month columns with month name spanning two columns */}
-                {monthArray.map((month) => (
+          {/* Wrapper Box with scrolling properties */}
+          <Box sx={{ minWidth: "2340px",whiteSpace: "nowrap"  }}>
+            {/* Show two tables if two years are selected */}
+            {selectedYears.length === 2 ? (
+              <>
+                {/* First Table */}
+                <Box sx={{ marginBottom: "20px" }}>
+                  {/* First Header Row */}
                   <Box
-                    key={month}
                     sx={{
-                      width: "160px", // Span over Plan and Fact columns
-                      textAlign: "center",
+                      display: "flex",
+                      alignItems: "center",
+                      backgroundColor: Colors.lightGray,
+                      padding: "10px 0",
+                      borderBottom: "1px solid #e0e0e0",
                     }}
                   >
-                    <Typography variant="subtitle2">{month}</Typography>
+                    <Box sx={{ width: "40px" }} />
+                    <Box sx={{ width: "350px", flexShrink: 0 }}>
+                      <Typography variant="h6">
+                        Сумма по полю Сумма (Год 1)
+                      </Typography>
+                    </Box>
+                    {monthArray.map((month) => (
+                      <Box
+                        key={month}
+                        sx={{
+                          width: "160px",
+                          textAlign: "center",
+                        }}
+                      >
+                        <Typography variant="subtitle2">{month}</Typography>
+                      </Box>
+                    ))}
+                    <Box sx={{ width: "80px", textAlign: "center" }}>
+                      <Typography variant="subtitle2">Total</Typography>
+                    </Box>
                   </Box>
-                ))}
-                {/* Sum column */}
-                <Box sx={{ width: "80px", textAlign: "center" }}>
-                  <Typography variant="subtitle2">Total</Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      backgroundColor: Colors.lightGray,
+                      padding: "10px 0",
+                      borderBottom: "2px solid #e0e0e0",
+                    }}
+                  >
+                    <Box sx={{ width: "40px" }} />
+                    <Box sx={{ width: "350px", flexShrink: 0 }} />
+                    {monthArray.map((month) => (
+                      <React.Fragment key={month}>
+                        <Box sx={{ width: "80px", textAlign: "center" }}>
+                          <Typography variant="subtitle2">Plan</Typography>
+                        </Box>
+                        <Box sx={{ width: "80px", textAlign: "center" }}>
+                          <Typography variant="subtitle2">Fact</Typography>
+                        </Box>
+                      </React.Fragment>
+                    ))}
+                    <Box sx={{ width: "80px", textAlign: "center" }} />
+                  </Box>
+                  <Box>
+                    {firsttableData.map((row) => (
+                      <DataRow key={row.id} row={row} />
+                    ))}
+                  </Box>
+                </Box>
+
+                {/* Second Table */}
+                <Box sx={{ minWidth: "2340px" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      backgroundColor: Colors.lightGray,
+                      padding: "10px 0",
+                      borderBottom: "1px solid #e0e0e0",
+                    }}
+                  >
+                    <Box sx={{ width: "40px" }} />
+                    <Box sx={{ width: "350px", flexShrink: 0 }}>
+                      <Typography variant="h6">
+                        Сумма по полю Сумма (Год 2)
+                      </Typography>
+                    </Box>
+                    {monthArray.map((month) => (
+                      <Box
+                        key={month}
+                        sx={{
+                          width: "160px",
+                          textAlign: "center",
+                        }}
+                      >
+                        <Typography variant="subtitle2">{month}</Typography>
+                      </Box>
+                    ))}
+                    <Box sx={{ width: "80px", textAlign: "center" }}>
+                      <Typography variant="subtitle2">Total</Typography>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      backgroundColor: Colors.lightGray,
+                      padding: "10px 0",
+                      borderBottom: "2px solid #e0e0e0",
+                    }}
+                  >
+                    <Box sx={{ width: "40px" }} />
+                    <Box sx={{ width: "350px", flexShrink: 0 }} />
+                    {monthArray.map((month) => (
+                      <React.Fragment key={month}>
+                        <Box sx={{ width: "80px", textAlign: "center" }}>
+                          <Typography variant="subtitle2">Plan</Typography>
+                        </Box>
+                        <Box sx={{ width: "80px", textAlign: "center" }}>
+                          <Typography variant="subtitle2">Fact</Typography>
+                        </Box>
+                      </React.Fragment>
+                    ))}
+                    <Box sx={{ width: "80px", textAlign: "center" }} />
+                  </Box>
+                  <Box>
+                    {secondTableData.map((row) => (
+                      <DataRow key={row.id} row={row} />
+                    ))}
+                  </Box>
+                </Box>
+              </>
+            ) : (
+              /* Show single table if one or no year is selected */
+              <Box sx={{ minWidth: "2340px" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: Colors.lightGray,
+                    padding: "10px 0",
+                    borderBottom: "1px solid #e0e0e0",
+                  }}
+                >
+                  <Box sx={{ width: "40px" }} />
+                  <Box sx={{ width: "350px", flexShrink: 0 }}>
+                    <Typography variant="h6">Сумма Сумма</Typography>
+                  </Box>
+                  {monthArray.map((month) => (
+                    <Box
+                      key={month}
+                      sx={{
+                        width: "160px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <Typography variant="subtitle2">{month}</Typography>
+                    </Box>
+                  ))}
+                  <Box sx={{ width: "80px", textAlign: "center" }}>
+                    <Typography variant="subtitle2">Total</Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: Colors.lightGray,
+                    padding: "10px 0",
+                    borderBottom: "2px solid #e0e0e0",
+                  }}
+                >
+                  <Box sx={{ width: "40px" }} />
+                  <Box sx={{ width: "350px", flexShrink: 0 }} />
+                  {monthArray.map((month) => (
+                    <React.Fragment key={month}>
+                      <Box sx={{ width: "80px", textAlign: "center" }}>
+                        <Typography variant="subtitle2">Plan</Typography>
+                      </Box>
+                      <Box sx={{ width: "80px", textAlign: "center" }}>
+                        <Typography variant="subtitle2">Fact</Typography>
+                      </Box>
+                    </React.Fragment>
+                  ))}
+                  <Box sx={{ width: "80px", textAlign: "center" }} />
+                </Box>
+                <Box>
+                  {firsttableData.map((row) => (
+                    <DataRow key={row.id} row={row} />
+                  ))}
                 </Box>
               </Box>
-              {/* Second Header Row */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  backgroundColor: Colors.lightGray,
-                  padding: "10px 0",
-                  borderBottom: "2px solid #e0e0e0",
-                }}
-              >
-                {/* Empty cell for arrow icons */}
-                <Box sx={{ width: "40px" }} />
-                {/* Empty name column */}
-                <Box sx={{ width: "300px", flexShrink: 0 }} />
-                {/* Plan and Fact labels */}
-                {monthArray.map((month) => (
-                  <React.Fragment key={month}>
-                    <Box sx={{ width: "80px", textAlign: "center" }}>
-                      <Typography variant="subtitle2">Plan</Typography>
-                    </Box>
-                    <Box sx={{ width: "80px", textAlign: "center" }}>
-                      <Typography variant="subtitle2">Fact</Typography>
-                    </Box>
-                  </React.Fragment>
-                ))}
-                {/* Empty sum column */}
-                <Box sx={{ width: "80px", textAlign: "center" }} />
-              </Box>
-              {/* Table Body */}
-              <Box>
-                {firsttableData.map((row) => (
-                  <DataRow key={row.id} row={row} />
-                ))}
-              </Box>
-            </Box>
-              </Box>
-            </Box>
+            )}
+          </Box>
         </Grid>
       </Grid>
     </Container>
