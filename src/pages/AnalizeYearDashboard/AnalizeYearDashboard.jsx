@@ -12,6 +12,7 @@ import {
   ListItemText,
   ListItemIcon,
   OutlinedInput,
+  ClickAwayListener
 } from "@mui/material";
 import LightHeader from "../../components/LightHeader/LightHeader";
 import { Colors } from "../../styles/theme";
@@ -33,6 +34,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PropTypes from "prop-types";
 import axios from "axios";
 import RemoveIcon from "@mui/icons-material/Remove"; // Import any suitable icon
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"; // Import the icon
+import Chip from '@mui/material/Chip';
+import { styled } from '@mui/system';
 
 // branch section //
 const top128Filials = [
@@ -590,7 +594,7 @@ const tableData = {
       name: "561",
       months: {
         January: {
-          newfirstYear: 200,
+          newfirstYear: 200000000,
           newsecondYear: 104,
           differencePercentage: "18",
           differenceAmount: "37600",
@@ -669,7 +673,7 @@ const tableData = {
       subRows: [
         {
           id: "1.1",
-          name: "Sub Row 1.1",
+          name: "Выплата районного коэффициента 1.1",
           months: {
             January: {
               newfirstYear: 200,
@@ -1202,6 +1206,89 @@ const tableData = {
       ],
     },
   ],
+  totalData:[
+    {
+    name: "Grand Total",
+    months: {
+      January: {
+        newfirstMonth: 400000000,
+        newsecondMonth: 104,
+        differencePercentageTotalMonth: "18",
+        differenceAmountTotalMonth: "37600",
+      },
+      February: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      March: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      April: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      May: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      June: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      July: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      August: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      September: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      October: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      November: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+      December: {
+        newfirstMonth: 150,
+        newsecondMonth: 140,
+        differencePercentageTotalMonth: "6.67",
+        differenceAmountTotalMonth: "100",
+      },
+    },
+    firstYearTotalMonthSum: "866,007",
+    secondYearTotalMonthSum: "846,963",
+    percentageSeparateTotalMonth: "46.6",
+    amountSeparateTotalMonth: "10963",
+  }
+  ],
 };
 
 // Define the list of years without id
@@ -1226,6 +1313,11 @@ const AnalizeYearDashboard = () => {
   // const [yearBollean, setYearBollean] = useState(false);
   const [firstYear, setFirstYear] = useState(null);
   const [secondYear, setSecondYear] = useState(null);
+  const [showFirstYear, setShowFirstYear] = useState(true);
+
+
+
+
 
   const monthArray = monthsList.map((month) => month.name);
 
@@ -1238,60 +1330,151 @@ const AnalizeYearDashboard = () => {
     }));
   };
 
-  // <==== SECOND DATA TABLE SECTION CODE  ====> //
+  // <==== SECOND DATA TABLE SECTION CODE ====>
   function DataRow({ row, depth = 0, monthArray }) {
     const [open, setOpen] = useState(false);
     const hasSubRows = row.subRows && row.subRows.length > 0;
 
-    // Adjust background color based on depth
-    const backgroundColor = `rgba(8, 52, 115, ${0.05 + depth * 0.05})`; // Adjust opacity based on depth
+    // Apply alternating background color as needed
+    const backgroundColor = "#FFFFFF";
 
     return (
       <React.Fragment>
         {/* Main Row */}
         <TableRow
-          onClick={() => hasSubRows && setOpen(!open)} // Make the entire row clickable
+          onClick={() => hasSubRows && setOpen(!open)}
           sx={{
             backgroundColor: backgroundColor,
             cursor: hasSubRows ? "pointer" : "default",
+            height: "20px",
           }}
         >
           <TableCell
             sx={{
-              paddingLeft: `${depth * 20}px`, // Indent based on depth
-              width: "382px",
+              width: "800px",
+              border: "2px solid #d0d0d0",
+              borderRadius: "5px",
+              height: "25px",
+              padding: "0px",
+              paddingLeft: `${depth * 5}px`, // Indent based on depth
             }}
           >
-            <Typography variant="body1">{row.name}</Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                paddingLeft: "5px",
+                whiteSpace: "nowrap", // Prevents text from wrapping to the next line
+                overflow: "hidden", // Ensures overflowed text is clipped
+                textOverflow: "ellipsis", // Adds ellipses when text overflows
+                display: "block", // Ensures the element behaves as a block for ellipsis
+              }}
+            >
+              {row.name}
+            </Typography>
           </TableCell>
 
           {monthArray.map((month) => (
             <React.Fragment key={month}>
-              <TableCell sx={{ width: "80px", textAlign: "center" }}>
+              <TableCell
+                sx={{
+                  width: "80px",
+                  border: "2px solid #d0d0d0",
+                  borderRadius: "5px",
+                  height: "20px",
+                  padding: "0 4px",
+                  textAlign:"right",
+                  display: showFirstYear ? 'table-cell' : 'none',
+                }}
+              >
                 {row.months[month]?.newfirstYear || "-"}
               </TableCell>
-              <TableCell sx={{ width: "80px", textAlign: "center" }}>
+              <TableCell
+                sx={{
+                  width: "80px",
+                  border: "2px solid #d0d0d0",
+                  borderRadius: "5px",
+                  height: "20px",
+                  padding: "0 4px",
+                  textAlign:"right",
+                }}
+              >
                 {row.months[month]?.newsecondYear || "-"}
               </TableCell>
-              <TableCell sx={{ width: "80px", textAlign: "center" }}>
+              <TableCell
+                sx={{
+                  width: "80px",
+                  textAlign: "center",
+                  border: "2px solid #d0d0d0",
+                  borderRadius: "5px",
+                  height: "20px",
+                  padding: "0 4px",
+                }}
+              >
                 {row.months[month]?.differencePercentage || "-"}%
               </TableCell>
-              <TableCell sx={{ width: "80px", textAlign: "center" }}>
+              <TableCell
+                sx={{
+                  width: "80px",
+                  border: "2px solid #d0d0d0",
+                  borderRadius: "5px",
+                  height: "20px",
+                  padding: "0 4px",
+                  textAlign:"right",
+                }}
+              >
                 {row.months[month]?.differenceAmount || "-"}
               </TableCell>
             </React.Fragment>
           ))}
 
-          <TableCell sx={{ width: "80px", textAlign: "center" }}>
+          <TableCell
+            sx={{
+              width: "80px",
+              border: "2px solid #d0d0d0",
+              borderRadius: "5px",
+              height: "20px",
+              padding: "0 4px",
+              textAlign:"right",
+            }}
+          >
             {row?.firstYearTotalSum || "-"}
           </TableCell>
-          <TableCell sx={{ width: "80px", textAlign: "center" }}>
+          <TableCell
+            sx={{
+              width: "80px",
+              border: "2px solid #d0d0d0",
+              borderRadius: "5px",
+              height: "20px",
+              padding: "0 4px",
+              textAlign:"right",
+            }}
+          >
             {row?.secondYearTotalSum || "-"}
           </TableCell>
-          <TableCell sx={{ width: "80px", textAlign: "center" }}>
+          <TableCell
+            sx={{
+              width: "80px",
+              textAlign: "center",
+              border: "2px solid #d0d0d0",
+              borderRadius: "5px",
+              height: "20px",
+              padding: "0 4px",
+            }}
+          >
             {row?.percentageSeparateTotal || "-"}%
           </TableCell>
-          <TableCell sx={{ width: "80px", textAlign: "center" }}>
+          <TableCell
+            sx={{
+              width: "80px",
+              border: "2px solid #d0d0d0",
+              borderRadius: "5px",
+              height: "20px",
+              padding: "0 4px",
+              textAlign:"right",
+            }}
+          >
             {row?.amountSeparateTotal || "-"}
           </TableCell>
         </TableRow>
@@ -1309,20 +1492,7 @@ const AnalizeYearDashboard = () => {
           ))}
       </React.Fragment>
     );
-  }
-
-  // Rendering Data Rows
-  {
-    /* <Table>
-  <TableBody>
-    {firsttableData &&
-      firsttableData.data &&
-      firsttableData.data.map((row) => (
-        <DataRow key={row.id} row={row} monthArray={monthArray} />
-      ))}
-  </TableBody>
-</Table> */
-  }
+  };
 
   DataRow.propTypes = {
     row: PropTypes.shape({
@@ -1336,18 +1506,6 @@ const AnalizeYearDashboard = () => {
     depth: PropTypes.number,
     monthArray: PropTypes.array.isRequired,
   };
-
-  // select first year code //
-  // const handleFirstYearChange = (event) => {
-  //   setSelectedFirstYear(event.target.value);
-  // };
-
-  // // select month code //
-  // const handleMonthToggle = (month) => {
-  //   setSelectedMonths((prev) =>
-  //     prev.includes(month) ? prev.filter((m) => m !== month) : [...prev, month]
-  //   );
-  // };
 
   // Render function for the tables
   const renderTable = () => {
@@ -1434,7 +1592,7 @@ const AnalizeYearDashboard = () => {
     return (
       <FormControl
         sx={{
-          width: "160px", // Reduced width
+          width: "100%", // Reduced width
           marginTop: "8px", // Reduced top margin
           "& .MuiInputLabel-root": {
             fontSize: "1rem", // Smaller label font size
@@ -1523,6 +1681,7 @@ const AnalizeYearDashboard = () => {
     }));
   };
 
+  // <==== FILILS NAME SELECTOR ====>  //
   function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
     const subRegions = setSelectedSecondMap[filial.id] || [];
 
@@ -1573,15 +1732,22 @@ const AnalizeYearDashboard = () => {
 
     return (
       <>
-        <TableRow sx={{ padding: 0 }}>
+        <TableRow
+          sx={{
+            height: "41px",
+            paddingLeft: "0px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           {/* Checkbox cell */}
-          <TableCell sx={{ padding: "2px" }}>
+          <TableCell sx={{ padding: "0px", width: "21px" }}>
             <Checkbox
               onChange={handleMainCheckboxChange}
               checked={allSubChecked}
               indeterminate={someSubChecked}
               size="small"
-              sx={{}}
+              sx={{ margin: 0, padding: "0px", paddingBottom: "2px" }}
             />
           </TableCell>
           {/* Clickable name cell to toggle open/close */}
@@ -1599,14 +1765,22 @@ const AnalizeYearDashboard = () => {
         </TableRow>
         {/* Sub-region rows stay open as long as isOpen is true */}
         {isOpen && (
-          <TableRow>
+          <TableRow sx={{ display: "flex", alignItems: "center" }}>
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
               <Collapse in={isOpen} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 0, padding: 0 }}>
-                  <Box sx={{ margin: 1 }}>
+                  <Box sx={{ margin: "0.5px" }}>
                     {subRegions.map((subRegion, index) => (
-                      <TableRow key={index}>
-                        <TableCell sx={{ padding: "0" }}>
+                      <TableRow key={index} sx={{ padding: "0px" }}>
+                        <TableCell
+                          sx={{
+                            padding: "0px",
+                            width: "20px",
+                            display: "flex",
+                            alignItems: "center",
+                            verticalAlign: "center",
+                          }}
+                        >
                           <Checkbox
                             onChange={(e) => {
                               e.stopPropagation(); // Prevent the click event from triggering handleToggle
@@ -1614,16 +1788,18 @@ const AnalizeYearDashboard = () => {
                             }}
                             checked={checkedItems.includes(subRegion.title)}
                             size="small"
-                            sx={{ padding: "0" }}
+                            sx={{ margin: 0, padding: "0px" }}
                           />
                         </TableCell>
 
                         <TableCell
                           sx={{
                             padding: "2px",
+                            margin: "0px",
                             cursor: "pointer",
-                            fontSize: "12px",
+                            fontSize: "14px",
                             fontWeight: "500",
+                            paddingLeft: "-5px",
                           }}
                           onClick={() => handleSubRegionClick(subRegion.title)}
                         >
@@ -1639,7 +1815,7 @@ const AnalizeYearDashboard = () => {
         )}
       </>
     );
-  }
+  };
 
   Row.propTypes = {
     filial: PropTypes.shape({
@@ -1709,42 +1885,100 @@ const AnalizeYearDashboard = () => {
     setCheckedItems: PropTypes.func.isRequired,
   };
 
-  // <=== SELECT MONTHS SECTION  ===> //
-  const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
-    const [open, setOpen] = useState(false); // State to control the open status of the select
+// <=== SELECT MONTHS SECTION ===>
+  // const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
+  
+  //   const handleChange = (event) => {
 
+  //     const {
+  //       target: { value },
+  //     } = event;
+  //     setSelectedMonths(
+  //       typeof value === "string" ? value.split(",") : value
+  //     )
+  //   };
+  
+
+  
+  //   return (
+  //     <FormControl
+  //       sx={{
+  //         width: "100%",
+  //         "& .MuiInputLabel-root": {
+  //           fontSize: "1rem",
+  //           color: Colors.dark,
+  //         },
+  //         "& .MuiSelect-root": {
+  //           fontSize: "0.8rem",
+  //         },
+  //       }}
+  //       size="small"
+  //     >
+  //       <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
+  //       <Select
+  //         labelId="month-picker-label"
+  //         id="month-picker"
+  //         multiple
+  //         value={selectedMonths}
+  //         onChange={handleChange}
+  //         input={<OutlinedInput label="Oyni Tanlash" />}
+  //         renderValue={(selected) => selected.join(", ")}
+  //       >
+  //         {monthsList.map((month) => (
+  //           <MenuItem
+  //             key={month.id}
+  //             value={month.name}
+  //             sx={{
+  //               padding: "4px 8px",
+  //               display: "flex",
+  //               alignItems: "center",
+  //               gap: "8px",
+  //             }}
+  //           >
+  //             <Checkbox
+  //               checked={selectedMonths.includes(month.name)}
+  //               sx={{ color: Colors.blue_nbu, padding: "0" }}
+  //               size="small"
+  //             />
+  //             <ListItemText
+  //               primary={month.name}
+  //               sx={{ fontSize: "0.8rem", margin: 0 }}
+  //             />
+  //           </MenuItem>
+  //         ))}
+  //       </Select>
+  //     </FormControl>
+  //   );
+  // };
+
+
+  const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
+    const [open, setOpen] = React.useState(false);
+  
     const handleChange = (event) => {
       const {
         target: { value },
       } = event;
-      // Prevent the menu from closing when an item is selected
-      event.stopPropagation();
-      // Convert the value to an array if it's a string
-      const selected = typeof value === "string" ? value.split(",") : value;
-      setSelectedMonths(selected);
+      setSelectedMonths(typeof value === 'string' ? value.split(',') : value);
     };
-
-    const handleClose = () => {
-      setOpen(false); // Close the select only when you want to (e.g., clicking outside)
+  
+    const handleToggleOpen = () => {
+      setOpen((prev) => !prev);
     };
-
-    const handleOpen = () => {
-      setOpen(true); // Open the select
-    };
-
+  
     return (
       <FormControl
         sx={{
-          width: "160px", // Reduced width for compactness
-          "& .MuiInputLabel-root": {
-            fontSize: "1rem", // Smaller label font size
+          width: '100%',
+          '& .MuiInputLabel-root': {
+            fontSize: '1rem',
             color: Colors.dark,
           },
-          "& .MuiSelect-root": {
-            fontSize: "0.8rem", // Smaller select font size
+          '& .MuiSelect-root': {
+            fontSize: '0.8rem',
           },
         }}
-        size="small" // Use small size for compactness
+        size="small"
       >
         <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
         <Select
@@ -1752,40 +1986,32 @@ const AnalizeYearDashboard = () => {
           id="month-picker"
           multiple
           open={open}
-          onOpen={handleOpen}
-          onClose={handleClose}
+          onClose={() => setOpen(false)}
+          onOpen={handleToggleOpen}
           value={selectedMonths}
           onChange={handleChange}
           input={<OutlinedInput label="Oyni Tanlash" />}
-          renderValue={(selected) => selected.join(", ")}
-          MenuProps={{
-            PaperProps: {
-              style: {
-                height: 460, // Adjust as needed
-                width: 150, // Adjust as needed
-              },
-            },
-          }}
+          renderValue={(selected) => selected.join(', ')}
         >
           {monthsList.map((month) => (
             <MenuItem
               key={month.id}
               value={month.name}
               sx={{
-                padding: "4px 8px", // Reduced padding for compactness
-                display: "flex",
-                alignItems: "center",
-                gap: "8px", // Reduced gap between Checkbox and Text
+                padding: '4px 8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
               }}
             >
               <Checkbox
                 checked={selectedMonths.includes(month.name)}
-                sx={{ color: Colors.blue_nbu, padding: "0" }} // Removed extra padding
-                size="small" // Use small size for the checkbox
+                sx={{ color: Colors.blue_nbu, padding: '0' }}
+                size="small"
               />
               <ListItemText
                 primary={month.name}
-                sx={{ fontSize: "0.8rem", margin: 0 }} // Reduced font size and removed margin
+                sx={{ fontSize: '0.8rem', margin: 0 }}
               />
             </MenuItem>
           ))}
@@ -1815,6 +2041,10 @@ const AnalizeYearDashboard = () => {
     }
   };
 
+  const handleHideFirstYear = () => {
+    setShowFirstYear((prev) => !prev);
+  };
+
   return (
     <Container
       maxWidth={false} // This allows the container to expand beyond the default breakpoints
@@ -1841,8 +2071,8 @@ const AnalizeYearDashboard = () => {
         {/* <=== LEFT SIDE FILTER SECTION ====> */}
         <Grid
           item
-          xs={2.7}
-          sm={2.7}
+          xs={3}
+          sm={3}
           sx={{
             height: "auto",
             bgcolor: Colors.white,
@@ -1850,13 +2080,22 @@ const AnalizeYearDashboard = () => {
             padding: "5px",
           }}
         >
-          <Box sx={{ width: "100%", height: "45px" }}>
+          {/* <=== BUTTON'S SECTION ===>S */}
+          <Box
+            sx={{
+              width: "100%",
+              height: "45px",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+            }}
+          >
             {/* <====  SEND REQUEST BUTTON FOR GET DATA FROM BACKEND ====> */}
             <Button
               variant="contained"
               onClick={sendCheckedItemsToBackend}
               sx={{
-                width: "100%",
+                width: "79%",
                 fontWeight: "bold",
                 color: "white",
                 bgcolor: Colors.nbu,
@@ -1866,7 +2105,24 @@ const AnalizeYearDashboard = () => {
                 },
               }}
             >
-              SEND REQUEST
+              NATIJA
+            </Button>
+            {/* <==== GRAFUC REQUEST BUTTON ====> */}
+            <Button
+              variant="contained"
+              onClick={sendCheckedItemsToBackend}
+              sx={{
+                width: "19%",
+                fontWeight: "bold",
+                color: "white",
+                bgcolor: Colors.nbu,
+                height: "45px",
+                "&:hover": {
+                  bgcolor: Colors.nbu, // Set hover background color to be the same as default
+                },
+              }}
+            >
+              GRAFIK
             </Button>
           </Box>
 
@@ -1877,7 +2133,8 @@ const AnalizeYearDashboard = () => {
               alignItems: "center",
               justifyContent: "space-between",
               gap: "5px",
-              height: "95%",
+              height: "100%",
+              marginTop: "5px",
             }}
           >
             {/* <==== LEFT SIDE FILIALS FILTER ====> */}
@@ -1910,15 +2167,22 @@ const AnalizeYearDashboard = () => {
             {/* <==== RIGHT SIDE YEAR,MONT,ACCOUNT FILTER ====> */}
             <Box
               sx={{
-                width: "50%",
-                display: "block",
+                width: "68%",
+                display: "flex",
+                flexDirection: "column",
                 height: "100%",
                 color: Colors.white,
+                gap: "10px",
               }}
             >
-              {/* <==== FIRST YEAR SELECTOR ====> */}
+              {/* <==== YEAR SELECTOR ====> */}
               <Box
-                sx={{ width: "100px", height: "auto", marginBottom: "16px" }}
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  // marginBottom: "16px",
+                  bgcolor: "white",
+                }}
               >
                 <YearPicker
                   yearsList={yearsList}
@@ -1929,7 +2193,7 @@ const AnalizeYearDashboard = () => {
                 />
               </Box>
               {/* <===== MONTH PICKER =====> */}
-              <Box sx={{ width: "100px", height: "auto" }}>
+              <Box sx={{ width: "100%", height: "auto" }}>
                 <MonthPicker
                   monthsList={monthsList}
                   selectedMonths={selectedMonths}
@@ -1939,9 +2203,8 @@ const AnalizeYearDashboard = () => {
               {/* ACCOUNT NUMBER LIST */}
               <List
                 sx={{
-                  marginTop: 2,
-                  paddingTop: "10px",
-                  height: "570px", // Set maxHeight for vertical scrolling
+                  paddingTop: "5px",
+                  height: "550px", // Set maxHeight for vertical scrolling
                   overflowY: "auto", // Enable vertical scroll
 
                   /* ===== Scrollbar Styles for WebKit Browsers ===== */
@@ -1957,7 +2220,6 @@ const AnalizeYearDashboard = () => {
                     // borderRadius: "4px",
                     border: "2px solid #f1f1f1", // Creates padding around thumb
                     transition: "background-color 0.3s ease", // Smooth transition
-
                   },
                   "&::-webkit-scrollbar-thumb:hover": {
                     backgroundColor: "#555", // Scrollbar thumb color on hover
@@ -2036,8 +2298,8 @@ const AnalizeYearDashboard = () => {
         {/* <=== RIGHT SIDE TABLE SECTION ====> */}
         <Grid
           item
-          xs={9.25}
-          sm={9.25}
+          xs={8.95}
+          sm={8.95}
           sx={{
             height: "auto",
             bgcolor: Colors.white,
@@ -2054,26 +2316,84 @@ const AnalizeYearDashboard = () => {
                   <TableRow
                     sx={{
                       backgroundColor: Colors.lightGray,
-                      borderBottom: "1px solid #e0e0e0",
+                      borderBottom: "2px solid #FFFFFF",
+                      height: "45px",
+                      padding: "0px",
+                      bgcolor: Colors.blue_tableheader_light,
+                      borderRadius: "5px",
                     }}
                   >
-                    <TableCell sx={{ width: "430px", flexShrink: 0 }}>
-                      <Typography variant="h6">Статья затрат</Typography>
+                    <TableCell
+                      sx={{
+                        width: "900px",
+                        flexShrink: 0,
+                        height: "20px",
+                        padding: "0 4px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ lineHeight: "normal" }}>
+                        Статья затрат
+                      </Typography>
                     </TableCell>
                     {firsttableData.newMonths.map((month) => (
                       <TableCell
                         key={month}
-                        colSpan={4}
-                        sx={{ textAlign: "center", width: "320px" }}
+                        colSpan={showFirstYear ? 4 : 3} 
+                        sx={{
+                          textAlign: "center",
+                          width: "320px",
+                          border: "2px solid #FFFFFF",
+                          height: "20px",
+                          padding: "0 4px",
+                          borderRadius: "5px",
+                          borderBottom: "2px solid #e0e0e0",
+                        }}
                       >
-                        <Typography variant="subtitle2">{month}</Typography>
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ lineHeight: "normal" }}
+                        >
+                          {month}
+                        </Typography>
                       </TableCell>
                     ))}
                     <TableCell
                       colSpan={2}
-                      sx={{ textAlign: "center", width: "340px" }}
+                      sx={{
+                        textAlign: "center",
+                        width: "340px",
+                        borderBottom: "2px solid #e0e0e0",
+                        borderRight: "2px solid #FFFFFF",
+                        height: "2px",
+                        padding: "0 4px",
+                        borderRadius: "5px",
+                      }}
                     >
-                      <Typography variant="subtitle2">Total</Typography>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ lineHeight: "normal" }}
+                      >
+                        Total
+                      </Typography>
+                    </TableCell>
+                    <TableCell
+                      colSpan={2}
+                      sx={{
+                        textAlign: "center",
+                        width: "340px",
+                        borderTop: "2px solid #FFFFFF",
+                        height: "22px",
+                        padding: "0 4px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ lineHeight: "normal" }}
+                      >
+                        Total
+                      </Typography>
                     </TableCell>
                   </TableRow>
 
@@ -2081,49 +2401,326 @@ const AnalizeYearDashboard = () => {
                   <TableRow
                     sx={{
                       backgroundColor: Colors.lightGray,
-                      borderBottom: "2px solid #e0e0e0",
+                      borderTop: "2px solid #e0e0e0 ",
+                      height: "22px",
                     }}
                   >
-                    <TableCell sx={{ width: "422px", flexShrink: 0 }} />
+                    <TableCell
+                      sx={{
+                        width: "100%",
+                        flexShrink: 0,
+                        border: "2px solid #d0d0d0",
+                        height: "22px",
+                        padding: "0",
+                        display:"flex",
+                        alignItems:"center",
+                        gap:"10px"
+                      }}
+                    >
+                      <Button variant="contained" sx={{width:"25%",padding:"0px",lineHeight:"20px"}} onClick={handleHideFirstYear}>2023</Button>
+                      <Button variant="contained" sx={{width:"25%",padding:"0px",lineHeight:"20px"}}>2024</Button>
+                      <Button variant="contained" sx={{width:"25%",padding:"0px",lineHeight:"20px"}}>%</Button>
+                      <Button variant="contained" sx={{width:"25%",padding:"0px",lineHeight:"20px"}}>$</Button>
+                    </TableCell>
                     {monthArray.map((month) => (
                       <React.Fragment key={month}>
-                        <TableCell sx={{ width: "80px", textAlign: "center" }}>
-                          <Typography variant="subtitle2">
+                        <TableCell
+                          sx={{
+                            width: "120px",
+                            textAlign: "center",
+                            border: "2px solid #d0d0d0",
+                            borderRadius: "8px",
+                            height: "20px",
+                            padding: "0 4px",
+                            display: showFirstYear ? 'table-cell' : 'none',
+                          }}
+                        >
+                          <Typography
+                            variant="subtitle2"
+                            sx={{ lineHeight: "normal" }}
+                          >
                             {firsttableData.choosedfirstYear}
                           </Typography>
                         </TableCell>
-                        <TableCell sx={{ width: "80px", textAlign: "center" }}>
-                          <Typography variant="subtitle2">
+                        <TableCell
+                          sx={{
+                            width: "120px",
+                            textAlign: "center",
+                            border: "2px solid #d0d0d0",
+                            borderRadius: "8px",
+                            height: "20px",
+                            padding: "0 4px",
+                          }}
+                        >
+                          <Typography
+                            variant="subtitle2"
+                            sx={{ lineHeight: "normal" }}
+                          >
                             {firsttableData.choosedsecondYear}
                           </Typography>
                         </TableCell>
-                        <TableCell sx={{ width: "80px", textAlign: "center" }}>
-                          <Typography variant="subtitle2">Perf.</Typography>
+                        <TableCell
+                          sx={{
+                            width: "120px",
+                            textAlign: "center",
+                            border: "2px solid #d0d0d0 ",
+                            borderRadius: "5px", // Added border radius
+                            height: "20px",
+                            padding: "0 4px",
+                          }}
+                        >
+                          <Typography
+                            variant="subtitle2"
+                            sx={{ lineHeight: "normal" }}
+                          >
+                            Perf.
+                          </Typography>
                         </TableCell>
-                        <TableCell sx={{ width: "80px", textAlign: "center" }}>
-                          <Typography variant="subtitle2">Amount</Typography>
+                        <TableCell
+                          sx={{
+                            width: "120px",
+                            textAlign: "center",
+                            border: "2px solid #d0d0d0",
+                            borderRadius: "5px", // Added border radius
+                            height: "20px",
+                            padding: "0 4px",
+                          }}
+                        >
+                          <Typography
+                            variant="subtitle2"
+                            sx={{ lineHeight: "normal" }}
+                          >
+                            Amount
+                          </Typography>
                         </TableCell>
                       </React.Fragment>
                     ))}
-                    <TableCell sx={{ width: "80px", textAlign: "center" }}>
-                      <Typography variant="subtitle2">
+
+                    <TableCell
+                      sx={{
+                        width: "120px",
+                        textAlign: "center",
+                        borderTop: "2px solid #d0d0d0",
+                        borderRadius: "5px", // Added border radius
+                        height: "20px",
+                        padding: "0 4px",
+                        display: showFirstYear ? 'table-cell' : 'none',
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ lineHeight: "normal", fontWeight: "bold" }}
+                      >
                         {tableData.choosedfirstYear}
                       </Typography>
                     </TableCell>
-                    <TableCell sx={{ width: "80px", textAlign: "center" }}>
-                      <Typography variant="subtitle2">
+
+                    <TableCell
+                      sx={{
+                        width: "120px",
+                        textAlign: "center",
+                        border: "2px solid #d0d0d0",
+                        borderRadius: "5px", // Added border radius
+                        height: "20px",
+                        padding: "0 4px",
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ lineHeight: "normal", fontWeight: "bold" }}
+                      >
                         {tableData.choosedsecondYear}
+                      </Typography>
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        width: "120px",
+                        textAlign: "center",
+                        border: "2px solid #d0d0d0",
+                        borderRadius: "5px", // Added border radius
+                        height: "20px",
+                        padding: "0 4px",
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ lineHeight: "normal", fontWeight: "bold" }}
+                      >
+                        Perf.
+                      </Typography>
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        width: "120px",
+                        textAlign: "center",
+                        border: "2px solid #d0d0d0",
+                        borderRadius: "5px", // Added border radius
+                        height: "20px",
+                        padding: "0 4px",
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ lineHeight: "normal", fontWeight: "bold" }}
+                      >
+                        Amount
                       </Typography>
                     </TableCell>
                   </TableRow>
                 </TableHead>
-
                 {/* Data Rows */}
                 <TableBody>
                   {firsttableData &&
                     firsttableData.data &&
                     firsttableData.data.map((row) => (
                       <DataRow key={row.id} row={row} monthArray={monthArray} />
+                    ))}
+                    {/* <==== TOTAL BOTTOM SECTION  ====> */}
+                    {tableData.totalData.map((total, key) => (
+                      <TableRow
+                        key={key}
+                        sx={{
+                          backgroundColor: Colors.lightGray,
+                          borderTop: "2px solid #e0e0e0",
+                          height: "22px",
+                        }}
+                      >
+                        {/* Name Cell */}
+                        <TableCell
+                          sx={{
+                            width: "482px",
+                            flexShrink: 0,
+                            border: "2px solid #d0d0d0",
+                            height: "20px",
+                            padding: "0",
+                          }}
+                        >
+                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold",paddingLeft:"5px" }}>
+                            {total.name}
+                          </Typography>
+                        </TableCell>
+
+                        {/* Monthly Data Cells */}
+                        {monthArray.map((month, index) => (
+                          <React.Fragment key={index}>
+                            <TableCell
+                              sx={{
+                                width: "120px",
+                                textAlign: "right",
+                                border: "2px solid #d0d0d0",
+                                borderRadius: "8px",
+                                height: "20px",
+                                padding: "0 4px",
+                                display: showFirstYear ? 'table-cell' : 'none',
+                              }}
+                            >
+                              <Typography variant="subtitle2" sx={{ lineHeight: "normal" }}>
+                                {total.months[month]?.newfirstMonth || "-"}
+                              </Typography>
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                width: "120px",
+                                textAlign: "right",
+                                border: "2px solid #d0d0d0",
+                                borderRadius: "8px",
+                                height: "20px",
+                                padding: "0 4px",
+                              }}
+                            >
+                              <Typography variant="subtitle2" sx={{ lineHeight: "normal" }}>
+                                {total.months[month]?.newsecondMonth || "-"}
+                              </Typography>
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                width: "120px",
+                                textAlign: "center",
+                                border: "2px solid #d0d0d0",
+                                borderRadius: "5px",
+                                height: "20px",
+                                padding: "0 4px",
+                              }}
+                            >
+                              <Typography variant="subtitle2" sx={{ lineHeight: "normal" }}>
+                                {total.months[month]?.differencePercentageTotalMonth || "-"}%
+                              </Typography>
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                width: "120px",
+                                textAlign: "right",
+                                border: "2px solid #d0d0d0",
+                                borderRadius: "5px",
+                                height: "20px",
+                                padding: "0 4px",
+                              }}
+                            >
+                              <Typography variant="subtitle2" sx={{ lineHeight: "normal" }}>
+                                {total.months[month]?.differenceAmountTotalMonth || "-"}
+                              </Typography>
+                            </TableCell>
+                          </React.Fragment>
+                        ))}
+
+                        {/* Total Yearly Sums and Final Columns */}
+                        <TableCell
+                          sx={{
+                            width: "120px",
+                            textAlign: "right",
+                            border: "2px solid #d0d0d0",
+                            borderRadius: "5px",
+                            height: "20px",
+                            padding: "0 4px",
+                          }}
+                        >
+                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold" }}>
+                            {total.firstYearTotalMonthSum}
+                          </Typography>
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            width: "120px",
+                            textAlign: "right",
+                            border: "2px solid #d0d0d0",
+                            borderRadius: "5px",
+                            height: "20px",
+                            padding: "0 4px",
+                          }}
+                        >
+                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold" }}>
+                            {total.secondYearTotalMonthSum}
+                          </Typography>
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            width: "120px",
+                            textAlign: "center",
+                            border: "2px solid #d0d0d0",
+                            borderRadius: "5px",
+                            height: "20px",
+                            padding: "0 4px",
+                          }}
+                        >
+                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold" }}>
+                            {total.percentageSeparateTotalMonth}%
+                          </Typography>
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            width: "120px",
+                            textAlign: "right",
+                            border: "2px solid #d0d0d0",
+                            borderRadius: "5px",
+                            height: "20px",
+                            padding: "0 4px",
+                          }}
+                        >
+                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold" }}>
+                            {total.amountSeparateTotalMonth}
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
                     ))}
                 </TableBody>
               </Table>

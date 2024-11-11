@@ -316,5 +316,88 @@ const tableData = {
         ],
       },
     ],
+    totalData:[
+      {
+      name: "Grand Total", // to'liq yig'indi nomi xardoim birxil "Grand Total" //
+      months: {
+        January: {
+          newfirstMonth: 400000000, // ==>  tanlangan kichik yilning 1-oydagi qiymatlari to'liq yig'indisi //
+          newsecondMonth: 104, // ==>  tanlangan katta yilning 1-oydagi qiymatlari to'liq yig'indisi //
+          differencePercentageTotalMonth: "18", // ==> 1-oydagi  tanlangan katta va kichik yilning o'zaro nisbatidan olingan foiz  //
+          differenceAmountTotalMonth: "37600", // ==> 1-oydagi  tanlangan katta va kichik yilning o'zaro ayirmasidan olingan summa   //
+        },
+        February: {
+          newfirstMonth: 150,// ==>  tanlangan kichik yilning 2-oydagi qiymatlari to'liq yig'indisi //
+          newsecondMonth: 140, // ==>  tanlangan katta yilning 2-oydagi qiymatlari to'liq yig'indisi //
+          differencePercentageTotalMonth: "6.67", // ==> 2-oydagi  tanlangan katta va kichik yilning o'zaro nisbatidan olingan foiz  //
+          differenceAmountTotalMonth: "100", // ==> 2-oydagi  tanlangan katta va kichik yilning o'zaro ayirmasidan olingan summa   //
+        },
+        March: {
+          newfirstMonth: 150, // ==>  tanlangan kichik yilning 3-oydagi qiymatlari to'liq yig'indisi //
+          newsecondMonth: 140, // ==>  tanlangan katta yilning 3-oydagi qiymatlari to'liq yig'indisi //
+          differencePercentageTotalMonth: "6.67", // ==> 3-oydagi  tanlangan katta va kichik yilning o'zaro nisbatidan olingan foiz  //
+          differenceAmountTotalMonth: "100", // ==> 3-oydagi  tanlangan katta va kichik yilning o'zaro ayirmasidan olingan summa   //
+        },
+        April: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+        May: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+        June: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+        July: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+        August: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+        September: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+        October: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+        November: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+        December: {
+          newfirstMonth: 150,
+          newsecondMonth: 140,
+          differencePercentageTotalMonth: "6.67",
+          differenceAmountTotalMonth: "100",
+        },
+      },
+      firstYearTotalMonthSum: "866,007", // ==> 1-yilning(kichik yil) barcha oylardagi qiymatlari yig'indisi summa //
+      secondYearTotalMonthSum: "846,963", // ==> 2-yilning(katta yil) barcha oylardagi qiymatlari yig'indisi summa //
+      percentageSeparateTotalMonth: "46.6",// ==> 1-yilning(kichik yil)  va 2-yilning(katta yil) barcha oylardagi qiymatlari nisbati foiz qiymatda //
+      amountSeparateTotalMonth: "10963", // ==> 1-yilning(kichik yil)  va 2-yilning(katta yil) barcha oylardagi qiymatlari ayirmasi summa qiymatda //
+    }
+    ],
   };
 
