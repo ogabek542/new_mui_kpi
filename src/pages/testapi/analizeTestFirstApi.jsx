@@ -1,4 +1,4 @@
-const tableData = {
+const newtableData = {
     choosedfirstYear: 2023,  // user Tanlagan Kichik(oldingi) yil  //
     choosedsecondYear: 2024, // user tanlagan katta(keyingi) yil       //
     newMonths: [   // user tomonidan tanlangan oylar ro'yxati massivga to'plab jo'natiladi //
@@ -401,3 +401,4 @@ const tableData = {
     ],
   };
 
+export default newtableData;

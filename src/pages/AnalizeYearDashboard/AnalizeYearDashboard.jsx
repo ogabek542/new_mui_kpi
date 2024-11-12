@@ -12,7 +12,7 @@ import {
   ListItemText,
   ListItemIcon,
   OutlinedInput,
-  ClickAwayListener
+  ClickAwayListener,
 } from "@mui/material";
 import LightHeader from "../../components/LightHeader/LightHeader";
 import { Colors } from "../../styles/theme";
@@ -35,8 +35,13 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import RemoveIcon from "@mui/icons-material/Remove"; // Import any suitable icon
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"; // Import the icon
-import Chip from '@mui/material/Chip';
-import { styled } from '@mui/system';
+import Chip from "@mui/material/Chip";
+import { styled } from "@mui/system";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+// import mock api datda // 
+import newTestAPI from "../testapi/analizeTestFirstApi"
+
 
 // branch section //
 const top128Filials = [
@@ -255,1042 +260,6 @@ const numbersList = [
   "579",
 ];
 
-// Mock table data
-// const tableData = [
-//   {
-//     id: "1",
-//     name: "561",
-//     months: {
-//       January: { plan: 100, fact: 90 },
-//       February: { plan: 150, fact: 140 },
-//       March: { plan: 130, fact: 125 },
-//       April: { plan: 120, fact: 115 },
-//       May: { plan: 140, fact: 135 },
-//       June: { plan: 160, fact: 155 },
-//       July: { plan: 170, fact: 165 },
-//       August: { plan: 180, fact: 175 },
-//       September: { plan: 150, fact: 145 },
-//       October: { plan: 130, fact: 125 },
-//       November: { plan: 140, fact: 138 },
-//       December: { plan: 160, fact: 155 },
-//     },
-//     sum: 1730,
-//     subRows: [
-//       {
-//         id: "1.1",
-//         name: "Sub Row 1.1",
-//         months: {
-//           January: { plan: 50, fact: 48 },
-//           February: { plan: 60, fact: 58 },
-//           March: { plan: 70, fact: 68 },
-//           April: { plan: 65, fact: 63 },
-//           May: { plan: 55, fact: 52 },
-//           June: { plan: 75, fact: 72 },
-//           July: { plan: 80, fact: 78 },
-//           August: { plan: 90, fact: 85 },
-//           September: { plan: 70, fact: 68 },
-//           October: { plan: 65, fact: 62 },
-//           November: { plan: 60, fact: 58 },
-//           December: { plan: 80, fact: 78 },
-//         },
-//         sum: 820,
-//         subRows: [
-//           {
-//             id: " 1.1.1",
-//             name: "Sub Sub Row 1.1.1",
-//             months: {
-//               January: { plan: 20, fact: 19 },
-//               February: { plan: 25, fact: 24 },
-//               March: { plan: 30, fact: 29 },
-//               April: { plan: 28, fact: 27 },
-//               May: { plan: 22, fact: 21 },
-//               June: { plan: 35, fact: 34 },
-//               July: { plan: 40, fact: 39 },
-//               August: { plan: 45, fact: 44 },
-//               September: { plan: 30, fact: 29 },
-//               October: { plan: 28, fact: 27 },
-//               November: { plan: 25, fact: 24 },
-//               December: { plan: 35, fact: 34 },
-//             },
-//             sum: 363,
-//             subRows: [
-//               {
-//                 id: " 1.1.1.1",
-//                 name: "Sub Sub Sub Row 1.1.1",
-//                 months: {
-//                   January: { plan: 20, fact: 19 },
-//                   February: { plan: 25, fact: 24 },
-//                   March: { plan: 30, fact: 29 },
-//                   April: { plan: 28, fact: 27 },
-//                   May: { plan: 22, fact: 21 },
-//                   June: { plan: 35, fact: 34 },
-//                   July: { plan: 40, fact: 39 },
-//                   August: { plan: 45, fact: 44 },
-//                   September: { plan: 30, fact: 29 },
-//                   October: { plan: 28, fact: 27 },
-//                   November: { plan: 25, fact: 24 },
-//                   December: { plan: 35, fact: 34 },
-//                 },
-//                 sum: 363,
-//                 subRows: [],
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       {
-//         id: "1.1",
-//         name: "Sub Row 1.1",
-//         months: {
-//           January: { plan: 50, fact: 48 },
-//           February: { plan: 60, fact: 58 },
-//           March: { plan: 70, fact: 68 },
-//           April: { plan: 65, fact: 63 },
-//           May: { plan: 55, fact: 52 },
-//           June: { plan: 75, fact: 72 },
-//           July: { plan: 80, fact: 78 },
-//           August: { plan: 90, fact: 85 },
-//           September: { plan: 70, fact: 68 },
-//           October: { plan: 65, fact: 62 },
-//           November: { plan: 60, fact: 58 },
-//           December: { plan: 80, fact: 78 },
-//         },
-//         sum: 820,
-//         subRows: [
-//           {
-//             id: " 1.1.1",
-//             name: "Sub Sub Row 1.1.1",
-//             months: {
-//               January: { plan: 20, fact: 19 },
-//               February: { plan: 25, fact: 24 },
-//               March: { plan: 30, fact: 29 },
-//               April: { plan: 28, fact: 27 },
-//               May: { plan: 22, fact: 21 },
-//               June: { plan: 35, fact: 34 },
-//               July: { plan: 40, fact: 39 },
-//               August: { plan: 45, fact: 44 },
-//               September: { plan: 30, fact: 29 },
-//               October: { plan: 28, fact: 27 },
-//               November: { plan: 25, fact: 24 },
-//               December: { plan: 35, fact: 34 },
-//             },
-//             sum: 363,
-//             subRows: [
-//               {
-//                 id: " 1.1.1.1",
-//                 name: "Sub Sub Sub Row 1.1.1",
-//                 months: {
-//                   January: { plan: 20, fact: 19 },
-//                   February: { plan: 25, fact: 24 },
-//                   March: { plan: 30, fact: 29 },
-//                   April: { plan: 28, fact: 27 },
-//                   May: { plan: 22, fact: 21 },
-//                   June: { plan: 35, fact: 34 },
-//                   July: { plan: 40, fact: 39 },
-//                   August: { plan: 45, fact: 44 },
-//                   September: { plan: 30, fact: 29 },
-//                   October: { plan: 28, fact: 27 },
-//                   November: { plan: 25, fact: 24 },
-//                   December: { plan: 35, fact: 34 },
-//                 },
-//                 sum: 363,
-//                 subRows: [],
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     id: "3",
-//     name: "563",
-//     months: {
-//       January: { plan: 100, fact: 90 },
-//       February: { plan: 150, fact: 140 },
-//       March: { plan: 130, fact: 125 },
-//       April: { plan: 120, fact: 115 },
-//       May: { plan: 140, fact: 135 },
-//       June: { plan: 160, fact: 155 },
-//       July: { plan: 170, fact: 165 },
-//       August: { plan: 180, fact: 175 },
-//       September: { plan: 150, fact: 145 },
-//       October: { plan: 130, fact: 125 },
-//       November: { plan: 140, fact: 138 },
-//       December: { plan: 160, fact: 155 },
-//     },
-//     sum: 1730,
-//     subRows: [
-//       {
-//         id: "1.1",
-//         name: "Sub Row 1.1",
-//         months: {
-//           January: { plan: 50, fact: 48 },
-//           February: { plan: 60, fact: 58 },
-//           March: { plan: 70, fact: 68 },
-//           April: { plan: 65, fact: 63 },
-//           May: { plan: 55, fact: 52 },
-//           June: { plan: 75, fact: 72 },
-//           July: { plan: 80, fact: 78 },
-//           August: { plan: 90, fact: 85 },
-//           September: { plan: 70, fact: 68 },
-//           October: { plan: 65, fact: 62 },
-//           November: { plan: 60, fact: 58 },
-//           December: { plan: 80, fact: 78 },
-//         },
-//         sum: 820,
-//         subRows: [
-//           {
-//             id: " 1.1.1",
-//             name: "Sub Sub Row 1.1.1",
-//             months: {
-//               January: { plan: 20, fact: 19 },
-//               February: { plan: 25, fact: 24 },
-//               March: { plan: 30, fact: 29 },
-//               April: { plan: 28, fact: 27 },
-//               May: { plan: 22, fact: 21 },
-//               June: { plan: 35, fact: 34 },
-//               July: { plan: 40, fact: 39 },
-//               August: { plan: 45, fact: 44 },
-//               September: { plan: 30, fact: 29 },
-//               October: { plan: 28, fact: 27 },
-//               November: { plan: 25, fact: 24 },
-//               December: { plan: 35, fact: 34 },
-//             },
-//             sum: 363,
-//             subRows: [
-//               {
-//                 id: " 1.1.1.1",
-//                 name: "Sub Sub Sub Row 1.1.1",
-//                 months: {
-//                   January: { plan: 20, fact: 19 },
-//                   February: { plan: 25, fact: 24 },
-//                   March: { plan: 30, fact: 29 },
-//                   April: { plan: 28, fact: 27 },
-//                   May: { plan: 22, fact: 21 },
-//                   June: { plan: 35, fact: 34 },
-//                   July: { plan: 40, fact: 39 },
-//                   August: { plan: 45, fact: 44 },
-//                   September: { plan: 30, fact: 29 },
-//                   October: { plan: 28, fact: 27 },
-//                   November: { plan: 25, fact: 24 },
-//                   December: { plan: 35, fact: 34 },
-//                 },
-//                 sum: 363,
-//                 subRows: [],
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     id: "2",
-//     name: "562",
-//     months: {
-//       January: { plan: 100, fact: 90 },
-//       February: { plan: 150, fact: 140 },
-//       March: { plan: 130, fact: 125 },
-//       April: { plan: 120, fact: 115 },
-//       May: { plan: 140, fact: 135 },
-//       June: { plan: 160, fact: 155 },
-//       July: { plan: 170, fact: 165 },
-//       August: { plan: 180, fact: 175 },
-//       September: { plan: 150, fact: 145 },
-//       October: { plan: 130, fact: 125 },
-//       November: { plan: 140, fact: 138 },
-//       December: { plan: 160, fact: 155 },
-//     },
-//     sum: 1730,
-//     subRows: [
-//       {
-//         id: "1.1",
-//         name: "Sub Row 1.1",
-//         months: {
-//           January: { plan: 50, fact: 48 },
-//           February: { plan: 60, fact: 58 },
-//           March: { plan: 70, fact: 68 },
-//           April: { plan: 65, fact: 63 },
-//           May: { plan: 55, fact: 52 },
-//           June: { plan: 75, fact: 72 },
-//           July: { plan: 80, fact: 78 },
-//           August: { plan: 90, fact: 85 },
-//           September: { plan: 70, fact: 68 },
-//           October: { plan: 65, fact: 62 },
-//           November: { plan: 60, fact: 58 },
-//           December: { plan: 80, fact: 78 },
-//         },
-//         sum: 820,
-//         subRows: [
-//           {
-//             id: " 1.1.1",
-//             name: "Sub Sub Row 1.1.1",
-//             months: {
-//               January: { plan: 20, fact: 19 },
-//               February: { plan: 25, fact: 24 },
-//               March: { plan: 30, fact: 29 },
-//               April: { plan: 28, fact: 27 },
-//               May: { plan: 22, fact: 21 },
-//               June: { plan: 35, fact: 34 },
-//               July: { plan: 40, fact: 39 },
-//               August: { plan: 45, fact: 44 },
-//               September: { plan: 30, fact: 29 },
-//               October: { plan: 28, fact: 27 },
-//               November: { plan: 25, fact: 24 },
-//               December: { plan: 35, fact: 34 },
-//             },
-//             sum: 363,
-//             subRows: [
-//               {
-//                 id: " 1.1.1.1",
-//                 name: "Sub Sub Sub Row 1.1.1",
-//                 months: {
-//                   January: { plan: 20, fact: 19 },
-//                   February: { plan: 25, fact: 24 },
-//                   March: { plan: 30, fact: 29 },
-//                   April: { plan: 28, fact: 27 },
-//                   May: { plan: 22, fact: 21 },
-//                   June: { plan: 35, fact: 34 },
-//                   July: { plan: 40, fact: 39 },
-//                   August: { plan: 45, fact: 44 },
-//                   September: { plan: 30, fact: 29 },
-//                   October: { plan: 28, fact: 27 },
-//                   November: { plan: 25, fact: 24 },
-//                   December: { plan: 35, fact: 34 },
-//                 },
-//                 sum: 363,
-//                 subRows: [],
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   // Add more rows as needed
-// ];
-
-const tableData = {
-  choosedfirstYear: 2023,
-  choosedsecondYear: 2024,
-  newMonths: [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ],
-  data: [
-    {
-      id: "1",
-      name: "561",
-      months: {
-        January: {
-          newfirstYear: 200000000,
-          newsecondYear: 104,
-          differencePercentage: "18",
-          differenceAmount: "37600",
-        },
-        February: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        March: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        April: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        May: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        June: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        July: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        August: {
-          newfirstYear: 150,
-          secondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        September: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        October: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        November: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        December: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-      },
-      firstYearTotalSum: "866,007",
-      secondYearTotalSum: "846,963",
-      percentageSeparateTotal: "46.6",
-      amountSeparateTotal: "10963",
-      subRows: [
-        {
-          id: "1.1",
-          name: "Выплата районного коэффициента 1.1",
-          months: {
-            January: {
-              newfirstYear: 200,
-              newsecondYear: 104,
-              differencePercentage: "18",
-              differenceAmount: "37600",
-            },
-            February: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            March: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            April: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            May: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            June: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            July: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            August: {
-              newfirstYear: 150,
-              secondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            September: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            October: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            November: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-            December: {
-              newfirstYear: 150,
-              newsecondYear: 140,
-              differencePercentage: "6.67",
-              differenceAmount: "100",
-            },
-          },
-          firstYearTotalSum: "866,007",
-          secondYearTotalSum: "846,963",
-          percentageSeparateTotal: "46.6",
-          amountSeparateTotal: "10963",
-          subRows: [
-            {
-              id: " 1.1.1",
-              name: "Sub Sub Row 1.1.1",
-              months: {
-                January: {
-                  newfirstYear: 200,
-                  newsecondYear: 104,
-                  differencePercentage: "18",
-                  differenceAmount: "37600",
-                },
-                February: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                March: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                April: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                May: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                June: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                July: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                August: {
-                  newfirstYear: 150,
-                  secondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                September: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                October: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                November: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-                December: {
-                  newfirstYear: 150,
-                  newsecondYear: 140,
-                  differencePercentage: "6.67",
-                  differenceAmount: "100",
-                },
-              },
-              firstYearTotalSum: "866,007",
-              secondYearTotalSum: "846,963",
-              percentageSeparateTotal: "46.6",
-              amountSeparateTotal: "10963",
-              subRows: [
-                {
-                  id: " 1.1.1.1",
-                  name: "Sub Sub Sub Row 1.1.1",
-                  months: {
-                    January: {
-                      newfirstYear: 200,
-                      newsecondYear: 104,
-                      differencePercentage: "18",
-                      differenceAmount: "37600",
-                    },
-                    February: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    March: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    April: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    May: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    June: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    July: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    August: {
-                      newfirstYear: 150,
-                      secondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    September: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    October: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    November: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                    December: {
-                      newfirstYear: 150,
-                      newsecondYear: 140,
-                      differencePercentage: "6.67",
-                      differenceAmount: "100",
-                    },
-                  },
-                  firstYearTotalSum: "866,007",
-                  secondYearTotalSum: "846,963",
-                  percentageSeparateTotal: "46.6",
-                  amountSeparateTotal: "10963",
-                  subRows: [],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    // Add more rows as needed
-    {
-      id: "2",
-      name: "562",
-      months: {
-        January: {
-          newfirstYear: 200,
-          newsecondYear: 104,
-          differencePercentage: "18",
-          differenceAmount: "37600",
-        },
-        February: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        March: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        April: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        May: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        June: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        July: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        August: {
-          newfirstYear: 150,
-          secondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        September: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        October: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        November: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        // add other months here...
-      },
-      firstYearTotalSum: "866,007",
-      secondYearTotalSum: "846,963",
-      subRows: [
-        {
-          id: "1.1",
-          name: "Sub Row 1.1",
-          months: {
-            January: { plan: 50, fact: 48 },
-            February: { plan: 60, fact: 58 },
-            March: { plan: 70, fact: 68 },
-            April: { plan: 65, fact: 63 },
-            May: { plan: 55, fact: 52 },
-            June: { plan: 75, fact: 72 },
-            July: { plan: 80, fact: 78 },
-            August: { plan: 90, fact: 85 },
-            September: { plan: 70, fact: 68 },
-            October: { plan: 65, fact: 62 },
-            November: { plan: 60, fact: 58 },
-            December: { plan: 80, fact: 78 },
-          },
-          sum: 820,
-          subRows: [
-            {
-              id: " 1.1.1",
-              name: "Sub Sub Row 1.1.1",
-              months: {
-                January: { plan: 20, fact: 19 },
-                February: { plan: 25, fact: 24 },
-                March: { plan: 30, fact: 29 },
-                April: { plan: 28, fact: 27 },
-                May: { plan: 22, fact: 21 },
-                June: { plan: 35, fact: 34 },
-                July: { plan: 40, fact: 39 },
-                August: { plan: 45, fact: 44 },
-                September: { plan: 30, fact: 29 },
-                October: { plan: 28, fact: 27 },
-                November: { plan: 25, fact: 24 },
-                December: { plan: 35, fact: 34 },
-              },
-              sum: 363,
-              subRows: [
-                {
-                  id: " 1.1.1.1",
-                  name: "Sub Sub Sub Row 1.1.1",
-                  months: {
-                    January: { plan: 20, fact: 19 },
-                    February: { plan: 25, fact: 24 },
-                    March: { plan: 30, fact: 29 },
-                    April: { plan: 28, fact: 27 },
-                    May: { plan: 22, fact: 21 },
-                    June: { plan: 35, fact: 34 },
-                    July: { plan: 40, fact: 39 },
-                    August: { plan: 45, fact: 44 },
-                    September: { plan: 30, fact: 29 },
-                    October: { plan: 28, fact: 27 },
-                    November: { plan: 25, fact: 24 },
-                    December: { plan: 35, fact: 34 },
-                  },
-                  sum: 363,
-                  subRows: [],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: "3",
-      name: "563",
-      months: {
-        January: {
-          newfirstYear: 200,
-          newsecondYear: 104,
-          differencePercentage: "18",
-          differenceAmount: "37600",
-        },
-        February: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        March: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        April: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        May: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        June: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        July: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        August: {
-          newfirstYear: 150,
-          secondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        September: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        October: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        November: {
-          newfirstYear: 150,
-          newsecondYear: 140,
-          differencePercentage: "6.67",
-          differenceAmount: "100",
-        },
-        // add other months here...
-      },
-      firstYearTotalSum: "866,007",
-      secondYearTotalSum: "846,963",
-      percentageSeparateTotal: "56.6",
-      amountSeparateTotal: "20963",
-      subRows: [
-        {
-          id: "1.1",
-          name: "563 uchun 1.1",
-          months: {
-            January: { plan: 50, fact: 48 },
-            February: { plan: 60, fact: 58 },
-            March: { plan: 70, fact: 68 },
-            April: { plan: 65, fact: 63 },
-            May: { plan: 55, fact: 52 },
-            June: { plan: 75, fact: 72 },
-            July: { plan: 80, fact: 78 },
-            August: { plan: 90, fact: 85 },
-            September: { plan: 70, fact: 68 },
-            October: { plan: 65, fact: 62 },
-            November: { plan: 60, fact: 58 },
-            December: { plan: 80, fact: 78 },
-          },
-          sum: 820,
-          subRows: [
-            {
-              id: " 1.1.1",
-              name: "Sub Sub Row 1.1.1",
-              months: {
-                January: { plan: 20, fact: 19 },
-                February: { plan: 25, fact: 24 },
-                March: { plan: 30, fact: 29 },
-                April: { plan: 28, fact: 27 },
-                May: { plan: 22, fact: 21 },
-                June: { plan: 35, fact: 34 },
-                July: { plan: 40, fact: 39 },
-                August: { plan: 45, fact: 44 },
-                September: { plan: 30, fact: 29 },
-                October: { plan: 28, fact: 27 },
-                November: { plan: 25, fact: 24 },
-                December: { plan: 35, fact: 34 },
-              },
-              sum: 363,
-              subRows: [
-                {
-                  id: " 1.1.1.1",
-                  name: "Sub Sub Sub Row 1.1.1",
-                  months: {
-                    January: { plan: 20, fact: 19 },
-                    February: { plan: 25, fact: 24 },
-                    March: { plan: 30, fact: 29 },
-                    April: { plan: 28, fact: 27 },
-                    May: { plan: 22, fact: 21 },
-                    June: { plan: 35, fact: 34 },
-                    July: { plan: 40, fact: 39 },
-                    August: { plan: 45, fact: 44 },
-                    September: { plan: 30, fact: 29 },
-                    October: { plan: 28, fact: 27 },
-                    November: { plan: 25, fact: 24 },
-                    December: { plan: 35, fact: 34 },
-                  },
-                  sum: 363,
-                  subRows: [],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-  totalData:[
-    {
-    name: "Grand Total",
-    months: {
-      January: {
-        newfirstMonth: 400000000,
-        newsecondMonth: 104,
-        differencePercentageTotalMonth: "18",
-        differenceAmountTotalMonth: "37600",
-      },
-      February: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      March: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      April: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      May: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      June: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      July: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      August: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      September: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      October: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      November: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-      December: {
-        newfirstMonth: 150,
-        newsecondMonth: 140,
-        differencePercentageTotalMonth: "6.67",
-        differenceAmountTotalMonth: "100",
-      },
-    },
-    firstYearTotalMonthSum: "866,007",
-    secondYearTotalMonthSum: "846,963",
-    percentageSeparateTotalMonth: "46.6",
-    amountSeparateTotalMonth: "10963",
-  }
-  ],
-};
-
 // Define the list of years without id
 const yearsList = [
   { label: 2020 },
@@ -1303,28 +272,30 @@ const yearsList = [
 const AnalizeYearDashboard = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const [openRows, setOpenRows] = useState({});
-  // const [selectedFirstYear, setSelectedFirstYear] = useState(2023);
-  // const [selectedSecondtYear, setSelectedSecondYear] = useState(null);
   const [selectedMonths, setSelectedMonths] = useState([]); // select mont name
   const [selectedNumbers, setSelectedNumbers] = useState([]); // select account book number
-  const [firsttableData, setFirstTableData] = useState(tableData);
+  const [firsttableData, setFirstTableData] = useState(newTestAPI);
   const [selectedYears, setSelectedYears] = useState([]);
   const [dataFetched, setDataFetched] = useState(false); // New state variable
-  // const [yearBollean, setYearBollean] = useState(false);
   const [firstYear, setFirstYear] = useState(null);
   const [secondYear, setSecondYear] = useState(null);
   const [showFirstYear, setShowFirstYear] = useState(true);
+  const [selectedButton, setSelectedButton] = useState(null);
 
 
 
-
+  const handleSelect = (event, newSelection) => {
+    if (newSelection !== null) {
+      setSelectedButton(newSelection);
+    }
+  };
 
   const monthArray = monthsList.map((month) => month.name);
 
   const getDataForYear = (year) => {
     // Simulate data fetching logic here
     // For now, return the same mock data
-    return tableData.map((item) => ({
+    return newTestAPI.map((item) => ({
       ...item,
       name: `${item.name} (${year})`, // Append year to distinguish data
     }));
@@ -1384,8 +355,8 @@ const AnalizeYearDashboard = () => {
                   borderRadius: "5px",
                   height: "20px",
                   padding: "0 4px",
-                  textAlign:"right",
-                  display: showFirstYear ? 'table-cell' : 'none',
+                  textAlign: "right",
+                  display: showFirstYear ? "table-cell" : "none",
                 }}
               >
                 {row.months[month]?.newfirstYear || "-"}
@@ -1397,7 +368,7 @@ const AnalizeYearDashboard = () => {
                   borderRadius: "5px",
                   height: "20px",
                   padding: "0 4px",
-                  textAlign:"right",
+                  textAlign: "right",
                 }}
               >
                 {row.months[month]?.newsecondYear || "-"}
@@ -1421,7 +392,7 @@ const AnalizeYearDashboard = () => {
                   borderRadius: "5px",
                   height: "20px",
                   padding: "0 4px",
-                  textAlign:"right",
+                  textAlign: "right",
                 }}
               >
                 {row.months[month]?.differenceAmount || "-"}
@@ -1436,7 +407,7 @@ const AnalizeYearDashboard = () => {
               borderRadius: "5px",
               height: "20px",
               padding: "0 4px",
-              textAlign:"right",
+              textAlign: "right",
             }}
           >
             {row?.firstYearTotalSum || "-"}
@@ -1448,7 +419,7 @@ const AnalizeYearDashboard = () => {
               borderRadius: "5px",
               height: "20px",
               padding: "0 4px",
-              textAlign:"right",
+              textAlign: "right",
             }}
           >
             {row?.secondYearTotalSum || "-"}
@@ -1472,7 +443,7 @@ const AnalizeYearDashboard = () => {
               borderRadius: "5px",
               height: "20px",
               padding: "0 4px",
-              textAlign:"right",
+              textAlign: "right",
             }}
           >
             {row?.amountSeparateTotal || "-"}
@@ -1492,7 +463,7 @@ const AnalizeYearDashboard = () => {
           ))}
       </React.Fragment>
     );
-  };
+  }
 
   DataRow.propTypes = {
     row: PropTypes.shape({
@@ -1505,54 +476,6 @@ const AnalizeYearDashboard = () => {
     }).isRequired,
     depth: PropTypes.number,
     monthArray: PropTypes.array.isRequired,
-  };
-
-  // Render function for the tables
-  const renderTable = () => {
-    if (dataFetched) {
-      if (selectedYears.length === 1 || selectedYears.length === 2) {
-        return (
-          <Box sx={{ minWidth: "2340px" }}>
-            {/* Header Rows */}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: Colors.lightGray,
-                padding: "10px 0",
-                borderBottom: "1px solid #e0e0e0",
-              }}
-            >
-              <Box sx={{ width: "40px" }} />
-              <Box sx={{ width: "350px", flexShrink: 0 }}>
-                <Typography variant="h6">Сумма по полю Сумма</Typography>
-              </Box>
-              {monthArray.map((month) => (
-                <Box
-                  key={month}
-                  sx={{
-                    width: "160px",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="subtitle2">{month}</Typography>
-                </Box>
-              ))}
-              <Box sx={{ width: "80px", textAlign: "center" }}>
-                <Typography variant="subtitle2">Total</Typography>
-              </Box>
-            </Box>
-
-            <Box>
-              {firstTableData.map((row) => (
-                <DataRow key={row.id} row={row} />
-              ))}
-            </Box>
-          </Box>
-        );
-      }
-    }
-    return null;
   };
 
   // select account number //
@@ -1654,6 +577,7 @@ const AnalizeYearDashboard = () => {
     console.log(secondYear, "have year 2");
   }, [firstYear, secondYear]);
 
+  // <==== YEAR PICKER proptype   ====> //
   YearPicker.propTypes = {
     yearsList: PropTypes.array.isRequired,
     selectedYears: PropTypes.array.isRequired,
@@ -1662,17 +586,6 @@ const AnalizeYearDashboard = () => {
     // setSecondYear: PropTypes.func.isRequired,
   };
 
-  const handleToggleYearSelection = (year) => {
-    setSelectedYears((prev) => {
-      if (prev.includes(year)) {
-        return prev.filter((y) => y !== year); // Deselect if already selected
-      }
-      if (prev.length < 2) {
-        return [...prev, year]; // Allow only up to two years
-      }
-      return prev; // Do nothing if already two years selected
-    });
-  };
 
   const toggleRowOpen = (id) => {
     setOpenRows((prev) => ({
@@ -1815,7 +728,7 @@ const AnalizeYearDashboard = () => {
         )}
       </>
     );
-  };
+  }
 
   Row.propTypes = {
     filial: PropTypes.shape({
@@ -1842,9 +755,6 @@ const AnalizeYearDashboard = () => {
         });
         console.log("Response from first API:", response.data);
 
-        // setFirstTableData(response.data);
-        // setSecondTableData([]);
-        // setDataFetched(true);
       } else if (selectedYears.length === 2) {
         console.log("Sending request to second API for two years");
         // Send a GET request to the second API if two years are selected
@@ -1852,21 +762,9 @@ const AnalizeYearDashboard = () => {
           params: { year1: selectedYears[0], year2: selectedYears[1] },
         });
         console.log("Response from second API:", response.data);
-
-        // if (response.data && response.data.year1Data && response.data.year2Data) {
-        //   setFirstTableData(response.data.year1Data);
-        //   setSecondTableData(response.data.year2Data);
-        // } else {
-        //   console.error("Data structure mismatch in response:", response.data);
-        //   setFirstTableData([]);
-        //   setSecondTableData([]);
-        // }
-        // setDataFetched(true);
       } else {
         console.log("No valid year selection, clearing data");
-        // setFirstTableData([]);
-        // setSecondTableData([]);
-        // setDataFetched(false);
+        
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -1885,9 +783,9 @@ const AnalizeYearDashboard = () => {
     setCheckedItems: PropTypes.func.isRequired,
   };
 
-// <=== SELECT MONTHS SECTION ===>
+  // <=== SELECT MONTHS SECTION ===>
   // const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
-  
+
   //   const handleChange = (event) => {
 
   //     const {
@@ -1897,9 +795,7 @@ const AnalizeYearDashboard = () => {
   //       typeof value === "string" ? value.split(",") : value
   //     )
   //   };
-  
 
-  
   //   return (
   //     <FormControl
   //       sx={{
@@ -1951,31 +847,30 @@ const AnalizeYearDashboard = () => {
   //   );
   // };
 
-
   const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
     const [open, setOpen] = React.useState(false);
-  
+
     const handleChange = (event) => {
       const {
         target: { value },
       } = event;
-      setSelectedMonths(typeof value === 'string' ? value.split(',') : value);
+      setSelectedMonths(typeof value === "string" ? value.split(",") : value);
     };
-  
+
     const handleToggleOpen = () => {
       setOpen((prev) => !prev);
     };
-  
+
     return (
       <FormControl
         sx={{
-          width: '100%',
-          '& .MuiInputLabel-root': {
-            fontSize: '1rem',
+          width: "100%",
+          "& .MuiInputLabel-root": {
+            fontSize: "1rem",
             color: Colors.dark,
           },
-          '& .MuiSelect-root': {
-            fontSize: '0.8rem',
+          "& .MuiSelect-root": {
+            fontSize: "0.8rem",
           },
         }}
         size="small"
@@ -1991,27 +886,27 @@ const AnalizeYearDashboard = () => {
           value={selectedMonths}
           onChange={handleChange}
           input={<OutlinedInput label="Oyni Tanlash" />}
-          renderValue={(selected) => selected.join(', ')}
+          renderValue={(selected) => selected.join(", ")}
         >
           {monthsList.map((month) => (
             <MenuItem
               key={month.id}
               value={month.name}
               sx={{
-                padding: '4px 8px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
+                padding: "4px 8px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
               }}
             >
               <Checkbox
                 checked={selectedMonths.includes(month.name)}
-                sx={{ color: Colors.blue_nbu, padding: '0' }}
+                sx={{ color: Colors.blue_nbu, padding: "0" }}
                 size="small"
               />
               <ListItemText
                 primary={month.name}
-                sx={{ fontSize: '0.8rem', margin: 0 }}
+                sx={{ fontSize: "0.8rem", margin: 0 }}
               />
             </MenuItem>
           ))}
@@ -2041,9 +936,51 @@ const AnalizeYearDashboard = () => {
     }
   };
 
+  // <=== SELECT FIRST YEAR FUNCTION ====> //
   const handleHideFirstYear = () => {
     setShowFirstYear((prev) => !prev);
   };
+
+    // Function to collect selected data and prepare parameters
+    const getSelectedParams = () => {
+      const params = {};
+  
+      // Account Numbers
+      params.accountNumbers = selectedNumbers.length
+        ? selectedNumbers
+        : numbersList; // Default to all numbers if none selected
+  
+      // Months
+      params.months = selectedMonths.length
+        ? selectedMonths
+        : monthsList.map((month) => month.name); // Default to all months if none selected
+  
+      // Years
+      params.years = selectedYears.length
+        ? selectedYears
+        : [yearsList[0].label]; // Default to first year if none selected
+  
+      // Filials
+      params.filials = checkedItems.length
+        ? checkedItems
+        : [top128Filials[0].title]; // Default to first filial if none selected
+  
+      return params;
+    };
+  
+      // Function to send data to backend
+      const sendDataToBackend = async () => {
+        const params = getSelectedParams();
+    
+        try {
+          const response = await axios.get("/your-backend-endpoint", { params });
+          console.log("Data sent successfully:", response.data);
+          // Handle the response as needed
+        } catch (error) {
+          console.error("Error sending data:", error);
+          // Handle the error as needed
+        }
+      };
 
   return (
     <Container
@@ -2339,7 +1276,7 @@ const AnalizeYearDashboard = () => {
                     {firsttableData.newMonths.map((month) => (
                       <TableCell
                         key={month}
-                        colSpan={showFirstYear ? 4 : 3} 
+                        colSpan={showFirstYear ? 4 : 3}
                         sx={{
                           textAlign: "center",
                           width: "320px",
@@ -2412,15 +1349,87 @@ const AnalizeYearDashboard = () => {
                         border: "2px solid #d0d0d0",
                         height: "22px",
                         padding: "0",
-                        display:"flex",
-                        alignItems:"center",
-                        gap:"10px"
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "2px",
                       }}
                     >
-                      <Button variant="contained" sx={{width:"25%",padding:"0px",lineHeight:"20px"}} onClick={handleHideFirstYear}>2023</Button>
-                      <Button variant="contained" sx={{width:"25%",padding:"0px",lineHeight:"20px"}}>2024</Button>
-                      <Button variant="contained" sx={{width:"25%",padding:"0px",lineHeight:"20px"}}>%</Button>
-                      <Button variant="contained" sx={{width:"25%",padding:"0px",lineHeight:"20px"}}>$</Button>
+                      <ToggleButtonGroup
+                        value={selectedButton}
+                        exclusive
+                        onChange={handleSelect}
+                        sx={{
+                          height: "22px",
+                          padding: "0",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          width: "100%",
+                          bgcolor: Colors.lightGray,
+                        }}
+                      >
+                        <ToggleButton
+                          value="2023"
+                          variant="contained"
+                          sx={{
+                            width: "25%",
+                            padding: "0px",
+                            lineHeight: "20px",
+                            color: "white",
+                            borderRadius: "0px",
+                            bgcolor:
+                              selectedButton === "2023" ? "lightblue" : "#020D9E",
+                          }}
+                          onClick={() => handleHideFirstYear()}
+                        >
+                          2023
+                        </ToggleButton>
+                        <ToggleButton
+                          value="2024"
+                          variant="contained"
+                          sx={{
+                            width: "25%",
+                            padding: "0px",
+                            lineHeight: "20px",
+                            color: "white",
+                            borderRadius: "0px",
+                            bgcolor:
+                              selectedButton === "2024" ? "lightblue" : "#020D9E",
+                          }}
+                        >
+                          2024
+                        </ToggleButton>
+                        <ToggleButton
+                          value="%"
+                          variant="contained"
+                          sx={{
+                            width: "25%",
+                            padding: "0px",
+                            lineHeight: "20px",
+                            color: "white",
+                            borderRadius: "0px",
+                            bgcolor:
+                              selectedButton === "%" ? "lightblue" : "#020D9E",
+                          }}
+                        >
+                          %
+                        </ToggleButton>
+                        <ToggleButton
+                          value="$"
+                          variant="contained"
+                          sx={{
+                            width: "25%",
+                            padding: "0px",
+                            lineHeight: "20px",
+                            color: "white",
+                            borderRadius: "0px",
+                            bgcolor:
+                              selectedButton === "$" ? "lightblue" : "#020D9E",
+                          }}
+                        >
+                          $
+                        </ToggleButton>
+                      </ToggleButtonGroup>
                     </TableCell>
                     {monthArray.map((month) => (
                       <React.Fragment key={month}>
@@ -2432,7 +1441,7 @@ const AnalizeYearDashboard = () => {
                             borderRadius: "8px",
                             height: "20px",
                             padding: "0 4px",
-                            display: showFirstYear ? 'table-cell' : 'none',
+                            display: showFirstYear ? "table-cell" : "none",
                           }}
                         >
                           <Typography
@@ -2504,14 +1513,14 @@ const AnalizeYearDashboard = () => {
                         borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
-                        display: showFirstYear ? 'table-cell' : 'none',
+                        display: showFirstYear ? "table-cell" : "none",
                       }}
                     >
                       <Typography
                         variant="subtitle2"
                         sx={{ lineHeight: "normal", fontWeight: "bold" }}
                       >
-                        {tableData.choosedfirstYear}
+                        {newTestAPI.choosedfirstYear}
                       </Typography>
                     </TableCell>
 
@@ -2529,7 +1538,7 @@ const AnalizeYearDashboard = () => {
                         variant="subtitle2"
                         sx={{ lineHeight: "normal", fontWeight: "bold" }}
                       >
-                        {tableData.choosedsecondYear}
+                        {newTestAPI.choosedsecondYear}
                       </Typography>
                     </TableCell>
                     <TableCell
@@ -2575,153 +1584,187 @@ const AnalizeYearDashboard = () => {
                     firsttableData.data.map((row) => (
                       <DataRow key={row.id} row={row} monthArray={monthArray} />
                     ))}
-                    {/* <==== TOTAL BOTTOM SECTION  ====> */}
-                    {tableData.totalData.map((total, key) => (
-                      <TableRow
-                        key={key}
+                  {/* <==== TOTAL BOTTOM SECTION  ====> */}
+                  {newTestAPI.totalData.map((total, key) => (
+                    <TableRow
+                      key={key}
+                      sx={{
+                        backgroundColor: Colors.lightGray,
+                        borderTop: "2px solid #e0e0e0",
+                        height: "22px",
+                      }}
+                    >
+                      {/* Name Cell */}
+                      <TableCell
                         sx={{
-                          backgroundColor: Colors.lightGray,
-                          borderTop: "2px solid #e0e0e0",
-                          height: "22px",
+                          width: "482px",
+                          flexShrink: 0,
+                          border: "2px solid #d0d0d0",
+                          height: "20px",
+                          padding: "0",
                         }}
                       >
-                        {/* Name Cell */}
-                        <TableCell
+                        <Typography
+                          variant="subtitle2"
                           sx={{
-                            width: "482px",
-                            flexShrink: 0,
-                            border: "2px solid #d0d0d0",
-                            height: "20px",
-                            padding: "0",
+                            lineHeight: "normal",
+                            fontWeight: "bold",
+                            paddingLeft: "5px",
                           }}
                         >
-                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold",paddingLeft:"5px" }}>
-                            {total.name}
-                          </Typography>
-                        </TableCell>
+                          {total.name}
+                        </Typography>
+                      </TableCell>
 
-                        {/* Monthly Data Cells */}
-                        {monthArray.map((month, index) => (
-                          <React.Fragment key={index}>
-                            <TableCell
-                              sx={{
-                                width: "120px",
-                                textAlign: "right",
-                                border: "2px solid #d0d0d0",
-                                borderRadius: "8px",
-                                height: "20px",
-                                padding: "0 4px",
-                                display: showFirstYear ? 'table-cell' : 'none',
-                              }}
+                      {/* Monthly Data Cells */}
+                      {monthArray.map((month, index) => (
+                        <React.Fragment key={index}>
+                          <TableCell
+                            sx={{
+                              width: "120px",
+                              textAlign: "right",
+                              border: "2px solid #d0d0d0",
+                              borderRadius: "8px",
+                              height: "20px",
+                              padding: "0 4px",
+                              display: showFirstYear ? "table-cell" : "none",
+                            }}
+                          >
+                            <Typography
+                              variant="subtitle2"
+                              sx={{ lineHeight: "normal" }}
                             >
-                              <Typography variant="subtitle2" sx={{ lineHeight: "normal" }}>
-                                {total.months[month]?.newfirstMonth || "-"}
-                              </Typography>
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                width: "120px",
-                                textAlign: "right",
-                                border: "2px solid #d0d0d0",
-                                borderRadius: "8px",
-                                height: "20px",
-                                padding: "0 4px",
-                              }}
+                              {total.months[month]?.newfirstMonth || "-"}
+                            </Typography>
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: "120px",
+                              textAlign: "right",
+                              border: "2px solid #d0d0d0",
+                              borderRadius: "8px",
+                              height: "20px",
+                              padding: "0 4px",
+                            }}
+                          >
+                            <Typography
+                              variant="subtitle2"
+                              sx={{ lineHeight: "normal" }}
                             >
-                              <Typography variant="subtitle2" sx={{ lineHeight: "normal" }}>
-                                {total.months[month]?.newsecondMonth || "-"}
-                              </Typography>
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                width: "120px",
-                                textAlign: "center",
-                                border: "2px solid #d0d0d0",
-                                borderRadius: "5px",
-                                height: "20px",
-                                padding: "0 4px",
-                              }}
+                              {total.months[month]?.newsecondMonth || "-"}
+                            </Typography>
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: "120px",
+                              textAlign: "center",
+                              border: "2px solid #d0d0d0",
+                              borderRadius: "5px",
+                              height: "20px",
+                              padding: "0 4px",
+                            }}
+                          >
+                            <Typography
+                              variant="subtitle2"
+                              sx={{ lineHeight: "normal" }}
                             >
-                              <Typography variant="subtitle2" sx={{ lineHeight: "normal" }}>
-                                {total.months[month]?.differencePercentageTotalMonth || "-"}%
-                              </Typography>
-                            </TableCell>
-                            <TableCell
-                              sx={{
-                                width: "120px",
-                                textAlign: "right",
-                                border: "2px solid #d0d0d0",
-                                borderRadius: "5px",
-                                height: "20px",
-                                padding: "0 4px",
-                              }}
+                              {total.months[month]
+                                ?.differencePercentageTotalMonth || "-"}
+                              %
+                            </Typography>
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: "120px",
+                              textAlign: "right",
+                              border: "2px solid #d0d0d0",
+                              borderRadius: "5px",
+                              height: "20px",
+                              padding: "0 4px",
+                            }}
+                          >
+                            <Typography
+                              variant="subtitle2"
+                              sx={{ lineHeight: "normal" }}
                             >
-                              <Typography variant="subtitle2" sx={{ lineHeight: "normal" }}>
-                                {total.months[month]?.differenceAmountTotalMonth || "-"}
-                              </Typography>
-                            </TableCell>
-                          </React.Fragment>
-                        ))}
+                              {total.months[month]
+                                ?.differenceAmountTotalMonth || "-"}
+                            </Typography>
+                          </TableCell>
+                        </React.Fragment>
+                      ))}
 
-                        {/* Total Yearly Sums and Final Columns */}
-                        <TableCell
-                          sx={{
-                            width: "120px",
-                            textAlign: "right",
-                            border: "2px solid #d0d0d0",
-                            borderRadius: "5px",
-                            height: "20px",
-                            padding: "0 4px",
-                          }}
+                      {/* Total Yearly Sums and Final Columns */}
+                      <TableCell
+                        sx={{
+                          width: "120px",
+                          textAlign: "right",
+                          border: "2px solid #d0d0d0",
+                          borderRadius: "5px",
+                          height: "20px",
+                          padding: "0 4px",
+                        }}
+                      >
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ lineHeight: "normal", fontWeight: "bold" }}
                         >
-                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold" }}>
-                            {total.firstYearTotalMonthSum}
-                          </Typography>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            width: "120px",
-                            textAlign: "right",
-                            border: "2px solid #d0d0d0",
-                            borderRadius: "5px",
-                            height: "20px",
-                            padding: "0 4px",
-                          }}
+                          {total.firstYearTotalMonthSum}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          width: "120px",
+                          textAlign: "right",
+                          border: "2px solid #d0d0d0",
+                          borderRadius: "5px",
+                          height: "20px",
+                          padding: "0 4px",
+                        }}
+                      >
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ lineHeight: "normal", fontWeight: "bold" }}
                         >
-                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold" }}>
-                            {total.secondYearTotalMonthSum}
-                          </Typography>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            width: "120px",
-                            textAlign: "center",
-                            border: "2px solid #d0d0d0",
-                            borderRadius: "5px",
-                            height: "20px",
-                            padding: "0 4px",
-                          }}
+                          {total.secondYearTotalMonthSum}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          width: "120px",
+                          textAlign: "center",
+                          border: "2px solid #d0d0d0",
+                          borderRadius: "5px",
+                          height: "20px",
+                          padding: "0 4px",
+                        }}
+                      >
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ lineHeight: "normal", fontWeight: "bold" }}
                         >
-                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold" }}>
-                            {total.percentageSeparateTotalMonth}%
-                          </Typography>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            width: "120px",
-                            textAlign: "right",
-                            border: "2px solid #d0d0d0",
-                            borderRadius: "5px",
-                            height: "20px",
-                            padding: "0 4px",
-                          }}
+                          {total.percentageSeparateTotalMonth}%
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          width: "120px",
+                          textAlign: "right",
+                          border: "2px solid #d0d0d0",
+                          borderRadius: "5px",
+                          height: "20px",
+                          padding: "0 4px",
+                        }}
+                      >
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ lineHeight: "normal", fontWeight: "bold" }}
                         >
-                          <Typography variant="subtitle2" sx={{ lineHeight: "normal", fontWeight: "bold" }}>
-                            {total.amountSeparateTotalMonth}
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                          {total.amountSeparateTotalMonth}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </Box>
