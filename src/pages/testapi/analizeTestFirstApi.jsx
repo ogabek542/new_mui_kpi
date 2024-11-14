@@ -42,7 +42,7 @@ const newtableData = {
         subRows: [
           {
             id: "1.1",
-            name: "Sub Row 1.1",
+            name: "Заработная плата",
             months: {
                 January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
                 // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
@@ -65,7 +65,56 @@ const newtableData = {
             subRows: [
               {
                 id: " 1.1.1",
-                name: "Sub Sub Row 1.1.1",
+                name: "Выплата районного коэффициента",
+                months: {
+                    January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
+                    // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
+                    February: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    March: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    April: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    May: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    June: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    July: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    August: { newfirstYear: 150, secondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    September: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    October: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    November: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    December: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                },
+                firstYearTotalSum: "866,007",
+                secondYearTotalSum: "846,963",
+                percentageSeparateTotal: "46.6",
+                amountSeparateTotal: "10963",
+                subRows: [
+                  {
+                    id: " 1.1.1.1",
+                    name: "1112121212",
+                    months: {
+                        January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
+                        // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
+                        February: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        March: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        April: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        May: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        June: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        July: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        August: { newfirstYear: 150, secondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        September: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        October: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        November: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        December: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    },
+                    firstYearTotalSum: "866,007",   
+                    secondYearTotalSum: "846,963",
+                    percentageSeparateTotal: "46.6",
+                    amountSeparateTotal: "10963",
+                    subRows: [],
+                  },
+                ],
+              },
+              {
+                id: " 1.1.1",
+                name: "Гособязанность/Харбий мажбурият",
                 months: {
                     January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
                     // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
@@ -112,8 +161,157 @@ const newtableData = {
                   },
                 ],
               },
+              {
+                id: " 1.1.1",
+                name: "ИСН, ИОР и другие надбавки",
+                months: {
+                    January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
+                    // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
+                    February: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    March: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    April: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    May: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    June: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    July: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    August: { newfirstYear: 150, secondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    September: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    October: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    November: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    December: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                },
+                firstYearTotalSum: "866,007",
+                secondYearTotalSum: "846,963",
+                percentageSeparateTotal: "46.6",
+                amountSeparateTotal: "10963",
+                subRows: [
+                  {
+                    id: " 1.1.1.1",
+                    name: "Sub Sub Sub Row 1.1.1",
+                    months: {
+                        January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
+                        // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
+                        February: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        March: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        April: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        May: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        June: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        July: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        August: { newfirstYear: 150, secondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        September: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        October: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        November: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        December: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    },
+                    firstYearTotalSum: "866,007",   
+                    secondYearTotalSum: "846,963",
+                    percentageSeparateTotal: "46.6",
+                    amountSeparateTotal: "10963",
+                    subRows: [],
+                  },
+                ],
+              },
+              {
+                id: " 1.1.1",
+                name: "Оклад по штатному расписанию",
+                months: {
+                    January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
+                    // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
+                    February: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    March: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    April: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    May: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    June: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    July: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    August: { newfirstYear: 150, secondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    September: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    October: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    November: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    December: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                },
+                firstYearTotalSum: "866,007",
+                secondYearTotalSum: "846,963",
+                percentageSeparateTotal: "46.6",
+                amountSeparateTotal: "10963",
+              
+              },
             ],
           },
+          {
+            id: "1.1",
+            name: "Льготы для сотрудников",
+            months: {
+                January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
+                // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
+                February: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                March: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                April: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                May: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                June: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                July: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                August: { newfirstYear: 150, secondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                September: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                October: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                November: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                December: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+            },
+            firstYearTotalSum: "866,007",
+            secondYearTotalSum: "846,963",
+            percentageSeparateTotal: "46.6",
+            amountSeparateTotal: "10963",
+            subRows: [
+              {
+                id: " 1.1.1",
+                name: "202:Единовременные премии (другие)",
+                months: {
+                    January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
+                    // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
+                    February: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    March: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    April: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    May: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    June: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    July: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    August: { newfirstYear: 150, secondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    September: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    October: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    November: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    December: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                },
+                firstYearTotalSum: "866,007",
+                secondYearTotalSum: "846,963",
+                percentageSeparateTotal: "46.6",
+                amountSeparateTotal: "10963",
+                subRows: [
+                  {
+                    id: " 1.1.1.1",
+                    name: "1112121212",
+                    months: {
+                        January: { newfirstYear: 200, newsecondYear: 104, differencePercentage: "18", differenceAmount: "37600" }, 
+                        // newfirstYear: 200,=> bu tanlangan kichik yil qiymati , newsecondYear: 104,=> bu user tomonidan katta yil qiymati joylanadi, differencePercentage: "18",=> tanlangan kichikj va katta yillar orasidagi farq foiz qiymat chiqarish uchun   //
+                        February: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        March: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        April: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        May: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        June: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        July: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        August: { newfirstYear: 150, secondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        September: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        October: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        November: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                        December: { newfirstYear: 150, newsecondYear: 140, differencePercentage: "6.67", differenceAmount: "100" },
+                    },
+                    firstYearTotalSum: "866,007",   
+                    secondYearTotalSum: "846,963",
+                    percentageSeparateTotal: "46.6",
+                    amountSeparateTotal: "10963",
+                    subRows: [],
+                  },
+                ],
+              },
+            
+            ],
+          },
+
         ],
       },
       // Add more rows as needed
@@ -321,7 +519,7 @@ const newtableData = {
       name: "Grand Total", // to'liq yig'indi nomi xardoim birxil "Grand Total" //
       months: {
         January: {
-          newfirstMonth: 400000000, // ==>  tanlangan kichik yilning 1-oydagi qiymatlari to'liq yig'indisi //
+          newfirstMonth: 4000, // ==>  tanlangan kichik yilning 1-oydagi qiymatlari to'liq yig'indisi //
           newsecondMonth: 104, // ==>  tanlangan katta yilning 1-oydagi qiymatlari to'liq yig'indisi //
           differencePercentageTotalMonth: "18", // ==> 1-oydagi  tanlangan katta va kichik yilning o'zaro nisbatidan olingan foiz  //
           differenceAmountTotalMonth: "37600", // ==> 1-oydagi  tanlangan katta va kichik yilning o'zaro ayirmasidan olingan summa   //

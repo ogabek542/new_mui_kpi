@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from 'qs';
 
 // const API_URL = 'http://10.8.88.91:8000/';
 const API_URL = "http://10.8.99.171:8000/";
@@ -113,14 +114,6 @@ export const REQUESTS = {
     getRealTimeLive: () => axiosInstance.get("/api/daily-visitors"),
   },
 
-  // data: {
-  //   getData: (date) => axiosInstance.get('/api/work-log/', { params: { date } }), // Adjust endpoint
-  //   addData: (newData) => axiosInstance.post('/api/work-log/', newData),
-  //   editData: (id, updatedData) => axiosInstance.put(`/api/work-log/${id}/`, updatedData),
-  //   deleteData: (id) => axiosInstance.delete(`/api/work-log/${id}/`),
-  //   sendAllData: (data) => axiosInstance.post('/api/work-log/', data),
-  // },
-
   data: { 
     getData: (tableNumber, date) => axiosInstance.get(`/api/work-log/${tableNumber}/${date}/`),
     addData: (newData) => axiosInstance.post('/api/work-log/', newData),
@@ -129,6 +122,14 @@ export const REQUESTS = {
     // Updated sendAllData to accept tableNumber and date
     sendAllData: (tableNumber, date, data) => axiosInstance.post(`/api/work-log/${tableNumber}/${date}/`, data),
   },
+  financialAnalize: {
+    getFinancialAnalize: (params = {}) =>
+      axiosInstance.get("/api/financial-data", {
+        params,
+        paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat', encode: false }),
+      }),
+  },
+  
 };
 // console.log(getToken(), "get token");
 // console.log(getRefreshToken(),'ok refresh')

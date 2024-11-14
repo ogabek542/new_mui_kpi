@@ -272,7 +272,7 @@ const MainPage = () => {
               },
             }}
             // onClick={handleNavigateBalanceScreen}
-            onClick={handleOpenAcceptModal}
+            onClick={() => navigate("analizeyeardashboard")}
           >
             <Typography sx={{ fontWeight: "bold", textTransform: "uppercase" }}>
               {t("analysis")}

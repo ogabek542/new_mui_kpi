@@ -29,193 +29,195 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import PropTypes from "prop-types";
-import axios from "axios";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 // import 1-mock api datda // 
 import newTestAPI from "../testapi/analizeTestFirstApi";
 // import 2-mock api datda //
 import secondTableAPI from "../testapi/analizeSecondTable";
-
+import { REQUESTS } from "../../api/requests";
 
 // branch section //
 const top128Filials = [
-  { title: "Республика", id: 1 },
-  { title: "Тошкент ш", id: 2 },
-  { title: "Андижон", id: 3 },
-  { title: "Бухоро", id: 4 },
-  { title: "Фарғона", id: 5 },
-  { title: "Жиззах", id: 6 },
-  { title: "Наманган", id: 7 },
-  { title: "Навоий", id: 8 },
-  { title: "Қашқадарё", id: 9 },
-  { title: "Самарқанд", id: 10 },
-  { title: "Сирдарё", id: 11 },
-  { title: "Сурхондарё", id: 12 },
-  { title: "Тошкент вил", id: 13 },
-  { title: "Хоразм", id: 14 },
-  { title: "Қорақалпоғистон", id: 15 },
-  { title: "Миробод", id: 16 },
+  // { title: "Республика", id: 1 },
+  { title: "Respublika", id: 1 },
+  { title: "Toshkent ", id: 2 },
+  { title: "Andijon", id: 3 },
+  { title: "Buxoro", id: 4 },
+  { title: "Farg'ona", id: 5 },
+  { title: "Jizzax", id: 6 },
+  { title: "Namangan", id: 7 },
+  { title: "Navoiy", id: 8 },
+  { title: "Qashqadaryo", id: 9 },
+  { title: "Samarqand", id: 10 },
+  { title: "Sirdaryo", id: 11 },
+  { title: "Surxondaryo", id: 12 },
+  { title: "Toshkent vil", id: 13 },
+  { title: "Xorazm", id: 14 },
+  { title: "Qoraqalpog'iston", id: 15 },
+  { title: "Mirobod", id: 16 },
 ];
 
 // filials section //
 const setSelectedSecondMap = {
   // NBU//
-  1: [{ title: "Республика" }],
-  // Тошкент шаҳри //
+  1: [{ title: "Respublika" }],
+  // Toshkent shahri //
   2: [
-    { title: "Головной офис" },
-    { title: "Абусахий БХО" },
-    { title: "Атлас НБУ БХО" },
-    { title: "Ғалаба БХО" },
-    { title: "Миробод плаза БХО" },
-    { title: "Наврўз БХО" },
-    { title: "Технопарк БХО" },
-    { title: "Хумо БХО" },
-    { title: "Шайхонтохур БХО" },
-    { title: "Янги сергели БХО" },
-    { title: "Академия БХМ" },
-    { title: "Бектемир БХМ" },
-    { title: "Бош амалиёт БХМ" },
-    { title: "Марказий амалиёт БХМ" },
-    { title: "Мирзо-Улуғбек БХМ" },
-    { title: "Олмазор БХМ" },
-    { title: "Саёхат БХМ" },
-    { title: "Себзор амалиёт БХМ" },
-    { title: "Сергели БХМ" },
-    { title: "Учтепа БХM" },
-    { title: "Юнусобод БХМ" },
-    { title: "Яккасарой БХМ" },
-    { title: "Янгиобод БХM" },
-    { title: "Яшнобод БХM" },
+    { title: "Bosh ofis" },
+    { title: "Abusaxiy BXO" },
+    { title: "Atlas NBU BXO" },
+    { title: "G‘alaba BXO" },
+    { title: "Mirobod plaza BXO" },
+    { title: "Navro‘z BXO" },
+    { title: "Texnopark BXO" },
+    { title: "Xumo BXO" },
+    { title: "Shayxontohur BXO" },
+    { title: "Yangi Sergeli BXO" },
+    { title: "Akademiya BXM" },
+    { title: "Bektemir BXM" },
+    { title: "Bosh amaliyot BXM" },
+    { title: "Markaziy amaliyot BXM" },
+    { title: "Mirzo-Ulug‘bek BXM" },
+    { title: "Olmazor BXM" },
+    { title: "Sayohat BXM" },
+    { title: "Sebzor amaliyot BXM" },
+    { title: "Sergeli BXM" },
+    { title: "Uchtepa BXM" },
+    { title: "Yunusobod BXM" },
+    { title: "Yakkasaroy BXM" },
+    { title: "Yangiobod BXM" },
+    { title: "Yashnobod BXM" },
   ],
-  // Андижон вилояти //
+  // Andijon viloyati //
   3: [
-    { title: "Андижон амалиёт БХМ" },
-    { title: "Асака БХM" },
-    { title: "Избоскан БХО" },
-    { title: "Қурғонтепа БХО" },
-    { title: "Мархамат БХМ" },
-    { title: "Пахтаобод БХО" },
-    { title: "Шахрихон БХО" },
+    { title: "Andijon amaliyot BXM" },
+    { title: "Asaka BXM" },
+    { title: "Izboskan BXO" },
+    { title: "Qo‘rg‘ontepa BXO" },
+    { title: "Marhamat BXM" },
+    { title: "Paxtaobod BXO" },
+    { title: "Shaxrixon BXO" },
   ],
-  // Бухоро вилояти //
+  // Buxoro viloyati //
   4: [
-    { title: "Арк БХО" },
-    { title: "Бухоро амалиёт БХМ" },
-    { title: "Бухоро шаҳар БХО" },
-    { title: "Вобкент БХО" },
-    { title: "Ғиждувон БХМ" },
-    { title: "Когон БХM" },
-    { title: "Қоракўл БХМ" },
-    { title: "Қоровулбозор БХО" },
-    { title: "Нақшбанд БХО" },
-    { title: "Ромитан БХМ" },
-    { title: "Шофиркон БХО" },
+    { title: "Ark BXO" },
+    { title: "Buxoro amaliyot BXM" },
+    { title: "Buxoro shahar BXO" },
+    { title: "Vobkent BXO" },
+    { title: "G‘ijduvon BXM" },
+    { title: "Kogon BXM" },
+    { title: "Qorako‘l BXM" },
+    { title: "Qorovulbozor BXO" },
+    { title: "Naqshband BXO" },
+    { title: "Romitan BXM" },
+    { title: "Shofirkon BXO" },
   ],
-  // Фарғона вилояти //
+  // Farg‘ona viloyati //
   5: [
-    { title: "Бешариқ БХМ" },
-    { title: "Бувайда БХО" },
-    { title: "Қува БХМ" },
-    { title: "Қувасой БХО" },
-    { title: "Қуқон БХМ" },
-    { title: "Риштон БХМ" },
-    { title: "Фарғона амалиёт БХМ" },
-    { title: "Марғилон БХО" },
+    { title: "Beshariq BXM" },
+    { title: "Buvayda BXO" },
+    { title: "Quva BXM" },
+    { title: "Quvasoy BXO" },
+    { title: "Qo‘qon BXM" },
+    { title: "Rishton BXM" },
+    { title: "Farg‘ona amaliyot BXM" },
+    { title: "Marg‘ilon BXO" },
   ],
-  // Жиззах  вилояти //
+  // Jizzax viloyati //
   6: [
-    { title: "Джизак амалиёт БХМ" },
-    { title: "Индустриал БХМ" },
-    { title: "Мирзачуль БХМ" },
-    { title: "Пахтакор БХО" },
+    { title: "Jizzax amaliyot BXM" },
+    { title: "Industrial BXM" },
+    { title: "Mirzacho‘l BXM" },
+    { title: "Paxtakor BXO" },
   ],
-  // Наманган  вилояти //
+  // Namangan viloyati //
   7: [
-    { title: "Косонсой БХО" },
-    { title: "Наманган амалиёт БХМ" },
-    { title: "Турақўрғон БХО" },
-    { title: "Уйчи БХМ" },
-    { title: "Учқурғон БХМ" },
-    { title: "Чортоқ БХМ" },
-    { title: "Чуст БХО" },
+    { title: "Kosonsoy BXO" },
+    { title: "Namangan amaliyot BXM" },
+    { title: "Turaqo‘rg‘on BXO" },
+    { title: "Uychi BXM" },
+    { title: "Uchqo‘rg‘on BXM" },
+    { title: "Chortoq BXM" },
+    { title: "Chust BXO" },
   ],
-  // Навоий  вилояти //
+  // Navoiy viloyati //
   8: [
-    { title: "Зарафшон БХМ" },
-    { title: "Қизилтепа БХМ" },
-    { title: "Маликрабод БХМ" },
-    { title: "Навоий амалиёт БХМ" },
-    { title: "Нурота БХО" },
-    { title: "Учқудуқ БХМ" },
+    { title: "Zarafshon BXM" },
+    { title: "Qiziltepa BXM" },
+    { title: "Malikrabod BXM" },
+    { title: "Navoiy amaliyot BXM" },
+    { title: "Nurota BXO" },
+    { title: "Uchquduq BXM" },
   ],
-  // Қашқадарё  вилояти //
+  // Qashqadaryo viloyati //
   9: [
-    { title: "Ғузор БХО" },
-    { title: "Қарши амалиёт БХМ" },
-    { title: "Муборак БХО" },
-    { title: "Шаҳрисабз БХМ" },
-    { title: "Янгинишон БХО" },
+    { title: "G‘uzor BXO" },
+    { title: "Qarshi amaliyot BXM" },
+    { title: "Muborak BXO" },
+    { title: "Shahrisabz BXM" },
+    { title: "Yanginishon BXO" },
   ],
-  // Самарқанд  вилояти //
+  // Samarqand viloyati //
   10: [
-    { title: "Булунғур БХО" },
-    { title: "Джамбай БХМ" },
-    { title: "Зармитан БХО" },
-    { title: "Каттақўрғон БХО" },
-    { title: "Қорасув БХО" },
-    { title: "Нуробод БХО" },
-    { title: "Пайариқ БХО" },
-    { title: "Пастдаргом БХМ" },
-    { title: "Регистан БХМ" },
-    { title: "Самарканд амалиёт БХМ" },
-    { title: "Ургут БХМ" },
+    { title: "Bulung‘ur BXO" },
+    { title: "Jomboy BXM" },
+    { title: "Zarafshon BXO" },
+    { title: "Kattaqo‘rg‘on BXO" },
+    { title: "Qorasuv BXO" },
+    { title: "Nurobod BXO" },
+    { title: "Payariq BXO" },
+    { title: "Pastdarg‘om BXM" },
+    { title: "Registon BXM" },
+    { title: "Samarqand amaliyot BXM" },
+    { title: "Urgut BXM" },
   ],
-  // Сирдарё  вилояти //
-  11: [{ title: "Гулистан амалиёт БХМ" }, { title: "Оқолтин БХО" }],
-  // Сурхондарё  вилояти //
+  // Sirdaryo viloyati //
+  11: [
+    { title: "Guliston amaliyot BXM" },
+    { title: "Oqoltin BXO" },
+  ],
+  // Surxondaryo viloyati //
   12: [
-    { title: "Денов БХМ" },
-    { title: "Қумқўрғон БХМ" },
-    { title: "Термиз амалиёт БХМ" },
-    { title: "Жарқўрғон БХО" },
-    { title: "Шеробод БХО" },
+    { title: "Denov BXM" },
+    { title: "Qumqo‘rg‘on BXM" },
+    { title: "Termiz amaliyot BXM" },
+    { title: "Jarqo‘rg‘on BXO" },
+    { title: "Sherobod BXO" },
   ],
-  // Тошкент  вилояти //
+  // Toshkent viloyati //
   13: [
-    { title: "Ангрен БХM" },
-    { title: "Бекабад БХМ" },
-    { title: "Газалкент БХО" },
-    { title: "Нурафшон амалиёт БХМ" },
-    { title: "Олмалиқ БХО" },
-    { title: "Тошкент шахар БХО" },
-    { title: "Чирчиқ БХО" },
-    { title: "Янгийул БХМ" },
+    { title: "Angren BXM" },
+    { title: "Bekobod BXM" },
+    { title: "G‘azalkent BXO" },
+    { title: "Nurafshon amaliyot BXM" },
+    { title: "Olmaliq BXO" },
+    { title: "Toshkent shahar BXO" },
+    { title: "Chirchiq BXO" },
+    { title: "Yangiyo‘l BXM" },
   ],
-  // Хоразм  вилояти //
+  // Xorazm viloyati //
   14: [
-    { title: "Гурлан БХО" },
-    { title: "Карвон БХО" },
-    { title: "Хазорасп БХМ" },
-    { title: "Хива БХО" },
-    { title: "Хонқа БХМ" },
-    { title: "Хоразм амалиёт БХМ" },
-    { title: "Шовот БХМ" },
-    { title: "Янгиариқ БХО" },
-    { title: "Кушкупир БХМ" },
+    { title: "Gurlan BXO" },
+    { title: "Karvon BXO" },
+    { title: "Xazoras BXM" },
+    { title: "Xiva BXO" },
+    { title: "Xonqa BXM" },
+    { title: "Xorazm amaliyot BXM" },
+    { title: "Shovot BXM" },
+    { title: "Yangiariq BXO" },
+    { title: "Qo‘shkupir BXM" },
   ],
-  // Қорақалпоғистон республикаси //
+  // Qoraqalpog‘iston Respublikasi //
   15: [
-    { title: "Кўнғирот БХМ" },
-    { title: "Манғит БХО" },
-    { title: "Нукус амалиёт БХМ" },
-    { title: "Тўрткўл БХM" },
-    { title: "Хўжайли БХО" },
-    { title: "Чимбой БХО" },
+    { title: "Qo‘ng‘irot BXM" },
+    { title: "Mang‘it BXO" },
+    { title: "Nukus amaliyot BXM" },
+    { title: "To‘rtko‘l BXM" },
+    { title: "Xo‘jayli BXO" },
+    { title: "Chimboy BXO" },
   ],
-  16: [{ title: "Миробод" }],
+  16: [{ title: "Mirobod" }],
 };
+
 // month names //
 const monthsList = [
   { name: "January", id: 1 },
@@ -270,7 +272,7 @@ const AnalizeYearDashboard = () => {
   const [selectedMonths, setSelectedMonths] = useState([]); // select mont name
   const [selectedNumbers, setSelectedNumbers] = useState([]); // select account book number
   
-  // const [firsttableData, setFirstTableData] = useState(newTestAPI);
+  // const [firsttableData, setFirstTableData] = useState([]);
   const [selectedYears, setSelectedYears] = useState([]);
   const [dataFetched, setDataFetched] = useState(false); // New state variable
   const [firstYear, setFirstYear] = useState(null);
@@ -281,6 +283,8 @@ const AnalizeYearDashboard = () => {
   const [selectedButtons, setSelectedButtons] = useState([]);
   const toggleOptions = ["2023", "2024", "%", "$"];
 
+  const [onetable,setOneTable] = useState([]);
+
   const [visibleColumns, setVisibleColumns] = useState({
     firstYear: true,
     secondYear: true,
@@ -288,14 +292,26 @@ const AnalizeYearDashboard = () => {
     amount: true,
   });
 
+    // <==== MAKE SPACE CODE  =====>  //
+  const insertSpaces = (text) => {
+    if (!text) return ""; // Handle empty or undefined text
+
+    // Convert to string and ensure no more than 6 characters
+    const str = text.toString().slice(0, 6);
+
+    // Add spaces every 3 digits
+    return str.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  };
+
   // State variables for fetched data and UI type
   const [tableData, setTableData] = useState(null); // Data fetched from backend
   const [uiType, setUiType] = useState(null); // '1-UI' or '2-UI'
 
   const [changeapi,setChangeAPI] = useState(true);
-  const changeAPI = changeapi ?  secondTableAPI : newTestAPI;
+  // const changeAPI = changeapi ?  secondTableAPI : newTestAPI;
+  const changeAPI = changeapi ?  secondTableAPI : onetable;
   // const changeAPI = newTestAPI;
-  const [firsttableData, setFirstTableData] = useState( changeAPI );
+  const [firsttableData, setFirstTableData] = useState( changeAPI || null );
 
   useEffect(() => {
     setFirstTableData(changeAPI);
@@ -318,7 +334,6 @@ const AnalizeYearDashboard = () => {
 
   const monthArray = monthsList.map((month) => month.name);
 
-
   // <==== First DATA TABLE SECTION CODE ====>
   function DataRow({ row, depth = 0, monthArray }) {
     const [open, setOpen] = useState(false);
@@ -326,6 +341,9 @@ const AnalizeYearDashboard = () => {
 
     // Apply alternating background color as needed
     const backgroundColor = "#FFFFFF";
+
+
+
 
     return (
       <React.Fragment>
@@ -340,7 +358,7 @@ const AnalizeYearDashboard = () => {
         >
           <TableCell
             sx={{
-              width: "900px",
+              width: "600px",
               border: "2px solid #d0d0d0",
               borderRadius: "5px",
               height: "25px",
@@ -409,7 +427,7 @@ const AnalizeYearDashboard = () => {
                 {row.months[month]?.differencePercentage || "-"}%
               </TableCell>
               )}
-               {visibleColumns.amount && (
+              {visibleColumns.amount && (
               <TableCell
                 sx={{
                   width: "80px",
@@ -951,49 +969,6 @@ const AnalizeYearDashboard = () => {
     setCheckedItems: PropTypes.func.isRequired,
   };
 
-  // Function to send data to backend and fetch data
-  const sendCheckedItemsToBackend = async () => {
-    console.log("Checked items to send:", checkedItems);
-    console.log("Selected years:", selectedYears);
-
-    const params = getSelectedParams();
-
-    try {
-      if (selectedYears.length === 1) {
-        setChangeAPI(true);
-        console.log("Sending request to first API for a single year");
-        // Send a GET request to the first API if one year is selected
-        const response = await axios.get(`/api/firstEndpoint`, {
-          params: { year: selectedYears[0], ...params },
-        });
-        console.log("Response from first API:", response.data ,params);
-        setTableData(response.data);
-        setUiType("1-UI"); // Set UI type to 1-UI
-      } else if (selectedYears.length === 2) {
-        setChangeAPI(false);
-        console.log("Sending request to second API for two years");
-        // Send a GET request to the second API if two years are selected
-        const response = await axios.get(`/api/secondEndpoint`, {
-          params: {
-            year1: selectedYears[0],
-            year2: selectedYears[1],
-            ...params,
-          },
-        });
-        console.log("Response from second API:", response.data);
-        setTableData(response.data);
-        setUiType("2-UI"); // Set UI type to 2-UI
-      } else {
-        console.log("No valid year selection, clearing data");
-        setTableData(null);
-        setUiType(null);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setTableData(null);
-      setUiType(null);
-    }
-  };
 
   Row.propTypes = {
     filial: PropTypes.shape({
@@ -1007,69 +982,6 @@ const AnalizeYearDashboard = () => {
   };
 
   // <=== SELECT MONTHS SECTION ===>
-  // const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
-
-  //   const handleChange = (event) => {
-
-  //     const {
-  //       target: { value },
-  //     } = event;
-  //     setSelectedMonths(
-  //       typeof value === "string" ? value.split(",") : value
-  //     )
-  //   };
-
-  //   return (
-  //     <FormControl
-  //       sx={{
-  //         width: "100%",
-  //         "& .MuiInputLabel-root": {
-  //           fontSize: "1rem",
-  //           color: Colors.dark,
-  //         },
-  //         "& .MuiSelect-root": {
-  //           fontSize: "0.8rem",
-  //         },
-  //       }}
-  //       size="small"
-  //     >
-  //       <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
-  //       <Select
-  //         labelId="month-picker-label"
-  //         id="month-picker"
-  //         multiple
-  //         value={selectedMonths}
-  //         onChange={handleChange}
-  //         input={<OutlinedInput label="Oyni Tanlash" />}
-  //         renderValue={(selected) => selected.join(", ")}
-  //       >
-  //         {monthsList.map((month) => (
-  //           <MenuItem
-  //             key={month.id}
-  //             value={month.name}
-  //             sx={{
-  //               padding: "4px 8px",
-  //               display: "flex",
-  //               alignItems: "center",
-  //               gap: "8px",
-  //             }}
-  //           >
-  //             <Checkbox
-  //               checked={selectedMonths.includes(month.name)}
-  //               sx={{ color: Colors.blue_nbu, padding: "0" }}
-  //               size="small"
-  //             />
-  //             <ListItemText
-  //               primary={month.name}
-  //               sx={{ fontSize: "0.8rem", margin: 0 }}
-  //             />
-  //           </MenuItem>
-  //         ))}
-  //       </Select>
-  //     </FormControl>
-  //   );
-  // };
-
   const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
     const [open, setOpen] = React.useState(false);
 
@@ -1167,8 +1079,22 @@ const AnalizeYearDashboard = () => {
     setShowSecondYear((prev) => !prev);
   };
 
+  // Function to get all subregion filial names (excluding main filial titles)
+  const getAllFilialNames = () => {
+    let allFilialNames = [];
+
+    // Get subregion titles only
+    Object.values(setSelectedSecondMap).forEach((subRegions) => {
+      subRegions.forEach((subRegion) => {
+        allFilialNames.push(subRegion.title);
+      });
+    });
+
+    return allFilialNames;
+  };
+
       // Function to collect selected data and prepare parameters
-        const getSelectedParams = () => {
+  const getSelectedParams = () => {
           const params = {};
 
           // Account Numbers
@@ -1181,39 +1107,254 @@ const AnalizeYearDashboard = () => {
             ? selectedMonths
             : monthsList.map((month) => month.name); // Default to all months if none selected
 
-          // Filials
-          params.filials = checkedItems.length
+           // Filials
+            params.filials = checkedItems.length
             ? checkedItems
-            : top128Filials.map((filial) => filial.title); // Default to all filials if none selected
+            : ["Respublika"]; // If no filials selected, send all filial names
 
           return params;
-        };
+  };
   
-      // Function to send data to backend
-      const sendDataToBackend = async () => {
-        const params = getSelectedParams();
+
+    const toggleColumnVisibility = (columnKey) => {
+          setVisibleColumns((prev) => {
+            const updatedVisibility = { ...prev, [columnKey]: !prev[columnKey] };
+
+            // Ensure at least one column is visible
+            const visibleCount = Object.values(updatedVisibility).filter(Boolean).length;
+            if (visibleCount === 0) return prev;
+
+            return updatedVisibility;
+          });
+
+        };
+
+         // Function to send data to backend and fetch data
+//   const sendCheckedItemsToBackend = async () => {
+//     console.log("Checked items to send:", checkedItems);
+//     console.log("Selected years:", selectedYears);
+
+//     const params = getSelectedParams();
+
+//     try {
+//       if (selectedYears.length === 1) {
+//         setChangeAPI(true);
+//         console.log("Sending request to first API for a single year");
+//         // Send a GET request to the first API if one year is selected
+//         const response = await axios.get(`/api/firstEndpoint`, {
+//           params: { year: selectedYears[0], ...params },
+//         });
+//         console.log("Response from first API:", response.data ,params);
+//         setTableData(response.data);
+//         setUiType("1-UI"); // Set UI type to 1-UI
+//       } else if (selectedYears.length === 2) {
+//         setChangeAPI(false);
+//         console.log("Sending request to second API for two years");
+//         // Send a GET request to the second API if two years are selected
+//         const response = await axios.get(`/api/secondEndpoint`, {
+//           params: {
+//             year1: selectedYears[0],
+//             year2: selectedYears[1],
+//             ...params,
+//           },
+//         });
+//         console.log("Response from second API:", response.data);
+//         setTableData(response.data);
+//         setUiType("2-UI"); // Set UI type to 2-UI
+//       } else {
+//         console.log("No valid year selection, clearing data");
+//         setTableData(null);
+//         setUiType(null);
+//       }
+//     } catch (error) {
+//       console.error("Error fetching data:", error);
+//       setTableData(null);
+//       setUiType(null);
+//     }
+//   };
+
+// useEffect(() => {
+//   const fetchFinancialData = async () => {
+//       try {
+//           const response = await REQUESTS.financialAnalize.getFinancialAnalize();
+//           const propsdata = response.data[0];
+//             console.log(response)
+
+//       } catch (error) {
+//           console.error("Error fetching user data:", error);
+//       }
+//   };
+
+//   fetchFinancialData();
+// }, []);
+
+ // Function to send data to the backend based on selected years
+//  const sendCheckedItemsToBackend = async () => {
+//   console.log("Checked items to send:", checkedItems);
+//   console.log("Selected years:", selectedYears);
+
+//   const params = getSelectedParams(); // Your existing function for other params
+//   const formattedParams = {
+//     choosedfirstYear: selectedYears[0],
+//     choosedsecondYear: selectedYears[1],
+//     ...params,
+//   };
+
+//   // Ensure months are added as repeated keys
+//   if (params.months && Array.isArray(params.months)) {
+//     params.months.forEach((month) => {
+//       formattedParams[`newMonths`] = formattedParams[`newMonths`] || [];
+//       formattedParams[`newMonths`].push(month);
+//     });
+//   }
+
+//   try {
+//     console.log("Formatted params:", formattedParams);
+
+//     const response = await REQUESTS.financialAnalize.getFinancialAnalize(
+//       formattedParams
+//     );
+//     console.log("Response from backend:", response.data);
+//     setTableData(response.data);
+//     setUiType("2-UI");
+//   } catch (error) {
+//     console.error("Error fetching data:", error.response?.data || error.message);
+//     setTableData(null);
+//     setUiType(null);
+//   }
+// };
+
+// Adjusted sendCheckedItemsToBackend function
+// const sendCheckedItemsToBackend = async () => {
+//   console.log("Checked items to send:", checkedItems);
+//   console.log("Selected years:", selectedYears);
+
+//   const params = getSelectedParams();
+
+//   // Create formatted parameters, converting arrays to comma-separated strings
+//   const formattedParams = {
+//     choosedfirstYear: selectedYears[0],
+//     choosedsecondYear: selectedYears[1],
+//     newMonths: (params.months || []).join(','), // Convert to comma-separated string
+//     accountNumbers: (params.accountNumbers || []).join(','), // Convert to comma-separated string
+//     // filials: Excluded as per your request
+//   };
+
+//   try {
+//     console.log("Formatted Params:", formattedParams);
+
+//     const response = await REQUESTS.financialAnalize.getFinancialAnalize(
+//       formattedParams
+//     );
+
+//     setOneTable(response.data);
+
+
+//     console.log("Response from backend:", response.data);
+//     // console.log("data for table:", seconScreen_API);
+//     setTableData(response.data);
+//     setUiType("2-UI");
+//   } catch (error) {
+//     console.error("Error fetching data:", error.response?.data || error.message);
+//     setTableData(null);
+//     setUiType(null);
+//   }
+// };
+
+const sendCheckedItemsToBackend = async () => {
+  console.log("Checked items to send:", checkedItems);
+  console.log("Selected years:", selectedYears);
+
+  const params = getSelectedParams();
+
+  // Create formatted parameters, converting arrays to comma-separated strings
+  const formattedParams = {
+    choosedfirstYear: selectedYears[0],
+    choosedsecondYear: selectedYears[1],
+    newMonths: (params.months || []), // Convert to comma-separated string
+    accountNumbers: (params.accountNumbers || []).join(','), // Convert to comma-separated string
+    // filials: Excluded as per your request
+    filials: params.filials || [],
+  };
+
+
+  try {
+
+
+    console.log("Formatted Params:", formattedParams);
+
+    const response = await REQUESTS.financialAnalize.getFinancialAnalize(
+      formattedParams
+    );
+
     
-        try {
-          const response = await axios.get("/your-backend-endpoint", { params });
-          console.log("Data sent successfully:", response.data);
-          // Handle the response as needed
-        } catch (error) {
-          console.error("Error sending data:", error);
-          // Handle the error as needed
+    if (selectedYears.length === 1) {
+      // **1-UI Logic**
+      console.log("Fetching data for 1-UI (single year selected)...");
+
+      const response = await REQUESTS.financialAnalize.getFinancialAnalize({
+        year: selectedYears[0],
+        ...formattedParams,
+      });
+
+      console.log("Response for 1-UI:", response.data);
+      setFirstTableData(response.data); // Assuming firstTableData is used for 1-UI
+      setTableData(response.data);
+      setUiType("1-UI");
+    } else if (selectedYears.length === 2) {setFirstTableData(response.data); // Update firsttableData directly
+
+    console.log("Response from backend:", response.data);
+    setTableData(response.data);
+    setUiType("2-UI");
+
+  } else {
+    // **No Valid Selection**
+    console.log("No valid year selection, clearing data");
+    setTableData(null);
+    setUiType(null);
+  }
+
+  } catch (error) {
+    console.error("Error fetching data:", error.response?.data || error.message);
+    setTableData(null);
+    setUiType(null);
+  }
+};
+
+// Fetch initial data for 2-UI when component mounts or selected years change
+    useEffect(() => {
+      const fetchFinancialData = async () => {
+        if (selectedYears.length === 2) {
+          try {
+            console.log("Fetching data for 2-UI (two years selected)...");
+            const params = getSelectedParams();
+            console.log("Generated params:", params);
+
+            const response = await REQUESTS.financialAnalize.getFinancialAnalize({
+              year1: selectedYears[0],
+              year2: selectedYears[1],
+              ...params,
+            });
+            console.log("Response for 2-UI:", response.data);
+            setTableData(response.data);
+            setUiType("2-UI");
+          } catch (error) {
+            if (error.response) {
+              console.error("Server responded with an error:", error.response.data);
+            } else if (error.request) {
+              console.error("No response received from server:", error.request);
+            } else {
+              console.error("Error in setting up the request:", error.message);
+            }
+            setTableData(null);
+            setUiType(null);
+          }
         }
       };
 
-    const toggleColumnVisibility = (columnKey) => {
-  setVisibleColumns((prev) => {
-    const updatedVisibility = { ...prev, [columnKey]: !prev[columnKey] };
+      fetchFinancialData();
+    }, [selectedYears]);
 
-    // Ensure at least one column is visible
-    const visibleCount = Object.values(updatedVisibility).filter(Boolean).length;
-    if (visibleCount === 0) return prev;
-
-    return updatedVisibility;
-  });
-};
 
   return (
     <Container
@@ -1280,7 +1421,7 @@ const AnalizeYearDashboard = () => {
             {/* <==== GRAFUC REQUEST BUTTON ====> */}
             <Button
               variant="contained"
-              onClick={sendCheckedItemsToBackend}
+              // onClick={sendCheckedItemsToBackend}
               sx={{
                 width: "19%",
                 fontWeight: "bold",
@@ -1480,7 +1621,7 @@ const AnalizeYearDashboard = () => {
         >
           {/* 1-UI  */}
           {uiType === "1-UI" && tableData && (
-          <Box sx={{ minWidth: "4000px", whiteSpace: "nowrap" }}>
+          <Box sx={{ minWidth: "4000px", whiteSpace: "nowrap",height:"700px" }}>
             <Box sx={{ minWidth: "2340px" }}>
               <Table>
                 <TableHead>
@@ -1911,7 +2052,7 @@ const AnalizeYearDashboard = () => {
         )}
           {/* 2-UI */}
           {uiType === "2-UI" && tableData && (
-          <Box sx={{ minWidth: "4000px", whiteSpace: "nowrap" }}>
+          <Box sx={{ minWidth: "4000px", whiteSpace: "nowrap",height:"700px" }}>
             <Box sx={{ minWidth: "2340px" }}>
               <Table>
                 <TableHead>
@@ -1928,14 +2069,22 @@ const AnalizeYearDashboard = () => {
                   >
                     <TableCell
                       sx={{
-                        maxWidth: "900px",
+                        width: "600px",
                         flexShrink: 0,
                         height: "22px",
                         padding: "0 4px",
                         borderRadius: "5px",
                       }}
                     >
-                      <Typography variant="h6" sx={{ lineHeight: "normal" }}>
+                      <Typography variant="h6" 
+                      sx={{ 
+                        lineHeight: "normal",
+                        textAlign: "center",
+                        whiteSpace: "nowrap", 
+                        overflow:"hidden",
+                        textOverflow:"ellipsis",
+                        width:"100%",
+                        }}>
                         Статья затрат
                       </Typography>
                     </TableCell>
@@ -2025,8 +2174,10 @@ const AnalizeYearDashboard = () => {
                             lineHeight: "20px",
                             color: "black",
                             borderRadius: "0px",
-                            bgcolor:
-                              selectedButton === firstYear ? "#66CFFF" : "#66CFFF",
+                            bgcolor: visibleColumns.firstYear ? "#66CFFF" : "#C0C0C0", // Light blue when visible, dark blue when hidden
+                            "&:hover": {
+                              bgcolor: visibleColumns.firstYear ? "#559FCF" : "#9CC5D2", // Adjust hover color
+                            },
                           }}
                           onClick={() => toggleColumnVisibility("firstYear")}
                         >
@@ -2041,8 +2192,10 @@ const AnalizeYearDashboard = () => {
                             lineHeight: "20px",
                             color: "black",
                             borderRadius: "0px",
-                            bgcolor:
-                              selectedButton === secondYear ? "#66CFFF" : "#66CFFF",
+                            bgcolor: visibleColumns.secondYear ? "#66CFFF" : "#C0C0C0",
+                            "&:hover": {
+                              bgcolor: visibleColumns.secondYear ? "#559FCF" : "#9CC5D2",
+                            },
                           }}
                           onClick={() => toggleColumnVisibility("secondYear")}
                         >
@@ -2057,8 +2210,10 @@ const AnalizeYearDashboard = () => {
                             lineHeight: "20px",
                             color: "black",
                             borderRadius: "0px",
-                            bgcolor:
-                              selectedButton === "%" ? "#66CFFF" : "#66CFFF",
+                            bgcolor: visibleColumns.percentage ? "#66CFFF" : "#C0C0C0",
+                            "&:hover": {
+                              bgcolor: visibleColumns.percentage ? "#559FCF" : "#9CC5D2",
+                            },
                           }}
                           onClick={() => toggleColumnVisibility("percentage")}
                         >
@@ -2073,8 +2228,10 @@ const AnalizeYearDashboard = () => {
                             lineHeight: "20px",
                             color: "black",
                             borderRadius: "0px",
-                            bgcolor:
-                              selectedButton === "$" ? "#66CFFF" : "#66CFFF",
+                            bgcolor: visibleColumns.amount ? "#66CFFF" : "#C0C0C0",
+                            "&:hover": {
+                              bgcolor: visibleColumns.amount ? "#559FCF" : "#9CC5D2",
+                            },
                           }}
                           onClick={() => toggleColumnVisibility("amount")}
                         >
@@ -2083,7 +2240,7 @@ const AnalizeYearDashboard = () => {
                     </TableCell>
                     {monthArray.map((month) => (
                       <React.Fragment key={month}>
-                         {visibleColumns.firstYear && (
+                        {visibleColumns.firstYear && (
                         <TableCell
                           sx={{
                             width: "120px",
@@ -2263,7 +2420,7 @@ const AnalizeYearDashboard = () => {
                       {/* Name Cell */}
                       <TableCell
                         sx={{
-                          width: "482px",
+                          width: "600px",
                           flexShrink: 0,
                           border: "2px solid #d0d0d0",
                           height: "20px",
@@ -2276,6 +2433,11 @@ const AnalizeYearDashboard = () => {
                             lineHeight: "normal",
                             fontWeight: "bold",
                             paddingLeft: "5px",
+                            whiteSpace: "nowrap", 
+                            overflow:"hidden",
+                            textOverflow:"ellipsis",
+                            width:"100%",
+                            textAlign:"left",
                           }}
                         >
                           {total.name}
@@ -2285,7 +2447,7 @@ const AnalizeYearDashboard = () => {
                       {/* Monthly Data Cells */}
                       {monthArray.map((month, index) => (
                         <React.Fragment key={index}>
-                           {visibleColumns.firstYear && (
+                          {visibleColumns.firstYear && (
                           <TableCell
                             sx={{
                               width: "120px",
@@ -2301,10 +2463,10 @@ const AnalizeYearDashboard = () => {
                               variant="subtitle2"
                               sx={{ lineHeight: "normal" }}
                             >
-                              {total.months[month]?.newfirstMonth || "-"}
+                              {insertSpaces(total.months[month]?.newfirstMonth) || "-"}
                             </Typography>
                           </TableCell>
-                           )}
+                            )}
                             {visibleColumns.secondYear && (
                           <TableCell
                             sx={{
@@ -2320,7 +2482,7 @@ const AnalizeYearDashboard = () => {
                               variant="subtitle2"
                               sx={{ lineHeight: "normal" }}
                             >
-                              {total.months[month]?.newsecondMonth || "-"}
+                              {insertSpaces(total.months[month]?.newsecondMonth) || "-"}
                             </Typography>
                           </TableCell>
                             )}
@@ -2339,9 +2501,7 @@ const AnalizeYearDashboard = () => {
                               variant="subtitle2"
                               sx={{ lineHeight: "normal" }}
                             >
-                              {total.months[month]
-                                ?.differencePercentageTotalMonth || "-"}
-                              %
+                              {insertSpaces(total.months[month]?.differencePercentageTotalMonth) || "-"}%
                             </Typography>
                           </TableCell>
                             )}
@@ -2360,8 +2520,8 @@ const AnalizeYearDashboard = () => {
                               variant="subtitle2"
                               sx={{ lineHeight: "normal" }}
                             >
-                              {total.months[month]
-                                ?.differenceAmountTotalMonth || "-"}
+                              {insertSpaces(total.months[month]?.differenceAmountTotalMonth) || "-"}
+                                
                             </Typography>
                           </TableCell>
                             )}
@@ -2384,7 +2544,7 @@ const AnalizeYearDashboard = () => {
                           variant="subtitle2"
                           sx={{ lineHeight: "normal", fontWeight: "bold" }}
                         >
-                          {total.firstYearTotalMonthSum}
+                          {insertSpaces(total.firstYearTotalMonthSum)}
                         </Typography>
                       </TableCell>
                       )}
@@ -2403,7 +2563,7 @@ const AnalizeYearDashboard = () => {
                           variant="subtitle2"
                           sx={{ lineHeight: "normal", fontWeight: "bold" }}
                         >
-                          {total.secondYearTotalMonthSum}
+                          {insertSpaces(total.secondYearTotalMonthSum)}
                         </Typography>
                       </TableCell>
                       )}
@@ -2441,7 +2601,7 @@ const AnalizeYearDashboard = () => {
                           variant="subtitle2"
                           sx={{ lineHeight: "normal", fontWeight: "bold" }}
                         >
-                          {total.amountSeparateTotalMonth}
+                          {insertSpaces(total.amountSeparateTotalMonth)}
                         </Typography>
                       </TableCell>
                       )}
@@ -2460,3 +2620,5 @@ const AnalizeYearDashboard = () => {
 };
 
 export default AnalizeYearDashboard;
+
+
