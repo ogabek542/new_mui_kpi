@@ -1,6 +1,7 @@
 const newtableData = {
     choosedfirstYear: "2023",  // user Tanlagan Kichik(oldingi) yil  //
     choosedsecondYear: "2024", // user tanlagan katta(keyingi) yil       //
+    filialsName:["Respublika","Andijon","ARK BXM"],
     newMonths: [ // user tomonidan tanlangan oylar ro'yxati massivga to'plab jo'natiladi //
       "January", // faqat yanvar oyi tanlangani uchun bu yerda faqat yanvar oyi nomi mavjud //
     ],

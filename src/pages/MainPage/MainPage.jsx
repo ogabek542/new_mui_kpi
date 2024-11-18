@@ -27,7 +27,6 @@ import StackedBartchart from "../../components/StackedBarchart/StackedBartchart.
 import MainPageCostBarchart from "../../components/MainPageCostBarchart/MainPageCostBarchart.jsx";
 import { useLocation } from "react-router-dom";
 // <=== IMPORT LOADER ICON ====> //
-import { PacmanLoader } from "react-spinners";
 import AnimatedIcon from "../../components/AnimatedIcon/AnimatedIcon.jsx";
 // IMPORT MODAL //
 import CustomModal from "../../components/CustomModal/CustomModal.jsx";

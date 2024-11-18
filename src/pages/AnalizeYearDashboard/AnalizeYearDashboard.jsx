@@ -34,189 +34,12 @@ import newTestAPI from "../testapi/analizeTestFirstApi";
 // import 2-mock api datda //
 import secondTableAPI from "../testapi/analizeSecondTable";
 import { REQUESTS } from "../../api/requests";
-
-// branch section //
-const top128Filials = [
-  // { title: "Республика", id: 1 },
-  { title: "Respublika", id: 1 },
-  { title: "Toshkent ", id: 2 },
-  { title: "Andijon", id: 3 },
-  { title: "Buxoro", id: 4 },
-  { title: "Farg'ona", id: 5 },
-  { title: "Jizzax", id: 6 },
-  { title: "Namangan", id: 7 },
-  { title: "Navoiy", id: 8 },
-  { title: "Qashqadaryo", id: 9 },
-  { title: "Samarqand", id: 10 },
-  { title: "Sirdaryo", id: 11 },
-  { title: "Surxondaryo", id: 12 },
-  { title: "Toshkent vil", id: 13 },
-  { title: "Xorazm", id: 14 },
-  { title: "Qoraqalpog'iston", id: 15 },
-  { title: "Mirobod", id: 16 },
-];
-
-// filials section //
-const setSelectedSecondMap = {
-  // NBU//
-  1: [{ title: "Respublika" }],
-  // Toshkent shahri //
-  2: [
-    { title: "Bosh ofis" },
-    { title: "Abusaxiy BXO" },
-    { title: "Atlas NBU BXO" },
-    { title: "G‘alaba BXO" },
-    { title: "Mirobod plaza BXO" },
-    { title: "Navro‘z BXO" },
-    { title: "Texnopark BXO" },
-    { title: "Xumo BXO" },
-    { title: "Shayxontohur BXO" },
-    { title: "Yangi Sergeli BXO" },
-    { title: "Akademiya BXM" },
-    { title: "Bektemir BXM" },
-    { title: "Bosh amaliyot BXM" },
-    { title: "Markaziy amaliyot BXM" },
-    { title: "Mirzo-Ulug‘bek BXM" },
-    { title: "Olmazor BXM" },
-    { title: "Sayohat BXM" },
-    { title: "Sebzor amaliyot BXM" },
-    { title: "Sergeli BXM" },
-    { title: "Uchtepa BXM" },
-    { title: "Yunusobod BXM" },
-    { title: "Yakkasaroy BXM" },
-    { title: "Yangiobod BXM" },
-    { title: "Yashnobod BXM" },
-  ],
-  // Andijon viloyati //
-  3: [
-    { title: "Andijon amaliyot BXM" },
-    { title: "Asaka BXM" },
-    { title: "Izboskan BXO" },
-    { title: "Qo‘rg‘ontepa BXO" },
-    { title: "Marhamat BXM" },
-    { title: "Paxtaobod BXO" },
-    { title: "Shaxrixon BXO" },
-  ],
-  // Buxoro viloyati //
-  4: [
-    { title: "Ark BXO" },
-    { title: "Buxoro amaliyot BXM" },
-    { title: "Buxoro shahar BXO" },
-    { title: "Vobkent BXO" },
-    { title: "G‘ijduvon BXM" },
-    { title: "Kogon BXM" },
-    { title: "Qorako‘l BXM" },
-    { title: "Qorovulbozor BXO" },
-    { title: "Naqshband BXO" },
-    { title: "Romitan BXM" },
-    { title: "Shofirkon BXO" },
-  ],
-  // Farg‘ona viloyati //
-  5: [
-    { title: "Beshariq BXM" },
-    { title: "Buvayda BXO" },
-    { title: "Quva BXM" },
-    { title: "Quvasoy BXO" },
-    { title: "Qo‘qon BXM" },
-    { title: "Rishton BXM" },
-    { title: "Farg‘ona amaliyot BXM" },
-    { title: "Marg‘ilon BXO" },
-  ],
-  // Jizzax viloyati //
-  6: [
-    { title: "Jizzax amaliyot BXM" },
-    { title: "Industrial BXM" },
-    { title: "Mirzacho‘l BXM" },
-    { title: "Paxtakor BXO" },
-  ],
-  // Namangan viloyati //
-  7: [
-    { title: "Kosonsoy BXO" },
-    { title: "Namangan amaliyot BXM" },
-    { title: "Turaqo‘rg‘on BXO" },
-    { title: "Uychi BXM" },
-    { title: "Uchqo‘rg‘on BXM" },
-    { title: "Chortoq BXM" },
-    { title: "Chust BXO" },
-  ],
-  // Navoiy viloyati //
-  8: [
-    { title: "Zarafshon BXM" },
-    { title: "Qiziltepa BXM" },
-    { title: "Malikrabod BXM" },
-    { title: "Navoiy amaliyot BXM" },
-    { title: "Nurota BXO" },
-    { title: "Uchquduq BXM" },
-  ],
-  // Qashqadaryo viloyati //
-  9: [
-    { title: "G‘uzor BXO" },
-    { title: "Qarshi amaliyot BXM" },
-    { title: "Muborak BXO" },
-    { title: "Shahrisabz BXM" },
-    { title: "Yanginishon BXO" },
-  ],
-  // Samarqand viloyati //
-  10: [
-    { title: "Bulung‘ur BXO" },
-    { title: "Jomboy BXM" },
-    { title: "Zarafshon BXO" },
-    { title: "Kattaqo‘rg‘on BXO" },
-    { title: "Qorasuv BXO" },
-    { title: "Nurobod BXO" },
-    { title: "Payariq BXO" },
-    { title: "Pastdarg‘om BXM" },
-    { title: "Registon BXM" },
-    { title: "Samarqand amaliyot BXM" },
-    { title: "Urgut BXM" },
-  ],
-  // Sirdaryo viloyati //
-  11: [
-    { title: "Guliston amaliyot BXM" },
-    { title: "Oqoltin BXO" },
-  ],
-  // Surxondaryo viloyati //
-  12: [
-    { title: "Denov BXM" },
-    { title: "Qumqo‘rg‘on BXM" },
-    { title: "Termiz amaliyot BXM" },
-    { title: "Jarqo‘rg‘on BXO" },
-    { title: "Sherobod BXO" },
-  ],
-  // Toshkent viloyati //
-  13: [
-    { title: "Angren BXM" },
-    { title: "Bekobod BXM" },
-    { title: "G‘azalkent BXO" },
-    { title: "Nurafshon amaliyot BXM" },
-    { title: "Olmaliq BXO" },
-    { title: "Toshkent shahar BXO" },
-    { title: "Chirchiq BXO" },
-    { title: "Yangiyo‘l BXM" },
-  ],
-  // Xorazm viloyati //
-  14: [
-    { title: "Gurlan BXO" },
-    { title: "Karvon BXO" },
-    { title: "Xazoras BXM" },
-    { title: "Xiva BXO" },
-    { title: "Xonqa BXM" },
-    { title: "Xorazm amaliyot BXM" },
-    { title: "Shovot BXM" },
-    { title: "Yangiariq BXO" },
-    { title: "Qo‘shkupir BXM" },
-  ],
-  // Qoraqalpog‘iston Respublikasi //
-  15: [
-    { title: "Qo‘ng‘irot BXM" },
-    { title: "Mang‘it BXO" },
-    { title: "Nukus amaliyot BXM" },
-    { title: "To‘rtko‘l BXM" },
-    { title: "Xo‘jayli BXO" },
-    { title: "Chimboy BXO" },
-  ],
-  16: [{ title: "Mirobod" }],
-};
+// filials list imported //
+import setSelectedSecondMap from "../testapi/SecondOptions";
+// branch options list  //
+import top128Filials from "../testapi/firstOption";
+// loader icon //
+import AnimatedIcon from "../../components/AnimatedIcon/AnimatedIcon";
 
 // month names //
 const monthsList = [
@@ -234,7 +57,7 @@ const monthsList = [
   { name: "December", id: 12 },
 ];
 
-//
+// shot list //
 const numbersList = [
   "561",
   "562",
@@ -257,6 +80,34 @@ const numbersList = [
   "579",
 ];
 
+// shottext list //
+const textList = [
+  "Заработная плата",
+  "Служба охраны",
+  "Командировочные расходы",
+  "Почта, телефон, факс",
+  "Репрезентация",
+  "Расходы на износ",
+  "Налоги (иные, чем налоги на прибыль)",
+  "568",
+  "569",
+  "570",
+  "571",
+  "572",
+  "573",
+  "574",
+  "575",
+  "576",
+  "577",
+  "578",
+  "579",
+];
+// Combine the two lists into one array of objects
+const combinedList = numbersList.map((number, index) => ({
+  id: `${number}-${index}`, // Unique ID
+  number,
+  text: textList[index] || "", // Handle cases where textList might be shorter
+}));
 // Define the list of years without id
 const yearsList = [
   { label: 2020 },
@@ -271,26 +122,21 @@ const AnalizeYearDashboard = () => {
   const [openRows, setOpenRows] = useState({});
   const [selectedMonths, setSelectedMonths] = useState([]); // select mont name
   const [selectedNumbers, setSelectedNumbers] = useState([]); // select account book number
-  
-  // const [firsttableData, setFirstTableData] = useState([]);
   const [selectedYears, setSelectedYears] = useState([]);
   const [dataFetched, setDataFetched] = useState(false); // New state variable
   const [firstYear, setFirstYear] = useState(null);
   const [secondYear, setSecondYear] = useState(null);
   const [showFirstYear, setShowFirstYear] = useState(true);
   const [showSecondYear, setShowSecondYear] = useState(true);
-  const [selectedButton, setSelectedButton] = useState(null);
-  const [selectedButtons, setSelectedButtons] = useState([]);
-  const toggleOptions = ["2023", "2024", "%", "$"];
-
   const [onetable,setOneTable] = useState([]);
-
   const [visibleColumns, setVisibleColumns] = useState({
     firstYear: true,
     secondYear: true,
     percentage: true,
     amount: true,
   });
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [error, setError] = useState(null);
 
     // <==== MAKE SPACE CODE  =====>  //
   const insertSpaces = (text) => {
@@ -312,12 +158,11 @@ const AnalizeYearDashboard = () => {
   const changeAPI = changeapi ?  secondTableAPI : onetable;
   // const changeAPI = newTestAPI;
   const [firsttableData, setFirstTableData] = useState( changeAPI || null );
+  const [loading, setLoading] = useState(true); // Start with loading as true
 
   useEffect(() => {
     setFirstTableData(changeAPI);
 }, [changeapi, changeAPI]);
-
-
 
   const handleSelect = (event, newSelection) => {
     if (newSelection !== null) {
@@ -356,26 +201,34 @@ const AnalizeYearDashboard = () => {
             height: "20px",
           }}
         >
-          <TableCell
-            sx={{
-              width: "600px",
-              border: "2px solid #d0d0d0",
-              borderRadius: "5px",
-              height: "25px",
-              padding: "0px",
-              paddingLeft: `${depth * 5}px`, // Indent based on depth
-            }}
-          >
+        <TableCell
+          sx={{
+            position: 'sticky',
+            left: 0,
+            backgroundColor: '#fff',
+            zIndex: depth === 0 ? 1 : 0,
+            width: '200px',
+            border: '2px solid #d0d0d0',
+            borderRadius: '5px',
+            height: '25px',
+            padding: '0px',
+            paddingLeft: `${depth * 5}px`, // Indent based on depth
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            borderRight: '1px solid #d0d0d0',
+          }}
+            >
             <Typography
               variant="body1"
               sx={{
-                fontSize: "16px",
-                fontWeight: "bold",
-                paddingLeft: "5px",
-                whiteSpace: "nowrap", // Prevents text from wrapping to the next line
-                overflow: "hidden", // Ensures overflowed text is clipped
-                textOverflow: "ellipsis", // Adds ellipses when text overflows
-                display: "block", // Ensures the element behaves as a block for ellipsis
+                fontSize: '16px',
+                fontWeight: 'bold',
+                paddingLeft: '5px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                width: '100%',
               }}
             >
               {row.name}
@@ -384,21 +237,21 @@ const AnalizeYearDashboard = () => {
 
           {monthArray.map((month) => (
             <React.Fragment key={month}>
-              {visibleColumns.firstYear && (
+            {visibleColumns.firstYear && (
               <TableCell
                 sx={{
-                  width: "80px",
-                  border: "2px solid #d0d0d0",
-                  borderRadius: "5px",
-                  height: "20px",
-                  padding: "0 4px",
-                  textAlign: "right",
-                  display: showFirstYear ? "table-cell" : "none",
+                  width: '80px',
+                  border: '2px solid #d0d0d0',
+                  borderRadius: '5px',
+                  height: '20px',
+                  padding: '0 4px',
+                  textAlign: 'right',
+                  display: visibleColumns.firstYear ? 'table-cell' : 'none', // Hide or show
                 }}
               >
-                {row.months[month]?.newfirstYear || "-"}
+                {insertSpaces(row.months[month]?.newfirstYear) || '-'}
               </TableCell>
-              )}
+            )}
               {visibleColumns.secondYear && (
               <TableCell
                 sx={{
@@ -410,7 +263,7 @@ const AnalizeYearDashboard = () => {
                   textAlign: "right",
                 }}
               >
-                {row.months[month]?.newsecondYear || "-"}
+                {insertSpaces(row.months[month]?.newsecondYear) || "-"}
               </TableCell>
               )}
               {visibleColumns.percentage && (
@@ -438,9 +291,9 @@ const AnalizeYearDashboard = () => {
                   textAlign: "right",
                 }}
               >
-                {row.months[month]?.differenceAmount || "-"}
+                {insertSpaces(row.months[month]?.differenceAmount) || "-"}
               </TableCell>
-               )}
+                )}
             </React.Fragment>
           ))}
           {visibleColumns.firstYear && (
@@ -454,7 +307,7 @@ const AnalizeYearDashboard = () => {
               textAlign: "right",
             }}
           >
-            {row?.firstYearTotalSum || "-"}
+            {insertSpaces(row?.firstYearTotalSum) || "-"}
           </TableCell>
           )}
           {visibleColumns.secondYear && (
@@ -468,7 +321,7 @@ const AnalizeYearDashboard = () => {
               textAlign: "right",
             }}
           >
-            {row?.secondYearTotalSum || "-"}
+            {insertSpaces(row?.secondYearTotalSum) || "-"}
           </TableCell>
           )}
           {visibleColumns.percentage && (
@@ -496,7 +349,7 @@ const AnalizeYearDashboard = () => {
               textAlign: "right",
             }}
           >
-            {row?.amountSeparateTotal || "-"}
+            {insertSpaces(row?.amountSeparateTotal) || "-"}
           </TableCell>
           )}
         </TableRow>
@@ -814,7 +667,6 @@ const AnalizeYearDashboard = () => {
     // setSecondYear: PropTypes.func.isRequired,
   };
 
-
   const toggleRowOpen = (id) => {
     setOpenRows((prev) => ({
       ...prev,
@@ -898,6 +750,11 @@ const AnalizeYearDashboard = () => {
               cursor: "pointer",
               fontWeight: "bold",
               color: Colors.black,
+              whiteSpace: "nowrap", 
+              overflow:"hidden",
+              textOverflow:"ellipsis",
+              width:"100%",
+              height:"22px",
             }}
             onClick={() => onToggle(filial.id)} // Pass filial.id to handleToggle
           >
@@ -912,11 +769,12 @@ const AnalizeYearDashboard = () => {
                 <Box sx={{ margin: 0, padding: 0 }}>
                   <Box sx={{ margin: "0.5px" }}>
                     {subRegions.map((subRegion, index) => (
-                      <TableRow key={index} sx={{ padding: "0px" }}>
+                      <TableRow key={index} sx={{ padding: "0px",display:"flex",alignItems:"center" }}>
                         <TableCell
                           sx={{
                             padding: "0px",
                             width: "20px",
+                            height:"20px",
                             display: "flex",
                             alignItems: "center",
                             verticalAlign: "center",
@@ -929,7 +787,7 @@ const AnalizeYearDashboard = () => {
                             }}
                             checked={checkedItems.includes(subRegion.title)}
                             size="small"
-                            sx={{ margin: 0, padding: "0px" }}
+                            sx={{ margin: 0, padding: "0px" , height:"20px",}}
                           />
                         </TableCell>
 
@@ -941,6 +799,11 @@ const AnalizeYearDashboard = () => {
                             fontSize: "14px",
                             fontWeight: "500",
                             paddingLeft: "-5px",
+                            whiteSpace: "nowrap", 
+                            overflow:"hidden",
+                            textOverflow:"ellipsis",
+                            width:"110px",
+                            height:"20px",
                           }}
                           onClick={() => handleSubRegionClick(subRegion.title)}
                         >
@@ -970,34 +833,105 @@ const AnalizeYearDashboard = () => {
   };
 
 
-  Row.propTypes = {
-    filial: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    onToggle: PropTypes.func.isRequired,
-    checkedItems: PropTypes.array.isRequired,
-    setCheckedItems: PropTypes.func.isRequired,
-  };
+  // Row.propTypes = {
+  //   filial: PropTypes.shape({
+  //     title: PropTypes.string.isRequired,
+  //     id: PropTypes.number.isRequired,
+  //   }).isRequired,
+  //   isOpen: PropTypes.bool.isRequired,
+  //   onToggle: PropTypes.func.isRequired,
+  //   checkedItems: PropTypes.array.isRequired,
+  //   setCheckedItems: PropTypes.func.isRequired,
+  // };
 
+  
+  
   // <=== SELECT MONTHS SECTION ===>
-  const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
-    const [open, setOpen] = React.useState(false);
 
+  // const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
+
+  //   const handleChange = (event) => {
+  //     const {
+  //       target: { value },
+  //     } = event;
+  //     setSelectedMonths(
+  //       typeof value === 'string' ? value.split(',') : value,
+  //     );
+  //   };
+
+
+  //   return (
+  //     <FormControl
+  //       sx={{
+  //         width: "100%",
+  //         "& .MuiInputLabel-root": {
+  //           fontSize: "1rem",
+  //           color: Colors.dark,
+  //         },
+  //         "& .MuiSelect-root": {
+  //           fontSize: "0.8rem",
+  //         },
+  //       }}
+  //       size="small"
+  //     >
+  //       <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
+  //       <Select
+  //         multiple
+  //         labelId="month-picker-label"
+  //         id="month-picker"
+  //         value={selectedMonths}
+  //         onChange={handleChange}
+  //         input={<OutlinedInput label="Oyni Tanlash" />}
+  //         renderValue={(selected) => selected.join(", ")}
+  //       >
+  //         {monthsList.map((month) => (
+  //           <MenuItem
+  //             key={month.id}
+  //             value={month.name}
+  //             sx={{
+  //               padding: "4px 8px",
+  //               display: "flex",
+  //               alignItems: "center",
+  //               gap: "8px",
+  //             }}
+  //           >
+  //             <Checkbox
+  //               checked={selectedMonths.includes(month.name)}
+  //               sx={{ color: Colors.blue_nbu, padding: 0 }}
+  //               size="small"
+  //             />
+  //             <ListItemText
+  //               primary={month.name}
+  //               sx={{ fontSize: "0.8rem", margin: 0 }}
+  //             />
+  //           </MenuItem>
+  //         ))}
+  //       </Select>
+  //     </FormControl>
+  //   );
+  // };
+
+  const MonthPicker = ({ selectedMonths, setSelectedMonths }) => {
+    const [open, setOpen] = useState(false);
+  
     const handleChange = (event) => {
-      const {
-        target: { value },
-      } = event;
-      setSelectedMonths(typeof value === "string" ? value.split(",") : value);
+      const {target: { value },} = event;
+      setSelectedMonths(typeof value === 'string' ? value.split(',') : value,);
+      setOpen(false);
     };
-
-    const handleToggleOpen = () => {
-      setOpen((prev) => !prev);
+  
+    const handleClickAway = (event) => {
+      // setOpen(true)
+      // Check if the click was on another Select component
+      if (event.target.closest('.MuiSelect-root')) {
+        return;
+      }
+      setOpen(false);
     };
-
+  
     return (
-      <FormControl
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <FormControl
         sx={{
           width: "100%",
           "& .MuiInputLabel-root": {
@@ -1008,47 +942,31 @@ const AnalizeYearDashboard = () => {
             fontSize: "0.8rem",
           },
         }}
-        size="small"
-      >
-        <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
-        <Select
-          labelId="month-picker-label"
-          id="month-picker"
-          multiple
-          open={open}
-          onClose={() => setOpen(false)}
-          onOpen={handleToggleOpen}
-          value={selectedMonths}
-          onChange={handleChange}
-          input={<OutlinedInput label="Oyni Tanlash" />}
-          renderValue={(selected) => selected.join(", ")}
+          size="small"
         >
-          {monthsList.map((month) => (
-            <MenuItem
-              key={month.id}
-              value={month.name}
-              sx={{
-                padding: "4px 8px",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <Checkbox
-                checked={selectedMonths.includes(month.name)}
-                sx={{ color: Colors.blue_nbu, padding: "0" }}
-                size="small"
-              />
-              <ListItemText
-                primary={month.name}
-                sx={{ fontSize: "0.8rem", margin: 0 }}
-              />
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <InputLabel id="month-picker-label">Oyni tanlash</InputLabel>
+          <Select
+            id="month-picker"
+            multiple
+            labelId="month-picker-label"
+            value={selectedMonths}
+            onChange={handleChange}
+            input={<OutlinedInput label="Oyni Tanlash" />}
+            renderValue={(selected) => selected.join(", ")}
+          >
+            {monthsList.map((month) => (
+              <MenuItem key={month.id} value={month.name}>
+                <Checkbox  checked={selectedMonths.includes(month.name)}  size="small"/>
+                <ListItemText primary={month.name} sx={{ fontSize: "0.8rem", margin: 0 }} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </ClickAwayListener>
     );
-  };
+  }
+
+
 
   MonthPicker.propTypes = {
     monthsList: PropTypes.arrayOf(
@@ -1061,15 +979,15 @@ const AnalizeYearDashboard = () => {
     setSelectedMonths: PropTypes.func.isRequired,
   };
 
-  const handleSelectAllToggle = () => {
-    if (selectedNumbers.length === numbersList.length) {
-      // All numbers are selected; deselect all
-      setSelectedNumbers([]);
-    } else {
-      // Select all numbers
-      setSelectedNumbers([...numbersList]);
-    }
-  };
+  // const handleSelectAllToggle = () => {
+  //   if (selectedNumbers.length === numbersList.length) {
+  //     // All numbers are selected; deselect all
+  //     setSelectedNumbers([]);
+  //   } else {
+  //     // Select all numbers
+  //     setSelectedNumbers([...numbersList]);
+  //   }
+  // };
 
   // <=== SELECT FIRST YEAR FUNCTION ====> //
   const handleHideFirstYear = () => {
@@ -1116,7 +1034,7 @@ const AnalizeYearDashboard = () => {
   };
   
 
-    const toggleColumnVisibility = (columnKey) => {
+  const toggleColumnVisibility = (columnKey) => {
           setVisibleColumns((prev) => {
             const updatedVisibility = { ...prev, [columnKey]: !prev[columnKey] };
 
@@ -1129,137 +1047,6 @@ const AnalizeYearDashboard = () => {
 
         };
 
-         // Function to send data to backend and fetch data
-//   const sendCheckedItemsToBackend = async () => {
-//     console.log("Checked items to send:", checkedItems);
-//     console.log("Selected years:", selectedYears);
-
-//     const params = getSelectedParams();
-
-//     try {
-//       if (selectedYears.length === 1) {
-//         setChangeAPI(true);
-//         console.log("Sending request to first API for a single year");
-//         // Send a GET request to the first API if one year is selected
-//         const response = await axios.get(`/api/firstEndpoint`, {
-//           params: { year: selectedYears[0], ...params },
-//         });
-//         console.log("Response from first API:", response.data ,params);
-//         setTableData(response.data);
-//         setUiType("1-UI"); // Set UI type to 1-UI
-//       } else if (selectedYears.length === 2) {
-//         setChangeAPI(false);
-//         console.log("Sending request to second API for two years");
-//         // Send a GET request to the second API if two years are selected
-//         const response = await axios.get(`/api/secondEndpoint`, {
-//           params: {
-//             year1: selectedYears[0],
-//             year2: selectedYears[1],
-//             ...params,
-//           },
-//         });
-//         console.log("Response from second API:", response.data);
-//         setTableData(response.data);
-//         setUiType("2-UI"); // Set UI type to 2-UI
-//       } else {
-//         console.log("No valid year selection, clearing data");
-//         setTableData(null);
-//         setUiType(null);
-//       }
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//       setTableData(null);
-//       setUiType(null);
-//     }
-//   };
-
-// useEffect(() => {
-//   const fetchFinancialData = async () => {
-//       try {
-//           const response = await REQUESTS.financialAnalize.getFinancialAnalize();
-//           const propsdata = response.data[0];
-//             console.log(response)
-
-//       } catch (error) {
-//           console.error("Error fetching user data:", error);
-//       }
-//   };
-
-//   fetchFinancialData();
-// }, []);
-
- // Function to send data to the backend based on selected years
-//  const sendCheckedItemsToBackend = async () => {
-//   console.log("Checked items to send:", checkedItems);
-//   console.log("Selected years:", selectedYears);
-
-//   const params = getSelectedParams(); // Your existing function for other params
-//   const formattedParams = {
-//     choosedfirstYear: selectedYears[0],
-//     choosedsecondYear: selectedYears[1],
-//     ...params,
-//   };
-
-//   // Ensure months are added as repeated keys
-//   if (params.months && Array.isArray(params.months)) {
-//     params.months.forEach((month) => {
-//       formattedParams[`newMonths`] = formattedParams[`newMonths`] || [];
-//       formattedParams[`newMonths`].push(month);
-//     });
-//   }
-
-//   try {
-//     console.log("Formatted params:", formattedParams);
-
-//     const response = await REQUESTS.financialAnalize.getFinancialAnalize(
-//       formattedParams
-//     );
-//     console.log("Response from backend:", response.data);
-//     setTableData(response.data);
-//     setUiType("2-UI");
-//   } catch (error) {
-//     console.error("Error fetching data:", error.response?.data || error.message);
-//     setTableData(null);
-//     setUiType(null);
-//   }
-// };
-
-// Adjusted sendCheckedItemsToBackend function
-// const sendCheckedItemsToBackend = async () => {
-//   console.log("Checked items to send:", checkedItems);
-//   console.log("Selected years:", selectedYears);
-
-//   const params = getSelectedParams();
-
-//   // Create formatted parameters, converting arrays to comma-separated strings
-//   const formattedParams = {
-//     choosedfirstYear: selectedYears[0],
-//     choosedsecondYear: selectedYears[1],
-//     newMonths: (params.months || []).join(','), // Convert to comma-separated string
-//     accountNumbers: (params.accountNumbers || []).join(','), // Convert to comma-separated string
-//     // filials: Excluded as per your request
-//   };
-
-//   try {
-//     console.log("Formatted Params:", formattedParams);
-
-//     const response = await REQUESTS.financialAnalize.getFinancialAnalize(
-//       formattedParams
-//     );
-
-//     setOneTable(response.data);
-
-
-//     console.log("Response from backend:", response.data);
-//     // console.log("data for table:", seconScreen_API);
-//     setTableData(response.data);
-//     setUiType("2-UI");
-//   } catch (error) {
-//     console.error("Error fetching data:", error.response?.data || error.message);
-//     setTableData(null);
-//     setUiType(null);
-//   }
-// };
 
 const sendCheckedItemsToBackend = async () => {
   console.log("Checked items to send:", checkedItems);
@@ -1326,6 +1113,7 @@ const sendCheckedItemsToBackend = async () => {
       const fetchFinancialData = async () => {
         if (selectedYears.length === 2) {
           try {
+            setLoading(true); // Start the loader when fetching begins
             console.log("Fetching data for 2-UI (two years selected)...");
             const params = getSelectedParams();
             console.log("Generated params:", params);
@@ -1349,11 +1137,29 @@ const sendCheckedItemsToBackend = async () => {
             setTableData(null);
             setUiType(null);
           }
+            finally {
+            setLoading(false);
+          }
         }
       };
 
       fetchFinancialData();
     }, [selectedYears]);
+
+
+    const handleSelectAllToggle = () => {
+      if (selectedItems.length === combinedList.length) {
+        setSelectedItems([]);
+      } else {
+        setSelectedItems(combinedList.map((item) => item.id));
+      }
+    };
+  
+    const handleItemToggle = (id) => {
+      setSelectedItems((prev) =>
+        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      );
+    };
 
 
   return (
@@ -1508,44 +1314,35 @@ const sendCheckedItemsToBackend = async () => {
                 <MonthPicker
                   monthsList={monthsList}
                   selectedMonths={selectedMonths}
-                  setSelectedMonths={setSelectedMonths}
+                  setSelectedMonths={setSelectedMonths} 
                 />
               </Box>
               {/* ACCOUNT NUMBER LIST */}
-              <List
-                sx={{
-                  paddingTop: "5px",
-                  height: "550px", // Set maxHeight for vertical scrolling
-                  overflowY: "auto", // Enable vertical scroll
-
-                  /* ===== Scrollbar Styles for WebKit Browsers ===== */
-                  "&::-webkit-scrollbar": {
-                    width: "8px", // Width of the entire scrollbar
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    background: "#f1f1f1", // Background of the scrollbar track
-                    // borderRadius: "4px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: "#C0C0C0", // Scrollbar thumb color
-                    // borderRadius: "4px",
-                    border: "2px solid #f1f1f1", // Creates padding around thumb
-                    transition: "background-color 0.3s ease", // Smooth transition
-                  },
-                  "&::-webkit-scrollbar-thumb:hover": {
-                    backgroundColor: "#555", // Scrollbar thumb color on hover
-                  },
-
-                  // /* ===== Scrollbar Styles for Firefox ===== */
-                  // scrollbarWidth: "thin", // "auto" or "thin"
-                  // scrollbarColor: "#083473 #f1f1f1", // thumb and track colors
-                }}
-              >
-                {/* Select All Numbers ListItem */}
+                <List
+                    sx={{
+                      paddingTop: "5px",
+                      height: "550px",
+                      overflowY: "auto",
+                      "&::-webkit-scrollbar": {
+                        width: "8px",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        background: "#f1f1f1",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "#C0C0C0",
+                        border: "2px solid #f1f1f1",
+                        transition: "background-color 0.3s ease",
+                      },
+                      "&::-webkit-scrollbar-thumb:hover": {
+                        backgroundColor: "#555",
+                      },
+                    }}
+                  >
+                {/* Select All ListItem */}
                 <ListItem
                   onClick={handleSelectAllToggle}
                   sx={{
-                    // padding: "5px",
                     height: "35px",
                     borderRadius: "5px",
                     marginBottom: "2px",
@@ -1553,30 +1350,33 @@ const sendCheckedItemsToBackend = async () => {
                     boxShadow:
                       "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
                     backgroundColor:
-                      selectedNumbers.length === numbersList.length
-                        ? "#083473" // All selected
-                        : selectedNumbers.length > 0
-                        ? "rgba(8, 52, 115, 0.5)" // Some selected
-                        : "transparent", // None selected
-                    color: selectedNumbers.length > 0 ? "white" : "black",
+                      selectedItems.length === combinedList.length
+                        ? "#083473"
+                        : selectedItems.length > 0
+                        ? "rgba(8, 52, 115, 0.5)"
+                        : "transparent",
+                    color: selectedItems.length > 0 ? "white" : "black",
                     "&:hover": {
                       backgroundColor:
-                        selectedNumbers.length === numbersList.length
+                        selectedItems.length === combinedList.length
                           ? "#083473"
-                          : "rgba(8, 52, 115, 0.5)", // Adjust hover color based on state
+                          : "rgba(8, 52, 115, 0.5)",
                       color: "white",
                       fontWeight: "bold",
                     },
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
                   }}
                 >
                   <ListItemText primary="Select All" />
                 </ListItem>
 
-                {/* Individual Account Number ListItems */}
-                {numbersList.map((number) => (
+                {/* Combined ListItems */}
+                {combinedList.map((item) => (
                   <ListItem
-                    key={number}
-                    onClick={() => handleNumberToggle(number)}
+                    key={item.id}
+                    onClick={() => handleItemToggle(item.id)}
                     sx={{
                       padding: "5px",
                       minHeight: "30px",
@@ -1585,20 +1385,30 @@ const sendCheckedItemsToBackend = async () => {
                       border: "1px solid #AAAAAE",
                       boxShadow:
                         "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
-                      backgroundColor: selectedNumbers.includes(number)
-                        ? "#083473" // Selected
-                        : "transparent", // Not selected
-                      color: selectedNumbers.includes(number)
-                        ? "white"
-                        : "black",
+                      backgroundColor: selectedItems.includes(item.id)
+                        ? "#083473"
+                        : "transparent",
+                      color: selectedItems.includes(item.id) ? "white" : "black",
                       "&:hover": {
-                        backgroundColor: Colors.blue_icon, // Light blue hover effect
+                        backgroundColor: Colors.blue_icon,
                         color: "white",
                         fontWeight: "bold",
                       },
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
                     }}
                   >
-                    <ListItemText sx={{ margin: 0 }} primary={number} />
+                    <ListItemText
+                      sx={{ margin: 0 }}
+                      primary={
+                        <Box sx={{ display: "flex", justifyContent: "left",alignItems:"center",gap:"5px" }}>
+                          <span style={{fontWeight:"bold"}}>{item.number}</span>
+                          <span style={{fontWeight:"bold"}}>-</span>
+                          <span style={{display:"flex",textAlign:"left",lineHeight:"0.9",fontSize:"12px"}}>{item.text}</span>
+                        </Box>
+                      }
+                    />
                   </ListItem>
                 ))}
               </List>
@@ -2051,10 +1861,34 @@ const sendCheckedItemsToBackend = async () => {
           </Box>
         )}
           {/* 2-UI */}
-          {uiType === "2-UI" && tableData && (
-          <Box sx={{ minWidth: "4000px", whiteSpace: "nowrap",height:"700px" }}>
+          {uiType === "2-UI" && (
+            <>
+              {loading ? (
+                // Loader
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "700px", // Match the table height
+                  }}
+                >
+                    <AnimatedIcon sx={{ width: '300px', height: '350px' }}/>
+                </Box>
+              ) : error ? (
+                // Error Message
+                <Typography variant="h6" color="error">
+                  Error loading data: {error.message}
+                </Typography>
+              ) : tableData && firsttableData ? (
+          <Box sx={{ width: '100%', overflowX: 'auto', whiteSpace: "nowrap",height:"700px" }}>
             <Box sx={{ minWidth: "2340px" }}>
-              <Table>
+              <Table 
+                  sx={{
+                    tableLayout: 'fixed',
+                    width: '100%',
+                  }}
+              >
                 <TableHead>
                   {/* Main Header Row */}
                   <TableRow
@@ -2069,11 +1903,14 @@ const sendCheckedItemsToBackend = async () => {
                   >
                     <TableCell
                       sx={{
+                        position: 'sticky',
+                        left: 0,
                         width: "600px",
                         flexShrink: 0,
                         height: "22px",
                         padding: "0 4px",
                         borderRadius: "5px",
+                        bgcolor: Colors.blue_tableheader_light,
                       }}
                     >
                       <Typography variant="h6" 
@@ -2154,6 +1991,8 @@ const sendCheckedItemsToBackend = async () => {
                     {/* <==== HIDE BUTTONS SECTIONS ===> */}
                     <TableCell
                       sx={{
+                        position:"sticky",
+                        left:0,
                         width: "100%",
                         flexShrink: 0,
                         border: "2px solid #d0d0d0",
@@ -2420,11 +2259,14 @@ const sendCheckedItemsToBackend = async () => {
                       {/* Name Cell */}
                       <TableCell
                         sx={{
+                          position:"sticky",
+                          left:0,
                           width: "600px",
                           flexShrink: 0,
                           border: "2px solid #d0d0d0",
                           height: "20px",
                           padding: "0",
+                          bgcolor:"#e0e0e0",
                         }}
                       >
                         <Typography
@@ -2527,7 +2369,6 @@ const sendCheckedItemsToBackend = async () => {
                             )}
                         </React.Fragment>
                       ))}
-
                       {/* Total Yearly Sums and Final Columns */}
                       {visibleColumns.firstYear && (
                       <TableCell
@@ -2611,7 +2452,14 @@ const sendCheckedItemsToBackend = async () => {
               </Table>
             </Box>
           </Box>
-            )}
+           ) : (
+            // Optional: No Data Message
+            <Typography variant="h6" color="textSecondary">
+              No data available.
+            </Typography>
+          )}
+        </>
+      )}
 
         </Grid>
       </Grid>
@@ -2620,5 +2468,3 @@ const sendCheckedItemsToBackend = async () => {
 };
 
 export default AnalizeYearDashboard;
-
-
