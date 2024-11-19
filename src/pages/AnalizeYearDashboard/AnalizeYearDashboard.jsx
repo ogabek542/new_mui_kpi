@@ -40,6 +40,7 @@ import setSelectedSecondMap from "../testapi/SecondOptions";
 import top128Filials from "../testapi/firstOption";
 // loader icon //
 import AnimatedIcon from "../../components/AnimatedIcon/AnimatedIcon";
+import Footer from "../../components/Footer/Footer";
 
 // month names //
 const monthsList = [
@@ -667,159 +668,338 @@ const AnalizeYearDashboard = () => {
     // setSecondYear: PropTypes.func.isRequired,
   };
 
+  // const toggleRowOpen = (id) => {
+  //   setOpenRows((prev) => ({
+  //     ...prev,
+  //     [id]: !prev[id],
+  //   }));
+  // };
+
   const toggleRowOpen = (id) => {
-    setOpenRows((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    if (id === 1) {
+      // If "Respublika" is toggled
+      setOpenRows((prev) => {
+        const allOpen = !prev[id]; // Toggle the state of "Respublika"
+        const newOpenRows = {};
+        top128Filials.forEach((filial) => {
+          newOpenRows[filial.id] = allOpen;
+        });
+        return newOpenRows;
+      });
+    } else {
+      setOpenRows((prev) => ({
+        ...prev,
+        [id]: !prev[id],
+      }));
+    }
   };
 
-  // <==== FILILS NAME SELECTOR ====>  //
-  function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
-    const subRegions = setSelectedSecondMap[filial.id] || [];
+  // Filials name section  //
 
-    // Extract titles of subRegions
-    const subRegionTitles = subRegions.map((sub) => sub.title);
+// function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
+//     const subRegions = setSelectedSecondMap[filial.id] || [];
 
-    // Determine if all subRegions are checked
-    const allSubChecked = subRegionTitles.every((title) =>
-      checkedItems.includes(title)
-    );
+//     // Extract titles of subRegions
+//     const subRegionTitles = subRegions.map((sub) => sub.title);
 
-    // Determine if some (but not all) subRegions are checked
-    const someSubChecked =
-      subRegionTitles.some((title) => checkedItems.includes(title)) &&
-      !allSubChecked;
+//     // Determine if all subRegions are checked
+//     const allSubChecked = subRegionTitles.every((title) =>
+//       checkedItems.includes(title)
+//     );
 
-    // Handle main branch checkbox change
-    const handleMainCheckboxChange = (event) => {
-      const { checked } = event.target;
-      if (checked) {
-        // Add main branch and all subRegions to checkedItems
-        setCheckedItems((prev) => [
-          ...new Set([...prev, filial.title, ...subRegionTitles]),
-        ]);
-      } else {
-        // Remove main branch and all subRegions from checkedItems
-        setCheckedItems((prev) =>
-          prev.filter(
-            (item) => item !== filial.title && !subRegionTitles.includes(item)
-          )
-        );
-      }
-    };
+//     // Determine if some (but not all) subRegions are checked
+//     const someSubChecked =
+//       subRegionTitles.some((title) => checkedItems.includes(title)) &&
+//       !allSubChecked;
 
-    // Handle subRegion checkbox change
-    const handleSubCheckboxChange = (title) => {
+//     // Handle main branch checkbox change
+//     const handleMainCheckboxChange = (event) => {
+//       const { checked } = event.target;
+//       if (checked) {
+//         // Add main branch and all subRegions to checkedItems
+//         setCheckedItems((prev) => [
+//           ...new Set([...prev, filial.title, ...subRegionTitles]),
+//         ]);
+//       } else {
+//         // Remove main branch and all subRegions from checkedItems
+//         setCheckedItems((prev) =>
+//           prev.filter(
+//             (item) => item !== filial.title && !subRegionTitles.includes(item)
+//           )
+//         );
+//       }
+//     };
+
+//     // Handle subRegion checkbox change
+//     const handleSubCheckboxChange = (title) => {
+//       setCheckedItems((prev) =>
+//         prev.includes(title)
+//           ? prev.filter((item) => item !== title)
+//           : [...prev, title]
+//       );
+//     };
+
+//     // Handle click on subRegion name to toggle checkbox
+//     const handleSubRegionClick = (title) => {
+//       handleSubCheckboxChange(title);
+//     };
+
+//     return (
+//       <>
+//         <TableRow
+//           sx={{
+//             height: "55px",
+//             paddingLeft: "0px",
+//             display: "flex",
+//             alignItems: "center",
+//           }}
+//         >
+//           {/* Checkbox cell */}
+//           <TableCell sx={{ padding: "0px", width: "21px" }}>
+//             <Checkbox
+//               onChange={handleMainCheckboxChange}
+//               checked={allSubChecked}
+//               indeterminate={someSubChecked}
+//               size="small"
+//               sx={{ margin: 0, padding: "0px", paddingBottom: "2px" }}
+//             />
+//           </TableCell>
+//           {/* Clickable name cell to toggle open/close */}
+//           <TableCell
+//             sx={{
+//               padding: 0,
+//               cursor: "pointer",
+//               fontWeight: "bold",
+//               color: Colors.black,
+//               whiteSpace: "nowrap", 
+//               overflow:"hidden",
+//               textOverflow:"ellipsis",
+//               width:"100%",
+//               height:"22px",
+//             }}
+//             onClick={() => onToggle(filial.id)} // Pass filial.id to handleToggle
+//           >
+//             {filial.title}
+//           </TableCell>
+//         </TableRow>
+//         {/* Sub-region rows stay open as long as isOpen is true */}
+//         {isOpen && (
+//           <TableRow sx={{ display: "flex", alignItems: "center" }}>
+//             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
+//               <Collapse in={isOpen} timeout="auto" unmountOnExit>
+//                 <Box sx={{ margin: 0, padding: 0 }}>
+//                   <Box sx={{ margin: "0.5px" }}>
+//                     {subRegions.map((subRegion, index) => (
+//                       <TableRow key={index} sx={{ padding: "0px",display:"flex",alignItems:"center" }}>
+//                         <TableCell
+//                           sx={{
+//                             padding: "0px",
+//                             width: "20px",
+//                             height:"20px",
+//                             display: "flex",
+//                             alignItems: "center",
+//                             verticalAlign: "center",
+//                           }}
+//                         >
+//                           <Checkbox
+//                             onChange={(e) => {
+//                               e.stopPropagation(); // Prevent the click event from triggering handleToggle
+//                               handleSubCheckboxChange(subRegion.title);
+//                             }}
+//                             checked={checkedItems.includes(subRegion.title)}
+//                             size="small"
+//                             sx={{ margin: 0, padding: "0px" , height:"20px",}}
+//                           />
+//                         </TableCell>
+
+//                         <TableCell
+//                           sx={{
+//                             padding: "2px",
+//                             margin: "0px",
+//                             cursor: "pointer",
+//                             fontSize: "14px",
+//                             fontWeight: "500",
+//                             paddingLeft: "-5px",
+//                             whiteSpace: "nowrap", 
+//                             overflow:"hidden",
+//                             textOverflow:"ellipsis",
+//                             width:"110px",
+//                             height:"20px",
+//                           }}
+//                           onClick={() => handleSubRegionClick(subRegion.title)}
+//                         >
+//                           {subRegion.title}
+//                         </TableCell>
+//                       </TableRow>
+//                     ))}
+//                   </Box>
+//                 </Box>
+//               </Collapse>
+//             </TableCell>
+//           </TableRow>
+//         )}
+//       </>
+//     );
+//   }
+
+function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
+  let subRegions = setSelectedSecondMap[filial.id] || [];
+  let subRegionTitles = subRegions.map((sub) => sub.title);
+
+  if (filial.title === "Respublika") {
+    // For "Respublika", subRegions are all filials except "Respublika" itself
+    subRegions = top128Filials
+      .filter((f) => f.title !== "Respublika")
+      .map((f) => ({ title: f.title }));
+    subRegionTitles = subRegions.map((sub) => sub.title);
+  }
+
+  // Determine if all subRegions are checked
+  const allSubChecked = subRegionTitles.every((title) =>
+    checkedItems.includes(title)
+  );
+
+  // Determine if some (but not all) subRegions are checked
+  const someSubChecked =
+    subRegionTitles.some((title) => checkedItems.includes(title)) &&
+    !allSubChecked;
+
+  // Handle main branch checkbox change
+  const handleMainCheckboxChange = (event) => {
+    const { checked } = event.target;
+    if (checked) {
+      // Add main branch and all subRegions to checkedItems
+      setCheckedItems((prev) => [
+        ...new Set([...prev, filial.title, ...subRegionTitles]),
+      ]);
+    } else {
+      // Remove main branch and all subRegions from checkedItems
       setCheckedItems((prev) =>
-        prev.includes(title)
-          ? prev.filter((item) => item !== title)
-          : [...prev, title]
+        prev.filter(
+          (item) => item !== filial.title && !subRegionTitles.includes(item)
+        )
       );
-    };
+    }
+  };
 
-    // Handle click on subRegion name to toggle checkbox
-    const handleSubRegionClick = (title) => {
-      handleSubCheckboxChange(title);
-    };
+  // Handle subRegion checkbox change
+  const handleSubCheckboxChange = (title) => {
+    setCheckedItems((prev) =>
+      prev.includes(title)
+        ? prev.filter((item) => item !== title)
+        : [...prev, title]
+    );
+  };
 
-    return (
-      <>
-        <TableRow
+  // Handle click on subRegion name to toggle checkbox
+  const handleSubRegionClick = (title) => {
+    handleSubCheckboxChange(title);
+  };
+
+  return (
+    <>
+      <TableRow
+        sx={{
+          paddingLeft: "0px",
+          display: "flex",
+          alignItems: "center",
+          verticalAlign:"center",
+          height: "53px",
+          borderBottom:"1px solid #AAAAAE"
+        }}
+      >
+        {/* Checkbox cell */}
+        <TableCell sx={{ padding: "0px", width: "21px",border:"none" }}>
+          <Checkbox
+            onChange={handleMainCheckboxChange}
+            checked={allSubChecked}
+            indeterminate={someSubChecked}
+            size="small"
+            sx={{ margin: 0, padding: "0px", paddingBottom: "2px" }}
+          />
+        </TableCell>
+        {/* Clickable name cell to toggle open/close */}
+        <TableCell
           sx={{
-            height: "41px",
-            paddingLeft: "0px",
-            display: "flex",
-            alignItems: "center",
+            padding: 0,
+            cursor: "pointer",
+            fontWeight: "bold",
+            color: Colors.black,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            width: "100%",
+            height: "22px",
+            border:"none"
           }}
+          onClick={() => onToggle(filial.id)}
         >
-          {/* Checkbox cell */}
-          <TableCell sx={{ padding: "0px", width: "21px" }}>
-            <Checkbox
-              onChange={handleMainCheckboxChange}
-              checked={allSubChecked}
-              indeterminate={someSubChecked}
-              size="small"
-              sx={{ margin: 0, padding: "0px", paddingBottom: "2px" }}
-            />
-          </TableCell>
-          {/* Clickable name cell to toggle open/close */}
-          <TableCell
-            sx={{
-              padding: 0,
-              cursor: "pointer",
-              fontWeight: "bold",
-              color: Colors.black,
-              whiteSpace: "nowrap", 
-              overflow:"hidden",
-              textOverflow:"ellipsis",
-              width:"100%",
-              height:"22px",
-            }}
-            onClick={() => onToggle(filial.id)} // Pass filial.id to handleToggle
-          >
-            {filial.title}
+          {filial.title}
+        </TableCell>
+      </TableRow>
+      {/* Sub-region rows stay open as long as isOpen is true */}
+      {isOpen && (
+        <TableRow sx={{ display: "flex", alignItems: "center" }}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
+            <Collapse in={isOpen} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 0, padding: 0 }}>
+                <Box sx={{ margin: "0.5px" }}>
+                  {subRegions.map((subRegion, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{ padding: "0px", display: "flex", alignItems: "center", }}
+                    >
+                      <TableCell
+                        sx={{
+                          padding: "0px",
+                          width: "20px",
+                          height: "20px",
+                          display: "flex",
+                          alignItems: "center",
+                          verticalAlign: "center",
+                        }}
+                      >
+                        <Checkbox
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            handleSubCheckboxChange(subRegion.title);
+                          }}
+                          checked={checkedItems.includes(subRegion.title)}
+                          size="small"
+                          sx={{ margin: 0, padding: "0px", height: "20px" }}
+                        />
+                      </TableCell>
+
+                      <TableCell
+                        sx={{
+                          padding: "2px",
+                          margin: "0px",
+                          cursor: "pointer",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          paddingLeft: "-5px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          width: "100px",
+                          height: "20px",
+                        }}
+                        onClick={() => handleSubRegionClick(subRegion.title)}
+                      >
+                        {subRegion.title}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </Box>
+              </Box>
+            </Collapse>
           </TableCell>
         </TableRow>
-        {/* Sub-region rows stay open as long as isOpen is true */}
-        {isOpen && (
-          <TableRow sx={{ display: "flex", alignItems: "center" }}>
-            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
-              <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                <Box sx={{ margin: 0, padding: 0 }}>
-                  <Box sx={{ margin: "0.5px" }}>
-                    {subRegions.map((subRegion, index) => (
-                      <TableRow key={index} sx={{ padding: "0px",display:"flex",alignItems:"center" }}>
-                        <TableCell
-                          sx={{
-                            padding: "0px",
-                            width: "20px",
-                            height:"20px",
-                            display: "flex",
-                            alignItems: "center",
-                            verticalAlign: "center",
-                          }}
-                        >
-                          <Checkbox
-                            onChange={(e) => {
-                              e.stopPropagation(); // Prevent the click event from triggering handleToggle
-                              handleSubCheckboxChange(subRegion.title);
-                            }}
-                            checked={checkedItems.includes(subRegion.title)}
-                            size="small"
-                            sx={{ margin: 0, padding: "0px" , height:"20px",}}
-                          />
-                        </TableCell>
+      )}
+    </>
+  );
+}
 
-                        <TableCell
-                          sx={{
-                            padding: "2px",
-                            margin: "0px",
-                            cursor: "pointer",
-                            fontSize: "14px",
-                            fontWeight: "500",
-                            paddingLeft: "-5px",
-                            whiteSpace: "nowrap", 
-                            overflow:"hidden",
-                            textOverflow:"ellipsis",
-                            width:"110px",
-                            height:"20px",
-                          }}
-                          onClick={() => handleSubRegionClick(subRegion.title)}
-                        >
-                          {subRegion.title}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </Box>
-                </Box>
-              </Collapse>
-            </TableCell>
-          </TableRow>
-        )}
-      </>
-    );
-  }
 
   Row.propTypes = {
     filial: PropTypes.shape({
@@ -832,106 +1012,22 @@ const AnalizeYearDashboard = () => {
     setCheckedItems: PropTypes.func.isRequired,
   };
 
-
-  // Row.propTypes = {
-  //   filial: PropTypes.shape({
-  //     title: PropTypes.string.isRequired,
-  //     id: PropTypes.number.isRequired,
-  //   }).isRequired,
-  //   isOpen: PropTypes.bool.isRequired,
-  //   onToggle: PropTypes.func.isRequired,
-  //   checkedItems: PropTypes.array.isRequired,
-  //   setCheckedItems: PropTypes.func.isRequired,
-  // };
-
-  
-  
   // <=== SELECT MONTHS SECTION ===>
 
-  // const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
+  const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
 
-  //   const handleChange = (event) => {
-  //     const {
-  //       target: { value },
-  //     } = event;
-  //     setSelectedMonths(
-  //       typeof value === 'string' ? value.split(',') : value,
-  //     );
-  //   };
-
-
-  //   return (
-  //     <FormControl
-  //       sx={{
-  //         width: "100%",
-  //         "& .MuiInputLabel-root": {
-  //           fontSize: "1rem",
-  //           color: Colors.dark,
-  //         },
-  //         "& .MuiSelect-root": {
-  //           fontSize: "0.8rem",
-  //         },
-  //       }}
-  //       size="small"
-  //     >
-  //       <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
-  //       <Select
-  //         multiple
-  //         labelId="month-picker-label"
-  //         id="month-picker"
-  //         value={selectedMonths}
-  //         onChange={handleChange}
-  //         input={<OutlinedInput label="Oyni Tanlash" />}
-  //         renderValue={(selected) => selected.join(", ")}
-  //       >
-  //         {monthsList.map((month) => (
-  //           <MenuItem
-  //             key={month.id}
-  //             value={month.name}
-  //             sx={{
-  //               padding: "4px 8px",
-  //               display: "flex",
-  //               alignItems: "center",
-  //               gap: "8px",
-  //             }}
-  //           >
-  //             <Checkbox
-  //               checked={selectedMonths.includes(month.name)}
-  //               sx={{ color: Colors.blue_nbu, padding: 0 }}
-  //               size="small"
-  //             />
-  //             <ListItemText
-  //               primary={month.name}
-  //               sx={{ fontSize: "0.8rem", margin: 0 }}
-  //             />
-  //           </MenuItem>
-  //         ))}
-  //       </Select>
-  //     </FormControl>
-  //   );
-  // };
-
-  const MonthPicker = ({ selectedMonths, setSelectedMonths }) => {
-    const [open, setOpen] = useState(false);
-  
     const handleChange = (event) => {
-      const {target: { value },} = event;
-      setSelectedMonths(typeof value === 'string' ? value.split(',') : value,);
-      setOpen(false);
+      const {
+        target: { value },
+      } = event;
+      setSelectedMonths(
+        typeof value === 'string' ? value.split(',') : value,
+      );
     };
-  
-    const handleClickAway = (event) => {
-      // setOpen(true)
-      // Check if the click was on another Select component
-      if (event.target.closest('.MuiSelect-root')) {
-        return;
-      }
-      setOpen(false);
-    };
-  
+
+
     return (
-      <ClickAwayListener onClickAway={handleClickAway}>
-        <FormControl
+      <FormControl
         sx={{
           width: "100%",
           "& .MuiInputLabel-root": {
@@ -942,31 +1038,44 @@ const AnalizeYearDashboard = () => {
             fontSize: "0.8rem",
           },
         }}
-          size="small"
+        size="small"
+      >
+        <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
+        <Select
+          multiple
+          labelId="month-picker-label"
+          id="month-picker"
+          value={selectedMonths}
+          onChange={handleChange}
+          input={<OutlinedInput label="Oyni Tanlash" />}
+          renderValue={(selected) => selected.join(", ")}
         >
-          <InputLabel id="month-picker-label">Oyni tanlash</InputLabel>
-          <Select
-            id="month-picker"
-            multiple
-            labelId="month-picker-label"
-            value={selectedMonths}
-            onChange={handleChange}
-            input={<OutlinedInput label="Oyni Tanlash" />}
-            renderValue={(selected) => selected.join(", ")}
-          >
-            {monthsList.map((month) => (
-              <MenuItem key={month.id} value={month.name}>
-                <Checkbox  checked={selectedMonths.includes(month.name)}  size="small"/>
-                <ListItemText primary={month.name} sx={{ fontSize: "0.8rem", margin: 0 }} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </ClickAwayListener>
+          {monthsList.map((month) => (
+            <MenuItem
+              key={month.id}
+              value={month.name}
+              sx={{
+                padding: "4px 8px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <Checkbox
+                checked={selectedMonths.includes(month.name)}
+                sx={{ color: Colors.blue_nbu, padding: 0 }}
+                size="small"
+              />
+              <ListItemText
+                primary={month.name}
+                sx={{ fontSize: "0.8rem", margin: 0 }}
+              />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     );
-  }
-
-
+  };
 
   MonthPicker.propTypes = {
     monthsList: PropTypes.arrayOf(
@@ -979,15 +1088,6 @@ const AnalizeYearDashboard = () => {
     setSelectedMonths: PropTypes.func.isRequired,
   };
 
-  // const handleSelectAllToggle = () => {
-  //   if (selectedNumbers.length === numbersList.length) {
-  //     // All numbers are selected; deselect all
-  //     setSelectedNumbers([]);
-  //   } else {
-  //     // Select all numbers
-  //     setSelectedNumbers([...numbersList]);
-  //   }
-  // };
 
   // <=== SELECT FIRST YEAR FUNCTION ====> //
   const handleHideFirstYear = () => {
@@ -1047,7 +1147,7 @@ const AnalizeYearDashboard = () => {
 
         };
 
-
+// send request to backend //
 const sendCheckedItemsToBackend = async () => {
   console.log("Checked items to send:", checkedItems);
   console.log("Selected years:", selectedYears);
@@ -1066,7 +1166,6 @@ const sendCheckedItemsToBackend = async () => {
 
 
   try {
-
 
     console.log("Formatted Params:", formattedParams);
 
@@ -1173,6 +1272,7 @@ const sendCheckedItemsToBackend = async () => {
         maxWidth: "100vw", // Ensure the container doesn't exceed the viewport width
         "@media (min-width: 1920px)": {
           maxWidth: "100%", // For extra-large screens, allow full width
+          height:"100%"
         },
       }}
     >
@@ -1182,8 +1282,8 @@ const sendCheckedItemsToBackend = async () => {
       <Grid
         container
         // spacing={0.5}
-        sx={{ height: "auto", marginTop: "5px", gap: "5px" }}
-        alignItems="stretch"
+        sx={{ height: "auto", marginTop: "5px", gap: "5px",marginBottom:"5px" }}
+        // alignItems="stretch"
       >
         {/* <=== LEFT SIDE FILTER SECTION ====> */}
         <Grid
@@ -1257,7 +1357,7 @@ const sendCheckedItemsToBackend = async () => {
             {/* <==== LEFT SIDE FILIALS FILTER ====> */}
             <Box
               sx={{
-                width: "50%",
+                width: "30%",
                 display: "block",
                 height: "100%",
                 color: Colors.white,
@@ -1321,7 +1421,7 @@ const sendCheckedItemsToBackend = async () => {
                 <List
                     sx={{
                       paddingTop: "5px",
-                      height: "550px",
+                      height: "100%",
                       overflowY: "auto",
                       "&::-webkit-scrollbar": {
                         width: "8px",
@@ -1431,7 +1531,7 @@ const sendCheckedItemsToBackend = async () => {
         >
           {/* 1-UI  */}
           {uiType === "1-UI" && tableData && (
-          <Box sx={{ minWidth: "4000px", whiteSpace: "nowrap",height:"700px" }}>
+          <Box sx={{ minWidth: "4000px", whiteSpace: "nowrap",height:"100%" }}>
             <Box sx={{ minWidth: "2340px" }}>
               <Table>
                 <TableHead>
@@ -1870,7 +1970,7 @@ const sendCheckedItemsToBackend = async () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: "700px", // Match the table height
+                    height: "100%", // Match the table height
                   }}
                 >
                     <AnimatedIcon sx={{ width: '300px', height: '350px' }}/>
@@ -1881,7 +1981,7 @@ const sendCheckedItemsToBackend = async () => {
                   Error loading data: {error.message}
                 </Typography>
               ) : tableData && firsttableData ? (
-          <Box sx={{ width: '100%', overflowX: 'auto', whiteSpace: "nowrap",height:"700px" }}>
+          <Box sx={{ width: '100%', overflowX: 'auto', whiteSpace: "nowrap",height:"auto" }}>
             <Box sx={{ minWidth: "2340px" }}>
               <Table 
                   sx={{
@@ -2077,7 +2177,7 @@ const sendCheckedItemsToBackend = async () => {
                           $
                         </Button>
                     </TableCell>
-                    {monthArray.map((month) => (
+                    {tableData.newMonths.map((month) => (
                       <React.Fragment key={month}>
                         {visibleColumns.firstYear && (
                         <TableCell
@@ -2174,7 +2274,7 @@ const sendCheckedItemsToBackend = async () => {
                         variant="subtitle2"
                         sx={{ lineHeight: "normal", fontWeight: "bold" }}
                       >
-                        {newTestAPI.choosedfirstYear}
+                        {firsttableData.choosedfirstYear}
                       </Typography>
                     </TableCell>
                       )}
@@ -2193,7 +2293,7 @@ const sendCheckedItemsToBackend = async () => {
                         variant="subtitle2"
                         sx={{ lineHeight: "normal", fontWeight: "bold" }}
                       >
-                        {newTestAPI.choosedsecondYear}
+                        {firsttableData.choosedsecondYear}
                       </Typography>
                     </TableCell> 
                     )}
@@ -2247,7 +2347,7 @@ const sendCheckedItemsToBackend = async () => {
                       <DataRow key={row.id} row={row} monthArray={monthArray} />
                     ))}
                   {/* <==== TOTAL BOTTOM SECTION  ====> */}
-                  {newTestAPI.totalData.map((total, key) => (
+                  {firsttableData.totalData.map((total, key) => (
                     <TableRow
                       key={key}
                       sx={{
@@ -2287,7 +2387,7 @@ const sendCheckedItemsToBackend = async () => {
                       </TableCell>
 
                       {/* Monthly Data Cells */}
-                      {monthArray.map((month, index) => (
+                      {firsttableData.newMonths.map((month, index) => (
                         <React.Fragment key={index}>
                           {visibleColumns.firstYear && (
                           <TableCell
@@ -2460,9 +2560,10 @@ const sendCheckedItemsToBackend = async () => {
           )}
         </>
       )}
-
         </Grid>
+
       </Grid>
+      <Footer />
     </Container>
   );
 };
