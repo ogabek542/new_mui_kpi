@@ -12,7 +12,6 @@ import {
   ListItemText,
   ListItemIcon,
   OutlinedInput,
-  ClickAwayListener,
 } from "@mui/material";
 import LightHeader from "../../components/LightHeader/LightHeader";
 import { Colors } from "../../styles/theme";
@@ -153,7 +152,6 @@ const AnalizeYearDashboard = () => {
   // State variables for fetched data and UI type
   const [tableData, setTableData] = useState(null); // Data fetched from backend
   const [uiType, setUiType] = useState(null); // '1-UI' or '2-UI'
-
   const [changeapi,setChangeAPI] = useState(true);
   // const changeAPI = changeapi ?  secondTableAPI : newTestAPI;
   const changeAPI = changeapi ?  secondTableAPI : onetable;
@@ -171,12 +169,12 @@ const AnalizeYearDashboard = () => {
     }
   };
 
-    // Handle year selection
-    const handleYearChange = (event) => {
-      const selected = typeof event.target.value === "string" ? event.target.value.split(",") : event.target.value;
-      const sortedSelected = selected.slice(0, 2).sort((a, b) => a - b); // Limit to two years
-      setSelectedYears(sortedSelected);
-    };
+  // Handle year selection
+    // const handleYearChange = (event) => {
+    //   const selected = typeof event.target.value === "string" ? event.target.value.split(",") : event.target.value;
+    //   const sortedSelected = selected.slice(0, 2).sort((a, b) => a - b);
+    //   setSelectedYears(sortedSelected);
+    // };
 
   const monthArray = monthsList.map((month) => month.name);
 
@@ -187,8 +185,6 @@ const AnalizeYearDashboard = () => {
 
     // Apply alternating background color as needed
     const backgroundColor = "#FFFFFF";
-
-
 
 
     return (
@@ -210,7 +206,6 @@ const AnalizeYearDashboard = () => {
             zIndex: depth === 0 ? 1 : 0,
             width: '200px',
             border: '2px solid #d0d0d0',
-            borderRadius: '5px',
             height: '25px',
             padding: '0px',
             paddingLeft: `${depth * 5}px`, // Indent based on depth
@@ -230,6 +225,7 @@ const AnalizeYearDashboard = () => {
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 width: '100%',
+                
               }}
             >
               {row.name}
@@ -243,7 +239,6 @@ const AnalizeYearDashboard = () => {
                 sx={{
                   width: '80px',
                   border: '2px solid #d0d0d0',
-                  borderRadius: '5px',
                   height: '20px',
                   padding: '0 4px',
                   textAlign: 'right',
@@ -258,7 +253,6 @@ const AnalizeYearDashboard = () => {
                 sx={{
                   width: "80px",
                   border: "2px solid #d0d0d0",
-                  borderRadius: "5px",
                   height: "20px",
                   padding: "0 4px",
                   textAlign: "right",
@@ -273,7 +267,6 @@ const AnalizeYearDashboard = () => {
                   width: "80px",
                   textAlign: "center",
                   border: "2px solid #d0d0d0",
-                  borderRadius: "5px",
                   height: "20px",
                   padding: "0 4px",
                 }}
@@ -286,7 +279,6 @@ const AnalizeYearDashboard = () => {
                 sx={{
                   width: "80px",
                   border: "2px solid #d0d0d0",
-                  borderRadius: "5px",
                   height: "20px",
                   padding: "0 4px",
                   textAlign: "right",
@@ -302,7 +294,6 @@ const AnalizeYearDashboard = () => {
             sx={{
               width: "80px",
               border: "2px solid #d0d0d0",
-              borderRadius: "5px",
               height: "20px",
               padding: "0 4px",
               textAlign: "right",
@@ -316,7 +307,6 @@ const AnalizeYearDashboard = () => {
             sx={{
               width: "80px",
               border: "2px solid #d0d0d0",
-              borderRadius: "5px",
               height: "20px",
               padding: "0 4px",
               textAlign: "right",
@@ -331,7 +321,6 @@ const AnalizeYearDashboard = () => {
               width: "80px",
               textAlign: "center",
               border: "2px solid #d0d0d0",
-              borderRadius: "5px",
               height: "20px",
               padding: "0 4px",
             }}
@@ -344,7 +333,6 @@ const AnalizeYearDashboard = () => {
             sx={{
               width: "80px",
               border: "2px solid #d0d0d0",
-              borderRadius: "5px",
               height: "20px",
               padding: "0 4px",
               textAlign: "right",
@@ -547,18 +535,18 @@ const AnalizeYearDashboard = () => {
       );
     }
   
-    // SecondDataRow.propTypes = {
-    //   row: PropTypes.shape({
-    //     id: PropTypes.string.isRequired,
-    //     name: PropTypes.string.isRequired,
-    //     months: PropTypes.object.isRequired,
-    //     firstYearTotalSum: PropTypes.string.isRequired,
-    //     secondYearTotalSum: PropTypes.string.isRequired,
-    //     subRows: PropTypes.array,
-    //   }).isRequired,
-    //   depth: PropTypes.number,
-    //   monthArray: PropTypes.array.isRequired,
-    // };
+    SecondDataRow.propTypes = {
+      row: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        months: PropTypes.object.isRequired,
+        firstYearTotalSum: PropTypes.string.isRequired,
+        secondYearTotalSum: PropTypes.string.isRequired,
+        subRows: PropTypes.array,
+      }).isRequired,
+      depth: PropTypes.number,
+      monthArray: PropTypes.array.isRequired,
+    };
 
   // select account number //
   const handleNumberToggle = (number) => {
@@ -667,13 +655,6 @@ const AnalizeYearDashboard = () => {
     // setFirstYear: PropTypes.func.isRequired,
     // setSecondYear: PropTypes.func.isRequired,
   };
-
-  // const toggleRowOpen = (id) => {
-  //   setOpenRows((prev) => ({
-  //     ...prev,
-  //     [id]: !prev[id],
-  //   }));
-  // };
 
   const toggleRowOpen = (id) => {
     if (id === 1) {
@@ -1260,7 +1241,6 @@ const sendCheckedItemsToBackend = async () => {
       );
     };
 
-
   return (
     <Container
       maxWidth={false} // This allows the container to expand beyond the default breakpoints
@@ -1324,7 +1304,7 @@ const sendCheckedItemsToBackend = async () => {
             >
               NATIJA
             </Button>
-            {/* <==== GRAFUC REQUEST BUTTON ====> */}
+            {/* <==== GRAFIC REQUEST BUTTON ====> */}
             <Button
               variant="contained"
               // onClick={sendCheckedItemsToBackend}
@@ -1343,7 +1323,7 @@ const sendCheckedItemsToBackend = async () => {
             </Button>
           </Box>
 
-          {/* <==== FILIALS SELECT SECTION =====> */}
+          {/* <===== FILIALS SELECT SECTION =====> */}
           <Box
             sx={{
               display: "flex",
@@ -1351,7 +1331,7 @@ const sendCheckedItemsToBackend = async () => {
               justifyContent: "space-between",
               gap: "5px",
               height: "100%",
-              marginTop: "5px",
+              marginTop: "5px", 
             }}
           >
             {/* <==== LEFT SIDE FILIALS FILTER ====> */}
@@ -1361,10 +1341,11 @@ const sendCheckedItemsToBackend = async () => {
                 display: "block",
                 height: "100%",
                 color: Colors.white,
+                marginTop:"15px",
               }}
             >
               <TableContainer component={Paper} sx={{ padding: 0 }}>
-                <Table aria-label="collapsible table" sx={{ margin: 0 }}>
+                <Table aria-label="collapsible table" sx={{ margin: 0, }}>
                   <TableBody>
                     {top128Filials.map((filial) => (
                       <Row
@@ -1397,7 +1378,6 @@ const sendCheckedItemsToBackend = async () => {
                 sx={{
                   width: "100%",
                   height: "auto",
-                  // marginBottom: "16px",
                   bgcolor: "white",
                 }}
               >
@@ -1982,11 +1962,13 @@ const sendCheckedItemsToBackend = async () => {
                 </Typography>
               ) : tableData && firsttableData ? (
           <Box sx={{ width: '100%', overflowX: 'auto', whiteSpace: "nowrap",height:"auto" }}>
-            <Box sx={{ minWidth: "2340px" }}>
-              <Table 
+            <Box sx={{width:"100%" }}>
+              <TableContainer 
+                component={Paper}
                   sx={{
                     tableLayout: 'fixed',
                     width: '100%',
+                    overflowX: 'auto',
                   }}
               >
                 <TableHead>
@@ -1998,7 +1980,6 @@ const sendCheckedItemsToBackend = async () => {
                       height: "45px",
                       padding: "0px",
                       bgcolor: Colors.blue_tableheader_light,
-                      borderRadius: "5px",
                     }}
                   >
                     <TableCell
@@ -2009,7 +1990,6 @@ const sendCheckedItemsToBackend = async () => {
                         flexShrink: 0,
                         height: "22px",
                         padding: "0 4px",
-                        borderRadius: "5px",
                         bgcolor: Colors.blue_tableheader_light,
                       }}
                     >
@@ -2037,11 +2017,10 @@ const sendCheckedItemsToBackend = async () => {
                         }
                         sx={{
                           textAlign: "center",
-                          width: "320px",
-                          border: "2px solid #FFFFFF",
+                          width: "auto",
+                          border: "1px solid #FFFFFF",
                           height: "20px",
                           padding: "0 4px",
-                          borderRadius: "5px",
                           borderBottom: "2px solid #e0e0e0",
                         }}
                       >
@@ -2063,12 +2042,11 @@ const sendCheckedItemsToBackend = async () => {
                         }
                       sx={{
                         textAlign: "center",
-                        width: "340px",
-                        borderBottom: "2px solid #e0e0e0",
-                        borderRight: "2px solid #FFFFFF",
+                        width: "auto",
+                        // borderBottom: "2px solid #e0e0e0",
+                        border: "2px solid #e0e0e0",
                         height: "2px",
                         padding: "0 4px",
-                        borderRadius: "5px",
                       }}
                     >
                       <Typography
@@ -2185,7 +2163,6 @@ const sendCheckedItemsToBackend = async () => {
                             width: "120px",
                             textAlign: "center",
                             border: "2px solid #d0d0d0",
-                            borderRadius: "8px",
                             height: "20px",
                             padding: "0 4px",
                             display: showFirstYear ? "table-cell" : "none",
@@ -2198,14 +2175,13 @@ const sendCheckedItemsToBackend = async () => {
                             {firsttableData.choosedfirstYear}
                           </Typography>
                         </TableCell>
-                         )}
+                          )}
                         {visibleColumns.secondYear && (
                         <TableCell
                           sx={{
                             width: "120px",
                             textAlign: "center",
                             border: "2px solid #d0d0d0",
-                            borderRadius: "8px",
                             height: "20px",
                             padding: "0 4px",
                           }}
@@ -2218,13 +2194,12 @@ const sendCheckedItemsToBackend = async () => {
                           </Typography>
                         </TableCell> 
                         )}
-                         {visibleColumns.percentage && (
+                        {visibleColumns.percentage && (
                         <TableCell
                           sx={{
                             width: "120px",
                             textAlign: "center",
                             border: "2px solid #d0d0d0 ",
-                            borderRadius: "5px", // Added border radius
                             height: "20px",
                             padding: "0 4px",
                           }}
@@ -2236,14 +2211,13 @@ const sendCheckedItemsToBackend = async () => {
                             Perf.
                           </Typography>
                         </TableCell>
-                         )}
-                           {visibleColumns.amount && (
+                          )}
+                            {visibleColumns.amount && (
                         <TableCell
                           sx={{
                             width: "120px",
                             textAlign: "center",
                             border: "2px solid #d0d0d0",
-                            borderRadius: "5px", // Added border radius
                             height: "20px",
                             padding: "0 4px",
                           }}
@@ -2255,7 +2229,7 @@ const sendCheckedItemsToBackend = async () => {
                             Amount
                           </Typography>
                         </TableCell>
-                           )}
+                            )}
                       </React.Fragment>
                     ))}
                       {visibleColumns.firstYear && (
@@ -2264,7 +2238,6 @@ const sendCheckedItemsToBackend = async () => {
                         width: "120px",
                         textAlign: "center",
                         borderTop: "2px solid #d0d0d0",
-                        borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
                         display: showFirstYear ? "table-cell" : "none",
@@ -2284,7 +2257,6 @@ const sendCheckedItemsToBackend = async () => {
                         width: "120px",
                         textAlign: "center",
                         border: "2px solid #d0d0d0",
-                        borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
                       }}
@@ -2304,7 +2276,6 @@ const sendCheckedItemsToBackend = async () => {
                         width: "120px",
                         textAlign: "center",
                         border: "2px solid #d0d0d0",
-                        borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
                       }}
@@ -2324,7 +2295,6 @@ const sendCheckedItemsToBackend = async () => {
                         width: "120px",
                         textAlign: "center",
                         border: "2px solid #d0d0d0",
-                        borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
                       }}
@@ -2344,7 +2314,7 @@ const sendCheckedItemsToBackend = async () => {
                   {firsttableData &&
                     firsttableData.data &&
                     firsttableData.data.map((row) => (
-                      <DataRow key={row.id} row={row} monthArray={monthArray} />
+                      <DataRow key={row.id} row={row} monthArray={firsttableData.newMonths} />
                     ))}
                   {/* <==== TOTAL BOTTOM SECTION  ====> */}
                   {firsttableData.totalData.map((total, key) => (
@@ -2391,15 +2361,13 @@ const sendCheckedItemsToBackend = async () => {
                         <React.Fragment key={index}>
                           {visibleColumns.firstYear && (
                           <TableCell
-                            sx={{
-                              width: "120px",
-                              textAlign: "right",
-                              border: "2px solid #d0d0d0",
-                              borderRadius: "8px",
-                              height: "20px",
-                              padding: "0 4px",
-                              display: showFirstYear ? "table-cell" : "none",
-                            }}
+                          sx={{
+                            width: "120px",
+                            textAlign: "right",
+                            border: "2px solid #d0d0d0",
+                            height: "20px",
+                            padding: "0 4px",
+                          }}
                           >
                             <Typography
                               variant="subtitle2"
@@ -2415,7 +2383,6 @@ const sendCheckedItemsToBackend = async () => {
                               width: "120px",
                               textAlign: "right",
                               border: "2px solid #d0d0d0",
-                              borderRadius: "8px",
                               height: "20px",
                               padding: "0 4px",
                             }}
@@ -2434,7 +2401,6 @@ const sendCheckedItemsToBackend = async () => {
                               width: "120px",
                               textAlign: "center",
                               border: "2px solid #d0d0d0",
-                              borderRadius: "5px",
                               height: "20px",
                               padding: "0 4px",
                             }}
@@ -2453,7 +2419,6 @@ const sendCheckedItemsToBackend = async () => {
                               width: "120px",
                               textAlign: "right",
                               border: "2px solid #d0d0d0",
-                              borderRadius: "5px",
                               height: "20px",
                               padding: "0 4px",
                             }}
@@ -2476,7 +2441,6 @@ const sendCheckedItemsToBackend = async () => {
                           width: "120px",
                           textAlign: "right",
                           border: "2px solid #d0d0d0",
-                          borderRadius: "5px",
                           height: "20px",
                           padding: "0 4px",
                         }}
@@ -2495,7 +2459,6 @@ const sendCheckedItemsToBackend = async () => {
                           width: "120px",
                           textAlign: "right",
                           border: "2px solid #d0d0d0",
-                          borderRadius: "5px",
                           height: "20px",
                           padding: "0 4px",
                         }}
@@ -2514,7 +2477,6 @@ const sendCheckedItemsToBackend = async () => {
                           width: "120px",
                           textAlign: "center",
                           border: "2px solid #d0d0d0",
-                          borderRadius: "5px",
                           height: "20px",
                           padding: "0 4px",
                         }}
@@ -2533,7 +2495,6 @@ const sendCheckedItemsToBackend = async () => {
                           width: "120px",
                           textAlign: "right",
                           border: "2px solid #d0d0d0",
-                          borderRadius: "5px",
                           height: "20px",
                           padding: "0 4px",
                         }}
@@ -2549,10 +2510,10 @@ const sendCheckedItemsToBackend = async () => {
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
+                </TableContainer>
             </Box>
           </Box>
-           ) : (
+            ) : (
             // Optional: No Data Message
             <Typography variant="h6" color="textSecondary">
               No data available.

@@ -41,7 +41,10 @@ const [validImage, setValidImage] = useState(false);
 
 const newDefaultImage = DefaultImage;
 
-    const imageUrl = `http://10.8.88.91:8000${data.photo_url}`;
+  
+    const imageUrl = `http://10.8.99.171:8000${data.photo_url}`;
+    // const imageUrl = `http://10.8.18.31:8080${data.photo_url}`;
+
 
     const formatDate = (value) => {
         const dateObj = new Date(value);
