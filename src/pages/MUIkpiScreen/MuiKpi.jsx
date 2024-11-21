@@ -273,13 +273,13 @@ const newDefaultImage = DefaultImage;
         }
       };
 
-      const insertSpaces = (text) => {
+const insertSpaces = (text) => {
         if (!text) return ""; // Handle empty or undefined text
         return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-      };
+};
     
 
-  return (
+    return (
     <Box sx={{width:"100%",height:"auto",padding:"5px"}}>
         {/* HEADER SECTION OF KPI SCREEN .. USER DATAS IN HERE */}
             <Grid container sx={{width:"100%",height:"200px",}}>

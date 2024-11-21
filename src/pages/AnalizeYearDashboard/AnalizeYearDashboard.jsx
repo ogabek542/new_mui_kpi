@@ -238,7 +238,7 @@ const AnalizeYearDashboard = () => {
               <TableCell
                 sx={{
                   width: '80px',
-                  border: '2px solid #d0d0d0',
+                  border: '1px solid #d0d0d0',
                   height: '20px',
                   padding: '0 4px',
                   textAlign: 'right',
@@ -252,7 +252,7 @@ const AnalizeYearDashboard = () => {
               <TableCell
                 sx={{
                   width: "80px",
-                  border: "2px solid #d0d0d0",
+                  border: "1px solid #d0d0d0",
                   height: "20px",
                   padding: "0 4px",
                   textAlign: "right",
@@ -266,7 +266,7 @@ const AnalizeYearDashboard = () => {
                 sx={{
                   width: "80px",
                   textAlign: "center",
-                  border: "2px solid #d0d0d0",
+                  border: "1px solid #d0d0d0",
                   height: "20px",
                   padding: "0 4px",
                 }}
@@ -278,7 +278,7 @@ const AnalizeYearDashboard = () => {
               <TableCell
                 sx={{
                   width: "80px",
-                  border: "2px solid #d0d0d0",
+                  border: "1px solid #d0d0d0",
                   height: "20px",
                   padding: "0 4px",
                   textAlign: "right",
@@ -293,7 +293,7 @@ const AnalizeYearDashboard = () => {
           <TableCell
             sx={{
               width: "80px",
-              border: "2px solid #d0d0d0",
+              border: "1px solid #d0d0d0",
               height: "20px",
               padding: "0 4px",
               textAlign: "right",
@@ -306,7 +306,7 @@ const AnalizeYearDashboard = () => {
           <TableCell
             sx={{
               width: "80px",
-              border: "2px solid #d0d0d0",
+              border: "1px solid #d0d0d0",
               height: "20px",
               padding: "0 4px",
               textAlign: "right",
@@ -320,7 +320,7 @@ const AnalizeYearDashboard = () => {
             sx={{
               width: "80px",
               textAlign: "center",
-              border: "2px solid #d0d0d0",
+              border: "1px solid #d0d0d0",
               height: "20px",
               padding: "0 4px",
             }}
@@ -332,7 +332,7 @@ const AnalizeYearDashboard = () => {
           <TableCell
             sx={{
               width: "80px",
-              border: "2px solid #d0d0d0",
+              border: "1px solid #d0d0d0",
               height: "20px",
               padding: "0 4px",
               textAlign: "right",
@@ -393,7 +393,7 @@ const AnalizeYearDashboard = () => {
             <TableCell
               sx={{
                 width: "800px",
-                border: "2px solid #d0d0d0",
+                border: "1px solid #d0d0d0",
                 borderRadius: "5px",
                 height: "25px",
                 padding: "0px",
@@ -421,7 +421,7 @@ const AnalizeYearDashboard = () => {
                 <TableCell
                   sx={{
                     width: "80px",
-                    border: "2px solid #d0d0d0",
+                    border: "1px solid #d0d0d0",
                     borderRadius: "5px",
                     height: "20px",
                     padding: "0 4px",
@@ -434,7 +434,7 @@ const AnalizeYearDashboard = () => {
                 <TableCell
                   sx={{
                     width: "80px",
-                    border: "2px solid #d0d0d0",
+                    border: "1px solid #d0d0d0",
                     borderRadius: "5px",
                     height: "20px",
                     padding: "0 4px",
@@ -447,7 +447,7 @@ const AnalizeYearDashboard = () => {
                   sx={{
                     width: "80px",
                     textAlign: "center",
-                    border: "2px solid #d0d0d0",
+                    border: "1px solid #d0d0d0",
                     borderRadius: "5px",
                     height: "20px",
                     padding: "0 4px",
@@ -458,7 +458,7 @@ const AnalizeYearDashboard = () => {
                 <TableCell
                   sx={{
                     width: "80px",
-                    border: "2px solid #d0d0d0",
+                    border: "1px solid #d0d0d0",
                     borderRadius: "5px",
                     height: "20px",
                     padding: "0 4px",
@@ -473,7 +473,7 @@ const AnalizeYearDashboard = () => {
             <TableCell
               sx={{
                 width: "80px",
-                border: "2px solid #d0d0d0",
+                border: "1px solid #d0d0d0",
                 borderRadius: "5px",
                 height: "20px",
                 padding: "0 4px",
@@ -485,7 +485,7 @@ const AnalizeYearDashboard = () => {
             <TableCell
               sx={{
                 width: "80px",
-                border: "2px solid #d0d0d0",
+                border: "1px solid #d0d0d0",
                 borderRadius: "5px",
                 height: "20px",
                 padding: "0 4px",
@@ -498,7 +498,7 @@ const AnalizeYearDashboard = () => {
               sx={{
                 width: "80px",
                 textAlign: "center",
-                border: "2px solid #d0d0d0",
+                border: "1px solid #d0d0d0",
                 borderRadius: "5px",
                 height: "20px",
                 padding: "0 4px",
@@ -509,7 +509,7 @@ const AnalizeYearDashboard = () => {
             <TableCell
               sx={{
                 width: "80px",
-                border: "2px solid #d0d0d0",
+                border: "1px solid #d0d0d0",
                 borderRadius: "5px",
                 height: "20px",
                 padding: "0 4px",
@@ -1607,7 +1607,7 @@ const sendCheckedItemsToBackend = async () => {
                           sx={{
                             width: "120px",
                             textAlign: "center",
-                            border: "2px solid #d0d0d0",
+                            border: "1px solid #d0d0d0",
                             borderRadius: "8px",
                             height: "20px",
                             padding: "0 4px",
@@ -1625,7 +1625,7 @@ const sendCheckedItemsToBackend = async () => {
                           sx={{
                             width: "120px",
                             textAlign: "center",
-                            border: "2px solid #d0d0d0",
+                            border: "1px solid #d0d0d0",
                             borderRadius: "8px",
                             height: "20px",
                             padding: "0 4px",
@@ -1659,7 +1659,7 @@ const sendCheckedItemsToBackend = async () => {
                           sx={{
                             width: "120px",
                             textAlign: "center",
-                            border: "2px solid #d0d0d0",
+                            border: "1px solid #d0d0d0",
                             borderRadius: "5px", // Added border radius
                             height: "20px",
                             padding: "0 4px",
@@ -1679,7 +1679,7 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         width: "120px",
                         textAlign: "center",
-                        borderTop: "2px solid #d0d0d0",
+                        borderTop: "1px solid #d0d0d0",
                         borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
@@ -1698,7 +1698,7 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         width: "120px",
                         textAlign: "center",
-                        border: "2px solid #d0d0d0",
+                        border: "1px solid #d0d0d0",
                         borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
@@ -1715,7 +1715,7 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         width: "120px",
                         textAlign: "center",
-                        border: "2px solid #d0d0d0",
+                        border: "1px solid #d0d0d0",
                         borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
@@ -1732,7 +1732,7 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         width: "120px",
                         textAlign: "center",
-                        border: "2px solid #d0d0d0",
+                        border: "1px solid #d0d0d0",
                         borderRadius: "5px", // Added border radius
                         height: "20px",
                         padding: "0 4px",
@@ -1769,7 +1769,7 @@ const sendCheckedItemsToBackend = async () => {
                         sx={{
                           width: "482px",
                           flexShrink: 0,
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           height: "20px",
                           padding: "0",
                         }}
@@ -1793,7 +1793,7 @@ const sendCheckedItemsToBackend = async () => {
                             sx={{
                               width: "120px",
                               textAlign: "right",
-                              border: "2px solid #d0d0d0",
+                              border: "1px solid #d0d0d0",
                               borderRadius: "8px",
                               height: "20px",
                               padding: "0 4px",
@@ -1811,7 +1811,7 @@ const sendCheckedItemsToBackend = async () => {
                             sx={{
                               width: "120px",
                               textAlign: "right",
-                              border: "2px solid #d0d0d0",
+                              border: "1px solid #d0d0d0",
                               borderRadius: "8px",
                               height: "20px",
                               padding: "0 4px",
@@ -1828,7 +1828,7 @@ const sendCheckedItemsToBackend = async () => {
                             sx={{
                               width: "120px",
                               textAlign: "center",
-                              border: "2px solid #d0d0d0",
+                              border: "1px solid #d0d0d0",
                               borderRadius: "5px",
                               height: "20px",
                               padding: "0 4px",
@@ -1847,7 +1847,7 @@ const sendCheckedItemsToBackend = async () => {
                             sx={{
                               width: "120px",
                               textAlign: "right",
-                              border: "2px solid #d0d0d0",
+                              border: "1px solid #d0d0d0",
                               borderRadius: "5px",
                               height: "20px",
                               padding: "0 4px",
@@ -1869,7 +1869,7 @@ const sendCheckedItemsToBackend = async () => {
                         sx={{
                           width: "120px",
                           textAlign: "right",
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           borderRadius: "5px",
                           height: "20px",
                           padding: "0 4px",
@@ -1886,7 +1886,7 @@ const sendCheckedItemsToBackend = async () => {
                         sx={{
                           width: "120px",
                           textAlign: "right",
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           borderRadius: "5px",
                           height: "20px",
                           padding: "0 4px",
@@ -1903,7 +1903,7 @@ const sendCheckedItemsToBackend = async () => {
                         sx={{
                           width: "120px",
                           textAlign: "center",
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           borderRadius: "5px",
                           height: "20px",
                           padding: "0 4px",
@@ -1920,7 +1920,7 @@ const sendCheckedItemsToBackend = async () => {
                         sx={{
                           width: "120px",
                           textAlign: "right",
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           borderRadius: "5px",
                           height: "20px",
                           padding: "0 4px",
@@ -1945,21 +1945,22 @@ const sendCheckedItemsToBackend = async () => {
             <>
               {loading ? (
                 // Loader
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100%", // Match the table height
-                  }}
-                >
-                    <AnimatedIcon sx={{ width: '300px', height: '350px' }}/>
-                </Box>
+                <Typography variant="h6" color="error">
+                Error loading data: {error.message}
+              </Typography>
               ) : error ? (
                 // Error Message
-                <Typography variant="h6" color="error">
-                  Error loading data: {error.message}
-                </Typography>
+               
+                 <Box
+                 sx={{
+                   display: "flex",
+                   justifyContent: "center",
+                   alignItems: "center",
+                   height: "100%", // Match the table height
+                 }}
+               >
+                   <AnimatedIcon sx={{ width: '300px', height: '350px' }}/>
+               </Box>
               ) : tableData && firsttableData ? (
           <Box sx={{ width: '100%', overflowX: 'auto', whiteSpace: "nowrap",height:"auto" }}>
             <Box sx={{width:"100%" }}>
@@ -2043,9 +2044,8 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         textAlign: "center",
                         width: "auto",
-                        // borderBottom: "2px solid #e0e0e0",
-                        border: "2px solid #e0e0e0",
-                        height: "2px",
+                        border: "1px solid #e0e0e0",
+                        height: "20px",
                         padding: "0 4px",
                       }}
                     >
@@ -2073,7 +2073,7 @@ const sendCheckedItemsToBackend = async () => {
                         left:0,
                         width: "100%",
                         flexShrink: 0,
-                        border: "2px solid #d0d0d0",
+                        border: "1px solid #d0d0d0",
                         height: "22px",
                         padding: "0",
                         display: "flex",
@@ -2158,30 +2158,29 @@ const sendCheckedItemsToBackend = async () => {
                     {tableData.newMonths.map((month) => (
                       <React.Fragment key={month}>
                         {visibleColumns.firstYear && (
-                        <TableCell
-                          sx={{
-                            width: "120px",
-                            textAlign: "center",
-                            border: "2px solid #d0d0d0",
-                            height: "20px",
-                            padding: "0 4px",
-                            display: showFirstYear ? "table-cell" : "none",
-                          }}
-                        >
-                          <Typography
-                            variant="subtitle2"
-                            sx={{ lineHeight: "normal" }}
+                            <TableCell
+                            sx={{
+                              width: "120px",
+                              textAlign: "center",
+                              border: "1px solid #d0d0d0",
+                              height: "20px",
+                              padding: "0 4px",
+                            }}
                           >
-                            {firsttableData.choosedfirstYear}
-                          </Typography>
-                        </TableCell>
+                            <Typography
+                              variant="subtitle2"
+                              sx={{ lineHeight: "normal" }}
+                            >
+                              {firsttableData.choosedfirstYear}
+                            </Typography>
+                          </TableCell> 
                           )}
                         {visibleColumns.secondYear && (
                         <TableCell
                           sx={{
                             width: "120px",
                             textAlign: "center",
-                            border: "2px solid #d0d0d0",
+                            border: "1px solid #d0d0d0",
                             height: "20px",
                             padding: "0 4px",
                           }}
@@ -2199,7 +2198,7 @@ const sendCheckedItemsToBackend = async () => {
                           sx={{
                             width: "120px",
                             textAlign: "center",
-                            border: "2px solid #d0d0d0 ",
+                            border: "1px solid #d0d0d0 ",
                             height: "20px",
                             padding: "0 4px",
                           }}
@@ -2208,7 +2207,7 @@ const sendCheckedItemsToBackend = async () => {
                             variant="subtitle2"
                             sx={{ lineHeight: "normal" }}
                           >
-                            Perf.
+                            Perc.
                           </Typography>
                         </TableCell>
                           )}
@@ -2217,7 +2216,7 @@ const sendCheckedItemsToBackend = async () => {
                           sx={{
                             width: "120px",
                             textAlign: "center",
-                            border: "2px solid #d0d0d0",
+                            border: "1px solid #d0d0d0",
                             height: "20px",
                             padding: "0 4px",
                           }}
@@ -2237,7 +2236,9 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         width: "120px",
                         textAlign: "center",
-                        borderTop: "2px solid #d0d0d0",
+                        borderTop: "1px solid #d0d0d0",
+                        borderRight:"1px solid #d0d0d0",
+                        borderLeft:"1px solid #d0d0d0",
                         height: "20px",
                         padding: "0 4px",
                         display: showFirstYear ? "table-cell" : "none",
@@ -2256,7 +2257,9 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         width: "120px",
                         textAlign: "center",
-                        border: "2px solid #d0d0d0",
+                        border: "1px solid #d0d0d0",
+                        borderLeft:"1px solid #d0d0d0",
+                        borderRight:"1px solid #d0d0d0", 
                         height: "20px",
                         padding: "0 4px",
                       }}
@@ -2275,7 +2278,7 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         width: "120px",
                         textAlign: "center",
-                        border: "2px solid #d0d0d0",
+                        border: "1px solid #d0d0d0",
                         height: "20px",
                         padding: "0 4px",
                       }}
@@ -2294,7 +2297,8 @@ const sendCheckedItemsToBackend = async () => {
                       sx={{
                         width: "120px",
                         textAlign: "center",
-                        border: "2px solid #d0d0d0",
+                        border: "1px solid #d0d0d0",
+                       
                         height: "20px",
                         padding: "0 4px",
                       }}
@@ -2333,7 +2337,7 @@ const sendCheckedItemsToBackend = async () => {
                           left:0,
                           width: "600px",
                           flexShrink: 0,
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           height: "20px",
                           padding: "0",
                           bgcolor:"#e0e0e0",
@@ -2362,9 +2366,10 @@ const sendCheckedItemsToBackend = async () => {
                           {visibleColumns.firstYear && (
                           <TableCell
                           sx={{
-                            width: "120px",
+                            width: "auto",
                             textAlign: "right",
-                            border: "2px solid #d0d0d0",
+                            border: "1px solid #d0d0d0",
+                            // borderRight: "1px solid #d0d0d0",
                             height: "20px",
                             padding: "0 4px",
                           }}
@@ -2380,9 +2385,9 @@ const sendCheckedItemsToBackend = async () => {
                             {visibleColumns.secondYear && (
                           <TableCell
                             sx={{
-                              width: "120px",
+                              width: "auto",
                               textAlign: "right",
-                              border: "2px solid #d0d0d0",
+                              border: "1px solid #d0d0d0",
                               height: "20px",
                               padding: "0 4px",
                             }}
@@ -2398,9 +2403,9 @@ const sendCheckedItemsToBackend = async () => {
                             {visibleColumns.percentage && (
                           <TableCell
                             sx={{
-                              width: "120px",
+                              width: "auto",
                               textAlign: "center",
-                              border: "2px solid #d0d0d0",
+                              border: "1px solid #d0d0d0",
                               height: "20px",
                               padding: "0 4px",
                             }}
@@ -2416,9 +2421,9 @@ const sendCheckedItemsToBackend = async () => {
                             {visibleColumns.amount && (
                           <TableCell
                             sx={{
-                              width: "120px",
+                              width: "auto",
                               textAlign: "right",
-                              border: "2px solid #d0d0d0",
+                              border: "1px solid #d0d0d0",
                               height: "20px",
                               padding: "0 4px",
                             }}
@@ -2438,9 +2443,9 @@ const sendCheckedItemsToBackend = async () => {
                       {visibleColumns.firstYear && (
                       <TableCell
                         sx={{
-                          width: "120px",
+                          width: "auto",
                           textAlign: "right",
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           height: "20px",
                           padding: "0 4px",
                         }}
@@ -2456,9 +2461,9 @@ const sendCheckedItemsToBackend = async () => {
                       {visibleColumns.secondYear && (
                       <TableCell
                         sx={{
-                          width: "120px",
+                          width: "auto",
                           textAlign: "right",
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           height: "20px",
                           padding: "0 4px",
                         }}
@@ -2474,9 +2479,9 @@ const sendCheckedItemsToBackend = async () => {
                       {visibleColumns.percentage && (
                       <TableCell
                         sx={{
-                          width: "120px",
+                          width: "auto",
                           textAlign: "center",
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           height: "20px",
                           padding: "0 4px",
                         }}
@@ -2492,9 +2497,9 @@ const sendCheckedItemsToBackend = async () => {
                       {visibleColumns.amount && (
                       <TableCell
                         sx={{
-                          width: "120px",
+                          width: "auto",
                           textAlign: "right",
-                          border: "2px solid #d0d0d0",
+                          border: "1px solid #d0d0d0",
                           height: "20px",
                           padding: "0 4px",
                         }}
