@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Container,
   Box,
@@ -12,7 +12,9 @@ import {
   ListItemText,
   ListItemIcon,
   OutlinedInput,
+  Autocomplete,
 } from "@mui/material";
+import "./main.css";
 import LightHeader from "../../components/LightHeader/LightHeader";
 import { Colors } from "../../styles/theme";
 import FormControl from "@mui/material/FormControl";
@@ -40,8 +42,11 @@ import top128Filials from "../testapi/firstOption";
 // loader icon //
 import AnimatedIcon from "../../components/AnimatedIcon/AnimatedIcon";
 import Footer from "../../components/Footer/Footer";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import MultiSelectComboBox from "../../components/MultiSelection/MultiSelection";
+import {Multiselect} from "multiselect-react-dropdown"
 
 // month names //
 const monthsList = [
@@ -58,6 +63,21 @@ const monthsList = [
   { name: "November", id: 11 },
   { name: "December", id: 12 },
 ];
+
+// const monthsList = [
+//    "January", 
+//    "February", 
+//    "March", 
+//    "April",
+//    "May", 
+//    "June", 
+//    "July", 
+//    "August", 
+//    "September", 
+//    "October", 
+//    "November", 
+//    "December", 
+// ];
 
 // shot list //
 const numbersList = [
@@ -119,6 +139,14 @@ const yearsList = [
   { label: 2024 },
 ];
 
+const yearsOptions = [
+  {id:1,value:'2020',label:"2020" },
+  {id:2,value:'2021',label:"2021" },
+  {id:3,value:'2022',label:"2022" },
+  {id:4,value:'2023',label:"2023" },
+  {id:5,value:'2024',label:"2024" },
+];
+
 const AnalizeYearDashboard = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const [openRows, setOpenRows] = useState({});
@@ -140,151 +168,9 @@ const AnalizeYearDashboard = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [error, setError] = useState(null);
 
-  // testing month selection section states //
-  const [selectedMonths, setSelectedMonths] = useState([]); // select mont name
-
-  const handleChangeMonth = (event) => {
-    const {
-      target: { value },
-    } = event;
-
-    setSelectedMonths(typeof value === "string" ? value.split(",") : value);
-  };
-
-  // select year function //
-  const handleChangeYear = (event) => {
-    const {
-      target: { value },
-    } = event;
-
-    // Convert the value to an array if it's a string
-    const selected = typeof value === "string" ? value.split(",") : value;
-
-    // Ensure the selected years are sorted in ascending order
-    const sortedSelected = selected.slice(0, 2).sort((a, b) => a - b);
-    setSelectedYears(sortedSelected);
-
-    // Update firstYear and secondYear states based on sorted selection
-    setFirstYear(sortedSelected[0] || null); // If no selection, set to null
-    setSecondYear(sortedSelected[1] || null); // If only one selection, set secondYear to null
-  };
-
-
-  const [allRowsExpanded, setAllRowsExpanded] = useState(false);
-
-  const toggleAllRows = () => {
-    setOpenRows((prev) => {
-      const newOpenRows = {};
-      if (allRowsExpanded) {
-        // Collapse all rows
-        return {};
-      } else {
-        // Expand all rows
-        top128Filials.forEach((filial) => {
-          newOpenRows[filial.id] = true;
-        });
-        return newOpenRows;
-      }
-    });
-    setAllRowsExpanded(!allRowsExpanded);
-  };
-
-  // Function to select/deselect all checkboxes
-  const selectAllRows = (checked) => {
-    if (checked) {
-      // Select all filials and their sub-regions
-      const allFilialTitles = top128Filials.map((f) => f.title);
-      let allSubregionTitles = [];
-      Object.values(setSelectedSecondMap).forEach((subregions) => {
-        allSubregionTitles = allSubregionTitles.concat(subregions.map((s) => s.title));
-      });
-      setCheckedItems([...new Set([...allFilialTitles, ...allSubregionTitles])]);
-    } else {
-      // Deselect all
-      setCheckedItems([]);
-    }
-  };
-
-  // Determine if all rows are checked
-  const allChecked = useMemo(() => {
-    const allFilialTitles = top128Filials.map((f) => f.title);
-    let allSubregionTitles = [];
-    Object.values(setSelectedSecondMap).forEach((subregions) => {
-      allSubregionTitles = allSubregionTitles.concat(subregions.map((s) => s.title));
-    });
-    const allTitles = [...allFilialTitles, ...allSubregionTitles];
-    return allTitles.every((title) => checkedItems.includes(title));
-  }, [checkedItems]);
-
-  // Determine if some rows are checked
-  const someChecked = useMemo(() => {
-    const allFilialTitles = top128Filials.map((f) => f.title);
-    let allSubregionTitles = [];
-    Object.values(setSelectedSecondMap).forEach((subregions) => {
-      allSubregionTitles = allSubregionTitles.concat(subregions.map((s) => s.title));
-    });
-    const allTitles = [...allFilialTitles, ...allSubregionTitles];
-    return allTitles.some((title) => checkedItems.includes(title)) && !allChecked;
-  }, [checkedItems, allChecked]);
-
-  function RespublikaButton({ allChecked, someChecked, onToggleAllRows, onSelectAll }) {
-    return (
-      <TableRow
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          height: '53px',
-          borderBottom: '1px solid #AAAAAE',
-          cursor: 'pointer',
-        }}
-        onClick={onToggleAllRows} // Clicking the row toggles all rows open/close
-      >
-        {/* Checkbox cell */}
-        <TableCell
-          sx={{ padding: '0px', width: '21px', border: 'none' }}
-          onClick={(e) => e.stopPropagation()} // Prevent row click when clicking on checkbox
-        >
-          <Checkbox
-            onChange={(e) => {
-              e.stopPropagation();
-              onSelectAll(e.target.checked);
-            }}
-            checked={allChecked}
-            indeterminate={!allChecked && someChecked}
-            size="small"
-            sx={{ margin: 0, padding: '0px', paddingBottom: '2px' }}
-          />
-        </TableCell>
-        {/* Clickable name cell to toggle open/close */}
-        <TableCell
-          sx={{
-            padding: 0,
-            fontWeight: 'bold',
-            color: Colors.black,
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            width: '100%',
-            height: '22px',
-            border: 'none',
-          }}
-        >
-          Respublika
-        </TableCell>
-      </TableRow>
-    );
-  }
-  
-  RespublikaButton.propTypes = {
-    allChecked: PropTypes.bool.isRequired,
-    someChecked: PropTypes.bool.isRequired,
-    onToggleAllRows: PropTypes.func.isRequired,
-    onSelectAll: PropTypes.func.isRequired,
-  };
-
-
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-  const checkedIcon = <CheckBoxIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
 
   // <==== MAKE SPACE CODE  =====>  //
   const insertSpaces = (text) => {
@@ -317,7 +203,14 @@ const AnalizeYearDashboard = () => {
     }
   };
 
- const monthArray = monthsList.map((month) => month.name);
+  // Handle year selection
+  // const handleYearChange = (event) => {
+  //   const selected = typeof event.target.value === "string" ? event.target.value.split(",") : event.target.value;
+  //   const sortedSelected = selected.slice(0, 2).sort((a, b) => a - b);
+  //   setSelectedYears(sortedSelected);
+  // };
+
+  const monthArray = monthsList.map((month) => month.name);
 
   // <==== First DATA TABLE SECTION CODE ====>
   function DataRow({ row, depth = 0, monthArray }) {
@@ -696,10 +589,247 @@ const AnalizeYearDashboard = () => {
     );
   };
 
+  // Updated YearPicker Component
+
+  const MaterialUIDropdown = () => {
+
+    const [selectValue, setSelectedValue] = useState([]);
+
+    console.log(selectValue,"all selected items")
+  
+    const handleValue = (event) => {
+      const {
+        target: { value },
+      } = event;
+
+      // Convert the value to an array if it's a string
+      const selected = typeof value === "string" ? value.split(",") : value;
+
+      setSelectedValue(
+        typeof value === 'string' ? value.split(',') : value
+      );
+
+            // Ensure the selected years are sorted in ascending order
+            const sortedSelected = selected.slice(0, 2).sort((a, b) => a - b);
+            setSelectedValue(sortedSelected);
+
+    };
+  
+    return (
+      <div>
+        <FormControl
+          sx={{
+            width: '100%',
+            marginTop: '8px',
+            '& .MuiInputLabel-root': {
+              fontSize: '1rem',
+              color: '#333', 
+            },
+            '& .MuiSelect-root': {
+              fontSize: '0.8rem',
+            },
+          }}
+          size="small"
+        >
+          <InputLabel id="year-picker-label">Yilni Tanlash</InputLabel>
+          <Select
+            labelId="year-picker-label"
+            id="multi-select"
+            multiple
+            value={selectValue}
+            onChange={handleValue}
+            input={<OutlinedInput label="Yilni Tanlash" />}
+            // renderValue={(selected) => selected.join(', ')} 
+            renderValue={(selected) => selected.join(" - ")}
+          >
+            {yearsOptions.map((option) => (
+              <MenuItem key={option.id} value={option.value}>
+                <ListItemIcon>
+                  <Checkbox
+                    checked={selectValue.includes(option.value)} 
+                    name="selected-checkbox"
+                  />
+                </ListItemIcon>
+                <ListItemText primary={option.label} sx={{ color: 'black' }} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+    );
+  };
+
+  const YearPicker = ({
+    yearsList,
+    selectedYears,
+    setSelectedYears,
+    setFirstYear,
+    setSecondYear,
+  }) => {
+    
+    const handleChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+
+      // Convert the value to an array if it's a string
+      const selected = typeof value === "string" ? value.split(",") : value;
+
+      // Ensure the selected years are sorted in ascending order
+      const sortedSelected = selected.slice(0, 2).sort((a, b) => a - b);
+      setSelectedYears(sortedSelected);
+
+      // Update firstYear and secondYear states based on sorted selection
+      setFirstYear(sortedSelected[0] || null); // If no selection, set to null
+      setSecondYear(sortedSelected[1] || null); // If only one selection, set secondYear to null
+    };
+
+    return (
+      <FormControl
+        sx={{
+          width: "100%", 
+          marginTop: "8px", 
+          "& .MuiInputLabel-root": {
+            fontSize: "1rem", 
+            color: Colors.dark,
+          },
+          "& .MuiSelect-root": {
+            fontSize: "0.8rem", 
+          },
+        }}
+        size="small" 
+      >
+        <InputLabel id="year-picker-label">Yilni Tanlash</InputLabel>
+        <Select
+          labelId="year-picker-label"
+          id="year-picker"
+          multiple
+          value={selectedYears}
+          onChange={handleChange}
+          input={<OutlinedInput label="Yilni Tanlash" />}
+          renderValue={(selected) => selected.join(" - ")}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 200, 
+                width: 150, 
+              },
+            },
+          }}
+        >
+          {yearsList.map((year) => (
+            <MenuItem
+              key={year.label}
+              value={year.label}
+              sx={{
+                padding: "4px 8px", 
+                display: "flex",
+                alignItems: "center",
+                gap: "8px", 
+              }}
+            >
+              <Checkbox
+                checked={selectedYears.includes(year.label)}
+                sx={{ color: Colors.blue_nbu, padding: "0" }} // Removed extra padding
+                size="small" // Optional: Use small size for the checkbox
+              />
+              <ListItemText
+                primary={year.label}
+                sx={{ fontSize: "0.8rem", margin: 0 }} // Reduced font size and removed margin
+              />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    );
+  };
+
+  // Updated YearPicker Component
+// const YearPicker = ({
+//   yearsList,
+//   selectedYears,
+//   setSelectedYears,
+//   setFirstYear,
+//   setSecondYear,
+// }) => {
+//   const handleChange = (event, newValue) => {
+//       //   // Convert the value to an array if it's a string
+//     const selected = typeof value === 'string' ? value.split(',') : value;
+
+//   //   // Update selectedYears with the new selection
+//     setSelectedYears(selected);
+
+//     // Ensure the selected years are sorted in ascending order and limited to 2
+//     const sortedSelected = newValue.slice(0, 2).sort((a, b) => a - b);
+
+//     setSelectedYears(sortedSelected);
+//     setFirstYear(sortedSelected[0] || null);
+//     setSecondYear(sortedSelected[1] || null);
+//   };
+
+//   // const handleChange = (event) => {
+//   //   const {
+//   //     target: { value },
+//   //   } = event;
+
+//   //   // Convert the value to an array if it's a string
+//   //   const selected = typeof value === 'string' ? value.split(',') : value;
+
+//   //   // Update selectedYears with the new selection
+//   //   setSelectedYears(selected);
+
+//   //   // Update firstYear and secondYear based on selectedYears
+//   //   setFirstYear(selected[0] || null);
+//   //   setSecondYear(selected[1] || null);
+
+//   //   // Close the menu after selection
+//   //   setOpen(false);
+//   // };
+
+//   return (
+//     <Autocomplete
+//       multiple
+//       id="checkboxes-tags-demo"
+//       options={yearsList.map((year) => year.label)}
+//       disableCloseOnSelect
+//       value={selectedYears}
+//       onChange={handleChange}
+//       getOptionLabel={(option) => option.toString()}
+//       renderOption={(props, option, { selected }) => {
+//         const { key, ...optionProps } = props;
+//         return (
+//           <li key={key} {...optionProps}>
+//             <Checkbox
+//               icon={icon}
+//               checkedIcon={checkedIcon}
+//               style={{ marginRight: 8 }}
+//               checked={selected}
+//             />
+//             {option}
+//           </li>
+//         );
+//       }}
+//       renderInput={(params) => (
+//         <TextField {...params} label="Yilni Tanlash" placeholder="Favorites" />
+//       )}
+//       size="small"
+//     />
+//   );
+// };
+
   useEffect(() => {
     console.log(firstYear, "have year 1");
     console.log(secondYear, "have year 2");
   }, [firstYear, secondYear]);
+
+  // <==== YEAR PICKER proptype   ====> //
+  YearPicker.propTypes = {
+    yearsList: PropTypes.array.isRequired,
+    selectedYears: PropTypes.array.isRequired,
+    setSelectedYears: PropTypes.func.isRequired,
+    // setFirstYear: PropTypes.func.isRequired,
+    // setSecondYear: PropTypes.func.isRequired,
+  };
 
   const toggleRowOpen = (id) => {
     if (id === 1) {
@@ -720,43 +850,185 @@ const AnalizeYearDashboard = () => {
     }
   };
 
-  function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
+  // function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
+  //     const subRegions = setSelectedSecondMap[filial.id] || [];
 
-    // Memoize subRegions and subRegionTitles to optimize performance
-    const { subRegions, subRegionTitles } = useMemo(() => {
-      let regions = setSelectedSecondMap[filial.id] || [];
-      let titles = regions.map((sub) => sub.title);
-      return { subRegions: regions, subRegionTitles: titles };
-    }, [filial]);
-  
+  //     // Extract titles of subRegions
+  //     const subRegionTitles = subRegions.map((sub) => sub.title);
+
+  //     // Determine if all subRegions are checked
+  //     const allSubChecked = subRegionTitles.every((title) =>
+  //       checkedItems.includes(title)
+  //     );
+
+  //     // Determine if some (but not all) subRegions are checked
+  //     const someSubChecked =
+  //       subRegionTitles.some((title) => checkedItems.includes(title)) &&
+  //       !allSubChecked;
+
+  //     // Handle main branch checkbox change
+  //     const handleMainCheckboxChange = (event) => {
+  //       const { checked } = event.target;
+  //       if (checked) {
+  //         // Add main branch and all subRegions to checkedItems
+  //         setCheckedItems((prev) => [
+  //           ...new Set([...prev, filial.title, ...subRegionTitles]),
+  //         ]);
+  //       } else {
+  //         // Remove main branch and all subRegions from checkedItems
+  //         setCheckedItems((prev) =>
+  //           prev.filter(
+  //             (item) => item !== filial.title && !subRegionTitles.includes(item)
+  //           )
+  //         );
+  //       }
+  //     };
+
+  //     // Handle subRegion checkbox change
+  //     const handleSubCheckboxChange = (title) => {
+  //       setCheckedItems((prev) =>
+  //         prev.includes(title)
+  //           ? prev.filter((item) => item !== title)
+  //           : [...prev, title]
+  //       );
+  //     };
+
+  //     // Handle click on subRegion name to toggle checkbox
+  //     const handleSubRegionClick = (title) => {
+  //       handleSubCheckboxChange(title);
+  //     };
+
+  //     return (
+  //       <>
+  //         <TableRow
+  //           sx={{
+  //             height: "55px",
+  //             paddingLeft: "0px",
+  //             display: "flex",
+  //             alignItems: "center",
+  //           }}
+  //         >
+  //           {/* Checkbox cell */}
+  //           <TableCell sx={{ padding: "0px", width: "21px" }}>
+  //             <Checkbox
+  //               onChange={handleMainCheckboxChange}
+  //               checked={allSubChecked}
+  //               indeterminate={someSubChecked}
+  //               size="small"
+  //               sx={{ margin: 0, padding: "0px", paddingBottom: "2px" }}
+  //             />
+  //           </TableCell>
+  //           {/* Clickable name cell to toggle open/close */}
+  //           <TableCell
+  //             sx={{
+  //               padding: 0,
+  //               cursor: "pointer",
+  //               fontWeight: "bold",
+  //               color: Colors.black,
+  //               whiteSpace: "nowrap",
+  //               overflow:"hidden",
+  //               textOverflow:"ellipsis",
+  //               width:"100%",
+  //               height:"22px",
+  //             }}
+  //             onClick={() => onToggle(filial.id)} // Pass filial.id to handleToggle
+  //           >
+  //             {filial.title}
+  //           </TableCell>
+  //         </TableRow>
+  //         {/* Sub-region rows stay open as long as isOpen is true */}
+  //         {isOpen && (
+  //           <TableRow sx={{ display: "flex", alignItems: "center" }}>
+  //             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
+  //               <Collapse in={isOpen} timeout="auto" unmountOnExit>
+  //                 <Box sx={{ margin: 0, padding: 0 }}>
+  //                   <Box sx={{ margin: "0.5px" }}>
+  //                     {subRegions.map((subRegion, index) => (
+  //                       <TableRow key={index} sx={{ padding: "0px",display:"flex",alignItems:"center" }}>
+  //                         <TableCell
+  //                           sx={{
+  //                             padding: "0px",
+  //                             width: "20px",
+  //                             height:"20px",
+  //                             display: "flex",
+  //                             alignItems: "center",
+  //                             verticalAlign: "center",
+  //                           }}
+  //                         >
+  //                           <Checkbox
+  //                             onChange={(e) => {
+  //                               e.stopPropagation(); // Prevent the click event from triggering handleToggle
+  //                               handleSubCheckboxChange(subRegion.title);
+  //                             }}
+  //                             checked={checkedItems.includes(subRegion.title)}
+  //                             size="small"
+  //                             sx={{ margin: 0, padding: "0px" , height:"20px",}}
+  //                           />
+  //                         </TableCell>
+
+  //                         <TableCell
+  //                           sx={{
+  //                             padding: "2px",
+  //                             margin: "0px",
+  //                             cursor: "pointer",
+  //                             fontSize: "14px",
+  //                             fontWeight: "500",
+  //                             paddingLeft: "-5px",
+  //                             whiteSpace: "nowrap",
+  //                             overflow:"hidden",
+  //                             textOverflow:"ellipsis",
+  //                             width:"110px",
+  //                             height:"20px",
+  //                           }}
+  //                           onClick={() => handleSubRegionClick(subRegion.title)}
+  //                         >
+  //                           {subRegion.title}
+  //                         </TableCell>
+  //                       </TableRow>
+  //                     ))}
+  //                   </Box>
+  //                 </Box>
+  //               </Collapse>
+  //             </TableCell>
+  //           </TableRow>
+  //         )}
+  //       </>
+  //     );
+  //   }
+
+
+  function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
+    let subRegions = setSelectedSecondMap[filial.id] || [];
+    let subRegionTitles = subRegions.map((sub) => sub.title);
+
+    if (filial.title === "Respublika") {
+      // For "Respublika", subRegions are all filials except "Respublika" itself
+      subRegions = top128Filials
+        .filter((f) => f.title !== "Respublika")
+        .map((f) => ({ title: f.title }));
+      subRegionTitles = subRegions.map((sub) => sub.title);
+    }
+
     // Determine if all subRegions are checked
-    const allSubChecked = useMemo(
-      () => {
-        const allChecked = subRegionTitles.every((title) => checkedItems.includes(title));
-        return checkedItems.includes(filial.title) && allChecked;
-      },
-      [subRegionTitles, checkedItems, filial.title]
+    const allSubChecked = subRegionTitles.every((title) =>
+      checkedItems.includes(title)
     );
-  
+
     // Determine if some (but not all) subRegions are checked
-    const someSubChecked = useMemo(
-      () => {
-        const someChecked = subRegionTitles.some((title) => checkedItems.includes(title));
-        return (checkedItems.includes(filial.title) && !allSubChecked) || (!checkedItems.includes(filial.title) && (someChecked || allSubChecked));
-      },
-      [subRegionTitles, checkedItems, allSubChecked, filial.title]
-    );
-  
-    // Handle main filial checkbox change
+    const someSubChecked =
+      subRegionTitles.some((title) => checkedItems.includes(title)) &&
+      !allSubChecked;
+
+    // Handle main branch checkbox change
     const handleMainCheckboxChange = (event) => {
       const { checked } = event.target;
       if (checked) {
-        // Add filial title and all subRegions to checkedItems
+        // Add main branch and all subRegions to checkedItems
         setCheckedItems((prev) => [
           ...new Set([...prev, filial.title, ...subRegionTitles]),
         ]);
       } else {
-        // Remove filial title and all subRegions from checkedItems
+        // Remove main branch and all subRegions from checkedItems
         setCheckedItems((prev) =>
           prev.filter(
             (item) => item !== filial.title && !subRegionTitles.includes(item)
@@ -764,7 +1036,7 @@ const AnalizeYearDashboard = () => {
         );
       }
     };
-  
+
     // Handle subRegion checkbox change
     const handleSubCheckboxChange = (title) => {
       setCheckedItems((prev) =>
@@ -773,49 +1045,47 @@ const AnalizeYearDashboard = () => {
           : [...prev, title]
       );
     };
-  
+
     // Handle click on subRegion name to toggle checkbox
     const handleSubRegionClick = (title) => {
       handleSubCheckboxChange(title);
     };
-  
+
     return (
       <>
         <TableRow
           sx={{
-            paddingLeft: '0px',
-            display: 'flex',
-            alignItems: 'center',
-            verticalAlign: 'center',
-            height: '53px',
-            borderBottom: '1px solid #AAAAAE',
+            paddingLeft: "0px",
+            display: "flex",
+            alignItems: "center",
+            verticalAlign: "center",
+            height: "53px",
+            borderBottom: "1px solid #AAAAAE",
           }}
         >
           {/* Checkbox cell */}
-          <TableCell sx={{ padding: '0px', width: '21px', border: 'none' }}
-            onClick={(e) => e.stopPropagation()}
-          >
+          <TableCell sx={{ padding: "0px", width: "21px", border: "none" }}>
             <Checkbox
               onChange={handleMainCheckboxChange}
               checked={allSubChecked}
-              indeterminate={someSubChecked && !allSubChecked}
+              indeterminate={someSubChecked}
               size="small"
-              sx={{ margin: 0, padding: '0px', paddingBottom: '2px' }}
+              sx={{ margin: 0, padding: "0px", paddingBottom: "2px" }}
             />
           </TableCell>
           {/* Clickable name cell to toggle open/close */}
           <TableCell
             sx={{
               padding: 0,
-              cursor: 'pointer',
-              fontWeight: 'bold',
+              cursor: "pointer",
+              fontWeight: "bold",
               color: Colors.black,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              width: '100%',
-              height: '22px',
-              border: 'none',
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              width: "100%",
+              height: "22px",
+              border: "none",
             }}
             onClick={() => onToggle(filial.id)}
           >
@@ -824,30 +1094,29 @@ const AnalizeYearDashboard = () => {
         </TableRow>
         {/* Sub-region rows stay open as long as isOpen is true */}
         {isOpen && (
-          <TableRow sx={{ display: 'flex', alignItems: 'center' }}>
+          <TableRow sx={{ display: "flex", alignItems: "center" }}>
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
               <Collapse in={isOpen} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 0, padding: 0 }}>
-                  <Box sx={{ margin: '0.5px' }}>
-                    {subRegions.map((subRegion) => (
+                  <Box sx={{ margin: "0.5px" }}>
+                    {subRegions.map((subRegion, index) => (
                       <TableRow
-                        key={subRegion.title} // Use unique key
+                        key={index}
                         sx={{
-                          padding: '0px',
-                          display: 'flex',
-                          alignItems: 'center',
+                          padding: "0px",
+                          display: "flex",
+                          alignItems: "center",
                         }}
                       >
                         <TableCell
                           sx={{
-                            padding: '0px',
-                            width: '20px',
-                            height: '20px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            verticalAlign: 'center',
+                            padding: "0px",
+                            width: "20px",
+                            height: "20px",
+                            display: "flex",
+                            alignItems: "center",
+                            verticalAlign: "center",
                           }}
-                          onClick={(e) => e.stopPropagation()}
                         >
                           <Checkbox
                             onChange={(e) => {
@@ -856,23 +1125,23 @@ const AnalizeYearDashboard = () => {
                             }}
                             checked={checkedItems.includes(subRegion.title)}
                             size="small"
-                            sx={{ margin: 0, padding: '0px', height: '20px' }}
+                            sx={{ margin: 0, padding: "0px", height: "20px" }}
                           />
                         </TableCell>
-  
+
                         <TableCell
                           sx={{
-                            padding: '2px',
-                            margin: '0px',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            fontWeight: '500',
-                            paddingLeft: '5px', // Changed from -5px to 5px for better spacing
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            width: '100px',
-                            height: '20px',
+                            padding: "2px",
+                            margin: "0px",
+                            cursor: "pointer",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            paddingLeft: "-5px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            width: "100px",
+                            height: "20px",
                           }}
                           onClick={() => handleSubRegionClick(subRegion.title)}
                         >
@@ -889,7 +1158,6 @@ const AnalizeYearDashboard = () => {
       </>
     );
   }
-  
 
   Row.propTypes = {
     filial: PropTypes.shape({
@@ -900,6 +1168,149 @@ const AnalizeYearDashboard = () => {
     onToggle: PropTypes.func.isRequired,
     checkedItems: PropTypes.array.isRequired,
     setCheckedItems: PropTypes.func.isRequired,
+  };
+
+  // <=== SELECT MONTHS SECTION ===>
+
+  const MonthPicker = ({ monthsList }) => {
+
+    const [selectedMonths, setSelectedMonths] = useState([]); // select mont name
+
+    const handleChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+
+      setSelectedMonths(typeof value === "string" ? value.split(",") : value);
+    };
+
+    return (
+      <FormControl
+        sx={{
+          width: "100%",
+          "& .MuiInputLabel-root": {
+            fontSize: "1rem",
+            color: Colors.dark,
+          },
+          "& .MuiSelect-root": {
+            fontSize: "0.8rem",
+          },
+        }}
+        size="small"
+      >
+        <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
+        <Select
+          multiple
+          labelId="month-picker-label"
+          id="month-picker"
+          value={selectedMonths}
+          onChange={handleChange}
+          input={<OutlinedInput label="Oyni Tanlash" />}
+          renderValue={(selected) => selected.join(", ")}
+        >
+          {monthsList.map((month) => (
+            <MenuItem
+              key={month.id}
+              value={month.name}
+              sx={{
+                padding: "4px 8px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <Checkbox
+                checked={selectedMonths.includes(month.name)}
+                sx={{ color: Colors.blue_nbu, padding: 0 }}
+                size="small"
+              />
+              <ListItemText
+                primary={month.name}
+                sx={{ fontSize: "0.8rem", margin: 0 }}
+              />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    );
+  };
+
+
+  // const MonthPicker = ({ monthsList, selectedMonths, setSelectedMonths }) => {
+
+  //   const handleChange = (event) => {
+  //     const {
+  //       target: { value },
+  //     } = event;
+  
+  //     setSelectedMonths(
+  //       typeof value === "string" ? value.split(", ") : value
+  //     );
+  //   };
+  
+  //   return (
+  //     <FormControl
+  //       sx={{
+  //         width: "100%",
+  //         "& .MuiInputLabel-root": {
+  //           fontSize: "1rem",
+  //           color: Colors.dark,
+  //         },
+  //         "& .MuiSelect-root": {
+  //           fontSize: "0.8rem",
+  //         },
+  //       }}
+  //       size="small"
+  //     >
+  //       <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
+  //       <Select
+  //         multiple
+  //         labelId="month-picker-label"
+  //         id="month-picker"
+  //         value={selectedMonths}
+  //         onChange={handleChange}
+  //         input={<OutlinedInput label="Oyni Tanlash" />}
+  //         renderValue={(selected) => selected.join(", ")}
+          
+  //       >
+  //         {monthsList.map((month) => (
+  //           <MenuItem
+  //             key={month.id}
+  //             value={month.name}
+  //             sx={{
+  //               padding: "4px 8px",
+  //               display: "flex",
+  //               alignItems: "center",
+  //               gap: "8px",
+  //             }}
+  //             // Prevent the menu from closing when clicking on a menu item
+  //             onClick={(event) => event.stopPropagation()}
+  //           >
+  //             <Checkbox
+  //               checked={selectedMonths.includes(month.name)}
+  //               sx={{ color: Colors.blue_nbu, padding: 0 }}
+  //               size="small"
+  //             />
+  //             <ListItemText
+  //               primary={month.name}
+  //               sx={{ fontSize: "0.8rem", margin: 0 }}
+  //             />
+  //           </MenuItem>
+  //         ))}
+  //       </Select>
+  //     </FormControl>
+  //   );
+  // };
+  
+  MonthPicker.propTypes = {
+    monthsList: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+      })
+    ).isRequired,
+    selectedMonths: PropTypes.arrayOf(PropTypes.string).isRequired,
+    setSelectedMonths: PropTypes.func.isRequired,
   };
 
   // <=== SELECT FIRST YEAR FUNCTION ====> //
@@ -1181,12 +1592,6 @@ const AnalizeYearDashboard = () => {
               <TableContainer component={Paper} sx={{ padding: 0 }}>
                 <Table aria-label="collapsible table" sx={{ margin: 0 }}>
                   <TableBody>
-                  <RespublikaButton
-                  allChecked={allChecked}
-                  someChecked={someChecked}
-                  onToggleAllRows={toggleAllRows}
-                  onSelectAll={selectAllRows}
-                />
                     {top128Filials.map((filial) => (
                       <Row
                         key={filial.id}
@@ -1221,113 +1626,22 @@ const AnalizeYearDashboard = () => {
                   bgcolor: "white",
                 }}
               >
-                <FormControl
-                  sx={{
-                    width: "100%",
-                    marginTop: "8px",
-                    "& .MuiInputLabel-root": {
-                      fontSize: "1rem",
-                      color: Colors.dark,
-                    },
-                    "& .MuiSelect-root": {
-                      fontSize: "0.8rem",
-                    },
-                  }}
-                  size="small"
-                >
-                  <InputLabel id="year-picker-label">Yilni Tanlash</InputLabel>
-                  <Select
-                    labelId="year-picker-label"
-                    id="year-picker"
-                    multiple
-                    value={selectedYears}
-                    onChange={handleChangeYear}
-                    input={<OutlinedInput label="Yilni Tanlash" />}
-                    renderValue={(selected) => selected.join(" - ")}
-                    MenuProps={{
-                      PaperProps: {
-                        style: {
-                          maxHeight: 200,
-                          width: 150,
-                        },
-                      },
-                    }}
-                  >
-                    {yearsList.map((year) => (
-                      <MenuItem
-                        key={year.label}
-                        value={year.label}
-                        sx={{
-                          padding: "4px 8px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                        }}
-                      >
-                        <Checkbox
-                          checked={selectedYears.includes(year.label)}
-                          sx={{ color: Colors.blue_nbu, padding: "0" }} // Removed extra padding
-                          size="small" // Optional: Use small size for the checkbox
-                        />
-                        <ListItemText
-                          primary={year.label}
-                          sx={{ fontSize: "0.8rem", margin: 0 }} // Reduced font size and removed margin
-                        />
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                {/* <YearPicker
+                  yearsList={yearsList}
+                  selectedYears={selectedYears}
+                  setSelectedYears={setSelectedYears}
+                  setFirstYear={setFirstYear}
+                  setSecondYear={setSecondYear}
+                /> */}
+                <MaterialUIDropdown/>
               </Box>
 
               {/* <===== MONTH PICKER =====> */}
               <Box sx={{ width: "100%", height: "auto" }}>
-                <FormControl
-                  sx={{
-                    width: "100%",
-                    "& .MuiInputLabel-root": {
-                      fontSize: "1rem",
-                      color: Colors.dark,
-                    },
-                    "& .MuiSelect-root": {
-                      fontSize: "0.8rem",
-                    },
-                  }}
-                  size="small"
-                >
-                  <InputLabel id="month-picker-label">Oyni Tanlash</InputLabel>
-                  <Select
-                    multiple
-                    labelId="month-picker-label"
-                    id="month-picker"
-                    value={selectedMonths}
-                    onChange={handleChangeMonth}
-                    input={<OutlinedInput label="Oyni Tanlash" />}
-                    renderValue={(selected) => selected.join(", ")}
-                  >
-                    {monthsList.map((month) => (
-                      <MenuItem
-                        key={month.id}
-                        value={month.name}
-                        sx={{
-                          padding: "4px 8px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                        }}
-                      >
-                        <Checkbox
-                          checked={selectedMonths.includes(month.name)}
-                          sx={{ color: Colors.blue_nbu, padding: 0 }}
-                          size="small"
-                        />
-                        <ListItemText
-                          primary={month.name}
-                          sx={{ fontSize: "0.8rem", margin: 0 }}
-                        />
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <MonthPicker
+                  monthsList={monthsList}
+                  
+                />
               </Box>
               {/* ACCOUNT NUMBER LIST */}
               <List

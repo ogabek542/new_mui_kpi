@@ -1,6 +1,5 @@
 const top128Filials = [
-    // { title: "Республика", id: 1 },
-    { title: "Respublika", id: 1 },
+    // { title: "Respublika", id: 1 },
     { title: "Toshkent ", id: 2 },
     { title: "Andijon", id: 3 },
     { title: "Buxoro", id: 4 },

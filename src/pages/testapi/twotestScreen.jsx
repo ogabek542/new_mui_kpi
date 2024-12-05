@@ -320,83 +320,425 @@ const AnalizeYearDashboard = () => {
   };
 
   // Filial row component
-  function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
-    const subRegions = setSelectedSecondMap[filial.id] || [];
+  // function Row({ filial, isOpen, onToggle, checkedItems, setCheckedItems }) {
+  //   const subRegions = setSelectedSecondMap[filial.id] || [];
 
-    const handleCheckboxChange = (title) => {
-      setCheckedItems((prev) =>
-        prev.includes(title)
-          ? prev.filter((item) => item !== title)
-          : [...prev, title]
-      );
-    };
+  //   const handleCheckboxChange = (title) => {
+  //     setCheckedItems((prev) =>
+  //       prev.includes(title)
+  //         ? prev.filter((item) => item !== title)
+  //         : [...prev, title]
+  //     );
+  //   };
 
-    return (
-      <>
+  //   return (
+  //     <>
+  //       <TableRow>
+  //         {/* Checkbox cell */}
+  //         <TableCell sx={{ padding: "2px" }}>
+  //           <Checkbox
+  //             onChange={(e) => {
+  //               e.stopPropagation();
+  //               handleCheckboxChange(filial.title);
+  //             }}
+  //             checked={checkedItems.includes(filial.title)}
+  //             size="small"
+  //           />
+  //         </TableCell>
+  //         {/* Clickable name cell to toggle open/close */}
+  //         <TableCell
+  //           sx={{
+  //             padding: "2px",
+  //             cursor: "pointer",
+  //             fontWeight: "bold",
+  //             color: Colors.black,
+  //           }}
+  //           onClick={() => onToggle(filial.id)}
+  //         >
+  //           {filial.title}
+  //         </TableCell>
+  //       </TableRow>
+  //       {/* Sub-region rows */}
+  //       {isOpen && (
+  //         <TableRow>
+  //           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
+  //             <Collapse in={isOpen} timeout="auto" unmountOnExit>
+  //               <Box sx={{ margin: 0, padding: 0 }}>
+  //                 <Table size="small" aria-label="subregions" sx={{ margin: 0 }}>
+  //                   <TableBody>
+  //                     {subRegions.map((subRegion, index) => (
+  //                       <TableRow key={index}>
+  //                         <TableCell sx={{ padding: "2px", pl: 2 }}>
+  //                           <Checkbox
+  //                             onChange={(e) => {
+  //                               e.stopPropagation();
+  //                               handleCheckboxChange(subRegion.title);
+  //                             }}
+  //                             checked={checkedItems.includes(subRegion.title)}
+  //                             size="small"
+  //                           />
+  //                         </TableCell>
+
+  //                         <TableCell
+  //                           sx={{ padding: "2px", pl: 2, cursor: "pointer" }}
+  //                           onClick={() => handleCheckboxChange(subRegion.title)}
+  //                         >
+  //                           {subRegion.title}
+  //                         </TableCell>
+  //                       </TableRow>
+  //                     ))}
+  //                   </TableBody>
+  //                 </Table>
+  //               </Box>
+  //             </Collapse>
+  //           </TableCell>
+  //         </TableRow>
+  //       )}
+  //     </>
+  //   );
+  // }
+  
+  // function Row({
+  //   filial,
+  //   isOpen,
+  //   onToggle,
+  //   checkedItems,
+  //   setCheckedItems,
+  //   top128Filials,
+  //   setSelectedSecondMap
+  // }) {
+  //   // Get subRegions only if not "Respublika"
+  //   let subRegions = filial.title !== "Respublika" ? setSelectedSecondMap[filial.id] || [] : [];
+  //   let subRegionTitles = subRegions.map((sub) => sub.title);
+  
+  //   // If "Respublika", prepare to handle all filials
+  //   let allFilialTitles = [];
+  //   if (filial.title === "Respublika") {
+  //     allFilialTitles = top128Filials
+  //       .filter((f) => f.title !== "Respublika")
+  //       .map((f) => f.title);
+  //     // No subRegions for "Respublika"
+  //     subRegions = [];
+  //     subRegionTitles = [];
+  //   }
+  
+  //   // Determine if all filials are checked (for "Respublika")
+  //   const allFilialsChecked = filial.title === "Respublika"
+  //     ? allFilialTitles.every((title) => checkedItems.includes(title))
+  //     : subRegionTitles.every((title) => checkedItems.includes(title));
+  
+  //   // Determine if some filials are checked (for "Respublika")
+  //   const someFilialsChecked = filial.title === "Respublika"
+  //     ? allFilialTitles.some((title) => checkedItems.includes(title)) && !allFilialsChecked
+  //     : subRegionTitles.some((title) => checkedItems.includes(title)) && !allFilialsChecked;
+  
+  //   // Determine if the main checkbox should be checked
+  //   const isChecked = filial.title === "Respublika"
+  //     ? allFilialsChecked
+  //     : checkedItems.includes(filial.title);
+  
+  //   // Handle main branch checkbox change
+  //   const handleMainCheckboxChange = (event) => {
+  //     const { checked } = event.target;
+  //     if (filial.title === "Respublika") {
+  //       if (checked) {
+  //         // Select all filials (excluding "Respublika")
+  //         setCheckedItems([...new Set([...checkedItems, ...allFilialTitles])]);
+  //       } else {
+  //         // Deselect all filials (excluding "Respublika")
+  //         setCheckedItems(checkedItems.filter((item) => !allFilialTitles.includes(item)));
+  //       }
+  //     } else {
+  //       if (checked) {
+  //         // Select filial and its subRegions
+  //         setCheckedItems([...new Set([...checkedItems, filial.title, ...subRegionTitles])]);
+  //       } else {
+  //         // Deselect filial and its subRegions
+  //         setCheckedItems(checkedItems.filter((item) => item !== filial.title && !subRegionTitles.includes(item)));
+  //       }
+  //     }
+  //   };
+  
+  //   // Handle subRegion checkbox change
+  //   const handleSubCheckboxChange = (title) => {
+  //     setCheckedItems((prev) =>
+  //       prev.includes(title)
+  //         ? prev.filter((item) => item !== title)
+  //         : [...prev, title]
+  //     );
+  //   };
+  
+  //   // Handle click on subRegion name to toggle checkbox
+  //   const handleSubRegionClick = (title) => {
+  //     handleSubCheckboxChange(title);
+  //   };
+  
+  //   return (
+  //     <>
+  //       <TableRow
+  //         sx={{
+  //           paddingLeft: "0px",
+  //           display: "flex",
+  //           alignItems: "center",
+  //           verticalAlign: "center",
+  //           height: "53px",
+  //           borderBottom: "1px solid #AAAAAE",
+  //         }}
+  //       >
+  //         {/* Checkbox cell */}
+  //         <TableCell sx={{ padding: "0px", width: "21px", border: "none" }}>
+  //           <Checkbox
+  //             onChange={handleMainCheckboxChange}
+  //             checked={isChecked}
+  //             indeterminate={someFilialsChecked}
+  //             size="small"
+  //             sx={{ margin: 0, padding: "0px", paddingBottom: "2px" }}
+  //           />
+  //         </TableCell>
+  //         {/* Clickable name cell to toggle open/close */}
+  //         <TableCell
+  //           sx={{
+  //             padding: "2px",
+  //             cursor: "pointer",
+  //             fontWeight: "bold",
+  //             color: Colors.black,
+  //             whiteSpace: "nowrap",
+  //             overflow: "hidden",
+  //             textOverflow: "ellipsis",
+  //             width: "100%",
+  //             height: "22px",
+  //             border: "none",
+  //           }}
+  //           onClick={() => onToggle(filial.id)}
+  //         >
+  //           {filial.title}
+  //         </TableCell>
+  //       </TableRow>
+  //       {/* Sub-region rows */}
+  //       {isOpen && subRegions.length > 0 && (
+  //         <TableRow>
+  //           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
+  //             <Collapse in={isOpen} timeout="auto" unmountOnExit>
+  //               <Box sx={{ margin: 0, padding: 0 }}>
+  //                 <Table size="small" aria-label="subregions" sx={{ margin: 0 }}>
+  //                   <TableBody>
+  //                     {subRegions.map((subRegion, index) => (
+  //                       <TableRow key={index}>
+  //                         <TableCell sx={{ padding: "2px", pl: 2 }}>
+  //                           <Checkbox
+  //                             onChange={(e) => {
+  //                               e.stopPropagation();
+  //                               handleSubCheckboxChange(subRegion.title);
+  //                             }}
+  //                             checked={checkedItems.includes(subRegion.title)}
+  //                             size="small"
+  //                           />
+  //                         </TableCell>
+  
+  //                         <TableCell
+  //                           sx={{
+  //                             padding: "2px",
+  //                             pl: 2,
+  //                             cursor: "pointer",
+  //                             fontWeight: "500",
+  //                             whiteSpace: "nowrap",
+  //                             overflow: "hidden",
+  //                             textOverflow: "ellipsis",
+  //                             height: "20px",
+  //                             boxSizing: "border-box",
+  //                           }}
+  //                           onClick={() => handleSubRegionClick(subRegion.title)}
+  //                         >
+  //                           {subRegion.title}
+  //                         </TableCell>
+  //                       </TableRow>
+  //                     ))}
+  //                   </TableBody>
+  //                 </Table>
+  //               </Box>
+  //             </Collapse>
+  //           </TableCell>
+  //         </TableRow>
+  //       )}
+  //     </>
+  //   );
+  // }
+
+  // Row.jsx
+import React from 'react';
+import { TableRow, TableCell, Checkbox, Collapse, Box, Table, TableBody } from '@mui/material';
+
+// Define Colors or use any appropriate color constants
+const Colors = {
+  black: '#000000',
+};
+
+function Row({
+  filial,
+  isOpen,
+  onToggle,
+  checkedItems,
+  setCheckedItems,
+  top128Filials,
+  setSelectedSecondMap,
+}) {
+  // Get subRegions only if not "Respublika"
+  let subRegions = filial.title !== 'Respublika' ? setSelectedSecondMap[filial.id] || [] : [];
+  let subRegionTitles = subRegions.map((sub) => sub.title);
+
+  // For "Respublika", prepare to handle all filials except itself
+  let allOtherFilialTitles = [];
+  if (filial.title === 'Respublika') {
+    allOtherFilialTitles = top128Filials
+      .filter((f) => f.title !== 'Respublika')
+      .map((f) => f.title);
+    // No subRegions for "Respublika"
+    subRegions = [];
+    subRegionTitles = [];
+  }
+
+  // Determine if all filials are checked (for "Respublika")
+  const allFilialsChecked =
+    filial.title === 'Respublika'
+      ? allOtherFilialTitles.every((title) => checkedItems.includes(title))
+      : subRegionTitles.every((title) => checkedItems.includes(title));
+
+  // Determine if some filials are checked (for "Respublika")
+  const someFilialsChecked =
+    filial.title === 'Respublika'
+      ? allOtherFilialTitles.some((title) => checkedItems.includes(title)) && !allFilialsChecked
+      : subRegionTitles.some((title) => checkedItems.includes(title)) && !allFilialsChecked;
+
+  // Determine if the main checkbox should be checked
+  const isChecked =
+    filial.title === 'Respublika' ? allFilialsChecked : checkedItems.includes(filial.title);
+
+  // Handle main branch checkbox change
+  // Handle main branch checkbox change
+  const handleMainCheckboxChange = (event) => {
+    const { checked } = event.target;
+    if (filial.title === 'Respublika') {
+      if (checked) {
+        // Add "Respublika" and all other filials to checkedItems
+        setCheckedItems([...new Set(['Respublika', ...allOtherFilialTitles])]);
+      } else {
+        // Remove all other filials from checkedItems, keep "Respublika" selected
+        setCheckedItems(['Respublika']);
+      }
+    } else {
+      if (checked) {
+        // Add filial and all its subRegions to checkedItems
+        setCheckedItems([...new Set([...checkedItems, filial.title, ...subRegionTitles])]);
+      } else {
+        // Remove filial and all its subRegions from checkedItems
+        setCheckedItems(checkedItems.filter((item) => item !== filial.title && !subRegionTitles.includes(item)));
+      }
+    }
+  };
+  // Handle subRegion checkbox change
+  const handleSubCheckboxChange = (title) => {
+    setCheckedItems((prev) =>
+      prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]
+    );
+  };
+
+  // Handle click on subRegion name to toggle checkbox
+  const handleSubRegionClick = (title) => {
+    handleSubCheckboxChange(title);
+  };
+
+  return (
+    <>
+      <TableRow
+        sx={{
+          paddingLeft: '0px',
+          display: 'flex',
+          alignItems: 'center',
+          verticalAlign: 'center',
+          height: '53px',
+          borderBottom: '1px solid #AAAAAE',
+        }}
+      >
+        {/* Checkbox cell */}
+        <TableCell sx={{ padding: '0px', width: '21px', border: 'none' }}>
+          <Checkbox
+            onChange={handleMainCheckboxChange}
+            checked={isChecked}
+            indeterminate={someFilialsChecked}
+            size="small"
+            sx={{ margin: 0, padding: '0px', paddingBottom: '2px' }}
+          />
+        </TableCell>
+        {/* Clickable name cell to toggle open/close */}
+        <TableCell
+          sx={{
+            padding: '2px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            color: Colors.black,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            width: '100%',
+            height: '22px',
+            border: 'none',
+          }}
+          onClick={() => onToggle(filial.id)}
+        >
+          {filial.title}
+        </TableCell>
+      </TableRow>
+      {/* Sub-region rows */}
+      {isOpen && subRegions.length > 0 && (
         <TableRow>
-          {/* Checkbox cell */}
-          <TableCell sx={{ padding: "2px" }}>
-            <Checkbox
-              onChange={(e) => {
-                e.stopPropagation();
-                handleCheckboxChange(filial.title);
-              }}
-              checked={checkedItems.includes(filial.title)}
-              size="small"
-            />
-          </TableCell>
-          {/* Clickable name cell to toggle open/close */}
-          <TableCell
-            sx={{
-              padding: "2px",
-              cursor: "pointer",
-              fontWeight: "bold",
-              color: Colors.black,
-            }}
-            onClick={() => onToggle(filial.id)}
-          >
-            {filial.title}
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
+            <Collapse in={isOpen} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 0, padding: 0 }}>
+                <Table size="small" aria-label="subregions" sx={{ margin: 0 }}>
+                  <TableBody>
+                    {subRegions.map((subRegion, index) => (
+                      <TableRow key={index}>
+                        <TableCell sx={{ padding: '2px', pl: 4 }}>
+                          <Checkbox
+                            onChange={(e) => {
+                              e.stopPropagation();
+                              handleSubCheckboxChange(subRegion.title);
+                            }}
+                            checked={checkedItems.includes(subRegion.title)}
+                            size="small"
+                          />
+                        </TableCell>
+
+                        <TableCell
+                          sx={{
+                            padding: '2px',
+                            pl: 2,
+                            cursor: 'pointer',
+                            fontWeight: '500',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            height: '20px',
+                            boxSizing: 'border-box',
+                          }}
+                          onClick={() => handleSubRegionClick(subRegion.title)}
+                        >
+                          {subRegion.title}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
           </TableCell>
         </TableRow>
-        {/* Sub-region rows */}
-        {isOpen && (
-          <TableRow>
-            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
-              <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                <Box sx={{ margin: 0, padding: 0 }}>
-                  <Table size="small" aria-label="subregions" sx={{ margin: 0 }}>
-                    <TableBody>
-                      {subRegions.map((subRegion, index) => (
-                        <TableRow key={index}>
-                          <TableCell sx={{ padding: "2px", pl: 2 }}>
-                            <Checkbox
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                handleCheckboxChange(subRegion.title);
-                              }}
-                              checked={checkedItems.includes(subRegion.title)}
-                              size="small"
-                            />
-                          </TableCell>
+      )}
+    </>
+  );
+}
 
-                          <TableCell
-                            sx={{ padding: "2px", pl: 2, cursor: "pointer" }}
-                            onClick={() => handleCheckboxChange(subRegion.title)}
-                          >
-                            {subRegion.title}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </Box>
-              </Collapse>
-            </TableCell>
-          </TableRow>
-        )}
-      </>
-    );
-  }
+
 
   Row.propTypes = {
     filial: PropTypes.shape({

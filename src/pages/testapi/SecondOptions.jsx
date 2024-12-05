@@ -1,7 +1,7 @@
 
 const setSelectedSecondMap = {
     // NBU//
-    1: [{ title: "Respublika" }],
+    1: [{ }],
     // Toshkent shahri //
     2: [
       { title: "Bosh ofis" },
