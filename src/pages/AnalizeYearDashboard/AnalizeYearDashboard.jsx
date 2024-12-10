@@ -13,6 +13,8 @@ import {
   ListItemIcon,
   OutlinedInput,
 } from "@mui/material";
+
+
 import LightHeader from "../../components/LightHeader/LightHeader";
 import { Colors } from "../../styles/theme";
 import FormControl from "@mui/material/FormControl";
@@ -104,6 +106,7 @@ const textList = [
   "578",
   "579",
 ];
+
 // Combine the two lists into one array of objects
 const combinedList = numbersList.map((number, index) => ({
   id: `${number}-${index}`, // Unique ID
@@ -122,7 +125,6 @@ const yearsList = [
 const AnalizeYearDashboard = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const [openRows, setOpenRows] = useState({});
-
   const [selectedNumbers, setSelectedNumbers] = useState([]); // select account book number
   const [selectedYears, setSelectedYears] = useState([]);
   const [dataFetched, setDataFetched] = useState(false); // New state variable
@@ -317,7 +319,7 @@ const AnalizeYearDashboard = () => {
     }
   };
 
- const monthArray = monthsList.map((month) => month.name);
+  const monthArray = monthsList.map((month) => month.name);
 
   // <==== First DATA TABLE SECTION CODE ====>
   function DataRow({ row, depth = 0, monthArray }) {
@@ -428,7 +430,7 @@ const AnalizeYearDashboard = () => {
               )}
             </React.Fragment>
           ))}
-          {visibleColumns.firstYear && (
+          {/* {visibleColumns.firstYear && (
             <TableCell
               sx={{
                 width: "80px",
@@ -479,7 +481,7 @@ const AnalizeYearDashboard = () => {
             >
               {insertSpaces(row?.amountSeparateTotal) || "-"}
             </TableCell>
-          )}
+          )} */}
         </TableRow>
 
         {/* Subrows */}
@@ -2002,7 +2004,7 @@ const AnalizeYearDashboard = () => {
                             </TableCell>
                           ))}
                           {/* <==== TOTAL COLUMN HEADER ====> */}
-                          <TableCell
+                          {/* <TableCell
                             colSpan={
                               (visibleColumns.firstYear ? 1 : 0) +
                               (visibleColumns.secondYear ? 1 : 0) +
@@ -2023,7 +2025,7 @@ const AnalizeYearDashboard = () => {
                             >
                               Total
                             </Typography>
-                          </TableCell>
+                          </TableCell> */}
                         </TableRow>
 
                         {/* Sub-header Row */}
@@ -2221,7 +2223,7 @@ const AnalizeYearDashboard = () => {
                               )}
                             </React.Fragment>
                           ))}
-                          {visibleColumns.firstYear && (
+                          {/* {visibleColumns.firstYear && (
                             <TableCell
                               sx={{
                                 width: "120px",
@@ -2244,8 +2246,8 @@ const AnalizeYearDashboard = () => {
                                 {firsttableData.choosedfirstYear}
                               </Typography>
                             </TableCell>
-                          )}
-                          {visibleColumns.secondYear && (
+                          )} */}
+                          {/* {visibleColumns.secondYear && (
                             <TableCell
                               sx={{
                                 width: "120px",
@@ -2267,9 +2269,9 @@ const AnalizeYearDashboard = () => {
                                 {firsttableData.choosedsecondYear}
                               </Typography>
                             </TableCell>
-                          )}
+                          )} */}
 
-                          {visibleColumns.percentage && (
+                          {/* {visibleColumns.percentage && (
                             <TableCell
                               sx={{
                                 width: "120px",
@@ -2312,7 +2314,7 @@ const AnalizeYearDashboard = () => {
                                 Amount
                               </Typography>
                             </TableCell>
-                          )}
+                          )} */}
                         </TableRow>
                       </TableHead>
                       {/* Data Rows */}
@@ -2456,7 +2458,7 @@ const AnalizeYearDashboard = () => {
                               </React.Fragment>
                             ))}
                             {/* Total Yearly Sums and Final Columns */}
-                            {visibleColumns.firstYear && (
+                            {/* {visibleColumns.firstYear && (
                               <TableCell
                                 sx={{
                                   width: "auto",
@@ -2539,7 +2541,7 @@ const AnalizeYearDashboard = () => {
                                   {insertSpaces(total.amountSeparateTotalMonth)}
                                 </Typography>
                               </TableCell>
-                            )}
+                            )} */}
                           </TableRow>
                         ))}
                       </TableBody>
